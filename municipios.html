@@ -1,0 +1,97 @@
+
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset=utf-8 /> 
+    <title>Municipios latLng</title> 
+    <link rel="shortcut icon" href="http://cartodb.com/favicon/favicon_32x32.ico" /> 
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      
+      var places = [];
+      var place = {};
+      var count = 0;
+      var total;
+    
+      $(document).ready(function(){
+        $.ajax({
+          method: "GET",
+          dataType: 'jsonp',
+          url: 'https://api.cartodb.com/v1',
+          data: {sql:'SELECT * FROM gadm4 WHERE center_latitude is null',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+          success: function(data) {
+            places = data.rows;
+            console.log(data.rows.length);
+            total = data.rows.length;
+            findLocation();
+          }
+        });
+      });
+      
+      function findLocation() {
+        if (places.length>0) {
+          place = places.shift();
+          place.address = place.name_4 +','+place.name_2+',Spain';
+          place.address = place.address.toLowerCase().replace(/é/g,'e').replace(/á/g,'a').replace(/í/g,'i').replace(/ó/g,'').replace(/ú/g,'u').replace(/è/g,'e').replace(/à/g,'a').replace(/ì/g,'i').replace(/ò/g,'').replace(/ù/g,'u');
+          
+          console.log('Searching '+place.address);
+          
+          $.ajax({
+            type: "GET",
+            url: 'http://maps.google.com/maps/geo?q='+encodeURIComponent(place.address)+'&sensor=false&output=json&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RTb-vLQlFZmc2N8bgWI8YDPp5FEVBSSShDhDbHNKr3tTC6UaCKqvYjyOQ',
+            dataType: 'jsonp',
+            success: function(data) {
+              if (data.Status.code == 602) {
+                console.log('Not founded '+place.address);
+                count++;
+                console.log(count+'/'+total);
+                console.log('--------------------------------');
+                findLocation();
+              } else {
+                console.log('Founded '+place.address);
+                saveRegionPosition(data);
+              }
+            },
+            error: function(e) {
+              console.debug(e);
+            }
+          });
+        } else {
+          console.log('Fin');
+        }
+                  
+      }
+      
+      
+      function saveRegionPosition(event) {
+        if (event.Placemark != undefined) {
+          console.log('Saving '+place.address);
+          
+          $.ajax({
+            type: "GET",
+            url: 'https://api.cartodb.com/v1',
+            data: {sql:"UPDATE gadm4 SET center_longitude="+event.Placemark[0].Point.coordinates[0]+",center_latitude="+event.Placemark[0].Point.coordinates[1]+ "WHERE cartodb_id="+place.cartodb_id,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+            dataType: 'jsonp',
+            success: function(data) {
+              console.log('Saved!');
+              count++;
+              console.log(count+'/'+total);
+              console.log('--------------------------');
+              findLocation();
+            },
+            error: function(e) {
+              console.debug(e);
+            }
+          });
+        }
+      }
+      
+      
+    </script>
+  </head> 
+  <body> 
+    asdfasf
+    
+  </body> 
+</html>
