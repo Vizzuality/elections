@@ -1,0 +1,101 @@
+html {height:auto;}
+body {height:auto; background:#2D3451;}
+
+/*HEADER*/
+div#header {position:absolute; left:0; right:0; top:0; height:154px; background:url('/images/header_bkg.png') repeat-x 0 0; z-index:50;}
+div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:137px; background:url('/images/end_left.jpg') no-repeat 0 0;}
+div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:137px; background:url('/images/end_right.jpg') no-repeat 0 0;}
+div#header div.left {display:inline-block; width:320px;}
+div#header div.left h1 {margin:27px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
+div#header div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:15px 0 0 19px;}
+div#header div.left form input.text {width:248px; height:15px; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular"; 
+  color:#CCCCCC; line-height:15px;}
+div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('/images/lens.png') no-repeat 0 0;}
+div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
+div#header div.left form input.submit:outline {background-position:0 -25px;}
+div#header div.left form input.text:focus {outline:none; color:#333333;}
+
+div.tabs {position:absolute; left:0; right:0; top:137px; bottom:0; width:100%;}
+div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
+div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
+div.tabs div#map div#canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
+div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
+div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#cccccc; z-index:0;}
+
+
+
+/*MAP CONTROLS*/
+div#zoom_control {position:absolute; top:10px; left:10px; width:58px; height:259px; background:url('/images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
+  text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#zoom_control a.zoom_in {position:absolute; top:8px; left:12px; width:34px; height:32px; background:url('/images/zooms.png') no-repeat -34px 0; z-index:15;}
+div#zoom_control a.zoom_out {position:absolute; bottom:16px; left:12px; width:34px; height:32px; background:url('/images/zooms.png') no-repeat 0 0; z-index:15;}
+div#zoom_control a.zoom_in:hover {background-position:-34px -32px;}
+div#zoom_control a.zoom_out:hover {background-position:0 -32px;}
+div#zoom_control span.slider {position:absolute; top:53px; left:27px; height:157px; width:4px; }
+  
+div#zoom_control .ui-slider { position: relative; text-align: left;}
+div#zoom_control .ui-slider .ui-slider-handle { position: absolute; z-index: 20; width:1.2em!important; height:1.2em!important; cursor: default;}
+div#zoom_control .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+div#zoom_control .ui-slider-horizontal { height: .8em; }
+div#zoom_control .ui-slider-horizontal .ui-slider-handle { top: -.3em; margin-left: -.6em;}
+div#zoom_control .ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+div#zoom_control .ui-slider-horizontal .ui-slider-range-min { left: 0; }
+div#zoom_control .ui-slider-horizontal .ui-slider-range-max { right: 0; }
+div#zoom_control .ui-slider-vertical { width: .8em; height: 100px; }
+div#zoom_control .ui-slider-vertical .ui-slider-handle { left: -6px; margin-left: 0; margin-bottom: -.6em; height:16px!important; width:16px!important; background:url('/images/handle.png') no-repeat 0 0;}
+div#zoom_control .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }  
+div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
+div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
+  
+/*MENU MAP/GRAPH*/
+div#tab_menu {position:absolute; right:6px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:100; overflow: hidden; text-indent:-9999%; 
+  font-size:0; display:block; line-height:0;}
+div#tab_menu a.map {float:left; width:32px; height:31px; margin:8px 0 0 13px; background:url('/images/map_icon.png') no-repeat 0 0;}
+div#tab_menu a.stats {float:left; width:32px; height:31px; margin:1px 0 0 13px; background:url('/images/stats_icon.png') no-repeat 0 0;}
+div#tab_menu a.selected {background-position: 0 -31px;}
+div#tab_menu a.selected:hover {cursor:default; background-position:0 -31px;}
+
+/*REGION MARKER*/
+div.region:hover {cursor:pointer;}
+
+/*INFOWINDOW*/
+div#infowindow {position:absolute; width:254px; height:271px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div#infowindow a.close_infowindow {position:absolute; right:4px; top:3px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div#infowindow a.close_infowindow:hover {background-position:0 -18px;}
+div#infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
+div#infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div#infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div#infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:9px 0 0 0;}
+div#infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
+div#infowindow div.top div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
+div#infowindow div.top div.stats div.bar {float:left; width:auto; height:6px!important; margin:2px 5px 0 0; background:url('/images/left_bars.png') no-repeat 0 bottom;}
+div#infowindow div.top div.stats div.bar span {float:left; width:20px; height:6px!important; margin:0 0 0 2px; background:url('/images/right_bars.png') no-repeat right bottom;}
+div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
+/*psoe*/
+div#infowindow div.top div.stats div.psoe div.bar {background-position:0 0;}
+div#infowindow div.top div.stats div.psoe div.bar span {background-position:right 0;}
+div#infowindow div.top div.stats div.psoe p {color:red;}
+/*pp*/
+div#infowindow div.top div.stats div.pp div.bar {background-position:0 -6px;}
+div#infowindow div.top div.stats div.pp div.bar span {background-position:right -6px;}
+div#infowindow div.top div.stats div.pp p {color:#00B2EB;}
+/*ui*/
+div#infowindow div.top div.stats div.iu div.bar {background-position:0 -12px;}
+div#infowindow div.top div.stats div.iu div.bar span {background-position:right -12px}
+div#infowindow div.top div.stats div.iu p {color:#009933;}
+/*otros*/
+div#infowindow div.top div.stats div.otros div.bar {background-position:0 bottom;}
+div#infowindow div.top div.stats div.otros div.bar span {background-position:right bottom;}
+div#infowindow div.top div.stats div.otros p {color:#999999;}
+div#infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
+div#infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
+div#infowindow div.bottom p.info a {font-weight:bold; color:#8B1F72; text-decoration:none;}
+div#infowindow div.bottom p.info a:hover {text-decoration:underline;}
+div#infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:20px; margin:3px 0 0 0;}
+div#infowindow div.bottom a.compare {display:inline-block; width:67px; height:13px; margin:10px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center;
+  line-height:13px;}
+div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
+
+

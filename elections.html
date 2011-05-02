@@ -5,25 +5,50 @@
     <meta charset=utf-8 /> 
     <title>RTVE - Mashup</title> 
     <link href="/stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" /> 
-    <link href="/stylesheets/spain.css" media="screen" rel="stylesheet" type="text/css" /> 
+    <link href="/stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" /> 
     
     <script src="/javascripts/plugins/jquery.js" type="text/javascript" charset="utf-8"></script>
     <script src="/javascripts/plugins/underscore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/plugins/jquery-ui-1.8.12.custom.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&region=ES&language=ES"></script>
     <script src="/javascripts/maps/SpainTiles.js" type="text/javascript" charset="utf-8"></script>
     <script src="/javascripts/maps/MercatorProjection.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/maps/Geocoder.js" type="text/javascript" charset="utf-8"></script>
     <script src="/javascripts/maps/InfoWindow.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="/javascripts/maps/spain.js"></script>
+    <script src="/javascripts/maps/maps.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/javascripts/application.js"></script>
   </head> 
   <body>
     <div id="header">
       <span class="end_left"></span>
       <span class="end_right"></span>
+      <div class="left">
+        <h1>Mapa de las Elecciones 2011</h1>
+        <form class="search">
+          <input type="text" value="Busca un lugar..." class="text" />
+          <input type="submit" value="" class="submit" />
+        </form>
+      </div>
+      <div class="right">
+      </div>
     </div>
-    <div id="map">
-      <div id="peninsula"></div>
-      <div id="canary_island"></div>
+    <div class="tabs">
+      <div id="tab_menu">
+        <a href="#mapa" class="map selected">Mapa</a>
+        <a href="#estadisticas" class="stats">Estadísticas</a>
+      </div>
+      <div id="map">
+        <div id="zoom_control">
+          <a href="#zoom_mas" class="zoom_in">Zoom más</a>
+          <span class="slider"></span>
+          <a href="#zoom_menos" class="zoom_out">Zoom menos</a>
+        </div>
+        <div id="peninsula"></div>
+        <div id="canary_island"></div>
+      </div>
+      <div id="graph">
+      </div>
     </div>
   </body> 
 </html>
