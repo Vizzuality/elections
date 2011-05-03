@@ -14,6 +14,7 @@
         } else {
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
+          initializeGraph();
         }
         $(this).addClass('selected')
       }
