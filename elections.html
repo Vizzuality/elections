@@ -33,6 +33,11 @@
           <input type="text" value="Busca un lugar..." class="text" />
           <input type="submit" value="" class="submit" />
         </form>
+        <div class="search_error">
+          <h5>Ops! No hemos podido encontrar lo que buscas</h5>
+          <p>Comprueba que has escrito bien el nombre o prueba con otro</p>
+          <a class="close" href="#cerrar">Cerrar</a>
+        </div>
       </div>
       <div class="right">
       </div>
@@ -43,31 +48,6 @@
         <a href="#estadisticas" class="stats">Estadísticas</a>
       </div>
       <div id="map">
-        <div id="comparewindow">
-          <a class="close_infowindow"></a>
-          <div class="top">
-            <h2>Alaejos</h2>
-            <p class="province">Valladolid, 11.982 habitantes.</p>
-            <div class="stats">
-              <h4>65% de participación</h4>
-              <div class="partido psoe"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>
-              <div class="partido pp"><div class="bar"><span></span></div><p>PP (36%)</p></div>
-              <div class="partido iu"><div class="bar"><span></span></div><p>IU (12%)</p></div>
-              <div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>
-            </div>
-            <div class="compare_graph">
-              <a href="#" class="left">left</a>
-              <a href="#" class="right">right</a>
-            </div>
-          </div>
-          <div class="bottom">
-            <h4>Selecciona otro lugar para comparar...</h4>
-            <form class="search_compare">
-              <input class="text" type="text" value="Busca una localidad..." />
-              <input class="submit" type="submit" value=""/>
-            </form>
-          </div>
-        </div>
         <div id="zoom_control">
           <a href="#zoom_mas" class="zoom_in">Zoom más</a>
           <span class="slider"></span>

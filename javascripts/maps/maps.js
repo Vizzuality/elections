@@ -41,9 +41,9 @@
     peninsula.overlayMapTypes.setAt(0,layer);
     canary_island.overlayMapTypes.setAt(0,layer);
     
-    /*Adding infowindow and comparewindow*/
+    /*Adding infowindow(over map) and comparewindow(over dom)*/
     infowindow = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
-    //comparewindow = new CompareWindow(new google.maps.LatLng(40,-3), peninsula);
+    comparewindow = new CompareWindow();
     
     peninsula.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
     canary_island.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));

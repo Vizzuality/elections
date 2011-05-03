@@ -30,10 +30,25 @@
         y = coord.y;
       }
       
-      query = "SELECT id_4 as id,name_4 as municipio,name_2 as provincia,censo_total, (votantes_totales::integer/censo_total::integer)*100 as percen_participacion,"+
-      "primer_partido_percent,segundo_partido_percent,tercer_partido_percent,0 as otros_partido_percent,(random()*100)::integer as abs_value,"+
-      "center_longitude,center_latitude from gadm4  as g inner join votaciones_por_municipio as v on g.cartodb_id=v.gadm4_cartodb_id "+
-      "where v_get_tile("+x+","+y+",11) && centre_geom_webmercator and proceso_electoral_id='62'";
+      // query = "SELECT id_4 AS id,name_4 AS municipio,name_2 AS provincia,censo_total,((votantes_totales / censo_total) * 100)::INTEGER AS percen_participacion,primer_partido_percent,"+
+      // "segundo_partido_percent,tercer_partido_percent,0 AS otros_partido_percent,(random() * 100) AS abs_value,center_longitude,center_latitude,vsm.paro_norm_1996, vsm.paro_norm_1997, vsm.paro_norm_1998,"+
+      // "vsm.paro_norm_1999, vsm.paro_norm_2000, vsm.paro_norm_2001, vsm.paro_norm_2002, vsm.paro_norm_2003, vsm.paro_norm_2004, vsm.paro_norm_2005, vsm.paro_norm_2006, vsm.paro_norm_2007, vsm.paro_norm_2008, vsm.paro_norm_2009 "+
+      // "FROM gadm4 AS g INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id = v.gadm4_cartodb_id INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = g.cartodb_id "+
+      // "where v_get_tile("+Math.floor(x)+","+y+",11) && centre_geom_webmercator and proceso_electoral_id = '73'";
+
+      
+      query = "SELECT id_4 AS id,name_4 AS municipio,name_2 AS provincia,censo_total,((votantes_totales / censo_total) * 100)::INTEGER AS percen_participacion,primer_partido_percent,"+
+       "pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name,"+
+       "0 AS otros_partido_percent,center_longitude,center_latitude,vsm.paro_norm_1996, vsm.paro_norm_1997, vsm.paro_norm_1998, vsm.paro_norm_1999, vsm.paro_norm_2000, vsm.paro_norm_2001,"+
+       "vsm.paro_norm_2002, vsm.paro_norm_2003, vsm.paro_norm_2004, vsm.paro_norm_2005, vsm.paro_norm_2006, vsm.paro_norm_2007, vsm.paro_norm_2008, vsm.paro_norm_2009 "+
+       "FROM gadm4 AS g INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id = v.gadm4_cartodb_id INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = v.gadm4_cartodb_id "+
+       "INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS "+
+       "pp3 ON pp3.cartodb_id = v.tercer_partido_id where v_get_tile("+x+","+y+",11) && centre_geom_webmercator and proceso_electoral_id = '73'";
+
+      // query = "SELECT id_4 as id,name_4 as municipio,name_2 as provincia,censo_total, (votantes_totales/censo_total)*100 as percen_participacion,"+
+      // "primer_partido_percent,segundo_partido_percent,tercer_partido_percent,0 as otros_partido_percent,(random()*100) as abs_value,"+
+      // "center_longitude,center_latitude from gadm4 as g inner join votaciones_por_municipio as v on g.cartodb_id=v.gadm4_cartodb_id "+
+      // "where v_get_tile("+x+","+y+",11) && centre_geom_webmercator and proceso_electoral_id = '73'";
       
     } else if (zoom>6 && zoom<=9) {
       query = 'SELECT id_2 as id,center_longitude,center_latitude from gadm2 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
@@ -63,6 +78,7 @@
         
         for (var i=0; i<points.length; i++) {
           var point_id = points[i].id;
+          var percentage_participacion = parseFloat(points[i].abs_value).toFixed(2);
           
           hash[coord.x+'_'+coord.y+'_'+zoom][point_id] = points[i];
           
@@ -77,16 +93,16 @@
           var lat = points[i].center_latitude;
           var lng = points[i].center_longitude;
       
-          if (point_id>=0 && point_id<1800) {
-            radius=8;
-          } else if (point_id>=1800 && point_id<3600) {
+          if (percentage_participacion>=0 && percentage_participacion<20) {
+            radius=7;
+          } else if (percentage_participacion>=20 && percentage_participacion<40) {
             radius=10;
-          } else if (point_id>=3600 && point_id<5400) {
-            radius=12;
-          } else if (point_id>=5400 && point_id<7200) {
-            radius=14;
-          } else {
+          } else if (percentage_participacion>=40 && percentage_participacion<60) {
+            radius=13;
+          } else if (percentage_participacion>=60 && percentage_participacion<80) {
             radius=16;
+          } else {
+            radius=19;
           }
 
           var child = ownerDocument.createElement('div');
@@ -114,14 +130,37 @@
 
                 
           var img = ownerDocument.createElement('img');
-          img.setAttribute('src', 'http://localhost:8888/images/marker.png');
+          img.setAttribute('src', 'http://localhost:8888/images/grey_marker.png');
           img.style.padding = "0";
           img.style.margin = "0";
           img.setAttribute('width','100%');
           img.setAttribute('height','100%');
-          
           child.appendChild(img);
+          
+          
+          var text = ownerDocument.createElement('p');
+          text.style.position = "absolute";
+          text.style.zIndex = 0;
+          text.style.top = "50%";
+          text.style.left = "50%";
+          text.style.textAlign = "center";
+          text.style.zIndex = 10;
+          text.style.color = "#666666";
+          text.style.font = "normal 11px 'Officina Bold'";
+          text.style.padding = "0";
+          text.style.margin = "-6px 0 0 0";
+          text.innerHTML  = "+2";
+          child.appendChild(text);
+
           div.appendChild(child);
+
+
+          var text_width = $(text).width();
+          if (radius < 11) {
+            text.style.display = "none";
+          } else {
+            text.style.margin = "-6px 0 0 -"+(text_width/2)+"px";
+          }
         }
     
         return div;
