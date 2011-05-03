@@ -43,7 +43,7 @@
           '</div>'+
           '<div class="bottom">'+
             '<p class="info">Su población es <a href="#">8 años mas jóven</a> que la media de edad nacional</p>'+
-            '<img src="http://chart.apis.google.com/chart?chxl=0:|Jan|Feb|Mar|Jun|Jul|Aug|1:|100|50|0&chxt=x,y&chs=205x20&cht=lc&chd=s:AA,ASms297wzuowqytmbSKA&chg=25,50&chls=0.75,-1,-1|2,4,1&chm=o,FF9900,1,-2,8|b,3399CC44,0,1,0" class="sparklines" />'+
+            '<img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chg=0,50,0,0&chls=1" class="sparklines" />'+
             '<a class="compare">Comparar</a>'+
           '</div>';
         div.innerHTML = inner_infowindow;

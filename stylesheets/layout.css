@@ -97,8 +97,8 @@ div#infowindow div.bottom {display:inline-block; width:205px; height:68px; margi
 div#infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div#infowindow div.bottom p.info a {font-weight:bold; color:#8B1F72; text-decoration:none;}
 div#infowindow div.bottom p.info a:hover {text-decoration:underline;}
-div#infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:20px; margin:3px 0 0 0;}
-div#infowindow div.bottom a.compare {display:inline-block; width:67px; height:13px; margin:10px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center;
+div#infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px; margin:3px 0 0 0;}
+div#infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center;
   line-height:13px;}
 div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 
