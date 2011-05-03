@@ -1,0 +1,3 @@
+source "http://rubygems.org"
+
+gem "cartodb-rb-client", :git => "git@github.com:Vizzuality/cartodb-rb-client.git"
