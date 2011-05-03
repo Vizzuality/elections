@@ -12,9 +12,9 @@
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
+          restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
-          initializeGraph();
         }
         $(this).addClass('selected')
       }
@@ -22,5 +22,8 @@
     
     //initialize map and map modules
     initializeMaps();
+    
+    //initialize graph
+    initializeGraph();
   });
   

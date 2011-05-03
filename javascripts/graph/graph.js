@@ -12,8 +12,6 @@
     
     
     function initializeGraph() {
-      removeBubbles();
-      
       $(".innerBubble").live({
         mouseenter: function () {
           $(this).css("backgroundColor","#000000");
@@ -26,14 +24,12 @@
       $(".innerBubble").live('click', function() {
         goDeeper("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
       });
-  
-      //INIT CODE
-      createBubbles("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
     }
-
-
-    function removeBubbles() {
+    
+    function restartGraph() {
       $('div#graph_container').empty();
+      valuesHash = {};
+      createBubbles("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
     }
 
 

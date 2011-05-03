@@ -5,7 +5,7 @@
   var allowedBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
   var projection = new MercatorProjection();
   var previous_zoom = 6;
-  var infowindow;
+  var infowindow,comparewindow;
   var dragging = false;
   var tileServers=["a","b","c","d"];
 
@@ -41,27 +41,30 @@
     peninsula.overlayMapTypes.setAt(0,layer);
     canary_island.overlayMapTypes.setAt(0,layer);
     
-    /*Adding infowindow*/
+    /*Adding infowindow and comparewindow*/
     infowindow = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
+    //comparewindow = new CompareWindow(new google.maps.LatLng(40,-3), peninsula);
     
     peninsula.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
     canary_island.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
     
-    // google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
-    //   var allowedBounds = this.getBounds();
-    //   google.maps.event.addListener(this,'zoom_changed',function() {checkZoom(); checkCanaryIsland();});
-    //   google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
-    // });
-    // google.maps.event.addListenerOnce(canary_island, 'tilesloaded', function() { 
-    //   var canaryBounds = this.getBounds();
-    //   google.maps.event.addListener(this,'center_changed',function() { checkBounds(canaryBounds,this); });
-    // });
-    // google.maps.event.addListener(peninsula, 'dragstart', function() { 
-    //   dragging = true;
-    // });
-    // google.maps.event.addListener(peninsula, 'dragend', function() { 
-    //   dragging = false;
-    // });
+    
+    //TODO - Review this listeners (old computers dont render ok with this stuff)
+    google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
+      var allowedBounds = this.getBounds();
+      google.maps.event.addListener(this,'zoom_changed',function() {checkZoom(); checkCanaryIsland();});
+      google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
+    });
+    google.maps.event.addListenerOnce(canary_island, 'tilesloaded', function() { 
+      var canaryBounds = this.getBounds();
+      google.maps.event.addListener(this,'center_changed',function() { checkBounds(canaryBounds,this); });
+    });
+    google.maps.event.addListener(peninsula, 'dragstart', function() { 
+      dragging = true;
+    });
+    google.maps.event.addListener(peninsula, 'dragend', function() { 
+      dragging = false;
+    });
     
     
     /*zoom controls*/
@@ -86,7 +89,7 @@
 			max: 11,
 			value: 6,
 			step: 1,
-			change: function( event, ui ) {
+			stop: function( event, ui ) {
         if (ui.value==10) {
           peninsula.setZoom(11);
         } else if (ui.value==11) {

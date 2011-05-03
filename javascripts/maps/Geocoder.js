@@ -3,7 +3,6 @@
 
     // Search map module with dom bind events
     function initializeSearch() {    
-      
       $('form.search input.text').focusin(function(){
         var value = $(this).val();
         if (value=="Busca un lugar...") {
@@ -27,11 +26,12 @@
     
     
     function searchLocation(location) {
+      location += ', España';
       geocoder.geocode( { 'address': location}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           peninsula.fitBounds(results[0].geometry.bounds);
         } else {
-          alert('not found');
+          alert('TODO - Tooltip city not found');
         }
       });
     }
