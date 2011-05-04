@@ -20,15 +20,14 @@
       });
   
       $(".innerBubble").live('click', function() {
-        goDeeper("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
+        goDeeper(valuesHash[$(this).parent().attr('id')]["children_json_url"]);
       });
     }
     
     function restartGraph() {
       $('div#graph_container').empty();
       valuesHash = {};
-      // createBubbles("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
-      createBubbles("/json/sample.json");
+      createBubbles("/json/autonomies_paro_normalizado_2007.json");
     }
 
 
@@ -51,7 +50,6 @@
     function setValue(url){
       //TODO: VER SI PUEDO EVITAR LEER EL JSON (AL MENOS AL PRINCIPIO)
       $.getJSON(url, function(data) {
-        // $.each(data.municipios, function(key, v) {
         $.each(data, function(key, v) {          
           valuesHash[key] = v;
           updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
