@@ -31,8 +31,12 @@
     //initialize graph
     initializeGraph();
     
-    
     //------------------------ TEST!!!!!!!   HEADER!
+    
+    var route = window.location.hash.replace('#','').split('_');
+    goToHash(route);
+    
+    /*-------------------------------------*/
     $("div.year_slider").slider({
       range: "min",
       min: 1987,
@@ -96,10 +100,6 @@
       } 
     });
     /*---------------END TEST HEADER & START DEEP LINKING----------------------*/
-    var route = window.location.hash.replace('#','').split('_');
-    goToHash(route);
-    
-    /*-------------------------------------*/
   });
   
   
