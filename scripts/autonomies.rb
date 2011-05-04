@@ -26,13 +26,12 @@ FileUtils.mkdir_p("#{base_path}/../json/generated_data")
 ## AUTONOMIES
 #############
 puts
-autonomies.each do |autonomy_hash|
-  variables.each do |variable|
-    puts
-    puts "Variable: #{variable}"
-    dir_path = "#{base_path}/../json/generated_data/#{variable}/autonomies/#{autonomy_hash[:name_1]}"
-    FileUtils.mkdir_p(dir_path)
-    json = {}
+variables.each do |variable|
+  puts
+  puts "Variable: #{variable}"
+  json = {}
+  autonomies.each do |autonomy_hash|
+    dir_path = "#{base_path}/../json/generated_data"
     proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
     row = votes_per_autonomy.select{|h| h[:gadm1_cartodb_id] == autonomy_hash[:cartodb_id] && h[:proceso_electoral_id] == proceso_electoral_id }.first
     unless row
@@ -47,14 +46,16 @@ autonomies.each do |autonomy_hash|
       x_coordinate = x_coordinate*-1 if row[:primer_partido_id] == psoe_id
     end
     radius = ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 6000.0) / 100.0 + 20.0
-    json[autonomy_hash[:name_1]] ||= {}
-    json[autonomy_hash[:name_1]][:cartodb_id] = autonomy_hash[:cartodb_id]
-    json[autonomy_hash[:name_1]][:x_coordinate] = x_coordinate
-    json[autonomy_hash[:name_1]][:y_coordinate] = get_y_coordinate(row, variable.to_sym)
-    json[autonomy_hash[:name_1]][:radius] = radius.to_i
-    json[autonomy_hash[:name_1]][:parent_json_url] = nil
-    json[autonomy_hash[:name_1]][:children_json_url] = []
-    fd = File.open("#{dir_path}/#{variable}.json",'w+')
+    autonomy_name = autonomy_hash[:name_1].tr(' ','_')
+    json[autonomy_name] ||= {}
+    json[autonomy_name][:cartodb_id] = autonomy_hash[:cartodb_id]
+    json[autonomy_name][:x_coordinate] = x_coordinate
+    json[autonomy_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym)
+    json[autonomy_name][:radius] = radius.to_i
+    json[autonomy_name][:color] = "#D94B5F"
+    json[autonomy_name][:parent_json_url] = nil
+    json[autonomy_name][:children_json_url] = []
+    fd = File.open("#{dir_path}/autonomies_#{variable}.json",'w+')
     fd.write(json.to_json)
     fd.close
   end
