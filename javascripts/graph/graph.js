@@ -9,15 +9,13 @@
 
     jQuery.easing.def = "easeInOutCubic";
     
-    
-    
     function initializeGraph() {
       $(".innerBubble").live({
         mouseenter: function () {
           $(this).css("backgroundColor","#000000");
         },
         mouseleave: function () {
-          $(this).css("backgroundColor",valuesHash[$(this).parent().attr('id')][3]);
+          $(this).css("backgroundColor",valuesHash[$(this).parent().attr('id')]["color"]);
         }
       });
   
@@ -29,20 +27,21 @@
     function restartGraph() {
       $('div#graph_container').empty();
       valuesHash = {};
-      createBubbles("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
+      // createBubbles("/json/data"+(Math.floor(Math.random()*2)+1)+".json");
+      createBubbles("/json/sample.json");
     }
 
 
     function createBubbles(url){
       $.getJSON(url, function(data) {
-        $.each(data.municipios, function(key, val) {
+        $.each(data, function(key, val) {          
           valuesHash[key] = val;
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
-          $('#'+key).find('.innerBubble').css("backgroundColor",val[3]);
+          $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
         });
       }); 
       setValue(url);
@@ -52,9 +51,10 @@
     function setValue(url){
       //TODO: VER SI PUEDO EVITAR LEER EL JSON (AL MENOS AL PRINCIPIO)
       $.getJSON(url, function(data) {
-        $.each(data.municipios, function(key, v) {
+        // $.each(data.municipios, function(key, v) {
+        $.each(data, function(key, v) {          
           valuesHash[key] = v;
-          updateBubble('#'+key,offsetScreenX+parseInt(v[0]),offsetScreenY+parseInt(v[1]),v[2],v[3]);
+          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
       });
     }
