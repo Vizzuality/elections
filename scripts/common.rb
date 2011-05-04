@@ -51,11 +51,12 @@ def get_provinces
   $cartodb.query("select cartodb_id, id_1, id_2, name_2 from #{PROVINCES_TABLE}")[:rows]
 end
 
-def get_variables
+def get_variables(gadm_level)
   processes = get_processes
-  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables")[:rows]
+  raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
   raw_variables.map do |raw_variable_hash|
     next if VARIABLES.include?(raw_variable_hash[:codigo])
+    next if gadm_level.to_i > raw_variable_hash[:min_gadm].to_i || gadm_level.to_i < raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
     processes.map do |k,v|

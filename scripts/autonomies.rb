@@ -7,7 +7,7 @@ psoe_id, pp_id = get_psoe_pp_id
 processes      = get_processes
 autonomies     = get_autonomies
 provinces      = get_provinces
-variables      = get_variables
+variables      = get_variables(1)
 
 # votes per autonomy
 query = <<-SQL

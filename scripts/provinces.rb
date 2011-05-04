@@ -7,7 +7,7 @@ psoe_id, pp_id = get_psoe_pp_id
 processes      = get_processes
 autonomies     = get_autonomies
 provinces      = get_provinces
-variables      = get_variables
+variables      = get_variables(2)
 
 query = <<-SQL
 select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
