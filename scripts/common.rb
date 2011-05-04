@@ -34,7 +34,11 @@ def get_psoe_pp_id
 end
 
 def get_processes
-  $cartodb.query("select cartodb_id, anyo from #{PROCESOS_NAME}")[:rows]
+  processes = {}
+  $cartodb.query("select cartodb_id, anyo from #{PROCESOS_NAME}")[:rows].each do |h|
+    processes[h[:anyo]] = h[:cartodb_id]
+  end
+  processes
 end
 
 def get_autonomies
@@ -46,5 +50,14 @@ def get_provinces
 end
 
 def get_variables
-  [:age, :pib]
+  processes = get_processes
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables")[:rows]
+  raw_variables.map do |raw_variable_hash|
+    min_year = raw_variable_hash[:min_year].to_i
+    max_year = raw_variable_hash[:max_year].to_i
+    processes.map do |k,v|
+      next if k.to_i < min_year || k.to_i > max_year
+      "#{raw_variable_hash[:codigo]}_#{k}"
+    end
+  end.flatten.compact
 end
