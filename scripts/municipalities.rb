@@ -73,9 +73,10 @@ autonomies.each do |autonomy_hash|
       municipalities = JSON.parse(response.body)["rows"]
       municipalities.each do |municipality|
         query = <<-SQL
-select votantes_totales, censo_total, gadm4_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent 
-from #{MUNICIPALITIES_VOTATIONS}
-where gadm4_cartodb_id = #{municipality['cartodb_id']}
+select votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
+       #{variables.join(',')}
+from #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
+where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{municipality['cartodb_id']} AND vars_socioeco_x_municipio.gadm4_cartodb_id = #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id
 SQL
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
@@ -83,18 +84,14 @@ SQL
         request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query.strip)}&#{oauth_token}")
         response = http.request(request)
         votes_per_municipality = JSON.parse(response.body)["rows"]
-        found = true
-        processes.each do |process_hash|
-          if found == false
-            municipalities_not_found += 1
+        puts votes_per_municipality.inspect
+        variables.each do |variable|
+          proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
+          unless row = votes_per_municipality.select{|h| h["gadm4_cartodb_id"] == municipality['cartodb_id'] && h["proceso_electoral_id"] == proceso_electoral_id }.first
             putc 'x'
             next
           end
-          unless row = votes_per_municipality.select{|h| h["gadm4_cartodb_id"] == municipality['cartodb_id'] && h["proceso_electoral_id"] == process_hash[:cartodb_id] }.first
-            found = false
-            next
-          end
-          dir_path = "#{base_path}/../json/generated_data/#{process_hash[:anyo]}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}/municipalities/#{municipality['name_4']}"
+          dir_path = "#{base_path}/../json/generated_data/#{variable}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}/municipalities/#{municipality['name_4']}"
           FileUtils.mkdir_p(dir_path)
           if row["primer_partido_id"].to_i != psoe_id && row["primer_partido_id"].to_i != pp_id
             x_coordinate = 0
@@ -108,7 +105,7 @@ SQL
             json[municipality["name_4"]] ||= {}
             json[municipality["name_4"]]["cartodb_id"] = municipality["cartodb_id"]
             json[municipality["name_4"]]["x_coordinate"] = x_coordinate
-            json[municipality["name_4"]]["y_coordinate"] = (rand(100.0) * rand(3)) + rand(10.0)
+            json[municipality["name_4"]]["y_coordinate"] = row[variable]
             json[municipality["name_4"]]["radius"] = radius.to_i
             json[municipality["name_4"]]["parent_json_url"] = nil
             fd = File.open("#{dir_path}/#{variable}.json",'w+')
