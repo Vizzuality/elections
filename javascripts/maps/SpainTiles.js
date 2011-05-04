@@ -51,7 +51,18 @@
       "INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id "+
       "WHERE v_get_tile("+coord.x+","+coord.y+","+zoom+") && centre_geom_webmercator AND proceso_electoral_id = '73'";
     } else {
-      query = 'SELECT id_1 as id,center_longitude,center_latitude from gadm1 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
+      //query = 'SELECT id_1 as id,center_longitude,center_latitude from gadm1 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
+      
+      query = "SELECT id_1 AS id, name_1 AS autonomia, censo_total, ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
+      primer_partido_percent, pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name,
+      0 AS otros_partido_percent,center_longitude,center_latitude,vsp.paro_normalizado_1996,vsp.paro_normalizado_1997,vsp.paro_normalizado_1998,vsp.paro_normalizado_1999,
+      vsp.paro_normalizado_2000,vsp.paro_normalizado_2001,vsp.paro_normalizado_2002,vsp.paro_normalizado_2003,vsp.paro_normalizado_2004,vsp.paro_normalizado_2005,vsp.paro_normalizado_2006,
+      vsp.paro_normalizado_2007,vsp.paro_normalizado_2008,vsp.paro_normalizado_2009 FROM gadm1 AS g INNER JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id 
+      INNER JOIN vars_socioeco_x_autonomia AS vsp ON vsp.gadm1_cartodb_id = v.gadm1_cartodb_id 
+      INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id 
+      INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id 
+      INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id 
+      WHERE v_get_tile("+x+","+y+",11) && centre_geom_webmercator AND proceso_electoral_id = '73'";
       
       // query = "SELECT id_2 AS id,name_2 AS municipio,censo_total,((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, "+
       // "primer_partido_percent,pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,0 AS otros_partido_percent, "+
