@@ -73,25 +73,29 @@ autonomies.each do |autonomy_hash|
       municipalities = JSON.parse(response.body)["rows"]
       municipalities.each do |municipality|
         query = <<-SQL
-  select votantes_totales, censo_total, gadm4_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent 
-  from #{MUNICIPALITIES_VOTATIONS}
-  where gadm4_cartodb_id = #{municipality['cartodb_id']}
-  SQL
+select votantes_totales, censo_total, gadm4_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent 
+from #{MUNICIPALITIES_VOTATIONS}
+where gadm4_cartodb_id = #{municipality['cartodb_id']}
+SQL
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query.strip)}&#{oauth_token}")
         response = http.request(request)
         votes_per_municipality = JSON.parse(response.body)["rows"]
+        found = true
         processes.each do |process_hash|
-          dir_path = "#{base_path}/../json/generated_data/#{process_hash[:anyo]}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}/municipalities/#{municipality['name_4']}"
-          FileUtils.mkdir_p(dir_path)
-          unless row = votes_per_municipality.select{|h| h["gadm4_cartodb_id"] == municipality['cartodb_id'] && h["proceso_electoral_id"] == process_hash[:cartodb_id] }.first
+          if found == false
             municipalities_not_found += 1
             putc 'x'
             next
           end
-          putc '.'
+          unless row = votes_per_municipality.select{|h| h["gadm4_cartodb_id"] == municipality['cartodb_id'] && h["proceso_electoral_id"] == process_hash[:cartodb_id] }.first
+            found = false
+            next
+          end
+          dir_path = "#{base_path}/../json/generated_data/#{process_hash[:anyo]}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}/municipalities/#{municipality['name_4']}"
+          FileUtils.mkdir_p(dir_path)
           if row["primer_partido_id"].to_i != psoe_id && row["primer_partido_id"].to_i != pp_id
             x_coordinate = 0
           else
@@ -112,6 +116,7 @@ autonomies.each do |autonomy_hash|
             fd.close        
           end
         end
+        putc '.'
       end
     end
   end
