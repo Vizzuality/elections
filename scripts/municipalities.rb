@@ -72,6 +72,7 @@ autonomies.each do |autonomy_hash|
       response = http.request(request)
       municipalities = JSON.parse(response.body)["rows"]
       municipalities.each do |municipality|
+        found = true
         query = <<-SQL
 select votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
        #{variables.join(',')}
@@ -84,11 +85,12 @@ SQL
         request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query.strip)}&#{oauth_token}")
         response = http.request(request)
         votes_per_municipality = JSON.parse(response.body)["rows"]
-        puts votes_per_municipality.inspect
         variables.each do |variable|
+          next unless found
           proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
           unless row = votes_per_municipality.select{|h| h["gadm4_cartodb_id"] == municipality['cartodb_id'] && h["proceso_electoral_id"] == proceso_electoral_id }.first
-            putc 'x'
+            puts "Not found for gadm4_cartodb_id: #{municipality['cartodb_id']} && proceso_electoral_id = #{proceso_electoral_id}"
+            found = false
             next
           end
           dir_path = "#{base_path}/../json/generated_data/#{variable}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}/municipalities/#{municipality['name_4']}"
@@ -105,7 +107,7 @@ SQL
             json[municipality["name_4"]] ||= {}
             json[municipality["name_4"]]["cartodb_id"] = municipality["cartodb_id"]
             json[municipality["name_4"]]["x_coordinate"] = x_coordinate
-            json[municipality["name_4"]]["y_coordinate"] = row[variable]
+            json[municipality["name_4"]]["y_coordinate"] = row[variable.to_sym]
             json[municipality["name_4"]]["radius"] = radius.to_i
             json[municipality["name_4"]]["parent_json_url"] = nil
             fd = File.open("#{dir_path}/#{variable}.json",'w+')
@@ -113,7 +115,6 @@ SQL
             fd.close        
           end
         end
-        putc '.'
       end
     end
   end
