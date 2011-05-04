@@ -17,6 +17,7 @@ PROVINCES_TABLE       = "gadm2"
 PROVINCES_VOTATIONS   = "votaciones_por_provincia"
 MUNICIPALITIES_TABLE  = "gadm4"
 MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
+VARIABLES = %W{ paro_normalizado edad_media_normalizada }
 #####
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
@@ -54,6 +55,7 @@ def get_variables
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables")[:rows]
   raw_variables.map do |raw_variable_hash|
+    next if VARIABLES.include?(raw_variable_hash[:codigo])
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
     processes.map do |k,v|
@@ -65,6 +67,14 @@ end
 
 def get_y_coordinate(row, variable)
   if variable.to_s =~ /^paro_normalizado/
+    # min: 1.0
+    # max: 9.0
+    if row[variable].to_s == "9999999"
+      return nil
+    else
+      return (row[variable].to_f * 100.0) / 9.0
+    end
+  elsif variable.to_s =~ /^edad_media_normalizada/
     # min: 1.0
     # max: 9.0
     if row[variable].to_s == "9999999"
