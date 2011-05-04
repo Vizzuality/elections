@@ -95,7 +95,7 @@
     	if (info.municipio != undefined) {
         $('div#infowindow h2').text(info.municipio);
         $('div#infowindow p.province').text(info.provincia+', '+info.censo_total+' habitantes');
-        $('div#infowindow div.stats h4').text(parseFloat(info.percen_participacion).toFixed(2)+'% de participación');
+        $('div#infowindow div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
         
         $('div#infowindow div.stats div.partido:eq(0) span').width((info.primer_partido_percent*175)/100);
         $('div#infowindow div.stats div.partido:eq(0) p').text('--- ('+info.primer_partido_percent+'%)');
@@ -110,7 +110,7 @@
         $('div#infowindow div.stats div.partido:eq(3) p').text('--- ('+info.otros_partido_percent+'%)');
         
         //$('div#infowindow div.sparklines').empty();
-        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1');
+        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=5,5,5,5');
     	}
 
     	

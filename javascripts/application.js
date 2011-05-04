@@ -5,6 +5,7 @@
 
 
   jQuery(function($) {
+
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
@@ -31,7 +32,7 @@
     initializeGraph();
     
     
-    //------------------------ - - - -- -   - - - - - - - - - - - --  - - - - -- - - TEST!!!!!!!   HEADER!
+    //------------------------ TEST!!!!!!!   HEADER!
     $("div.year_slider").slider({
       range: "min",
       min: 1987,
@@ -94,5 +95,24 @@
         $('body').unbind('click');
       } 
     });
+    /*---------------END TEST HEADER & START DEEP LINKING----------------------*/
+    var route = window.location.hash.replace('#','').split('_');
+    goToHash(route);
+    
+    /*-------------------------------------*/
   });
+  
+  
+  function goToHash(route) {
+    // Check length of the array
+    // if () {
+    //   
+    // }
+    // Check latlng is in Spain bounds
+
+    // Check zoom
+    
+    //check 1-num 2-num 3-num 4-year 5-string
+    
+  }
   
