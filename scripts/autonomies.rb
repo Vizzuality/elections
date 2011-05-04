@@ -28,6 +28,8 @@ FileUtils.mkdir_p("#{base_path}/../json/generated_data")
 puts
 autonomies.each do |autonomy_hash|
   variables.each do |variable|
+    puts
+    puts "Variable: #{variable}"
     dir_path = "#{base_path}/../json/generated_data/#{variable}/autonomies/#{autonomy_hash[:name_1]}"
     FileUtils.mkdir_p(dir_path)
     json = {}

@@ -25,6 +25,8 @@ puts
 autonomies.each do |autonomy_hash|
   provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
     variables.each do |variable|
+      puts
+      puts "Variable: #{variable}"
       dir_path = "#{base_path}/../json/generated_data/#{variable}/autonomies/#{autonomy_hash[:name_1]}/provinces/#{province[:name_2]}"
       FileUtils.mkdir_p(dir_path)
       json = {}

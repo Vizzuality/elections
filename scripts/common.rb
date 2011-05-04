@@ -55,8 +55,8 @@ def get_variables(gadm_level)
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
   raw_variables.map do |raw_variable_hash|
-    next if VARIABLES.include?(raw_variable_hash[:codigo])
-    next if gadm_level.to_i > raw_variable_hash[:min_gadm].to_i || gadm_level.to_i < raw_variable_hash[:max_gadm].to_i
+    # next if VARIABLES.include?(raw_variable_hash[:codigo])
+    next if gadm_level.to_i < raw_variable_hash[:min_gadm].to_i || gadm_level.to_i > raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
     processes.map do |k,v|
@@ -67,23 +67,29 @@ def get_variables(gadm_level)
 end
 
 def get_y_coordinate(row, variable)
-  if variable.to_s =~ /^paro_normalizado/
-    # min: 1.0
-    # max: 9.0
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      return (row[variable].to_f * 100.0) / 9.0
-    end
-  elsif variable.to_s =~ /^edad_media_normalizada/
-    # min: 1.0
-    # max: 9.0
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      return (row[variable].to_f * 100.0) / 9.0
-    end
+  if row[variable].to_s == "9999999"
+    return nil
   else
-    row[variable]
+    return (row[variable].to_f * 100.0) / 9.0
   end
+  # 
+  # if variable.to_s =~ /^paro_normalizado/
+  #   # min: 1.0
+  #   # max: 9.0
+  #   if row[variable].to_s == "9999999"
+  #     return nil
+  #   else
+  #     return (row[variable].to_f * 100.0) / 9.0
+  #   end
+  # elsif variable.to_s =~ /^edad_media_normalizada/
+  #   # min: 1.0
+  #   # max: 9.0
+  #   if row[variable].to_s == "9999999"
+  #     return nil
+  #   else
+  #     return (row[variable].to_f * 100.0) / 9.0
+  #   end
+  # else
+  #   row[variable]
+  # end
 end
