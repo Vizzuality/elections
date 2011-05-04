@@ -2,7 +2,7 @@
     var geocoder = new google.maps.Geocoder();
 
     // Search map module with dom bind events
-    function initializeSearch() {    
+    function initializeSearch() { 
       $('form.search input.text').focusin(function(){
         var value = $(this).val();
         if (value=="Busca un lugar...") {
@@ -22,6 +22,12 @@
         ev.preventDefault();
         searchLocation($(this).find('input.text').val());
       });
+      
+      $('div.search_error a.close').click(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        $(this).parent().fadeOut();
+      });
     }
     
     
@@ -29,9 +35,10 @@
       location += ', España';
       geocoder.geocode( { 'address': location}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
+          $('div.search_error').fadeOut();
           peninsula.fitBounds(results[0].geometry.bounds);
         } else {
-          alert('TODO - Tooltip city not found');
+          $('div.search_error').fadeIn();
         }
       });
     }
