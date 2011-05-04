@@ -6,6 +6,7 @@ require "cartodb-rb-client"
 require "ruby-debug"
 require "net/https"
 require 'uri'
+require File.dirname(__FILE__) + "/array_ext"
 
 # Tables names
 POLITICAL_PARTIES     = "partidos_politicos"
@@ -66,12 +67,12 @@ def get_y_coordinate(row, variable)
   if variable.to_s =~ /^paro_normalizado/
     # min: 1.0
     # max: 9.0
-    if row[variable.to_sym].to_s == "9999999"
+    if row[variable].to_s == "9999999"
       return nil
     else
-      return (row[variable.to_sym].to_f * 100.0) / 9.0
+      return (row[variable].to_f * 100.0) / 9.0
     end
   else
-    row[variable.to_sym]
+    row[variable]
   end
 end

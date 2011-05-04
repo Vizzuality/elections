@@ -24,38 +24,12 @@ if ARGV[0] =~ /\d+/
   if ARGV[1] =~ /\d+/
     part = ARGV[1].to_i
   else
-    raise "You should indicate which part"
+    raise "You should indicate which part of the array"
   end
 end
 
-class Array
-  def in_groups(number, fill_with = nil)
-    # size / number gives minor group size;
-    # size % number gives how many objects need extra accomodation;
-    # each group hold either division or division + 1 items.
-    division = size / number
-    modulo = size % number
-
-    # create a new array avoiding dup
-    groups = []
-    start = 0
-
-    number.times do |index|
-      length = division + (modulo > 0 && modulo > index ? 1 : 0)
-      padding = fill_with != false &&
-        modulo > 0 && length == division ? 1 : 0
-      groups << slice(start, length).concat([fill_with] * padding)
-      start += length
-    end
-
-    if block_given?
-      groups.each{|g| yield(g) }
-    else
-      groups
-    end
-  end
-end
-
+# n: the number of sub-arrays in which split the array of autonomies
+# part: the part of the file to pick
 if n
   autonomies = autonomies.in_groups(n)[part]
 end
@@ -107,7 +81,7 @@ SQL
             json[municipality["name_4"]] ||= {}
             json[municipality["name_4"]]["cartodb_id"] = municipality["cartodb_id"]
             json[municipality["name_4"]]["x_coordinate"] = x_coordinate
-            json[municipality["name_4"]]["y_coordinate"] = row[variable.to_sym]
+            json[municipality["name_4"]]["y_coordinate"] = get_y_coordinate(row, variable.to_s)
             json[municipality["name_4"]]["radius"] = radius.to_i
             json[municipality["name_4"]]["parent_json_url"] = nil
             fd = File.open("#{dir_path}/#{variable}.json",'w+')
