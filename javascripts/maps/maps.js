@@ -50,11 +50,13 @@
     
     
     //TODO - Review this listeners (old computers dont render ok with this stuff)
-    // google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
-    //   var allowedBounds = this.getBounds();
-    //   google.maps.event.addListener(this,'zoom_changed',function() {checkZoom(); checkCanaryIsland();});
-    //   google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
-    // });
+    google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
+      var allowedBounds = this.getBounds();
+      
+      google.maps.event.addListener(this,'bounds_changed',function(){changeHash();});
+      //google.maps.event.addListener(this,'zoom_changed',function() {checkZoom(); checkCanaryIsland();});
+      //google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
+    });
     // google.maps.event.addListenerOnce(canary_island, 'tilesloaded', function() { 
     //   var canaryBounds = this.getBounds();
     //   google.maps.event.addListener(this,'center_changed',function() { checkBounds(canaryBounds,this); });
@@ -192,4 +194,9 @@
 
       map.setCenter(new google.maps.LatLng(Y,X));
     }
+  }
+  
+  
+  function changeHash() {
+    
   }
