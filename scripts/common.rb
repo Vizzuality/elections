@@ -28,6 +28,9 @@ VARIABLES = %W{ paro_normalizado }
 # Provinces:
 #  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
 #    example: json/generated_data/provinces/Andalucia_paro_1999.json
+# Municipalities:
+#  - json/generated_data/municipalities/<province_name>_<var_name>.json
+#    example: json/generated_data/provinces/Sevilla_paro_1999.json
 ### 
 
 
