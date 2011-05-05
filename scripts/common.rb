@@ -20,6 +20,16 @@ MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
 VARIABLES = %W{ paro_normalizado }
 #####
 
+# Paths
+# =====
+# Autonomies:
+#  - json/generated_data/autonomies_<var_name>.json
+# Provinces:
+#  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
+#    example: json/generated_data/provinces/Andalucia_paro_1999.json
+### 
+
+
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new  
 
@@ -114,9 +124,18 @@ def get_radius(row)
   return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
 end
 
-def autonomies_path(variable)
-  variable = if variable =~ /^paro_normalizado_(\d+)$/
+def variable_name(variable)
+  if variable.to_s =~ /^paro_normalizado_(\d+)$/
     "paro_#{$1}"
+  else
+    variable.to_s
   end
-  "../json/generated_data/autonomies_#{variable}.json"
+end
+
+def autonomies_path(variable)
+  "../json/generated_data/autonomies_#{variable_name(variable)}.json"
+end
+
+def provinces_path(autonomy_name, variable)
+  "../json/generated_data/provinces/#{autonomy_name}_#{variable_name(variable)}.json"
 end
