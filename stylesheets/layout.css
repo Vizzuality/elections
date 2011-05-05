@@ -35,6 +35,8 @@ div#header div.right div.selects div.select {position:relative; float:right;}
 div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('/images/select_left.png') no-repeat 0 0;}
 div#header div.right div.selects div.select.selected div.outer_select {background-position:0 -97px;}
 div#header div.right div.selects div.select div.outer_select img {position:absolute; left:20px; top:18px; z-index:10;}
+div#header div.right div.selects div.select div.outer_select.chat img {left:23px;}
+div#header div.right div.selects div.select div.outer_select.money img {left:23px;}
 div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:auto; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
 div#header div.right div.selects div.select.selected div.outer_select span.inner_select {background-position:right -97px;}
 div#header div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
@@ -115,7 +117,7 @@ div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }  
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
-  
+
 /*MENU MAP/GRAPH*/
 div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%; 
   font-size:0; display:block; line-height:0;}
@@ -159,6 +161,20 @@ div#infowindow div.top div.stats div.iu p {color:#009933;}
 div#infowindow div.top div.stats div.otros div.bar {background-position:0 bottom;}
 div#infowindow div.top div.stats div.otros div.bar span {background-position:right bottom;}
 div#infowindow div.top div.stats div.otros p {color:#999999;}
+/*par1*/
+div#infowindow div.top div.stats div.par1 div.bar {background-position:0 -36px;}
+div#infowindow div.top div.stats div.par1 div.bar span {background-position:right -36px;}
+div#infowindow div.top div.stats div.par1 p {color:#990033;}
+/*par2*/
+div#infowindow div.top div.stats div.par2 div.bar {background-position:0 -24px;}
+div#infowindow div.top div.stats div.par2 div.bar span {background-position:right -24px;}
+div#infowindow div.top div.stats div.par2 p {color:orange;}
+/*par3*/
+div#infowindow div.top div.stats div.par3 div.bar {background-position:0 -30px;}
+div#infowindow div.top div.stats div.par3 div.bar span {background-position:right -30px}
+div#infowindow div.top div.stats div.par3 p {color:blue;}
+
+
 div#infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
 div#infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div#infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}

@@ -43,7 +43,7 @@
       //query = 'SELECT id_2 as id,center_longitude,center_latitude from gadm2 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
       
       query = "SELECT id_2 AS id,name_2 AS municipio,censo_total,((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, "+
-      "primer_partido_percent,pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,0 AS otros_partido_percent, "+
+      "primer_partido_percent,pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,pp3.name AS tercer_partido_name,tercer_partido_percent,0 AS otros_partido_percent, "+
       "center_longitude,center_latitude,vsp.paro_normalizado_1996,vsp.paro_normalizado_1997,vsp.paro_normalizado_1998,vsp.paro_normalizado_1999, "+
       "vsp.paro_normalizado_2000,vsp.paro_normalizado_2001,vsp.paro_normalizado_2002,vsp.paro_normalizado_2003,vsp.paro_normalizado_2004,vsp.paro_normalizado_2005, "+
       "vsp.paro_normalizado_2006,vsp.paro_normalizado_2007,vsp.paro_normalizado_2008,vsp.paro_normalizado_2009 FROM gadm2 AS g INNER JOIN votaciones_por_provincia AS v ON g.cartodb_id = v.gadm2_cartodb_id "+

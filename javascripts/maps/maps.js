@@ -52,6 +52,7 @@
     
     //TODO - Review this listeners (old computers dont render ok with this stuff)
     google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
+      changeHash();
       var allowedBounds = this.getBounds();
       
       google.maps.event.addListener(this,'dragend',function(){changeHash();});
