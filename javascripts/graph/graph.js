@@ -5,7 +5,6 @@
 
     var valuesHash = {};
     var nBubbles = 0;
-    var deeperURL = "";
 
     jQuery.easing.def = "easeInOutCubic";
     
@@ -85,14 +84,14 @@
     }
 
     function goDeeper(url){
-      deeperURL = url;
+      console.log("Going deep to " + url);
       for (key in valuesHash){
         //Destroy Bubbles
-        destroyBubble(key);
+        destroyBubble(key, url);
       }
     }
 
-    function destroyBubble(b){
+    function destroyBubble(b, url){
       (parseInt($("#"+b).css("left")) < offsetScreenX) ? displacementX = "-=30px" : displacementX = "+=30px";
       (parseInt($("#"+b).css("top")) < offsetScreenY) ? displacementY = "-=30px" : displacementY = "+=30px";
       $("#"+key).animate({
@@ -100,11 +99,11 @@
         top: displacementY,
         opacity: "0"
       }, 500, function(){
-          console.log("remove "+b);
+          console.log("Removing "+b);
           $("#"+b).remove();
           nBubbles=nBubbles-1;
           if(nBubbles==0){
-            createBubbles(deeperURL);
+            createBubbles(url);
           }
         }
       );
