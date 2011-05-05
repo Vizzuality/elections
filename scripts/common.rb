@@ -115,6 +115,8 @@ def get_radius(row)
 end
 
 def autonomies_path(variable)
-  base_path = FileUtils.pwd
+  variable = if variable =~ /^paro_normalizado_(\d+)$/
+    "paro_#{$1}"
+  end
   "../json/generated_data/autonomies_#{variable}.json"
 end
