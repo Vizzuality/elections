@@ -45,6 +45,7 @@
       change: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
         year = ui.value;
+        setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
       },
       stop: function( event, ui ) {
         changeHash();
