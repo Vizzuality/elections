@@ -154,7 +154,7 @@
         //change data of the ball
         var data,className;
         if (ele[normalization[compare]+'_'+year]==null) {
-          data = 'NF';
+          data = '-';
           className = "red";
         } else {
           data = ((ele[normalization[compare]+'_'+year]>0)?('+'+Math.ceil(ele[normalization[compare]+'_'+year])):(Math.floor(ele[normalization[compare]+'_'+year])));
@@ -167,14 +167,33 @@
         $('div#'+ele.id+' img').attr('src','/images/'+className+'_marker.png');
         
         //change heigth-width of the ball
+        var less = Math.floor(ele[normalization[compare]+'_'+year+'_min']);
+        var desv = Math.max(Math.ceil(Math.abs(ele[normalization[compare]+'_'+year+'_max'])),Math.ceil(Math.abs(ele[normalization[compare]+'_'+year+'_min'])))/5;
+        var value = Math.abs(ele[normalization[compare]+'_'+year]);
+
+        var radius;
+        if ((desv*0)>=value && value<(desv*1)) {
+          radius=7;
+        } else if ((desv*1)>=value && value<(desv*2)) {
+          radius=10;
+        } else if ((desv*2)>=value && value<(desv*3)) {
+          radius=13;
+        } else if ((desv*3)>=value && value<(desv*4)) {
+          radius=16;
+        } else {
+          radius=19;
+        }
         
+        var old_radius = ($('div#'+ele.id).width()/2);
+        var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
+        $('div#'+ele.id).css('top',top-radius+'px');
+        var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
+        $('div#'+ele.id).css('left',left-radius+'px');
+        
+        $('div#'+ele.id).width(radius*2);
+        $('div#'+ele.id).height(radius*2);
+
       });
-      
-      // if (random) {
-      //   $('div#'+occ.id).animate({height:"+=10",width:'+=10',top: '-=5px',left:'-=5px'},600);
-      // } else {
-      //   $('div#'+occ.id).animate({height: "-=10",width:'-=10',top: '+=5px',left:'+=5px'},600);
-      // }
     });
   }
   
