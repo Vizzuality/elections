@@ -17,8 +17,18 @@ PROVINCES_TABLE       = "gadm2"
 PROVINCES_VOTATIONS   = "votaciones_por_provincia"
 MUNICIPALITIES_TABLE  = "gadm4"
 MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
-VARIABLES = %W{ paro_normalizado edad_media_normalizada }
+VARIABLES = %W{ paro_normalizado }
 #####
+
+# Paths
+# =====
+# Autonomies:
+#  - json/generated_data/autonomies_<var_name>.json
+# Provinces:
+#  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
+#    example: json/generated_data/provinces/Andalucia_paro_1999.json
+### 
+
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new  
@@ -55,7 +65,7 @@ def get_variables(gadm_level)
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
   raw_variables.map do |raw_variable_hash|
-    # next if VARIABLES.include?(raw_variable_hash[:codigo])
+    next if !VARIABLES.include?(raw_variable_hash[:codigo])
     next if gadm_level.to_i < raw_variable_hash[:min_gadm].to_i || gadm_level.to_i > raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
@@ -66,30 +76,66 @@ def get_variables(gadm_level)
   end.flatten.compact
 end
 
-def get_y_coordinate(row, variable)
-  if row[variable].to_s == "9999999"
-    return nil
+def get_y_coordinate(row, variable, max)
+  if variable.to_s =~ /^paro_normalizado/
+    if row[variable].to_s == "9999999"
+      return nil
+    else
+      val = (row[variable].to_f * 150.0) / max.to_f
+      if val > 0
+        return val + 100
+      elsif val < 0
+        return -100 - val
+      end
+    end
+  elsif variable.to_s =~ /^edad_media_normalizada/
+    if row[variable].to_s == "9999999"
+      return nil
+    else
+      return (row[variable].to_f * 100.0) / 9.0
+    end
   else
-    return (row[variable].to_f * 100.0) / 9.0
+    row[variable]
   end
-  # 
-  # if variable.to_s =~ /^paro_normalizado/
-  #   # min: 1.0
-  #   # max: 9.0
-  #   if row[variable].to_s == "9999999"
-  #     return nil
-  #   else
-  #     return (row[variable].to_f * 100.0) / 9.0
-  #   end
-  # elsif variable.to_s =~ /^edad_media_normalizada/
-  #   # min: 1.0
-  #   # max: 9.0
-  #   if row[variable].to_s == "9999999"
-  #     return nil
-  #   else
-  #     return (row[variable].to_f * 100.0) / 9.0
-  #   end
-  # else
-  #   row[variable]
-  # end
+end
+
+def get_x_coordinate(row, max, psoe_id, pp_id)
+  if row[:primer_partido_id].to_i != psoe_id && row[:primer_partido_id].to_i != pp_id
+    return 0
+  else
+    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
+    x_coordinate += 100.0
+    x_coordinate = x_coordinate*-1 if row[:primer_partido_id] == psoe_id
+    return x_coordinate
+  end
+end
+
+def get_color(x)
+  if x > 0
+    "#E88394"
+  elsif x < 0
+    "#D94B5F"
+  else
+    "#000000"
+  end
+end
+
+def get_radius(row)
+  return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
+end
+
+def variable_name(variable)
+  if variable.to_s =~ /^paro_normalizado_(\d+)$/
+    "paro_#{$1}"
+  else
+    variable.to_s
+  end
+end
+
+def autonomies_path(variable)
+  "../json/generated_data/autonomies_#{variable_name(variable)}.json"
+end
+
+def provinces_path(autonomy_name, variable)
+  "../json/generated_data/provinces/#{autonomy_name}_#{variable_name(variable)}.json"
 end
