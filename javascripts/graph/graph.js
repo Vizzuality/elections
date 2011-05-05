@@ -23,6 +23,9 @@
           } else {
             goDeeper(url);
           }
+        },
+        hover: function() {
+          console.log($(this).parent().attr('id') + ': ' + valuesHash[$(this).parent().attr('id')]["x_coordinate"] + ', ' + valuesHash[$(this).parent().attr('id')]["y_coordinate"]);
         }
       });
     }
