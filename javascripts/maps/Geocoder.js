@@ -42,3 +42,17 @@
         }
       });
     }
+    
+    
+    function searchCompareLocation(location) {
+      location += ', España';
+      geocoder.geocode( { 'address': location}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          alert('ehheheheheheh!');
+          //$('div.search_error').fadeOut();
+          //peninsula.fitBounds(results[0].geometry.bounds);
+        } else {
+          //$('div.search_error').fadeIn();
+        }
+      });
+    }

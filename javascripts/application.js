@@ -127,6 +127,7 @@
     }
     //Check variable of compare
     if (!$('div.option_list ul li a.'+route[4]).length) {
+      $('div.option_list ul li a.paro').closest('div.select').find('span.inner_select a').text('Tasa de paro');
       $('div.option_list ul li a.paro').closest('li').addClass('selected');
       $('div.option_list ul li a.paro').closest('div.select').addClass('selected');
       return false;
@@ -144,8 +145,10 @@
     year = parseInt(route[3]);
     $("div.year_slider").slider("value",[year]);
     compare = route[4];
+    var value = $('div.option_list ul li a.'+route[4]).text();
     $('div.option_list ul li a.'+route[4]).closest('li').addClass('selected');
     $('div.option_list ul li a.'+route[4]).closest('div.select').addClass('selected');
+    $('div.option_list ul li a.'+route[4]).closest('div.select').find('span.inner_select a').text(value);
   }
   
   
