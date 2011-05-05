@@ -44,6 +44,7 @@
       },
       slide: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
+        year = ui.value;
       },
       stop: function( event, ui ) {
         //Change bubbles!!
