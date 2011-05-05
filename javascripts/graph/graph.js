@@ -43,9 +43,20 @@
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
         });
       }); 
+      setValue(url);
+    }
+
+    //changes the values on the graph
+    function setValue(url){
+      //TODO: VER SI PUEDO EVITAR LEER EL JSON (AL MENOS AL PRINCIPIO)
+      $.getJSON(url, function(data) {
+        $.each(data, function(key, v) {          
+          valuesHash[key] = v;
+          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
+        });
+      });
     }
 
     //Function for update the values of the bubbles that are being visualized
