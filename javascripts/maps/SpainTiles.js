@@ -31,17 +31,34 @@
         x = coord.x;
         y = coord.y;
       }
+      
+      
+      // query = "SELECT id_4 AS id,name_4 AS municipio,name_2 AS provincia,censo_total,((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,primer_partido_percent,"+
+      // "pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name,0 AS otros_partido_percent,center_longitude,"+
+      // "center_latitude,vsm.paro_normalizado_1996,vsm.paro_normalizado_1997,vsm.paro_normalizado_1998,vsm.paro_normalizado_1999,vsm.paro_normalizado_2000,vsm.paro_normalizado_2001,"+
+      // "vsm.paro_normalizado_2002,vsm.paro_normalizado_2003,vsm.paro_normalizado_2004,vsm.paro_normalizado_2005,vsm.paro_normalizado_2006,vsm.paro_normalizado_2007,vsm.paro_normalizado_2008,"+
+      // "vsm.paro_normalizado_2009,p_n_min_max.* FROM (SELECT max(paro_normalizado_1996) as paro_normalizado_1996_max,min(paro_normalizado_1996) as paro_normalizado_1996_min, max(paro_normalizado_1997) as paro_normalizado_1997_max,"+
+      // "min(paro_normalizado_1997) as paro_normalizado_1997_min,max(paro_normalizado_1998) as paro_normalizado_1998_max,min(paro_normalizado_1998) as paro_normalizado_1998_min,max(paro_normalizado_1999) as paro_normalizado_1999_max,"+
+      // "min(paro_normalizado_1999) as paro_normalizado_1999_min,max(paro_normalizado_2000) as paro_normalizado_2000_max,min(paro_normalizado_2000) as paro_normalizado_2000_min,max(paro_normalizado_2001) as paro_normalizado_2001_max,"+
+      // "min(paro_normalizado_2001) as paro_normalizado_2001_min,max(paro_normalizado_2002) as paro_normalizado_2002_max,min(paro_normalizado_2002) as paro_normalizado_2002_min,max(paro_normalizado_2003) as paro_normalizado_2003_max,"+
+      // "min(paro_normalizado_2003) as paro_normalizado_2003_min,max(paro_normalizado_2004) as paro_normalizado_2004_max,min(paro_normalizado_2004) as paro_normalizado_2004_min,max(paro_normalizado_2005) as paro_normalizado_2005_max,"+
+      // "min(paro_normalizado_2005) as paro_normalizado_2005_min,max(paro_normalizado_2006) as paro_normalizado_2006_max,min(paro_normalizado_2006) as paro_normalizado_2006_min,max(paro_normalizado_2007) as paro_normalizado_2007_max,"+
+      // "min(paro_normalizado_2007) as paro_normalizado_2007_min,max(paro_normalizado_2008) as paro_normalizado_2008_max,min(paro_normalizado_2008) as paro_normalizado_2008_min,max(paro_normalizado_2009) as paro_normalizado_2009_max,"+
+      // "min(paro_normalizado_2009) as paro_normalizado_2009_min FROM vars_socioeco_x_municipio) AS p_n_min_max,gadm4 AS g INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id = v.gadm4_cartodb_id "+
+      // "INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = v.gadm4_cartodb_id INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id "+
+      // "INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id "+ 
+      // "WHERE v_get_tile("+Math.floor(x)+","+Math.floor(y)+",11) && centre_geom_webmercator and proceso_electoral_id=73";
+      
+      
     
       query = "SELECT id_4 AS id,name_4 AS municipio,name_2 AS provincia,censo_total,((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,primer_partido_percent,"+
-           "pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name,"+
-           "0 AS otros_partido_percent,center_longitude,center_latitude,vsm.paro_normalizado_1996, vsm.paro_normalizado_1997, vsm.paro_normalizado_1998, vsm.paro_normalizado_1999, vsm.paro_normalizado_2000, vsm.paro_normalizado_2001,"+
-           "vsm.paro_normalizado_2002, vsm.paro_normalizado_2003, vsm.paro_normalizado_2004, vsm.paro_normalizado_2005, vsm.paro_normalizado_2006, vsm.paro_normalizado_2007, vsm.paro_normalizado_2008, vsm.paro_normalizado_2009 "+
-           "FROM gadm4 AS g INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id = v.gadm4_cartodb_id INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = v.gadm4_cartodb_id "+
-           "INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS "+
-           "pp3 ON pp3.cartodb_id = v.tercer_partido_id where v_get_tile("+x+","+y+",11) && centre_geom_webmercator and proceso_electoral_id = '73'";
+      "pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name,"+
+      "0 AS otros_partido_percent,center_longitude,center_latitude,vsm.paro_normalizado_1996, vsm.paro_normalizado_1997, vsm.paro_normalizado_1998, vsm.paro_normalizado_1999, vsm.paro_normalizado_2000, vsm.paro_normalizado_2001,"+
+      "vsm.paro_normalizado_2002, vsm.paro_normalizado_2003, vsm.paro_normalizado_2004, vsm.paro_normalizado_2005, vsm.paro_normalizado_2006, vsm.paro_normalizado_2007, vsm.paro_normalizado_2008, vsm.paro_normalizado_2009 "+
+      "FROM gadm4 AS g INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id = v.gadm4_cartodb_id INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = v.gadm4_cartodb_id "+
+      "INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS "+
+      "pp3 ON pp3.cartodb_id = v.tercer_partido_id where v_get_tile("+x+","+y+",11) && centre_geom_webmercator and proceso_electoral_id = '73'";
     } else if (zoom>6 && zoom<=9) {
-      //query = 'SELECT id_2 as id,center_longitude,center_latitude from gadm2 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
-      
       query = "SELECT id_2 AS id,name_2 AS municipio,censo_total,((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, "+
       "primer_partido_percent,pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,pp3.name AS tercer_partido_name,tercer_partido_percent,0 AS otros_partido_percent, "+
       "center_longitude,center_latitude,vsp.paro_normalizado_1996,vsp.paro_normalizado_1997,vsp.paro_normalizado_1998,vsp.paro_normalizado_1999, "+
@@ -51,8 +68,6 @@
       "INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id "+
       "WHERE v_get_tile("+coord.x+","+coord.y+","+zoom+") && centre_geom_webmercator AND proceso_electoral_id = '73'";
     } else {
-      //query = 'SELECT id_1 as id,center_longitude,center_latitude from gadm1 where v_get_tile('+coord.x+','+coord.y+','+zoom+') && centre_geom_webmercator';
-      
       query = "SELECT id_1 AS id, name_1 AS municipio, censo_total, ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, "+
       "primer_partido_percent, pp1.name AS primer_partido_name,segundo_partido_percent,pp2.name AS segundo_partido_name,tercer_partido_percent,pp3.name AS tercer_partido_name, "+
       "0 AS otros_partido_percent,center_longitude,center_latitude,vsp.paro_normalizado_1996,vsp.paro_normalizado_1997,vsp.paro_normalizado_1998,vsp.paro_normalizado_1999, "+
@@ -136,10 +151,18 @@
       radius=19;
     }
 
+    var data,className;
+    if (point[normalization[compare]+'_'+year]==null) {
+      data = 'NF';
+      className = "red";
+    } else {
+      data = ((point[normalization[compare]+'_'+year]>0)?('+'+Math.ceil(point[normalization[compare]+'_'+year])):(Math.floor(point[normalization[compare]+'_'+year])));
+      className = (point[normalization[compare]+'_'+year]>0)?'yellow':'grey';
+    }
 
     var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
-                    '<img src="/images/grey_marker.png"/>'+
-                    '<p>+2</p>'+
+                    '<img src="/images/'+className+'_marker.png"/>'+
+                    '<p class="'+className+'">'+data+'</p>'+
                   '</div>';
     $(div).append(bubble);
     
@@ -147,24 +170,48 @@
       $(bubble).find('p').css('display',"none");
     }
     
-    
     return div;
   };
   
   
   
   
-  // function getActiveTiles() {
-  //   var flat = _.reduceRight(hash,function(a,b){ return a.concat(b) },[]);
-  //   flat = _.select(flat, function(ele){ return ele!=undefined; });
-  //   
-  //   _.each(flat,function(occ,key){
-  //     var random = (Math.random()>0.5)?true:false;
-  //     if (random) {
-  //       $('div#'+occ.id).animate({height:"+=10",width:'+=10',top: '-=5px',left:'-=5px'},600);
-  //     } else {
-  //       $('div#'+occ.id).animate({height: "-=10",width:'-=10',top: '+=5px',left:'+=5px'},600);
-  //     }
-  //   });
-  // }
+  function refreshTiles() {
+    var flat = _.reduceRight(hash,function(a,b){ return a.concat(b); },[]);
+    flat = _.select(flat, function(ele){ return ele!=undefined;});
+    
+    _.each(flat,function(occ,key){
+      _.each(occ,function(ele,i){
+        //console.log(ele);
+        
+        //close infowindow - comparewindow
+        infowindow.hide();
+        comparewindow.hide();
+        
+        //change data of the ball
+        var data,className;
+        if (ele[normalization[compare]+'_'+year]==null) {
+          data = 'NF';
+          className = "red";
+        } else {
+          data = ((ele[normalization[compare]+'_'+year]>0)?('+'+Math.ceil(ele[normalization[compare]+'_'+year])):(Math.floor(ele[normalization[compare]+'_'+year])));
+          className = (ele[normalization[compare]+'_'+year]>0)?'yellow':'grey';
+        }
+        $('div#'+ele.id+' p').text(data);
+        $('div#'+ele.id+' p').removeClass().addClass(className);
+        
+        //change color of the ball
+        $('div#'+ele.id+' img').attr('src','/images/'+className+'_marker.png');
+        
+        //change heigth-width of the ball
+        
+      });
+      
+      // if (random) {
+      //   $('div#'+occ.id).animate({height:"+=10",width:'+=10',top: '-=5px',left:'-=5px'},600);
+      // } else {
+      //   $('div#'+occ.id).animate({height: "-=10",width:'-=10',top: '+=5px',left:'+=5px'},600);
+      // }
+    });
+  }
   
