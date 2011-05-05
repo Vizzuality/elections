@@ -15,11 +15,15 @@
         },
         mouseleave: function () {
           $(this).css("backgroundColor",valuesHash[$(this).parent().attr('id')]["color"]);
+        },
+        click: function() {
+          var url = valuesHash[$(this).parent().attr('id')]["children_json_url"];
+          if (url == null) {
+            return false;
+          } else {
+            goDeeper(url);
+          }
         }
-      });
-  
-      $(".innerBubble").live('click', function() {
-        goDeeper(valuesHash[$(this).parent().attr('id')]["children_json_url"]);
       });
     }
     
