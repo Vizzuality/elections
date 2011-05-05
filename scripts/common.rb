@@ -127,7 +127,12 @@ end
 
 def get_radius(row)
   return 0 if row[:censo_total].to_f == 0
-  return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
+  if row[:votantes_totales] > row[:censo_total]
+    # puts "#{row[:ine_province_id]},#{row[:ine_municipality_id]}"
+    return 80
+  else
+    return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
+  end
 end
 
 def autonomies_path(variable)
