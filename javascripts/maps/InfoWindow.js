@@ -144,19 +144,28 @@
         $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width==0)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
         
-        var max = 0; var count = 0;
+        var max = 0; var count = 0; var find = false;
         var paro = "";
         for (var i=1996; i<2010; i++) {
           if (info[normalization[compare]+'_'+i]!=undefined) {
-            count++;
+            if (!find) {
+              if (year==i) {
+                find = true;
+              }
+              count++;
+            }
             if (Math.abs(parseFloat(info[normalization[compare]+'_'+i]))>max) max = Math.ceil(Math.abs(parseFloat(info[normalization[compare]+'_'+i])));
 
             paro += info[normalization[compare]+'_'+i] + ',';
           }
         }
         paro = paro.substring(0, paro.length-1);
-         
-        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds='+max+',-'+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=5,5,5,5');
+        
+        if (info.municipio == "Castellón") {
+          console.log(max);
+        }
+        
+        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=0,3,0,3');
     	}
 
     	
