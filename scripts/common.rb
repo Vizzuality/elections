@@ -7,6 +7,7 @@ require "ruby-debug"
 require "net/https"
 require 'uri'
 require File.dirname(__FILE__) + "/array_ext"
+require File.dirname(__FILE__) + "/hash_ext"
 
 # Tables names
 POLITICAL_PARTIES     = "partidos_politicos"
@@ -54,11 +55,11 @@ def get_processes
 end
 
 def get_autonomies
-  $cartodb.query("select cartodb_id, id_1, name_1 from #{AUTONOMIAS_TABLE}")[:rows]
+  $cartodb.query("select cartodb_id, id_1, name_1 from #{AUTONOMIAS_TABLE}")[:rows].compact
 end
 
 def get_provinces
-  $cartodb.query("select cartodb_id, id_1, id_2, name_2 from #{PROVINCES_TABLE}")[:rows]
+  $cartodb.query("select cartodb_id, id_1, id_2, name_2 from #{PROVINCES_TABLE}")[:rows].compact
 end
 
 def get_variables(gadm_level)
@@ -77,6 +78,7 @@ def get_variables(gadm_level)
 end
 
 def get_y_coordinate(row, variable, max)
+  return nil if max.to_f == 0
   if variable.to_s =~ /^paro_normalizado/
     if row[variable].to_s == "9999999"
       return nil
@@ -100,6 +102,9 @@ def get_y_coordinate(row, variable, max)
 end
 
 def get_x_coordinate(row, max, psoe_id, pp_id)
+  if max == 0
+    return 0
+  end
   if row[:primer_partido_id].to_i != psoe_id && row[:primer_partido_id].to_i != pp_id
     return 0
   else
@@ -121,6 +126,7 @@ def get_color(x)
 end
 
 def get_radius(row)
+  return 0 if row[:censo_total].to_f == 0
   return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
 end
 
@@ -138,4 +144,8 @@ end
 
 def provinces_path(autonomy_name, variable)
   "../json/generated_data/provinces/#{autonomy_name}_#{variable_name(variable)}.json"
+end
+
+def municipalities_path(province_name, variable)
+  "../json/generated_data/municipalities/#{province_name}_#{variable_name(variable)}.json"  
 end
