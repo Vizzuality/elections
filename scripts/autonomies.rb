@@ -53,10 +53,11 @@ variables.each do |variable|
     json[autonomy_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym)
     json[autonomy_name][:radius] = radius.to_i
     json[autonomy_name][:color] = "#D94B5F"
-    json[autonomy_name][:parent_json_url] = nil
     json[autonomy_name][:children_json_url] = []
     fd = File.open("#{dir_path}/autonomies_#{variable}.json",'w+')
     fd.write(json.to_json)
     fd.close
   end
 end
+
+puts 
