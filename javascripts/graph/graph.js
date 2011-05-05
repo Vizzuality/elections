@@ -30,7 +30,6 @@
       createBubbles("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
     }
 
-
     function createBubbles(url){
       $.getJSON(url, function(data) {
         $.each(data, function(key, val) {          
