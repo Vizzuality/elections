@@ -53,11 +53,12 @@
     //TODO - Review this listeners (old computers dont render ok with this stuff)
     google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
       changeHash();
+      checkZoom();
       var allowedBounds = this.getBounds();
       
       google.maps.event.addListener(this,'dragend',function(){changeHash();});
-      google.maps.event.addListener(this,'zoom_changed',function(){changeHash();});
-      //google.maps.event.addListener(this,'zoom_changed',function() {checkZoom(); checkCanaryIsland();});
+      google.maps.event.addListener(this,'zoom_changed',function(){changeHash(); checkZoom();});
+      //google.maps.event.addListener(this,'zoom_changed',function() {checkCanaryIsland();});
       //google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
     });
     // google.maps.event.addListenerOnce(canary_island, 'tilesloaded', function() { 
@@ -200,8 +201,3 @@
   }
   
   
-  function changeHash() {
-    var latlng = peninsula.getCenter();
-    var zoom = peninsula.getZoom();
-    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare;
-  }

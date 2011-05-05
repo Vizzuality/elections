@@ -1,6 +1,6 @@
 
   /*Application global vars*/
-  var year = 2007;
+  var year = 2009;
   var compare = 'paro';
 
 
@@ -27,27 +27,28 @@
     
 
     
-    //------------------------ TEST!!!!!!!   HEADER!
-    
-    var route = window.location.hash.replace('#','').split('_');
-    goToHash(route);
-    
+
     /*-------------------------------------*/
     $("div.year_slider").slider({
       range: "min",
       min: 1987,
       max: 2011,
-      value: 2011,
+      value: 2009,
       step: 1,
       create: function(event,ui) {
-        $(this).find('a.ui-slider-handle').text('2011');
+        $(this).find('a.ui-slider-handle').text('2009');
       },
       slide: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
         year = ui.value;
       },
+      change: function( event, ui ) {
+        $(this).find('a.ui-slider-handle').text(ui.value);
+        year = ui.value;
+      },
       stop: function( event, ui ) {
-        //Change bubbles!!
+        changeHash();
+        refreshTiles();
       }
     });
     
@@ -96,9 +97,11 @@
         $('body').unbind('click');
       } 
     });
-    /*---------------END TEST HEADER & START DEEP LINKING----------------------*/
     
+    var route = window.location.hash.replace('#','').split('_');
+    goToHash(route);
     
+    /*---------------END TEST----------------------*/
     
     //initialize map and map modules
     initializeMaps();
@@ -109,20 +112,22 @@
   });
   
   
+  
+  
+  
   function goToHash(route) {
     // Check length of the array
     if (route.length!=5) {
       return false;
     }
-    
     //check 1-num 2-num 3-num 4-year 5-string
     if (isNaN(route[0]) || isNaN(route[1]) || isNaN(route[2]) || isNaN(route[3]) || route[3].length!=4 || !isNaN(route[4])) {
       return false;
     }
-    
     //Check variable of compare
-    
-    
+    if (!$('div.option_list ul li a.'+route[4]).length) {
+      return false;
+    }
     // Check latlng is in Spain bounds
     
 
@@ -130,11 +135,21 @@
     if (route[2]>12 || route[2]<6) {
       return false;
     }
-    
     //All ok - change variables!
     start_center = new google.maps.LatLng(parseFloat(route[0]),parseFloat(route[1]));
     start_zoom = parseInt(route[2]);
     year = parseInt(route[3]);
+    $("div.year_slider").slider("value",[year]);
     compare = route[4];
+    $('div.option_list ul li a.'+route[4]).closest('li').addClass('selected');
+    $('div.option_list ul li a.'+route[4]).closest('div.select').addClass('selected');
+  }
+  
+  
+  
+  function changeHash() {
+    var latlng = peninsula.getCenter();
+    var zoom = peninsula.getZoom();
+    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare;
   }
   
