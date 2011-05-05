@@ -101,8 +101,6 @@
     var desv = Math.max(Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_max'])),Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_min'])))/5;
     var value = Math.abs(point[normalization[compare]+'_'+year]);
     
-    console.log(less,desv,value);
-    
     var radius;
     if ((desv*0)>=value && value<(desv*1)) {
       radius=7;
