@@ -138,7 +138,21 @@
         $('div#infowindow div.stats div.partido:eq(3) span').width((info.otros_partido_percent*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
         
-        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=5,5,5,5');
+        var max,min,count = 0;
+        var paro = "";
+        
+        for (var i=1996; i<2010; i++) {
+          if (info['paro_normalizado_'+i]!=undefined) {
+            count++;
+            if (info['paro_normalizado_'+i]>max) max = info['paro_normalizado_'+i];
+            if (info['paro_normalizado_'+i]<min) min = info['paro_normalizado_'+i]; 
+            paro += info['paro_normalizado_'+i] + ',';
+          }
+        }
+        paro = paro.substring(0, paro.length-1);
+         
+         console.log(paro);
+        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds='+min+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=5,5,5,5');
     	}
 
     	
