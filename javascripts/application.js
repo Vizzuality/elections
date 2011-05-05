@@ -45,6 +45,7 @@
       change: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
         year = ui.value;
+        restartGraph();
       },
       stop: function( event, ui ) {
         changeHash();
