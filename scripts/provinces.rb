@@ -48,7 +48,7 @@ variables.each do |variable|
       json[province_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y)
       json[province_name][:radius]       = get_radius(row)
       json[province_name][:color]        = get_color(x_coordinate)
-      json[province_name][:children_json_url] = nil
+      json[province_name][:children_json_url] = municipalities_path(province_name,variable)[3..-1] # hack to remove ../ from path
     end
     fd = File.open(provinces_path(autonomy_name,variable),'w+')
     fd.write(json.to_json)
