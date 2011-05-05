@@ -20,7 +20,7 @@
    
   
   var query_provincia = " SELECT id_2 AS id, " +
-   "   name_2 AS provincia, " +
+   "   name_2 AS municipio, " +
    "   censo_total, " +
    "   ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, " +
    "   primer_partido_percent, " +
@@ -86,7 +86,7 @@
    " INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id ";
    
    var query_comunidad = " SELECT id_1 AS id, " +
-   "   name_1 AS autonomia, " +
+   "   name_1 AS municipio, " +
    "   censo_total, " +
    "   ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion, " +
    "   primer_partido_percent, " +

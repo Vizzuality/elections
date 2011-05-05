@@ -103,6 +103,8 @@
         $('div#infowindow div.stats div.partido').each(function(i,ele){
           $(ele).removeClass('psoe pp iu par1 par2 par3');
         });
+        var bar_width;
+        
         
         // First political party
         var partido_1 = info.primer_partido_name.toLowerCase();
@@ -111,7 +113,8 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
         }
-        $('div#infowindow div.stats div.partido:eq(0) span').width((info.primer_partido_percent*175)/100);
+        bar_width = (info.primer_partido_percent*175)/100;
+        $('div#infowindow div.stats div.partido:eq(0) span').width((bar_width==0)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
 
         // Second political party
@@ -121,7 +124,8 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
         }
-        $('div#infowindow div.stats div.partido:eq(1) span').width((info.segundo_partido_percent*175)/100);
+        bar_width = (info.segundo_partido_percent*175)/100;
+        $('div#infowindow div.stats div.partido:eq(1) span').width((bar_width==0)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
 
         // Third political party
@@ -131,11 +135,13 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
         }
-        $('div#infowindow div.stats div.partido:eq(2) span').width((info.tercer_partido_percent*175)/100);
+        bar_width = (info.tercer_partido_name*175)/100;
+        $('div#infowindow div.stats div.partido:eq(2) span').width((bar_width==0)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
 
         // Other
-        $('div#infowindow div.stats div.partido:eq(3) span').width((info.otros_partido_percent*175)/100);
+        bar_width = (info.otros_partido_percent*175)/100;
+        $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width==0)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
         
         var max = 0; var min = 0; var count = 0;

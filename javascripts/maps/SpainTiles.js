@@ -98,19 +98,19 @@
     var top = pixelCoordinate.y - tileCoordinate.y;
 
     var less = Math.floor(point[normalization[compare]+'_'+year+'_min']);
-    var desv = (Math.ceil(point[normalization[compare]+'_'+year+'_max'])-Math.floor(point[normalization[compare]+'_'+year+'_min']))/5;
-    var value = point[normalization[compare]+'_'+year];
+    var desv = Math.max(Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_max'])),Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_min'])))/5;
+    var value = Math.abs(point[normalization[compare]+'_'+year]);
     
     console.log(less,desv,value);
     
     var radius;
-    if ((less+(desv*0))>=value && value<(less+(desv*1))) {
+    if ((desv*0)>=value && value<(desv*1)) {
       radius=7;
-    } else if ((less+(desv*1))>=value && value<(less+(desv*2))) {
+    } else if ((desv*1)>=value && value<(desv*2)) {
       radius=10;
-    } else if ((less+(desv*2))>=value && value<(less+(desv*3))) {
+    } else if ((desv*2)>=value && value<(desv*3)) {
       radius=13;
-    } else if ((less+(desv*3))>=value && value<(less+(desv*4))) {
+    } else if ((desv*3)>=value && value<(desv*4)) {
       radius=16;
     } else {
       radius=19;
