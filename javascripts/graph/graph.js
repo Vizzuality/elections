@@ -99,7 +99,7 @@
         top: displacementY,
         opacity: "0"
       }, 500, function(){
-          console.log("Removing "+b);
+          //console.log("Removing "+b);
           $("#"+b).remove();
           nBubbles=nBubbles-1;
           if(nBubbles==0){
