@@ -92,24 +92,52 @@
     	var div = this.div_;
     	this.latlng_ = latlng;
     	
+    	//console.log(info);
+    	
     	if (info.municipio != undefined) {
         $('div#infowindow h2').text(info.municipio);
-        $('div#infowindow p.province').text(info.provincia+', '+info.censo_total+' habitantes');
+        $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info.censo_total+' habitantes');
         $('div#infowindow div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
         
-        $('div#infowindow div.stats div.partido:eq(0) span').width((info.primer_partido_percent*175)/100);
-        $('div#infowindow div.stats div.partido:eq(0) p').text('--- ('+info.primer_partido_percent+'%)');
-
-        $('div#infowindow div.stats div.partido:eq(1) span').width((info.segundo_partido_percent*175)/100);
-        $('div#infowindow div.stats div.partido:eq(1) p').text('--- ('+info.segundo_partido_percent+'%)');
-
-        $('div#infowindow div.stats div.partido:eq(2) span').width((info.tercer_partido_percent*175)/100);
-        $('div#infowindow div.stats div.partido:eq(2) p').text('--- ('+info.tercer_partido_percent+'%)');
-
-        $('div#infowindow div.stats div.partido:eq(3) span').width((info.otros_partido_percent*175)/100);
-        $('div#infowindow div.stats div.partido:eq(3) p').text('--- ('+info.otros_partido_percent+'%)');
+        // Remove previous political style bars
+        $('div#infowindow div.stats div.partido').each(function(i,ele){
+          $(ele).removeClass('psoe pp iu par1 par2 par3');
+        });
         
-        //$('div#infowindow div.sparklines').empty();
+        // First political party
+        var partido_1 = info.primer_partido_name.toLowerCase();
+        if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
+          $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+        } else {
+          $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+        }
+        $('div#infowindow div.stats div.partido:eq(0) span').width((info.primer_partido_percent*175)/100);
+        $('div#infowindow div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
+
+        // Second political party
+        var partido_2 = info.segundo_partido_name.toLowerCase();
+        if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
+          $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
+        } else {
+          $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+        }
+        $('div#infowindow div.stats div.partido:eq(1) span').width((info.segundo_partido_percent*175)/100);
+        $('div#infowindow div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
+
+        // Third political party
+        var partido_3 = info.tercer_partido_name.toLowerCase();
+        if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
+          $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
+        } else {
+          $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
+        }
+        $('div#infowindow div.stats div.partido:eq(2) span').width((info.tercer_partido_percent*175)/100);
+        $('div#infowindow div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
+
+        // Other
+        $('div#infowindow div.stats div.partido:eq(3) span').width((info.otros_partido_percent*175)/100);
+        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
+        
         $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=5,5,5,5');
     	}
 
