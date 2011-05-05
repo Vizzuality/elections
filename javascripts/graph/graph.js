@@ -27,7 +27,8 @@
     function restartGraph() {
       $('div#graph_container').empty();
       valuesHash = {};
-      createBubbles("/json/autonomies_paro_normalizado_2007.json");
+      console.log("/json/generated_data/autonomies_"+compare+"_"+year+".json");
+      createBubbles("/json/generated_data/autonomies_"+compare+"_"+year+".json");
     }
 
 

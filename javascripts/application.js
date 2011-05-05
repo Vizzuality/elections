@@ -1,6 +1,6 @@
 
   /*Application global vars*/
-  var year = 2011;
+  var year = 2007;
   var compare = 'paro';
 
 
