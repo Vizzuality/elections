@@ -66,7 +66,7 @@ def get_variables(gadm_level)
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
   raw_variables.map do |raw_variable_hash|
-    next if !VARIABLES.include?(raw_variable_hash[:codigo])
+    # next if !VARIABLES.include?(raw_variable_hash[:codigo])
     next if gadm_level.to_i < raw_variable_hash[:min_gadm].to_i || gadm_level.to_i > raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
@@ -130,22 +130,14 @@ def get_radius(row)
   return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
 end
 
-def variable_name(variable)
-  if variable.to_s =~ /^paro_normalizado_(\d+)$/
-    "paro_#{$1}"
-  else
-    variable.to_s
-  end
-end
-
 def autonomies_path(variable)
-  "../json/generated_data/autonomies_#{variable_name(variable)}.json"
+  "../json/generated_data/autonomies_#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
-  "../json/generated_data/provinces/#{autonomy_name}_#{variable_name(variable)}.json"
+  "../json/generated_data/provinces/#{autonomy_name}_#{variable}.json"
 end
 
 def municipalities_path(province_name, variable)
-  "../json/generated_data/municipalities/#{province_name}_#{variable_name(variable)}.json"  
+  "../json/generated_data/municipalities/#{province_name}_#{variable}.json"  
 end
