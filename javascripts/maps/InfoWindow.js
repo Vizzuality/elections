@@ -88,11 +88,12 @@
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
       //console.log(info);
+      comparewindow.hide();
     	var me = this;
     	var div = this.div_;
     	this.latlng_ = latlng;
+    	this.information = info;
     	
-    	//console.log(info);
     	
     	if (info.municipio != undefined) {
         $('div#infowindow h2').text(info.municipio);
@@ -114,7 +115,7 @@
           $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
         }
         bar_width = (info.primer_partido_percent*175)/100;
-        $('div#infowindow div.stats div.partido:eq(0) span').width((bar_width==0)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
 
         // Second political party
@@ -125,7 +126,7 @@
           $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
         }
         bar_width = (info.segundo_partido_percent*175)/100;
-        $('div#infowindow div.stats div.partido:eq(1) span').width((bar_width==0)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
 
         // Third political party
@@ -135,13 +136,14 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
         }
-        bar_width = (info.tercer_partido_name*175)/100;
-        $('div#infowindow div.stats div.partido:eq(2) span').width((bar_width==0)?2:bar_width);
+
+        bar_width = (info.tercer_partido_percent*175)/100;
+        $('div#infowindow div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
 
         // Other
         bar_width = (info.otros_partido_percent*175)/100;
-        $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width==0)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
         
         var max = 0; var count = 0; var find = false;
@@ -160,12 +162,9 @@
           }
         }
         paro = paro.substring(0, paro.length-1);
+
         
-        if (info.municipio == "Castellón") {
-          console.log(max);
-        }
-        
-        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=0,3,0,3');
+        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=3,3,3,3');
     	}
 
     	
@@ -209,7 +208,7 @@
     
     InfoWindow.prototype.openCompare = function() {
       this.hide();
-      comparewindow.show();
+      comparewindow.compareFirstRegion(this.information);
     }
 
 

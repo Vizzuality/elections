@@ -148,33 +148,33 @@ div#infowindow div.top div.stats div.bar {float:left; width:auto; height:6px!imp
 div#infowindow div.top div.stats div.bar span {float:left; width:20px; height:6px!important; margin:0 0 0 2px; background:url('/images/right_bars.png') no-repeat right bottom;}
 div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 /*psoe*/
-div#infowindow div.top div.stats div.psoe div.bar {background-position:0 0;}
-div#infowindow div.top div.stats div.psoe div.bar span {background-position:right 0;}
-div#infowindow div.top div.stats div.psoe p {color:red;}
+div#infowindow div.top div.stats div.psoe div.bar,div#comparewindow div.top div.stats div.psoe div.bar {background-position:0 0;}
+div#infowindow div.top div.stats div.psoe div.bar span,div#comparewindow div.top div.stats div.psoe div.bar span {background-position:right 0;}
+div#infowindow div.top div.stats div.psoe p,div#comparewindow div.top div.stats div.psoe p {color:red;}
 /*pp*/
-div#infowindow div.top div.stats div.pp div.bar {background-position:0 -6px;}
-div#infowindow div.top div.stats div.pp div.bar span {background-position:right -6px;}
-div#infowindow div.top div.stats div.pp p {color:#00B2EB;}
+div#infowindow div.top div.stats div.pp div.bar, div#comparewindow div.top div.stats div.pp div.bar {background-position:0 -6px;}
+div#infowindow div.top div.stats div.pp div.bar span, div#comparewindow div.top div.stats div.pp div.bar span {background-position:right -6px;}
+div#infowindow div.top div.stats div.pp p, div#comparewindow div.top div.stats div.pp p {color:#00B2EB;}
 /*ui*/
-div#infowindow div.top div.stats div.iu div.bar {background-position:0 -12px;}
-div#infowindow div.top div.stats div.iu div.bar span {background-position:right -12px}
-div#infowindow div.top div.stats div.iu p {color:#009933;}
+div#infowindow div.top div.stats div.iu div.bar,div#comparewindow div.top div.stats div.ui div.bar {background-position:0 -12px;}
+div#infowindow div.top div.stats div.iu div.bar span, div#comparewindow div.top div.stats div.iu div.bar span {background-position:right -12px}
+div#infowindow div.top div.stats div.iu p, div#comparewindow div.top div.stats div.iu p {color:#009933;}
 /*otros*/
-div#infowindow div.top div.stats div.otros div.bar {background-position:0 bottom;}
-div#infowindow div.top div.stats div.otros div.bar span {background-position:right bottom;}
-div#infowindow div.top div.stats div.otros p {color:#999999;}
+div#infowindow div.top div.stats div.otros div.bar,div#comparewindow div.top div.stats div.otros div.bar {background-position:0 bottom;}
+div#infowindow div.top div.stats div.otros div.bar span,div#comparewindow div.top div.stats div.otros div.bar span {background-position:right bottom;}
+div#infowindow div.top div.stats div.otros p, div#comparewindow div.top div.stats div.otros p {color:#999999;}
 /*par1*/
-div#infowindow div.top div.stats div.par1 div.bar {background-position:0 -36px;}
-div#infowindow div.top div.stats div.par1 div.bar span {background-position:right -36px;}
-div#infowindow div.top div.stats div.par1 p {color:#990033;}
+div#infowindow div.top div.stats div.par1 div.bar,div#comparewindow div.top div.stats div.par1 div.bar {background-position:0 -36px;}
+div#infowindow div.top div.stats div.par1 div.bar span, div#comparewindow div.top div.stats div.par1 div.bar span {background-position:right -36px;}
+div#infowindow div.top div.stats div.par1 p, div#comparewindow div.top div.stats div.par1 p {color:#990033;}
 /*par2*/
-div#infowindow div.top div.stats div.par2 div.bar {background-position:0 -24px;}
-div#infowindow div.top div.stats div.par2 div.bar span {background-position:right -24px;}
-div#infowindow div.top div.stats div.par2 p {color:orange;}
+div#infowindow div.top div.stats div.par2 div.bar, div#comparewindow div.top div.stats div.par2 div.bar {background-position:0 -24px;}
+div#infowindow div.top div.stats div.par2 div.bar span, div#comparewindow div.top div.stats div.par2 div.bar span {background-position:right -24px;}
+div#infowindow div.top div.stats div.par2 p, div#comparewindow div.top div.stats div.par2 p {color:orange;}
 /*par3*/
-div#infowindow div.top div.stats div.par3 div.bar {background-position:0 -30px;}
-div#infowindow div.top div.stats div.par3 div.bar span {background-position:right -30px}
-div#infowindow div.top div.stats div.par3 p {color:blue;}
+div#infowindow div.top div.stats div.par3 div.bar, div#comparewindow div.top div.stats div.par3 div.bar {background-position:0 -30px;}
+div#infowindow div.top div.stats div.par3 div.bar span, div#comparewindow div.top div.stats div.par3 div.bar span {background-position:right -30px}
+div#infowindow div.top div.stats div.par3 p, div#comparewindow div.top div.stats div.par3 p {color:blue;}
 
 
 div#infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}

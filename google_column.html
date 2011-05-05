@@ -36,13 +36,15 @@
           method: "GET",
           dataType: 'jsonp',
           url: 'https://api.cartodb.com/v1',
-          data: {sql:'SELECT * FROM gadm4 WHERE google_maps_name is null limit 10',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+          data: {sql:'SELECT * FROM gadm4 WHERE cartodb_id<50',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
           success: function(data) {
             if (data.rows.length>0) {
               places = data.rows;
               console.log(data.rows.length);
               total = data.rows.length;
               findLocation();
+            } else {
+              console.log('Fin');
             }
           },
           error: function(e) {
