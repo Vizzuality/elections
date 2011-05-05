@@ -126,6 +126,8 @@
     }
     //Check variable of compare
     if (!$('div.option_list ul li a.'+route[4]).length) {
+      $('div.option_list ul li a.paro').closest('li').addClass('selected');
+      $('div.option_list ul li a.paro').closest('div.select').addClass('selected');
       return false;
     }
     // Check latlng is in Spain bounds
