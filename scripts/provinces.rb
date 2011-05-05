@@ -31,8 +31,8 @@ variables.each do |variable|
   proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].tr(' ','_')
-    max_y = votes_per_province.map{ |h| h[variable.to_sym ] }.max
-    max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.max
+    max_y = votes_per_province.map{ |h| h[variable.to_sym ] }.compact.max
+    max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
     json = {}
     provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
       row = votes_per_province.select{|h| h[:gadm2_cartodb_id] == province[:cartodb_id] && h[:proceso_electoral_id] == proceso_electoral_id }.first

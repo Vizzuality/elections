@@ -29,8 +29,8 @@ variables.each do |variable|
   puts
   puts "Variable: #{variable}"
   proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-  max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ] }.max
-  max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.max
+  max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ] }.compact.max
+  max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
   json = {}
   autonomies.each do |autonomy_hash|
     dir_path = "#{base_path}/../json/generated_data"

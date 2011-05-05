@@ -26,8 +26,8 @@
     function restartGraph() {
       $('div#graph_container').empty();
       valuesHash = {};
-      console.log("/json/generated_data/autonomies_"+compare+"_"+year+".json");
-      createBubbles("/json/generated_data/autonomies_"+compare+"_"+year+".json");
+      console.log("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
+      createBubbles("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
     }
 
 
