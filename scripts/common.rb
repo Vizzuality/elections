@@ -115,13 +115,28 @@ def get_x_coordinate(row, max, psoe_id, pp_id)
   end
 end
 
+# ROJO : #D8282A, #D94B5F, #E08394
+# AZUL:  #5AB0E9, #64B7DE, #90D7F4
+# de mas intenso a menos intenso
 def get_color(x)
-  if x > 0
-    "#E88394"
-  elsif x < 0
-    "#D94B5F"
+  if x < 0
+    if x > -100
+      "#E08394"
+    elsif x > -200
+      "#D94B5F"
+    else
+      "#D8282A"
+    end
+  elsif x > 0
+    if x < 100
+      "#90D7F4"
+    elsif x < 200
+      "#64B7DE"
+    else
+      "#5AB0E9"
+    end
   else
-    "#000000"
+    "#AAA"
   end
 end
 
