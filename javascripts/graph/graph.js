@@ -21,7 +21,10 @@
           if (url == null) {
             return false;
           } else {
-            goDeeper(url);
+            // goDeeper(url);
+            $("#graph_infowindow").find(".top").find("h2").empty();
+            $("#graph_infowindow").find(".top").find("h2").append($(this).parent().attr('id'));
+            
           }
         },
         hover: function() {
