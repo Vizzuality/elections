@@ -51,57 +51,19 @@
         </div>
         <div class="selects">
           <div class="select">
-            <div class="outer_select money">
+            <div class="outer_select money"> <!-- other options are people or chat -->
               <img src="/images/money.png" title="" alt="Datos económicos" />
               <span class="inner_select"><a href="#Datos_economicos">Datos económicos</a></span>
             </div>
-            <div class="option_list">
+            <div class="option_list money">
               <div class="top"></div>
               <div class="bottom">
                 <ul>
                   <li><a class="paro" href="#Tasa_de_paro">Tasa de paro</a></li>
-                  <!-- <li><a href="#PIB">PIB</a></li>
-                  <li><a href="#Salario_medio">Salario medio</a></li> -->
                 </ul>
               </div>
             </div>
           </div>
-          
-          <!-- <div class="select">
-            <div class="outer_select chat">
-              <img src="/images/chat.png" title="" alt="Datos sociológicos" />
-              <span class="inner_select"><a href="#Datos_sociológicos">Datos sociológicos</a></span>
-            </div>
-            <div class="option_list">
-              <div class="top"></div>
-              <div class="bottom">
-                <ul>
-                  <li><a href="#Estudios_acabados">Estudios acabados</a></li>
-                  <li><a href="#Consumo_TV">Consumo de TV</a></li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-          
-          <!-- <div class="select">
-            <div class="outer_select people">
-              <img src="/images/people.png" title="" alt="Datos demográficos" />
-              <span class="inner_select"><a href="#Datos_demográficos">Datos demográficos</a></span>
-            </div>
-            <div class="option_list">
-              <div class="top"></div>
-              <div class="bottom">
-                <ul>
-                  <li><a href="#Edad_Media">Edad Media</a></li>
-                  <li><a href="#Saldo_vegetativo">Saldo vegetativo</a></li>
-                  <li><a href="#Envejecimiento">Envejecimiento</a></li>
-                  <li><a href="#Sexo">Sexo</a></li>
-                  <li><a href="#Inmigracion">Inmigración</a></li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-          
         </div>
       </div>
       <div class="years_content">
@@ -132,7 +94,39 @@
         <div id="canary_island"></div>
       </div>
       <div id="graph">
+        <!-- Graph container -->
         <div id="graph_container"></div>
+        <!-- Graph infowindow -->
+        <div class="infowindow" id="graph_infowindow" style="opacity:1; top:0; right:70px">
+          <a class="close_infowindow"></a>
+          <div class="top">
+            <h2>Alaejos</h2>
+            <p class="province">Valladolid, 11.982 habitantes.</p>
+            <div class="stats">
+              <h4>65% de participación</h4>
+              <div class="partido psoe"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>
+              <div class="partido pp"><div class="bar"><span></span></div><p>PP (36%)</p></div>
+              <div class="partido iu"><div class="bar"><span></span></div><p>IU (12%)</p></div>
+              <div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>
+            </div>
+          </div>
+          <div class="bottom">
+            <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>
+            <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />
+            <a class="compare">Comparar</a>
+          </div>
+        </div>
+        <!-- Graph Infowindow -->
+        <div class="graph_legend">
+          <h2>Tasa de Paro en Palencia<sup>(2010)</sup></h2>
+          <p class="autonomy"><a href="#">Castilla y León</a></p>
+          <div class="stats">
+            <div class="partido psoe"><div class="bar"><span style="width:20px"></span></div><p>PSOE (61%)</p></div>
+            <div class="partido pp"><div class="bar"><span style="width:20px"></span></div><p>PP (36%)</p></div>
+            <div class="partido iu"><div class="bar"><span style="width:20px"></span></div><p>IU (12%)</p></div>
+            <div class="partido otros"><div class="bar"><span style="width:20px"></span></div><p>OTROS (11%)</p></div>
+          </div>
+        </div>
       </div>
     </div>
   </body> 

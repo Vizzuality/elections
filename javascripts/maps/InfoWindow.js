@@ -25,6 +25,7 @@
       if (!div) {
         div = this.div_ = document.createElement('div');
         div.setAttribute('id','infowindow');
+        div.setAttribute('class','infowindow');
 
 
         // Inner HTML
@@ -43,7 +44,7 @@
           '</div>'+
           '<div class="bottom">'+
             '<p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
-            '<img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,10" class="sparklines" />'+
+            '<img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,10&chma=3,3,3,3" class="sparklines" />'+
             '<a class="compare">Comparar</a>'+
           '</div>';
         div.innerHTML = inner_infowindow;
@@ -93,6 +94,7 @@
     	var div = this.div_;
     	this.latlng_ = latlng;
     	this.information = info;
+    	this.actualZoom = peninsula.getZoom();
     	
     	
     	if (info.municipio != undefined) {
@@ -208,7 +210,7 @@
     
     InfoWindow.prototype.openCompare = function() {
       this.hide();
-      comparewindow.compareFirstRegion(this.information);
+      comparewindow.compareFirstRegion(this.information,this.actualZoom);
     }
 
 
