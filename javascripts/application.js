@@ -4,8 +4,8 @@
   var compare = 'paro';
 
 
-  jQuery(function($) {
-
+  $(document).ready(function(){
+    
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
