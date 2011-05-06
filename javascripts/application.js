@@ -117,14 +117,6 @@
   
   
   function goToHash(route) {
-    // Check length of the array
-    if (route.length!=5) {
-      return false;
-    }
-    //check 1-num 2-num 3-num 4-year 5-string
-    if (isNaN(route[0]) || isNaN(route[1]) || isNaN(route[2]) || isNaN(route[3]) || route[3].length!=4 || !isNaN(route[4])) {
-      return false;
-    }
     //Check variable of compare
     if (!$('div.option_list ul li a.'+route[4]).length) {
       $('div.option_list ul li a.paro').closest('div.select').find('span.inner_select a').text('Tasa de paro');
@@ -132,6 +124,17 @@
       $('div.option_list ul li a.paro').closest('div.select').addClass('selected');
       return false;
     }
+    
+    // Check length of the array
+    if (route.length!=5) {
+      return false;
+    }
+    
+    //check 1-num 2-num 3-num 4-year 5-string
+    if (isNaN(route[0]) || isNaN(route[1]) || isNaN(route[2]) || isNaN(route[3]) || route[3].length!=4 || !isNaN(route[4])) {
+      return false;
+    }
+    
     // Check latlng is in Spain bounds
     
 

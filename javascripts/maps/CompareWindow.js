@@ -2,6 +2,9 @@
 
     function CompareWindow() {
       this.create();
+      this.firstZoom = 12;
+      this.firstData = {};
+      this.secondData = {};
     }
     
     CompareWindow.prototype = {};
@@ -35,7 +38,7 @@
               '<input class="text" type="text" value="Busca una localidad..." />'+
               '<input class="submit" type="submit" value=""/>'+
             '</form>'+
-            '<p>Querías decir <a href="#"</p>'+
+            '<p class="refer">¿Te refieres a... <a href="#Almendralejo">Almendralejo, Extremadura</a>?</p>'+
           '</div>'+
           '<div class="region">'+
             '<h2>Alaejos</h2>'+
@@ -75,19 +78,21 @@
       });
     }
     
-    CompareWindow.prototype.compareFirstRegion = function(info) {
+    CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
       //console.log(info);
     	var me = this;
     	var div = this.div;
-    	
+    	this.firstZoom = zoom;
+    	//Reset
+    	this.resetSearch();
     	
     	if (info.municipio != undefined) {
-        $('div#comparewindow h2').text(info.municipio);
-        $('div#comparewindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info.censo_total+' habitantes');
-        $('div#comparewindow div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
+        $('div#comparewindow div.top h2').text(info.municipio);
+        $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info.censo_total+' habitantes');
+        $('div#comparewindow div.top div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
         
         // Remove previous political style bars
-        $('div#comparewindow div.stats div.partido').each(function(i,ele){
+        $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
           $(ele).removeClass('psoe pp iu par1 par2 par3');
         });
         var bar_width;
@@ -96,47 +101,120 @@
         // First political party
         var partido_1 = info.primer_partido_name.toLowerCase();
         if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
-          $('div#comparewindow div.stats div.partido:eq(0)').addClass(partido_1);
+          $('div#comparewindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
         } else {
-          $('div#comparewindow div.stats div.partido:eq(0)').addClass('par1');
+          $('div#comparewindow div.top div.stats div.partido:eq(0)').addClass('par1');
         }
         bar_width = (info.primer_partido_percent*175)/100;
-        $('div#comparewindow div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
+        $('div#comparewindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
 
         // Second political party
         var partido_2 = info.segundo_partido_name.toLowerCase();
         if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
-          $('div#comparewindow div.stats div.partido:eq(1)').addClass(partido_2);
+          $('div#comparewindow div.top div.stats div.partido:eq(1)').addClass(partido_2);
         } else {
-          $('div#comparewindow div.stats div.partido:eq(1)').addClass('par2');
+          $('div#comparewindow div.top div.stats div.partido:eq(1)').addClass('par2');
         }
         bar_width = (info.segundo_partido_percent*175)/100;
-        $('div#comparewindow div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
+        $('div#comparewindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
 
         // Third political party
         var partido_3 = info.tercer_partido_name.toLowerCase();
         if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
-          $('div#comparewindow div.stats div.partido:eq(2)').addClass(partido_3);
+          $('div#comparewindow div.top div.stats div.partido:eq(2)').addClass(partido_3);
         } else {
-          $('div#comparewindow div.stats div.partido:eq(2)').addClass('par3');
+          $('div#comparewindow div.top div.stats div.partido:eq(2)').addClass('par3');
         }
         bar_width = (info.tercer_partido_percent*175)/100;
-        $('div#comparewindow div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
+        $('div#comparewindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
 
         // Other
         bar_width = (info.otros_partido_percent*175)/100;
-        $('div#comparewindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
+        $('div#comparewindow div.top div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
  
     	}
-      
-      
-      
+
       this.show();
     }
+    
+    
+    CompareWindow.prototype.compareSecondRegion = function(formatted_address) {
+      var query = query_search_municipio + " WHERE g.google_maps_name = '"+formatted_address+"' AND v.proceso_electoral_id = 73 ";
+      $.ajax({
+        method: "GET",
+        dataType: 'jsonp',
+        url: 'https://api.cartodb.com/v1',
+        data: {sql:query,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+        success: function(data) {
+          
+          var info = data.rows[0];
+          $('div#comparewindow div.bottom div.region h2').text(info.municipio);
+          $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info.censo_total+' habitantes');
+          $('div#comparewindow div.bottom div.region div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
+
+          // Remove previous political style bars
+          $('div#comparewindow div.bottom div.region div.stats div.partido').each(function(i,ele){
+            $(ele).removeClass('psoe pp iu par1 par2 par3');
+          });
+          var bar_width;
+
+          // First political party
+          var partido_1 = info.primer_partido_name.toLowerCase();
+          if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass(partido_1);
+          } else {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass('par1');
+          }
+          bar_width = (info.primer_partido_percent*175)/100;
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) p').text(info.primer_partido_name+' ('+info.primer_partido_percent+'%)');
+
+          // Second political party
+          var partido_2 = info.segundo_partido_name.toLowerCase();
+          if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass(partido_2);
+          } else {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass('par2');
+          }
+          bar_width = (info.segundo_partido_percent*175)/100;
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) p').text(info.segundo_partido_name+' ('+info.segundo_partido_percent+'%)');
+
+          // Third political party
+          var partido_3 = info.tercer_partido_name.toLowerCase();
+          if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass(partido_3);
+          } else {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass('par3');
+          }
+
+          bar_width = (info.tercer_partido_percent*175)/100;
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) p').text(info.tercer_partido_name+' ('+info.tercer_partido_percent+'%)');
+
+          // Other
+          bar_width = (info.otros_partido_percent*175)/100;
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
+
+          $('div#comparewindow div.bottom').removeClass('search').addClass('region');
+        },
+        error: function(error) {
+          $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba otra por favor :(');
+        }
+      });
+    }
+    
+    CompareWindow.prototype.resetSearch = function() {
+      $('div#comparewindow div.bottom input.text').val('Busca una localidad...');
+      $('div#comparewindow div.bottom p.refer').hide();
+      $('div#comparewindow div.bottom').removeClass('region').addClass('search');
+    }
+    
 
     CompareWindow.prototype.show = function() {
       $(this.div).css('margin','-200px 0 0 -178px').css('top','50%').css('left','50%');
