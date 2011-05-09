@@ -106,7 +106,7 @@ end
 
 reading.terminate
 puts
-puts '... getting data finished!'
+puts 'done!'
 
 progress = ProgressBar.new(municipalities_data.keys.count)
 
