@@ -14,7 +14,7 @@ psoe_id, pp_id = get_psoe_pp_id
 query = <<-SQL
 select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id, 
        primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent, 
-       tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales,
+       tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent, 
        #{variables.join(',')}
 from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia
 where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
@@ -52,10 +52,11 @@ variables.each do |variable|
     json[autonomy_name][:children_json_url] = provinces_path(autonomy_name,variable)[3..-1] # hack to remove ../ from path
     json[autonomy_name][:censo_total]  = row[:censo_total]
     json[autonomy_name][:porcentaje_participacion] = row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0
-    json[autonomy_name][:partido_1] = [parties[row[:primer_partido_id]],get_party_color(parties[row[:primer_partido_id]], row[:primer_partido_percent]),row[:primer_partido_percent].to_f]
-    json[autonomy_name][:partido_2] = [parties[row[:segundo_partido_id]],get_party_color(parties[row[:segundo_partido_id]], row[:segundo_partido_percent]),row[:segundo_partido_percent].to_f]
-    json[autonomy_name][:partido_3] = [parties[row[:tercer_partido_id]],get_party_color(parties[row[:tercer_partido_id]], row[:tercer_partido_percent]),row[:tercer_partido_percent].to_f]
-    json[autonomy_name][:info] = "INFO"
+    json[autonomy_name][:partido_1] = [parties[row[:primer_partido_id]], row[:primer_partido_percent].to_f]
+    json[autonomy_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_percent].to_f]
+    json[autonomy_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
+    json[autonomy_name][:resto_partidos_percent] = row[:resto_partido_percent]
+    json[autonomy_name][:info] = ""
    end
   fd = File.open(autonomies_path(variable),'w+')
   fd.write(json.to_json)
