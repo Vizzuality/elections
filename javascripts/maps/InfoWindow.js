@@ -45,7 +45,7 @@
           '<div class="bottom">'+
             '<p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
             '<div class="chart">'+
-              '<img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,10&chma=3,3,3,3"/>'+
+              '<img title="" alt="Chart de región" />'+
             '</div>'+
             '<a class="compare">Comparar</a>'+
           '</div>';
@@ -98,6 +98,8 @@
     	this.information = info;
     	this.actualZoom = peninsula.getZoom();
     	
+    	//Hide char image.
+    	$('div#infowindow div.chart img').hide();
     	
     	if (info.municipio != undefined) {
         $('div#infowindow h2').text(info.municipio);
@@ -172,6 +174,7 @@
 
         
         $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    	  $('div#infowindow div.chart img').show();
     	}
 
     	

@@ -172,7 +172,7 @@ div#comparewindow div div.stats div.bar {float:left; width:auto; height:6px!impo
 div#comparewindow div div.stats div.bar span {float:left; width:20px; height:6px!important; margin:0 0 0 2px; background:url('/images/right_bars.png') no-repeat right bottom;}
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div#comparewindow div.top div.compare_graph {position:relative; width:356px; height:110px; margin:10px 0 0;}
-div#comparewindow div.top div.compare_graph a {position:absolute; top:43px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#comparewindow div.top div.compare_graph a {position:absolute; top:46px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div#comparewindow div.top div.compare_graph a.left {position:absolute; left:11px; width:24px; height:24px; background-position: 0 0;}
 div#comparewindow div.top div.compare_graph a.left:hover {background-position:0 -24px;}
 div#comparewindow div.top div.compare_graph a.right {position:absolute; right:11px; width:24px; height:24px; background-position:right 0;}
