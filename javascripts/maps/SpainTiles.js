@@ -145,7 +145,6 @@
     
     _.each(flat,function(occ,key){
       _.each(occ,function(ele,i){
-        //console.log(ele);
         
         //close infowindow - comparewindow
         infowindow.hide();

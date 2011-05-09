@@ -7,6 +7,7 @@ processes      = get_processes
 autonomies     = get_autonomies
 provinces      = get_provinces
 variables      = get_variables(4)
+parties        = get_parties
 psoe_id, pp_id = get_psoe_pp_id
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
@@ -44,7 +45,7 @@ autonomies.each do |autonomy_hash|
     query = <<-SQL
 select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-   ine_municipality_id, ine_province_id,
+   ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, 
    #{variables.join(',')}
 from   #{MUNICIPALITIES_TABLE}, #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
 where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{MUNICIPALITIES_TABLE}.cartodb_id AND 
@@ -73,6 +74,12 @@ SQL
         json[municipality_name][:radius]       = get_radius(municipality)
         json[municipality_name][:color]        = get_color(x_coordinate)
         json[municipality_name][:children_json_url] = nil
+        json[municipality_name][:censo_total]  = municipality[:censo_total]
+        json[municipality_name][:porcentaje_participacion] = municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0
+        json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],get_party_color(parties[municipality[:primer_partido_id]], municipality[:primer_partido_percent]),municipality[:primer_partido_percent].to_f]
+        json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]],get_party_color(parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent]),municipality[:segundo_partido_percent].to_f]
+        json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],get_party_color(parties[municipality[:tercer_partido_id]], municipality[:tercer_partido_percent]),municipality[:tercer_partido_percent].to_f]
+        
       end
       fd = File.open(municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
