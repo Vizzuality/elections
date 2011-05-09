@@ -11,7 +11,7 @@
   var tileServers=["a","b","c","d"];
 
 
-  function initializeMaps() {
+  function initializeMap() {
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12}
     var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12}
     
