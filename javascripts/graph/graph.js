@@ -25,7 +25,66 @@
             $("#graph_infowindow").find(".top").find("h2").empty();
             $("#graph_infowindow").find(".top").find("h2").append($(this).parent().attr('id'));
             $("#graph_infowindow").find(".top").find(".province").empty();
-            $("#graph_infowindow").find(".top").find(".province").append(valuesHash[$(this).parent().attr('id')]["censo_total"]);
+            $("#graph_infowindow").find(".top").find(".province").append(valuesHash[$(this).parent().attr('id')]["censo_total"] + " habitantes");
+            $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
+            $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[$(this).parent().attr('id')]["porcentaje_participacion"])) + "% de participación");
+            
+            // First political party
+            var partido_1 = valuesHash[$(this).parent().attr('id')]["partido_1"][0].toLowerCase();
+            c1 = $('div#graph_infowindow div.top div.stats div.partido:eq(0)').attr('class').split(" ");
+            $.each(c1, function(c){
+              if(c1[c] != "partido"){
+                $('div#graph_infowindow div.top div.stats div.partido:eq(0)').removeClass(c1[c]);
+              }
+            })
+            if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
+            } else {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
+            }
+            bar_width = (valuesHash[$(this).parent().attr('id')]["partido_1"][2]*175)/100;
+            $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
+            $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[$(this).parent().attr('id')]["partido_1"][0]+' ('+(valuesHash[$(this).parent().attr('id')]["partido_1"][2]*175)/100+'%)');
+
+            // Second political party
+            var partido_2 = valuesHash[$(this).parent().attr('id')]["partido_2"][0].toLowerCase();
+            c2 = $('div#graph_infowindow div.top div.stats div.partido:eq(1)').attr('class').split(" ");
+            $.each(c2, function(c){
+              if(c2[c] != "partido"){
+                $('div#graph_infowindow div.top div.stats div.partido:eq(1)').removeClass(c2[c]);
+              }
+            })
+            if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass(partido_2);
+            } else {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
+            }
+            bar_width = (valuesHash[$(this).parent().attr('id')]["partido_2"][2]*175)/100;
+            $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
+            $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[$(this).parent().attr('id')]["partido_2"][0]+' ('+(valuesHash[$(this).parent().attr('id')]["partido_2"][2]*175)/100+'%)');
+            
+            // Third political party
+            var partido_3 = valuesHash[$(this).parent().attr('id')]["partido_3"][0].toLowerCase();
+            c3 = $('div#graph_infowindow div.top div.stats div.partido:eq(2)').attr('class').split(" ");
+            $.each(c3, function(c){
+              if(c3[c] != "partido"){
+                $('div#graph_infowindow div.top div.stats div.partido:eq(2)').removeClass(c3[c]);
+              }
+            })
+            if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass(partido_3);
+            } else {
+              $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
+            }
+            bar_width = (valuesHash[$(this).parent().attr('id')]["partido_3"][2]*175)/100;
+            $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
+            $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[$(this).parent().attr('id')]["partido_3"][0]+' ('+(valuesHash[$(this).parent().attr('id')]["partido_3"][2]*175)/100+'%)');
+
+            // Other political party
+            bar_width = (valuesHash[$(this).parent().attr('id')]["partido_otros"][2]*175)/100;
+            $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
+
           }
         },
         hover: function() {
@@ -42,7 +101,7 @@
 
     function createBubbles(url){
       $.getJSON(url, function(data) {
-        $.each(data, function(key, val) {          
+        $.each(data, function(key, val) {
           valuesHash[key] = val;
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
@@ -71,25 +130,27 @@
       var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
 
       $(bubble).animate({
-        left: x.toString(),
-        top: y.toString(),
-        opacity: "1"
-      }, 1000);
+        left: x.toString() + "px",
+        top: y.toString() + "px",
+        opacity: 1
+      }, 1000, function(){
+        console.log("ukelele");
+      });
   
       $(bubble).find('.outerBubble').animate({
-          height: val.toString(),
-          width: val.toString(),
-          top: offset.toString(),
-          left: offset.toString(),
+          height: val.toString() + "px",
+          width: val.toString() + "px",
+          top: offset.toString() + "px",
+          left: offset.toString() + "px"
         }, 1000);
   
       $(bubble).find('.innerBubble').animate({
-          height: (val-10).toString(),
-          width: (val-10).toString(),
-          top: (offset + 5).toString(),
-          left: (offset + 5).toString(),
-          backgroundColor: c.toString()        
-        }, 1000);    
+          height: (val-10).toString() + "px",
+          width: (val-10).toString() + "px",
+          top: (offset + 5).toString() + "px",
+          left: (offset + 5).toString() + "px",
+          backgroundColor: c.toString() + "px"        
+        }, 1000);
     }
 
     function goDeeper(url){
