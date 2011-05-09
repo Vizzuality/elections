@@ -150,25 +150,28 @@
         $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
         
-        var max = 0; var count = 0; var find = false;
+        var max = 0; var count = 0; var find = false; var find_year;
         var paro = "";
-        for (var i=1996; i<2010; i++) {
+        for (var i=1987; i<2012; i++) {
           if (info[normalization[compare]+'_'+i]!=undefined) {
             if (!find) {
               if (year==i) {
                 find = true;
+                find_year = count;
               }
-              count++;
             }
             if (Math.abs(parseFloat(info[normalization[compare]+'_'+i]))>max) max = Math.ceil(Math.abs(parseFloat(info[normalization[compare]+'_'+i])));
-
             paro += info[normalization[compare]+'_'+i] + ',';
+          } else {
+            paro += '0,';
           }
+          count++;
         }
+        
         paro = paro.substring(0, paro.length-1);
 
         
-        $('img.sparklines').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+count+',6&chma=3,3,3,3');
+        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
     	}
 
     	

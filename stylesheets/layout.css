@@ -152,7 +152,8 @@ div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 10px Aria
 div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
 div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
-div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px; margin:5px 0 0 0; background:url('/images/tiny_graph_bkg.png') repeat-x 0 -1px;}
+div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
+div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center;
   line-height:13px;}
 div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
