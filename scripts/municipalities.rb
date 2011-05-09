@@ -45,7 +45,7 @@ autonomies.each do |autonomy_hash|
     query = <<-SQL
 select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-   ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, 
+   ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
    #{variables.join(',')}
 from   #{MUNICIPALITIES_TABLE}, #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
 where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{MUNICIPALITIES_TABLE}.cartodb_id AND 
@@ -76,10 +76,11 @@ SQL
         json[municipality_name][:children_json_url] = nil
         json[municipality_name][:censo_total]  = municipality[:censo_total]
         json[municipality_name][:porcentaje_participacion] = municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0
-        json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],get_party_color(parties[municipality[:primer_partido_id]], municipality[:primer_partido_percent]),municipality[:primer_partido_percent].to_f]
-        json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]],get_party_color(parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent]),municipality[:segundo_partido_percent].to_f]
-        json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],get_party_color(parties[municipality[:tercer_partido_id]], municipality[:tercer_partido_percent]),municipality[:tercer_partido_percent].to_f]
-        
+        json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],  municipality[:primer_partido_percent].to_f]
+        json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent].to_f]
+        json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
+        json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
+        json[municipality_name][:info] = ""
       end
       fd = File.open(municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)

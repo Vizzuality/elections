@@ -9,17 +9,49 @@
   var infowindow,comparewindow;
   var dragging = false;
   var tileServers=["a","b","c","d"];
+  var baseUrl="http://chart.apis.google.com/chart?chs=256x256";
+  var chco = "6B6A6ADF|65432100";
+  var chf = "bg,s,65432100";
+  var chld = "ES";
+  var chd = "";
+
 
 
   function initializeMap() {
-    var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12}
-    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12}
+    
+    var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
+    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12};
     
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
     //canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
     
-    var layer = new google.maps.ImageMapType({
+    
+    //Custom styled map - custom_map_style
+    var styledMapOptions = {name: "rtve"};
+    var rtveMapType = new google.maps.StyledMapType(custom_map_style, styledMapOptions);
+    peninsula.mapTypes.set('rtve', rtveMapType);
+    peninsula.setMapTypeId('rtve');
+    
+    
+    var mapChartOptions = {
+        getTileUrl: function(coord, zoom) {
+            var lULP = new google.maps.Point(coord.x*256,(coord.y+1)*256);
+            var lLRP = new google.maps.Point((coord.x+1)*256,coord.y*256);     
+            var projectionMap = new MercatorProjection();
+            var lULg = projectionMap.fromDivPixelToLatLng(lULP, zoom);
+            var lLRg = projectionMap.fromDivPixelToLatLng(lLRP, zoom);                 
+            return baseUrl+"&chd="+chd+"&chco="+chco+"&chld="+chld+"&chf="+chf+"&cht=map:fixed="+
+               lULg.lat() +","+ lULg.lng() + "," + lLRg.lat() + "," + lLRg.lng();
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true
+    };
+    var mapChartType = new google.maps.ImageMapType(mapChartOptions);
+    peninsula.overlayMapTypes.insertAt(0, mapChartType);
+    
+    //Political tiles
+    var political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
          var c=Math.pow(2,zoom);
          var d=c-1-tile.y;
@@ -35,20 +67,22 @@
        isPng: true,
        urlPattern:'http://{n}.tiles.mapbox.com/vizzuality/1.0.0/election_data_816f6c/'
     });
+    peninsula.overlayMapTypes.setAt(1,political_parties);
+    //canary_island.overlayMapTypes.setAt(0,political_parties);
+
     
-    /* initialize search component */
-    initializeSearch();
-    
-    peninsula.overlayMapTypes.setAt(0,layer);
-    //canary_island.overlayMapTypes.setAt(0,layer);
     
     /*Adding infowindow(over map) and comparewindow(over dom)*/
     infowindow = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
     comparewindow = new CompareWindow();
     
-    peninsula.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
-    //canary_island.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
+    peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
+    //canary_island.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
     
+    
+    
+    /* initialize search component */
+    initializeSearch();
     
     //TODO - Review this listeners (old computers dont render ok with this stuff)
     google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {

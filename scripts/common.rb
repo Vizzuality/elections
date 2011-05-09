@@ -6,6 +6,7 @@ require "cartodb-rb-client"
 require "ruby-debug"
 require "net/https"
 require 'uri'
+require "progress_bar"
 require File.dirname(__FILE__) + "/array_ext"
 require File.dirname(__FILE__) + "/hash_ext"
 
@@ -31,11 +32,11 @@ VARIABLES = %W{ paro_normalizado }
 # Municipalities:
 #  - json/generated_data/municipalities/<province_name>_<var_name>.json
 #    example: json/generated_data/provinces/Sevilla_paro_1999.json
-### 
+###
 
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
-$cartodb = CartoDB::Client::Connection.new  
+$cartodb = CartoDB::Client::Connection.new
 
 def get_cartodb_connection
   $cartodb
@@ -46,7 +47,7 @@ def get_psoe_pp_id
   political_parties = $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES} where name = 'PSOE' OR name = 'PP'")[:rows]
   psoe_id = political_parties.select{ |h| h[:name] == "PSOE"}.first[:cartodb_id].to_i
   pp_id   = political_parties.select{ |h| h[:name] == "PP"}.first[:cartodb_id].to_i
-  return psoe_id, pp_id  
+  return psoe_id, pp_id
 end
 
 def get_processes
@@ -188,5 +189,9 @@ def provinces_path(autonomy_name, variable)
 end
 
 def municipalities_path(province_name, variable)
-  "../json/generated_data/municipalities/#{province_name}_#{variable}.json"  
+  "../json/generated_data/municipalities/#{province_name}_#{variable}.json"
+end
+
+def google_cache_path(file_name)
+  "../json/generated_data/google_names_cache/#{file_name}.json"
 end
