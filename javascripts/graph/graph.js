@@ -24,7 +24,8 @@
             // goDeeper(url);
             $("#graph_infowindow").find(".top").find("h2").empty();
             $("#graph_infowindow").find(".top").find("h2").append($(this).parent().attr('id'));
-            
+            $("#graph_infowindow").find(".top").find(".province").empty();
+            $("#graph_infowindow").find(".top").find(".province").append(valuesHash[$(this).parent().attr('id')]["censo_total"]);
           }
         },
         hover: function() {
