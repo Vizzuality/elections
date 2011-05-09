@@ -7,10 +7,14 @@ processes      = get_processes
 autonomies     = get_autonomies
 provinces      = get_provinces
 variables      = get_variables(2)
+parties        = get_parties
 psoe_id, pp_id = get_psoe_pp_id
 
 query = <<-SQL
-select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
+select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
+       primer_partido_id, primer_partido_percent, tercer_partido_id, 
+       segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
+       censo_total, votantes_totales,
        #{variables.join(',')}
 from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia
 where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id
@@ -49,6 +53,11 @@ variables.each do |variable|
       json[province_name][:radius]       = get_radius(row)
       json[province_name][:color]        = get_color(x_coordinate)
       json[province_name][:children_json_url] = municipalities_path(province_name,variable)[3..-1] # hack to remove ../ from path
+      json[province_name][:censo_total]  = row[:censo_total]
+      json[province_name][:porcentaje_participacion] = row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0
+      json[province_name][:partido_1] = [parties[row[:primer_partido_id]],get_party_color(parties[row[:primer_partido_id]], row[:primer_partido_percent]),row[:primer_partido_percent].to_f]
+      json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],get_party_color(parties[row[:segundo_partido_id]], row[:segundo_partido_percent]),row[:segundo_partido_percent].to_f]
+      json[province_name][:partido_3] = [parties[row[:tercer_partido_id]],get_party_color(parties[row[:tercer_partido_id]], row[:tercer_partido_percent]),row[:tercer_partido_percent].to_f]
     end
     fd = File.open(provinces_path(autonomy_name,variable),'w+')
     fd.write(json.to_json)
