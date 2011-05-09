@@ -42,7 +42,25 @@
       return false;
     }
     
-    // Check latlng is in Spain bounds
+    // Check latlng is in Spain bounds // lat - lng
+    
+    // Ea: 44.38622285113468
+    // Fa: 5.0576171875
+    // 
+    // Ea: 34.34289460173804
+    // Fa: -10.455078125
+    // peninsula
+    // --------------------------------
+    // canary
+    // Ea: 30.070903366702098
+    // Fa: -12.795166015625
+    // 
+    // Ea: 26.70822759363471
+    // Fa: -18.9090576171875
+    //
+    //
+    // Spain latlngbounds
+    
     
 
     // Check zoom
