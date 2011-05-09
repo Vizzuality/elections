@@ -72,9 +72,10 @@
 
     
     
-    /*Adding infowindow(over map) and comparewindow(over dom)*/
+    /*Adding infowindow(over map), comparewindow(over dom) and startwindow(over dom) */
     infowindow = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
     comparewindow = new CompareWindow();
+    startwindow = new WelcomeWindow();
     
     peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
     //canary_island.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
