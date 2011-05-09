@@ -35,6 +35,7 @@ variables.each do |variable|
   proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].tr(' ','_')
+    authonomy_results = get_authonomy_results(autonomy_name, proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ] }.compact.max
     max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
     json = {}
@@ -59,7 +60,9 @@ variables.each do |variable|
       json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_percent].to_f]
       json[province_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
       json[province_name][:resto_partidos_percent] = row[:resto_partido_percent]
-      json[province_name][:info] = "nil"
+      json[province_name][:info] = ""
+      json[province_name][:parents] = [autonomy_name]
+      json[province_name][:parent_results] = authonomy_results
     end
     fd = File.open(provinces_path(autonomy_name,variable),'w+')
     fd.write(json.to_json)

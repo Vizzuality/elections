@@ -59,6 +59,7 @@ SQL
     response = http.request(request)
     variables.each do |variable|
       proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
+      province_results = get_province_results(province_name, proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
@@ -81,6 +82,9 @@ SQL
         json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
         json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
         json[municipality_name][:info] = ""
+        json[municipality_name][:info] = ""
+        json[municipality_name][:parents] = [autonomy_hash[:name_1], province_name]
+        json[municipality_name][:parent_results] = province_results
       end
       fd = File.open(municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
