@@ -43,7 +43,7 @@ end
 
 def get_psoe_pp_id
   # political parties
-  political_parties = $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows]
+  political_parties = $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES} where name = 'PSOE' OR name = 'PP'")[:rows]
   psoe_id = political_parties.select{ |h| h[:name] == "PSOE"}.first[:cartodb_id].to_i
   pp_id   = political_parties.select{ |h| h[:name] == "PP"}.first[:cartodb_id].to_i
   return psoe_id, pp_id  
@@ -143,6 +143,28 @@ def get_color(x)
   end
 end
 
+def get_party_color(party_name, votes_percentage)
+  colors = {
+    "PSOE" => ["#E08394", "#D94B5F", "#D8282A"],
+    "PP" => ["#90D7F4", "#64B7DE", "#5AB0E9"]
+  }
+  index = if votes_percentage < 30
+    0
+  elsif votes_percentage > 30 && votes_percentage < 70
+    1
+  else
+    2
+  end
+  case party_name
+    when "PSOE"
+      colors[party_name][index]
+    when "PP"
+      colors[party_name][index]
+    else
+      "#AAAAAA"
+  end
+end
+
 def get_radius(row)
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
@@ -151,6 +173,10 @@ def get_radius(row)
   else
     return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
   end
+end
+
+def get_parties
+  @get_parties ||= $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
 end
 
 def autonomies_path(variable)
