@@ -25,6 +25,8 @@ GEM
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
+    fattr (2.2.0)
+    highline (1.6.1)
     i18n (0.5.0)
     json (1.5.1)
     linecache19 (0.5.12)
@@ -67,6 +69,11 @@ GEM
       oa-enterprise (= 0.1.6)
       oa-oauth (= 0.1.6)
       oa-openid (= 0.1.6)
+    options (2.3.0)
+      fattr
+    progress_bar (0.3.4)
+      highline (~> 1.6.1)
+      options (~> 2.3.0)
     pyu-ruby-sasl (0.0.3.2)
     rack (1.2.2)
     rack-openid (1.2.0)
@@ -104,4 +111,5 @@ PLATFORMS
 
 DEPENDENCIES
   cartodb-rb-client!
+  progress_bar
   ruby-debug19
