@@ -195,3 +195,52 @@ end
 def google_cache_path(file_name)
   "../json/generated_data/google_names_cache/#{file_name}.json"
 end
+
+def get_authonomy_results(autonomy_name, proceso_electoral_id)
+  # votes per autonomy
+  query = <<-SQL
+  select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id, 
+         primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent, 
+         tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
+  from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
+  where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND 
+        gadm1.name_1 = '#{autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
+        AND proceso_electoral_id = #{proceso_electoral_id}
+SQL
+  parties = get_parties
+  if row = $cartodb.query(query)[:rows].first
+    return {
+      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
+      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
+      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
+      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+    }
+  else
+    return {}
+  end
+end
+
+def get_province_results(province_name, proceso_electoral_id)
+  # votes per autonomy
+  query = <<-SQL
+  select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
+         primer_partido_id, primer_partido_percent, tercer_partido_id, 
+         segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
+         censo_total, votantes_totales, resto_partido_percent
+  from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
+  where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id AND
+        vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{province_name}'
+SQL
+  parties = get_parties
+  rows = $cartodb.query(query)[:rows]
+  if row = $cartodb.query(query)[:rows].first
+    return {
+      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
+      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
+      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
+      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+    }
+  else
+    return {}
+  end
+end
