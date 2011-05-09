@@ -1,1 +1,1 @@
-{"Las_Palmas":{"cartodb_id":46,"x_coordinate":0,"y_coordinate":"5.7","radius":68.57512834965951,"color":"#AAA","children_json_url":"json/generated_data/municipalities/Las_Palmas_paro_absoluto_2003.json"}}
+{"Las_Palmas":{"cartodb_id":46,"x_coordinate":0,"y_coordinate":"5.7","radius":68.57512834965951,"color":"#AAA","children_json_url":"json/generated_data/municipalities/Las_Palmas_paro_absoluto_2003.json","censo_total":656410,"porcentaje_participacion":80.95854724943253,"partido_1":["CC","#AAAAAA",20.0],"partido_2":["PSOE","#E08394",13.0],"partido_3":["PP","#90D7F4",5.0]}}
