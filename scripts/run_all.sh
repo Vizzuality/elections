@@ -1,6 +1,5 @@
 #!/bin/bash
 
-rm -rf ../json/generated_data/*
 echo "Autonomies...."
 ruby autonomies.rb
 echo "Provinces...."

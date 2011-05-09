@@ -57,6 +57,8 @@ variables.each do |variable|
     json[autonomy_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
     json[autonomy_name][:resto_partidos_percent] = row[:resto_partido_percent]
     json[autonomy_name][:info] = ""
+    json[autonomy_name][:parents] = []
+    json[autonomy_name][:parent_results] = nil
    end
   fd = File.open(autonomies_path(variable),'w+')
   fd.write(json.to_json)
