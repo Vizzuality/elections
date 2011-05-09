@@ -1,1 +1,1 @@
-{}
+{"Ceuta":{"cartodb_id":34,"x_coordinate":-142.5531914893617,"y_coordinate":"9.457292","radius":80,"color":"#D94B5F","children_json_url":"json/generated_data/municipalities/Ceuta_saldo_vegetativo_1987.json"},"Melilla":{"cartodb_id":35,"x_coordinate":-300.0,"y_coordinate":"10.825222","radius":80,"color":"#D8282A","children_json_url":"json/generated_data/municipalities/Melilla_saldo_vegetativo_1987.json"}}
