@@ -8,7 +8,7 @@ div#header span.end_right {position:absolute; right:0; top:0; width:10px; height
 div#header div.left {float:left; width:320px;}
 div#header div.left h1 {margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
 div#header div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px; overflow:hidden;}
-div#header div.left form input.text {float:right; width:248px; height:15px; margin:0; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular"; 
+div#header div.left form input.text {float:right; width:248px; height:15px; margin:0; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('/images/lens.png') no-repeat 0 0;}
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
@@ -19,7 +19,7 @@ div#header div.left div.search_error h5 {font:normal 15px "Officina Regular"; co
 div#header div.left div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
 div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
   text-align:center; line-height:13px; text-decoration:none;}
-div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}  
+div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div#header div.right {float:right; width:650px;}
 div#header div.right div.share {float:right; width:100%; height:24px; margin:20px 0 0 0;}
 div#header div.right div.share div.outer_share {float:right; width:144px!important; height:24px; padding:0; margin:0 15px 0 0; background:url('/images/share_bkg.png') no-repeat 0 0;}
@@ -37,6 +37,13 @@ div#header div.right div.selects div.select.selected div.outer_select {backgroun
 div#header div.right div.selects div.select div.outer_select img {position:absolute; left:20px; top:18px; z-index:10;}
 div#header div.right div.selects div.select div.outer_select.chat img {left:23px;}
 div#header div.right div.selects div.select div.outer_select.money img {left:23px;}
+div#header div.right div.selects div.select div.outer_select.people img {left:23px;}
+
+div#header div.right div.selects div.select div.outer_select span.icon {position:absolute; top: 10px; left:13px; height:32px; width:32px;}
+div#header div.right div.selects div.select div.outer_select.money span.icon {background:url('/images/money.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.chat span.icon {background:url('/images/chat.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.people span.icon {background:url('/images/people.png') no-repeat center;}
+
 div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:auto; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
 div#header div.right div.selects div.select.selected div.outer_select span.inner_select {background-position:right -97px;}
 div#header div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
@@ -56,6 +63,7 @@ div#header div.right div.selects div.select div.option_list div.bottom ul li a:h
 div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 1px;}
 div#header div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -32px;}
 div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -64px;}
+div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 0px;}
 
 div#header div.right {}
 
@@ -118,12 +126,12 @@ div#zoom_control .ui-slider-vertical { width: .8em; height: 100px; }
 div#zoom_control .ui-slider-vertical .ui-slider-handle { left: -6px; margin-left: 0; margin-bottom: -.6em; height:16px!important; width:16px!important; background:url('/images/handle.png') no-repeat 0 0;}
 div#zoom_control .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }  
+div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
 
 /*MENU MAP/GRAPH*/
-div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%; 
+div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
   font-size:0; display:block; line-height:0;}
 div#tab_menu a.map {float:left; width:32px; height:31px; margin:8px 0 0 13px; background:url('/images/map_icon.png') no-repeat -1px 0;}
 div#tab_menu a.stats {float:left; width:32px; height:31px; margin:1px 0 0 13px; background:url('/images/stats_icon.png') no-repeat -1px 0;}
