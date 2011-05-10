@@ -1,11 +1,11 @@
 
-  function WelcomeWindow() {
+  function ExplanationWindow() {
     this.create();
   }
 
-  WelcomeWindow.prototype = {};
+  ExplanationWindow.prototype = {};
 
-  WelcomeWindow.prototype.create = function() {
+  ExplanationWindow.prototype.create = function() {
     var me = this;
     this.div = document.createElement('div');
     this.div.setAttribute('id','appInfo');
@@ -30,7 +30,7 @@
 
     $('div#map').prepend(this.div);
     $(this.div).children('a.close_info').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
-    
+
     $(this.div).find('li').children('a').click(function(ev){
       ev.stopPropagation(); ev.preventDefault();
       if (!$(this).parent().hasClass('selected')) {
@@ -39,17 +39,17 @@
         var offset = $(this).position().top;
         $('div#appInfo span.arrow').animate({top:offset+'px'},300);
         //TODO - change div to show in the right main window
-        
+
       }
     });
     $(this.div).draggable({containment: 'parent'});
   }
 
-  WelcomeWindow.prototype.show = function() {
+  ExplanationWindow.prototype.show = function() {
     $(this.div).css('margin','-200px 0 0 -178px').css('top','50%').css('left','50%');
     $(this.div).fadeIn();
   }
 
-  WelcomeWindow.prototype.hide = function() {
+  ExplanationWindow.prototype.hide = function() {
     $(this.div).fadeOut();
   }
