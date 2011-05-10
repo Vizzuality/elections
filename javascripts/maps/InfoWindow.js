@@ -17,7 +17,7 @@
 
 
     InfoWindow.prototype.draw = function() {
-				
+
       var me = this;
     	var num = 0;
 
@@ -50,24 +50,24 @@
             '<a class="compare">Comparar</a>'+
           '</div>';
         div.innerHTML = inner_infowindow;
-        
+
 
         var panes = this.getPanes();
 		    panes.floatPane.appendChild(div);
-		    
+
 		    /*Infowindow events*/
 		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
 		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
-		    
-		    
-        google.maps.event.addDomListener(div,'mousedown',function(ev){ 
-          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; }; 
+
+
+        google.maps.event.addDomListener(div,'mousedown',function(ev){
+          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
         });
-        google.maps.event.addDomListener(div,'click',function(ev){ 
-          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; }; 
+        google.maps.event.addDomListener(div,'click',function(ev){
+          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
         });
-        google.maps.event.addDomListener(div,'dbclick',function(ev){ 
-          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; }; 
+        google.maps.event.addDomListener(div,'dbclick',function(ev){
+          try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
         });
       }
 
@@ -87,7 +87,7 @@
       }
     };
 
-    
+
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
       //console.log(info);
@@ -97,22 +97,22 @@
     	this.latlng_ = latlng;
     	this.information = info;
     	this.actualZoom = peninsula.getZoom();
-    	
+
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
-    	
+
     	if (info.municipio != undefined) {
         $('div#infowindow h2').text(info.municipio);
         $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info.censo_total+' habitantes');
         $('div#infowindow div.stats h4').text(parseFloat(info.percen_participacion).toFixed(0)+'% de participación');
-        
+
         // Remove previous political style bars
         $('div#infowindow div.stats div.partido').each(function(i,ele){
           $(ele).removeClass('psoe pp iu par1 par2 par3');
         });
         var bar_width;
-        
-        
+
+
         // First political party
         var partido_1 = info.primer_partido_name.toLowerCase();
         if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
@@ -151,17 +151,26 @@
         bar_width = (info.otros_partido_percent*175)/100;
         $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info.otros_partido_percent+'%)');
-        
+
         var max = 0; var count = 0; var find = false; var find_year;
         var paro = "";
-        for (var i=1987; i<2012; i++) {
-          if (info[normalization[compare]+'_'+i]!=undefined) {
+
+        var minYear = 1987; // 1987
+        var maxYear = 2012; // 2012
+
+        minGraphYear = 1987; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
+        var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+        var chartBackgroundTopPadding = 33 * electionYears.indexOf(minGraphYear);
+
+        for (var i = minYear; i < maxYear; i++) {
+          if (info[normalization[compare]+'_'+i] != undefined) {
             if (!find) {
-              if (year==i) {
+              if (year == i) {
                 find = true;
                 find_year = count;
               }
             }
+
             if (Math.abs(parseFloat(info[normalization[compare]+'_'+i]))>max) max = Math.ceil(Math.abs(parseFloat(info[normalization[compare]+'_'+i])));
             paro += info[normalization[compare]+'_'+i] + ',';
           } else {
@@ -169,22 +178,23 @@
           }
           count++;
         }
-        
+
         paro = paro.substring(0, paro.length-1);
 
-        
-        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-    	  $('div#infowindow div.chart img').show();
-    	}
+        $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
 
-    	
-    	
+        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+          $('div#infowindow div.chart img').show();
+      }
+
+
+
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       if (pixPosition) {
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
     	  div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
       }
-      this.moveMaptoOpen();	
+      this.moveMaptoOpen();
     	this.show();
     }
 
@@ -214,8 +224,8 @@
         }, 250, 'swing');
     	}
     }
-    
-    
+
+
     InfoWindow.prototype.openCompare = function() {
       this.hide();
       comparewindow.compareFirstRegion(this.information,this.actualZoom);
@@ -225,20 +235,20 @@
     InfoWindow.prototype.moveMaptoOpen = function() {
     	var left = 0;
     	var top = 0;
-	
+
       var pixPosition = this.getProjection().fromLatLngToContainerPixel(this.latlng_);
 
     	if ((pixPosition.x + this.offsetHorizontal_) < 0) {
     		left = (pixPosition.x + this.offsetHorizontal_ - 20);
     	}
-	
+
     	if ((pixPosition.x - this.offsetHorizontal_) >= ($('div#peninsula').width())) {
     		left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
     	}
-	
+
     	if ((pixPosition.y + this.offsetVertical_ - 30) < 0) {
     		top = (pixPosition.y + this.offsetVertical_ - 30);
     	}
-	
+
     	this.map_.panBy(left,top);
     }
