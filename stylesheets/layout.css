@@ -114,8 +114,16 @@ div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move
 div.tabs {position:absolute; left:0; right:0; top:148px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
-/*div.tabs div#map div#canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}*/
-/*div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}*/
+div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
+div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; display:none; padding:5px 7px; font:normal 13px Arial; color:white; background:rgba(0,0,0,0.7); z-index:10;}
+div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
+/*<div class="canary_island">
+  <a href="#islas_canarias" class="islas_canarias">Ir a las Islas Canarias</a>
+  <div id="canary_island"></div>
+</div>*/
+
+div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
+div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.jpg'); z-index:0;}
 /*graph*/

@@ -21,10 +21,10 @@
   function initializeMap() {
 
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
-    // var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12};
+    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']},draggable:false};
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
-    //canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
+    canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
 
 
     //Custom styled map - custom_map_style
@@ -32,6 +32,8 @@
     var rtveMapType = new google.maps.StyledMapType(custom_map_style, styledMapOptions);
     peninsula.mapTypes.set('rtve', rtveMapType);
     peninsula.setMapTypeId('rtve');
+    canary_island.mapTypes.set('rtve', rtveMapType);
+    canary_island.setMapTypeId('rtve');
 
 
     var mapChartOptions = {
@@ -52,6 +54,7 @@
     };
     var mapChartType = new google.maps.ImageMapType(mapChartOptions);
     peninsula.overlayMapTypes.insertAt(0, mapChartType);
+        
 
     //Political tiles
     political_parties = new google.maps.ImageMapType({
@@ -68,7 +71,7 @@
        alt: ""
     });
     peninsula.overlayMapTypes.insertAt(1,political_parties);
-    //canary_island.overlayMapTypes.setAt(0,political_parties);
+    canary_island.overlayMapTypes.setAt(0,political_parties);
 
 
 
@@ -78,7 +81,6 @@
     explanationwindow = new ExplanationWindow();
 
     peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
-    //canary_island.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
 
 
 
@@ -89,24 +91,19 @@
     google.maps.event.addListenerOnce(peninsula, 'tilesloaded', function() {
       changeHash();
       checkZoom();
-      var allowedBounds = this.getBounds();
 
       google.maps.event.addListener(this,'dragend',function(){changeHash();});
       google.maps.event.addListener(this,'zoom_changed',function(){changeHash(); checkZoom();});
-      //google.maps.event.addListener(this,'zoom_changed',function() {checkCanaryIsland();});
-      //google.maps.event.addListener(this,'center_changed',function() {checkCanaryIsland(); checkBounds(allowedBounds,this); });
     });
-    // google.maps.event.addListenerOnce(canary_island, 'tilesloaded', function() {
-    //   var canaryBounds = this.getBounds();
-    //   google.maps.event.addListener(this,'center_changed',function() { checkBounds(canaryBounds,this); });
-    // });
-    // google.maps.event.addListener(peninsula, 'dragstart', function() {
-    //   dragging = true;
-    // });
-    // google.maps.event.addListener(peninsula, 'dragend', function() {
-    //   dragging = false;
-    // });
 
+
+    /*Go to canary islands*/
+    $('a.islas_canarias').click(function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      peninsula.setCenter(canary_center);
+      peninsula.setZoom(8);
+    });
 
     /*zoom controls*/
     $('a.zoom_in').click(function(ev){
@@ -194,24 +191,25 @@
 
 
 
-  function checkCanaryIsland() {
-    var peninsula_bounds_ne = peninsula.getBounds().getNorthEast();
-    var peninsula_bounds_sw = peninsula.getBounds().getSouthWest();
+  // function checkCanaryIsland() {
+  //   var peninsula_bounds_ne = peninsula.getBounds().getNorthEast();
+  //   var peninsula_bounds_sw = peninsula.getBounds().getSouthWest();
+  // 
+  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lat()<36.00) || (peninsula_bounds_ne.lng()>3.10) ) {
+  //     $('#canary_island').removeClass('left');
+  //     $('#canary_island').css('zIndex',1);
+  //     return false;
+  //   }
+  // 
+  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lng()< -9.5581) || (peninsula_bounds_ne.lat()>52) ) {
+  //     $('#canary_island').addClass('left');
+  //     $('#canary_island').css('zIndex',1);
+  //     return false;
+  //   } else {
+  //     $('#canary_island').css('zIndex',0);
+  //   }
+  // }
 
-    if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lat()<36.00) || (peninsula_bounds_ne.lng()>3.10) ) {
-      $('#canary_island').removeClass('left');
-      $('#canary_island').css('zIndex',1);
-      return false;
-    }
-
-    if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lng()< -9.5581) || (peninsula_bounds_ne.lat()>52) ) {
-      $('#canary_island').addClass('left');
-      $('#canary_island').css('zIndex',1);
-      return false;
-    } else {
-      $('#canary_island').css('zIndex',0);
-    }
-  }
 
 
   function checkZoom(){
@@ -233,29 +231,37 @@
       $("span.slider").slider({value: peninsula.getZoom()});
     }
     previous_zoom = peninsula.getZoom();
+    
+    
+    //Show tiny Canarias map
+    if (peninsula.getZoom()==6) {
+      $('div.canary_island').css('z-index',2);
+    } else {
+      $('div.canary_island').css('z-index',0);
+    }
   }
   
 
 
   // Limit map area
-  function checkBounds(allowedBounds,map) {
-    if(!allowedBounds.contains(map.getCenter())) {
-      var C = map.getCenter();
-      var X = C.lng();
-      var Y = C.lat();
-
-      var AmaxX = allowedBounds.getNorthEast().lng();
-      var AmaxY = allowedBounds.getNorthEast().lat();
-      var AminX = allowedBounds.getSouthWest().lng();
-      var AminY = allowedBounds.getSouthWest().lat();
-
-      if (X < AminX) {X = AminX;}
-      if (X > AmaxX) {X = AmaxX;}
-      if (Y < AminY) {Y = AminY;}
-      if (Y > AmaxY) {Y = AmaxY;}
-
-      map.setCenter(new google.maps.LatLng(Y,X));
-    }
-  }
+  // function checkBounds(allowedBounds,map) {
+  //   if(!allowedBounds.contains(map.getCenter())) {
+  //     var C = map.getCenter();
+  //     var X = C.lng();
+  //     var Y = C.lat();
+  // 
+  //     var AmaxX = allowedBounds.getNorthEast().lng();
+  //     var AmaxY = allowedBounds.getNorthEast().lat();
+  //     var AminX = allowedBounds.getSouthWest().lng();
+  //     var AminY = allowedBounds.getSouthWest().lat();
+  // 
+  //     if (X < AminX) {X = AminX;}
+  //     if (X > AmaxX) {X = AmaxX;}
+  //     if (Y < AminY) {Y = AminY;}
+  //     if (Y > AmaxY) {Y = AmaxY;}
+  // 
+  //     map.setCenter(new google.maps.LatLng(Y,X));
+  //   }
+  // }
 
 
