@@ -4,6 +4,7 @@
 
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
+    this.json_tile_url = "/json/generated_data/tiles/";
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -20,11 +21,9 @@
     hash[coord.x+'_'+coord.y+'_'+zoom] = [];
     
     //Select query/json to take data from this tile
-    var query;
     var x,y;
     
     if (zoom>9) {
-      
       if (zoom==12) {
         x = coord.x/2;
         y = coord.y/2;
@@ -32,10 +31,8 @@
         x = coord.x;
         y = coord.y;
       }
-      query = query_municipio + "WHERE v_get_tile("+Math.floor(x)+","+Math.floor(y)+",11) && centre_geom_webmercator and proceso_electoral_id=73";
-      
+      z = 11;
     } else if (zoom>6 && zoom<=9) {
-      
       if (zoom>7) {
         var difference = (zoom - 7)*2;
         x = coord.x/difference;
@@ -44,20 +41,21 @@
         x = coord.x;
         y = coord.y;
       }
-      
-      query = query_provincia + " WHERE v_get_tile("+x+","+y+",7) && centre_geom_webmercator AND proceso_electoral_id = '73'";
+      z = 7;
     } else {
-      query = query_comunidad + " WHERE v_get_tile("+coord.x+","+coord.y+","+zoom+") && centre_geom_webmercator AND proceso_electoral_id = '73'";
+      x = coord.x;
+      y = coord.y;
+      z = 6;
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
       // Call service
       $.ajax({
         method: "GET",
-        dataType: 'jsonp',
-        url: 'https://api.cartodb.com/v1',
-        data: {sql:query,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
-        success: function(data) {
+        dataType: 'json',
+        url: me.json_tile_url+z+'_'+x+'_'+y+'.json',
+        success: function(points) {
+          
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ; 
           var worldcoord = new google.maps.Point(pixelcoord.x/Math.pow(2,zoom),pixelcoord.y/Math.pow(2,zoom)); 
@@ -66,21 +64,19 @@
           var normalizedPoint = peninsula.getProjection().fromLatLngToPoint(ne);
           var scale = Math.pow(2, zoom);
           var tileCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
-
-          // Tile data points
-          var points = data.rows;
+        
           // Remove previous data of this tile
           delete hash[coord.x+'_'+coord.y+'_'+zoom];
           hash[coord.x+'_'+coord.y+'_'+zoom] = {};
-
+        
           //Loop data points
           _.each(points,function(point,i){
-            me.createBubble(div,point,tileCoordinate,scale,coord,zoom,ownerDocument);
+            me.createBubble(div,point.data,tileCoordinate,scale,coord,zoom,ownerDocument);
           });
-
+        
           return div;
         },
-        error: function(error) {
+        error: function(e) {
           return div;
         }
       });
@@ -99,12 +95,9 @@
   };
   
   
-  
-  
-  
   CoordMapType.prototype.createBubble = function(div,point,tileCoordinate,scale,coord,zoom,ownerDocument) {
     hash[coord.x+'_'+coord.y+'_'+zoom][point.id] = point;
-
+    
     var latlng = new google.maps.LatLng(point.center_latitude,point.center_longitude);
     var normalizedPoint = peninsula.getProjection().fromLatLngToPoint(latlng); // returns x,y normalized to 0~255
     var pixelCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
