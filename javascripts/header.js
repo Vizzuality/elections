@@ -89,6 +89,27 @@
     });
 
 
+  function hideTooltip(p) {
+    $("div.info_tooltip").fadeOut("slow");
+    $('body').unbind("click");
+  }
+
+  function showInfoTooltip(title, position) {
+      $("div.info_tooltip").fadeOut("slow", function() {
+        $("div.info_tooltip h5").text(title);
+        $("div.info_tooltip").css("left", position );
+        $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
+        adjustInfoTooltipHeight();
+      });
+  }
+
+  function adjustInfoTooltipHeight() {
+    var height = $("div.info_tooltip div.content").height() + 65;
+    height = (height > 231) ? 231 : height;
+    $("div.info_tooltip").css("height", height + "px");
+  }
+
+
     /*SELECTS*/
     /*Select event*/
     $('div.select div.outer_select').click(function(ev){
@@ -128,6 +149,8 @@
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).closest('div.select').find('img').attr('alt'));});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
+
+		showInfoTooltip(value, $(this).closest('div.select').position().left);
 
         $(this).parent().addClass('selected');
         $(this).closest('div.select').addClass('selected').removeClass('opened');
