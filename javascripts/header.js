@@ -72,13 +72,15 @@
       }
     });
 
+
+    /*Info tooltip when you select a variable*/
     var infoTooltip = (function() {
 
-        $('div.info_tooltip a.close').live('click',function(ev){
-          ev.stopPropagation();
-          ev.preventDefault();
-          hideTooltip();
-        });
+      $('div.info_tooltip a.close').live('click',function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideTooltip();
+      });
 
       function hideTooltip() {
         $("div.info_tooltip").fadeOut("slow");
@@ -96,7 +98,7 @@
             $("div.info_tooltip ul li.left").html("<span>+25</span>" + info.left);
             $("div.info_tooltip ul li.right").html("<span>-25</span>" + info.right);
 
-            $("div.info_tooltip").css("left", position );
+            $("div.info_tooltip").css("left", position-7);
             $("div.info_tooltip").fadeIn("slow", function() {
               $('body').click(function(event) {
                 if (!$(event.target).closest('div.info_tooltip').length) { hideTooltip(); }
@@ -157,7 +159,7 @@
       var value = $(this).text();
 
       if (!$(this).parent().hasClass('selected')) {
-        $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).closest('div.select').find('img').attr('alt'));});
+        $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
 
