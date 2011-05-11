@@ -36,6 +36,7 @@
       $("div.year_slider").slider('value',1987);
       changeHash();
       refreshTiles();
+      refreshBubbles();
       setTimeout(function(){animate_interval = setInterval(function(){animateSlider()},3000)},3000);
     });
     
@@ -82,6 +83,7 @@
       stop: function( event, ui ) {
         changeHash();
         refreshTiles();
+        refreshBubbles();
         setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
       }
     });
@@ -145,6 +147,7 @@
       return false;
     } else {
       $("div.year_slider").slider('value',new_value);
+      refreshBubbles();
       changeHash();
       refreshTiles();
     }

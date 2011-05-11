@@ -2,10 +2,11 @@
   var canary_island,peninsula;
   var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036);
   var start_zoom = 6;
+  var previous_zoom = 6;
+  
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
   var allowedBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
   var projection = new MercatorProjection();
-  var previous_zoom = 6;
   var infowindow,comparewindow;
   var dragging = false;
   var tileServers=["a","b","c","d"];
@@ -14,6 +15,7 @@
   var chf = "bg,s,65432100";
   var chld = "ES";
   var chd = "";
+  var political_parties;
 
 
 
@@ -44,22 +46,28 @@
                lULg.lat() +","+ lULg.lng() + "," + lLRg.lat() + "," + lLRg.lng();
         },
         tileSize: new google.maps.Size(256, 256),
-        isPng: true
+        isPng: true,
+        minZoom: 6,
+        maxZoom: 12,
+        name: "Hide rest of countries"
     };
     var mapChartType = new google.maps.ImageMapType(mapChartOptions);
     peninsula.overlayMapTypes.insertAt(0, mapChartType);
 
     //Political tiles
-    var political_parties = new google.maps.ImageMapType({
+    political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
          return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.65,
        isPng: true,
-       urlPattern:'/tiles/'
+       urlPattern:'/tiles/',
+       minZoom: 6,
+       maxZoom: 12,
+       name: "Political parties tiles"
     });
-    peninsula.overlayMapTypes.setAt(1,political_parties);
+    peninsula.overlayMapTypes.insertAt(1,political_parties);
     //canary_island.overlayMapTypes.setAt(0,political_parties);
 
 
@@ -99,6 +107,7 @@
     //   dragging = false;
     // });
 
+    console.log(peninsula.overlayMapTypes.getArray());
 
     /*zoom controls*/
     $('a.zoom_in').click(function(ev){
@@ -162,6 +171,24 @@
   }
 
 
+  function refreshTiles() {
+    //Political tiles
+    political_parties = new google.maps.ImageMapType({
+       getTileUrl: function(tile, zoom) {
+         return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
+       },
+       tileSize: new google.maps.Size(256, 256),
+       opacity:0.65,
+       isPng: true,
+       urlPattern:'/tiles/',
+       minZoom: 6,
+       maxZoom: 12,
+       name: "Political parties tiles"
+    });
+    peninsula.overlayMapTypes.setAt(1,political_parties);
+  }
+
+
 
   function checkCanaryIsland() {
     var peninsula_bounds_ne = peninsula.getBounds().getNorthEast();
@@ -203,7 +230,7 @@
     }
     previous_zoom = peninsula.getZoom();
   }
-
+  
 
 
   // Limit map area
