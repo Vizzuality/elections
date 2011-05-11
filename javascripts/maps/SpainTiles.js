@@ -194,13 +194,14 @@
         
         var old_radius = ($('div#'+ele.id).width()/2);
         var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
-        $('div#'+ele.id).css('top',top-radius+'px');
         var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
-        $('div#'+ele.id).css('left',left-radius+'px');
         
-        $('div#'+ele.id).width(radius*2);
-        $('div#'+ele.id).height(radius*2);
-
+        // $('div#'+ele.id).css('top',top-radius+'px');
+        // $('div#'+ele.id).css('left',left-radius+'px');
+        // $('div#'+ele.id).width(radius*2);
+        // $('div#'+ele.id).height(radius*2);
+        
+        $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
       });
     });
   }
