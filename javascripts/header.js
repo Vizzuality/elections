@@ -24,18 +24,16 @@
 
 
     // Procesos_electorales var
-    $.ajax({
-      method: "GET",
-      dataType: 'jsonp',
-      url: 'https://api.cartodb.com/v1',
-      data: {sql:'SELECT * FROM procesos_electorales',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
-      success: function(data) {
-        procesos_electorales = data.rows;
-      },
-      error: function(e) {
-        
-      }
-    });
+    // $.ajax({
+    //   method: "GET",
+    //   dataType: 'jsonp',
+    //   url: 'https://api.cartodb.com/v1',
+    //   data: {sql:'SELECT * FROM procesos_electorales',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+    //   success: function(data) {
+    //     procesos_electorales = data.rows;
+    //   },
+    //   error: function(e) {console.debug(e)}
+    // });
 
 
     // Year Slider
@@ -70,6 +68,7 @@
       ev.preventDefault();
 
       $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
+      
       if (!$(this).closest('div.select').hasClass('opened')) {
         if ($(this).parent().find('li.selected').length) {
           var index = $(this).parent().find('li.selected').index();
