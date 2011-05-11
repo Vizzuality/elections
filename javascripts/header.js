@@ -1,7 +1,7 @@
 
   var procesos_electorales;
   var animate_interval;
-  
+
   function initializeOptions() {
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
@@ -24,7 +24,7 @@
       }
     });
 
-    
+
     /* Animate electoral slider process */
     // Play animation process
     $('a.play').live('click',function(ev){
@@ -35,7 +35,7 @@
       $(this).attr('href','#stop');
       animate_interval = setInterval(function(){animateSlider()},4000);
     });
-    
+
     // Stop animation process
     $('a.stop').live('click',function(ev){
       ev.stopPropagation();
@@ -73,26 +73,33 @@
       }
     });
 
+    var infoTooltip = (function() {
 
-  function hideTooltip(p) {
-    $("div.info_tooltip").fadeOut("slow");
-    $('body').unbind("click");
-  }
+      function hideTooltip(p) {
+        $("div.info_tooltip").fadeOut("slow");
+        $('body').unbind("click");
+      }
 
-  function showInfoTooltip(title, position) {
-      $("div.info_tooltip").fadeOut("slow", function() {
-        $("div.info_tooltip h5").text(title);
-        $("div.info_tooltip").css("left", position );
-        $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
-        adjustInfoTooltipHeight();
-      });
-  }
+      function showInfoTooltip(title, position) {
+        $("div.info_tooltip").fadeOut("slow", function() {
+          $("div.info_tooltip h5").text(title);
+          $("div.info_tooltip").css("left", position );
+          $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
+          refreshHeight();
+        });
+      }
 
-  function adjustInfoTooltipHeight() {
-    var height = $("div.info_tooltip div.content").height() + 65;
-    height = (height > 231) ? 231 : height;
-    $("div.info_tooltip").css("height", height + "px");
-  }
+      function refreshHeight() {
+        var height = $("div.info_tooltip div.content").height() + 65;
+        height = (height > 231) ? 231 : height;
+        $("div.info_tooltip").css("height", height + "px");
+      }
+
+      return{
+        hide: hideTooltip,
+        show: showInfoTooltip
+      }
+    }());
 
 
     /*SELECTS*/
@@ -102,8 +109,9 @@
       ev.preventDefault();
 
       $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
-      
+
       if (!$(this).closest('div.select').hasClass('opened')) {
+        infoTooltip.hide();
         if ($(this).parent().find('li.selected').length) {
           var index = $(this).parent().find('li.selected').index();
           $(this).parent().find('div.option_list').css('top',-(index*24)+'px');
@@ -135,19 +143,18 @@
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
 
-		showInfoTooltip(value, $(this).closest('div.select').position().left);
+        infoTooltip.show(value, $(this).closest('div.select').position().left);
 
         $(this).parent().addClass('selected');
         $(this).closest('div.select').addClass('selected').removeClass('opened');
         $(this).closest('div.select').find('span.inner_select a').text(value);
         $('body').unbind('click');
-      } 
+      }
     });
   }
-  
-  
-  
-  
+
+
+
   function animateSlider() {
     var new_value = $("div.year_slider").slider('value') + 1;
     if (new_value>2011) {
