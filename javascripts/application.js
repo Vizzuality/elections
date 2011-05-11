@@ -2,6 +2,7 @@
   /*Application global vars*/
   var year = 2009;
   var compare = 'paro';
+  var state = "map";
 
 
   $(document).ready(function(){
@@ -33,7 +34,12 @@
     }
     
     // Check length of the array
-    if (route.length!=5) {
+    if (route.length!=6) {
+      return false;
+    }
+    
+    // Check provincia-autonomia-municipio
+    if (route[5]!="autonomia" && route[5]!="municipio" && route[5]!="provincia") {
       return false;
     }
     
@@ -71,7 +77,7 @@
     start_center = new google.maps.LatLng(parseFloat(route[0]),parseFloat(route[1]));
     start_zoom = parseInt(route[2]);
     year = parseInt(route[3]);
-    $("div.year_slider").slider("value",[year]);
+    $("div.year_slider").slider("value",year);
     compare = route[4];
     var value = $('div.option_list ul li a.'+route[4]).text();
     $('div.option_list ul li a.'+route[4]).closest('li').addClass('selected');
@@ -84,6 +90,13 @@
   function changeHash() {
     var latlng = peninsula.getCenter();
     var zoom = peninsula.getZoom();
-    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare;
+    if (zoom==6) {
+      level = "autonomia";
+    } else if (zoom>6 && zoom<10) {
+      level = "provincia";
+    } else {
+      level = "municipio";
+    }
+    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare+"_"+level;
   }
   
