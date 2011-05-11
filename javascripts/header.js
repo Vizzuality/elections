@@ -109,7 +109,7 @@
         $("div.info_tooltip").css("height", height + "px");
       }
 
-      return{
+      return {
         hide: hideTooltip,
         show: showInfoTooltip
       }

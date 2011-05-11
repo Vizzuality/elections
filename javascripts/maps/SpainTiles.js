@@ -72,7 +72,7 @@
         
           //Loop data points
           _.each(points,function(point,i){
-            me.createBubble(div,point.data,tileCoordinate,scale,coord,zoom,ownerDocument);
+            me.createBubble(div,point,tileCoordinate,scale,coord,zoom,ownerDocument);
           });
         
           return div;
@@ -97,6 +97,7 @@
   
   
   CoordMapType.prototype.createBubble = function(div,point,tileCoordinate,scale,coord,zoom,ownerDocument) {
+    
     hash[coord.x+'_'+coord.y+'_'+zoom][point.id] = point;
     
     var latlng = new google.maps.LatLng(point.center_latitude,point.center_longitude);
@@ -106,9 +107,9 @@
     var left = pixelCoordinate.x - tileCoordinate.x;
     var top = pixelCoordinate.y - tileCoordinate.y;
 
-    var less = Math.floor(point[normalization[compare]+'_'+year+'_min']);
-    var desv = Math.max(Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_max'])),Math.ceil(Math.abs(point[normalization[compare]+'_'+year+'_min'])))/5;
-    var value = Math.abs(point[normalization[compare]+'_'+year]);
+    var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
+    var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
+    var value = Math.abs(point['data'][year][normalization[compare]]);
     
     var radius;
     if ((desv*0)>=value && value<(desv*1)) {
@@ -124,12 +125,12 @@
     }
 
     var data,className;
-    if (point[normalization[compare]+'_'+year]==null) {
+    if (point['data'][year][normalization[compare]]==null) {
       data = 'NF';
       className = "red";
     } else {
-      data = ((point[normalization[compare]+'_'+year]>0)?('+'+Math.ceil(point[normalization[compare]+'_'+year])):(Math.floor(point[normalization[compare]+'_'+year])));
-      className = (point[normalization[compare]+'_'+year]>0)?'yellow':'grey';
+      data = ((point['data'][year][normalization[compare]]>0)?('+'+Math.ceil(point['data'][year][normalization[compare]])):(Math.floor(point['data'][year][normalization[compare]])));
+      className = (point['data'][year][normalization[compare]]>0)?'yellow':'grey';
     }
 
     var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
@@ -161,12 +162,12 @@
         
         //change data of the ball
         var data,className;
-        if (ele[normalization[compare]+'_'+year]==null) {
+        if (ele['data'][year][normalization[compare]]==null) {
           data = '-';
           className = "red";
         } else {
-          data = ((ele[normalization[compare]+'_'+year]>0)?('+'+Math.ceil(ele[normalization[compare]+'_'+year])):(Math.floor(ele[normalization[compare]+'_'+year])));
-          className = (ele[normalization[compare]+'_'+year]>0)?'yellow':'grey';
+          data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.ceil(ele['data'][year][normalization[compare]])):(Math.floor(ele['data'][year][normalization[compare]])));
+          className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
         $('div#'+ele.id+' p').text(data);
         $('div#'+ele.id+' p').removeClass().addClass(className);
@@ -175,9 +176,9 @@
         $('div#'+ele.id+' img').attr('src','/images/'+className+'_marker.png');
         
         //change heigth-width of the ball
-        var less = Math.floor(ele[normalization[compare]+'_'+year+'_min']);
-        var desv = Math.max(Math.ceil(Math.abs(ele[normalization[compare]+'_'+year+'_max'])),Math.ceil(Math.abs(ele[normalization[compare]+'_'+year+'_min'])))/5;
-        var value = Math.abs(ele[normalization[compare]+'_'+year]);
+        var less = Math.floor(ele['data'][year][normalization[compare]+'_min']);
+        var desv = Math.max(Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_min'])))/5;
+        var value = Math.abs(ele['data'][year][normalization[compare]]);
 
         var radius;
         if ((desv*0)>=value && value<(desv*1)) {
