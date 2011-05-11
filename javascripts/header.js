@@ -97,7 +97,11 @@
             $("div.info_tooltip ul li.right").html("<span>-25</span>" + info.right);
 
             $("div.info_tooltip").css("left", position );
-            $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
+            $("div.info_tooltip").fadeIn("slow", function() {
+              $('body').click(function(event) {
+                if (!$(event.target).closest('div.info_tooltip').length) { hideTooltip(); }
+              });
+            });
             refreshHeight();
           }
         });
