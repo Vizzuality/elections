@@ -8,7 +8,7 @@ div#header span.end_right {position:absolute; right:0; top:0; width:10px; height
 div#header div.left {float:left; width:320px;}
 div#header div.left h1 {margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
 div#header div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px; overflow:hidden;}
-div#header div.left form input.text {float:right; width:248px; height:15px; margin:0; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular"; 
+div#header div.left form input.text {float:right; width:248px; height:15px; margin:0; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('/images/lens.png') no-repeat 0 0;}
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
@@ -19,7 +19,7 @@ div#header div.left div.search_error h5 {font:normal 15px "Officina Regular"; co
 div#header div.left div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
 div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
   text-align:center; line-height:13px; text-decoration:none;}
-div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}  
+div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div#header div.right {float:right; width:650px;}
 div#header div.right div.share {float:right; width:100%; height:24px; margin:20px 0 0 0;}
 div#header div.right div.share div.outer_share {float:right; width:144px!important; height:24px; padding:0; margin:0 15px 0 0; background:url('/images/share_bkg.png') no-repeat 0 0;}
@@ -30,14 +30,36 @@ div#header div.right div.share div.outer_share a.twitter {float:left; width:22px
 div#header div.right div.share div.outer_share a.twitter:hover {background-position:right -21px; cursor:pointer;}
 div#header div.right div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px;}
 
-div#header div.right div.selects {display:inline; float:right; width:auto; height:50px; margin:5px 7px 0 0!important;}
+div#header div.right div.info_tooltip{position:absolute; display:none; top:102px; width:231px; height:211px; background:url('/images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
+div#header div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('/images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
+div#header div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
+div#header div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content ul {clear:both; overflow:hidden;}
+div#header div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content ul li span {position:absolute; padding-top: 7px;}
+div#header div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('/images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
+div#header div.right div.info_tooltip div.content ul li.left span {left:9px;}
+div#header div.right div.info_tooltip div.content ul li.right {width: 40px; padding-right: 40px; background:url('/images/orange_marker_tooltip.png') no-repeat right 0; text-align:right;}
+div#header div.right div.info_tooltip div.content ul li.right span {right:15px; color: #FF9900;}
+div#header div.right div.info_tooltip div.content a.more {float:left; width:100px; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
+
+div#header div.right div.selects {display:inline; float:right; width:660px; height:50px; margin:5px 7px 0 0!important;}
 div#header div.right div.selects div.select {position:relative; float:right;}
 div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('/images/select_left.png') no-repeat 0 0;}
 div#header div.right div.selects div.select.selected div.outer_select {background-position:0 -97px;}
 div#header div.right div.selects div.select div.outer_select img {position:absolute; left:20px; top:18px; z-index:10;}
 div#header div.right div.selects div.select div.outer_select.chat img {left:23px;}
 div#header div.right div.selects div.select div.outer_select.money img {left:23px;}
-div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:auto; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
+div#header div.right div.selects div.select div.outer_select.people img {left:23px;}
+
+div#header div.right div.selects div.select div.outer_select span.icon {position:absolute; top: 10px; left:13px; height:32px; width:32px;}
+div#header div.right div.selects div.select div.outer_select.money span.icon {background:url('/images/money.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.chat span.icon {background:url('/images/chat.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.people span.icon {background:url('/images/people.png') no-repeat center;}
+
+div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:120px; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
 div#header div.right div.selects div.select.selected div.outer_select span.inner_select {background-position:right -97px;}
 div#header div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
 div#header div.right div.selects div.select div.outer_select:hover span.inner_select a {color:white;}
@@ -46,26 +68,25 @@ div#header div.right div.selects div.select div.outer_select span a {font:normal
 div#header div.right div.selects div.select.selected div.outer_select span a {color:white;}
 div#header div.right div.selects div.select div.option_list {position:absolute; display:none; top:0; left:-2px; width:198px; z-index:50;}
 div#header div.right div.selects div.select.opened div.option_list {display:block;}
-div#header div.right div.selects div.select div.option_list div.top {width:100%; height:11px; background:url('/images/top_list_select.png') no-repeat 0 0;}
-div#header div.right div.selects div.select div.option_list div.bottom {width:100%; height:auto; padding:3px 0 21px 0; background:url('/images/bottom_list_select.png') no-repeat 0 bottom;}
+div#header div.right div.selects div.select div.option_list div.top {width:220px; height:11px; background:url('/images/top_list_select.png') no-repeat 0 0;}
+div#header div.right div.selects div.select div.option_list div.bottom {width:220px; height:auto; padding:3px 0 21px 0; background:url('/images/bottom_list_select.png') no-repeat 0 bottom;}
 div#header div.right div.selects div.select div.option_list div.bottom ul {padding:5px 0 0 0;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li {padding:0 0 5px 16px;}
-div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('/images/selected_arrows.png') no-repeat 170px 4px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('/images/selected_arrows.png') no-repeat 195px 4px;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 1px;}
 div#header div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -32px;}
 div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -64px;}
-
-div#header div.right {}
+div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 0px;}
 
 
 /*YEARS SLIDER*/
 div#header div.years_content {position:absolute; bottom:20px; left:15px; right:20px;  height:34px; z-index:10;}
 div#header div.years_content a.action {display:inline-block; width:33px; height:34px; background:url('/images/play_stop.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.years_content a.action.play:hover {background-position:-31px 0;}
-div#header div.years_content a.action.stop {background-position:-25px 0;}
-div#header div.years_content a.action.stop:hover {background-position:-25px -22px;}
+div#header div.years_content a.action.stop {background-position:-95px 0;}
+div#header div.years_content a.action.stop:hover {background-position:-127px 0;}
 div#header div.years_content div.slider_bkg {position:absolute; right:0; left:60px; top:15px; bottom:0; height:9px; padding:0 0 0 4px; background:url('/images/big_slider_left.png') no-repeat 0 0; z-index:0;}
 div#header div.years_content div.slider_bkg span.slider_right {float:left; width:100%; height:9px; background:url('/images/big_slider_right.png') no-repeat right 0;}
 div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:17%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
@@ -93,8 +114,16 @@ div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move
 div.tabs {position:absolute; left:0; right:0; top:148px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
-/*div.tabs div#map div#canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}*/
-/*div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}*/
+div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
+div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; display:none; padding:5px 7px; font:normal 13px Arial; color:white; background:rgba(0,0,0,0.7); z-index:10;}
+div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
+/*<div class="canary_island">
+  <a href="#islas_canarias" class="islas_canarias">Ir a las Islas Canarias</a>
+  <div id="canary_island"></div>
+</div>*/
+
+div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
+div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.jpg'); z-index:0;}
 /*graph*/
@@ -102,6 +131,8 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.outerBubble{position:absolute;background:#FFFFFF;border:none;height:40px;width:40px;opacity:0.5;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 
+/*Vizzuality*/
+div#map a.vizzuality {position:absolute; left:70px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 /*MAP CONTROLS*/
 div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('/images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
@@ -118,12 +149,12 @@ div#zoom_control .ui-slider-vertical { width: .8em; height: 100px; }
 div#zoom_control .ui-slider-vertical .ui-slider-handle { left: -6px; margin-left: 0; margin-bottom: -.6em; height:16px!important; width:16px!important; background:url('/images/handle.png') no-repeat 0 0;}
 div#zoom_control .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }  
+div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
 
 /*MENU MAP/GRAPH*/
-div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%; 
+div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
   font-size:0; display:block; line-height:0;}
 div#tab_menu a.map {float:left; width:32px; height:31px; margin:8px 0 0 13px; background:url('/images/map_icon.png') no-repeat -1px 0;}
 div#tab_menu a.stats {float:left; width:32px; height:31px; margin:1px 0 0 13px; background:url('/images/stats_icon.png') no-repeat -1px 0;}
@@ -239,7 +270,7 @@ div div.stats div.partido.pp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp div.bar span {background-position:right -6px!important;}
 div div.stats div.partido.pp p {color:#00B2EB;}
 /*ui*/
-div div.stats div.partido.ui div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span {background-position:right -12px!important}
 div div.stats div.partido.iu p {color:#009933;}
 /*otros*/
