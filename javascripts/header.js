@@ -1,5 +1,6 @@
 
   var procesos_electorales;
+  var animate_interval;
   
   function initializeOptions() {
     //Control tab menu - map or graph
@@ -10,9 +11,11 @@
       if (!$(this).hasClass('selected')) {
         $('div#tab_menu a').removeClass('selected');
         if (className=='map') {
+          state = "map";
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
+          state = "graph";
           restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
@@ -21,7 +24,29 @@
       }
     });
 
-
+    
+    /* Animate electoral slider process */
+    // Play animation process
+    $('a.play').live('click',function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      //Remove play class and add pause class
+      $(this).removeClass('play').addClass('stop');
+      $(this).attr('href','#stop');
+      $("div.year_slider").slider('value',1987);
+      changeHash();
+      refreshTiles();
+      setTimeout(function(){animate_interval = setInterval(function(){animateSlider()},3000)},3000);
+    });
+    
+    // Stop animation process
+    $('a.stop').live('click',function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      clearInterval(animate_interval);
+      $(this).removeClass('stop').addClass('play');
+      $(this).attr('href','#play');
+    });
 
     // Procesos_electorales var
     // $.ajax({
@@ -41,10 +66,10 @@
       range: "min",
       min: 1987,
       max: 2011,
-      value: 2009,
+      value: year,
       step: 1,
       create: function(event,ui) {
-        $(this).find('a.ui-slider-handle').text('2009');
+        $(this).find('a.ui-slider-handle').text(year);
       },
       slide: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
@@ -56,10 +81,11 @@
       },
       stop: function( event, ui ) {
         changeHash();
-        setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
         refreshTiles();
+        setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
       }
     });
+
 
     /*SELECTS*/
     /*Select event*/
@@ -107,4 +133,19 @@
         $('body').unbind('click');
       } 
     });
+  }
+  
+  
+  
+  
+  function animateSlider() {
+    var new_value = $("div.year_slider").slider('value') + 1;
+    if (new_value>2011) {
+      clearInterval(animate_interval);
+      return false;
+    } else {
+      $("div.year_slider").slider('value',new_value);
+      changeHash();
+      refreshTiles();
+    }
   }
