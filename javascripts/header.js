@@ -74,12 +74,13 @@
 
     var infoTooltip = (function() {
 
-        $('div.info_tooltip').live('click',function(ev){
+        $('div.info_tooltip a.close').live('click',function(ev){
           ev.stopPropagation();
           ev.preventDefault();
+          this.hideTooltip();
         });
 
-      function hideTooltip(p) {
+      function hideTooltip() {
         $("div.info_tooltip").fadeOut("slow");
         $('body').unbind("click");
       }
