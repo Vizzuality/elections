@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + "/common"
 cartodb        = get_cartodb_connection
 
 base_path = FileUtils.pwd
+FileUtils.rm_rf("#{base_path}/../json/generated_data/tiles")
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
 
 def queries_by_zoom(x, y, z)
@@ -13,9 +14,8 @@ def queries_by_zoom(x, y, z)
       <<-SQL
          SELECT
           id_1 AS id,
-          name_1 AS autonomia,
-          proceso_electoral_id,
-          pe.anyo proceso_electoral_year,
+          name_1 AS name,
+          pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
           primer_partido_percent,
@@ -87,9 +87,8 @@ def queries_by_zoom(x, y, z)
         <<-SQL
          SELECT
           id_2 AS id,
-          name_2 AS provincia,
-          proceso_electoral_id,
-          pe.anyo proceso_electoral_year,
+          name_2 AS name,
+          pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
           primer_partido_percent,
@@ -161,10 +160,9 @@ def queries_by_zoom(x, y, z)
       <<-SQL
          SELECT
           id_4 AS id,
-          name_4 AS municipio,
+          name_4 AS name,
           name_2 AS provincia,
-          proceso_electoral_id,
-          pe.anyo proceso_electoral_year,
+          pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
           primer_partido_percent,
@@ -237,6 +235,56 @@ def queries_by_zoom(x, y, z)
   queries[z]
 end
 
+supported_variables = %w('paro_normalizado')
+variables = cartodb.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
+max_year = variables.map(&:max_year).sort.last
+min_year = variables.map(&:min_year).sort.first
+
+def create_years_hash(records, variables, max_year, min_year)
+
+  years = {}
+
+  min_year.upto(max_year) do |year|
+    data = years[year] || {}
+
+    variables.each do |variable|
+      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
+      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
+      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
+    end
+
+    records.each do |row|
+      data[:censo_total]             = nil
+      data[:percen_participacion]    = nil
+      data[:primer_partido_percent]  = nil
+      data[:primer_partido_name]     = nil
+      data[:segundo_partido_percent] = nil
+      data[:segundo_partido_name]    = nil
+      data[:tercer_partido_percent]  = nil
+      data[:tercer_partido_name]     = nil
+      data[:otros_partido_percent]   = nil
+
+      if row.proceso_electoral_year == year || row.proceso_electoral_year < year
+        data[:censo_total]             = row.censo_total
+        data[:percen_participacion]    = row.percen_participacion
+        data[:primer_partido_percent]  = row.primer_partido_percent
+        data[:primer_partido_name]     = row.primer_partido_name
+        data[:segundo_partido_percent] = row.segundo_partido_percent
+        data[:segundo_partido_name]    = row.segundo_partido_name
+        data[:tercer_partido_percent]  = row.tercer_partido_percent
+        data[:tercer_partido_name]     = row.tercer_partido_name
+        data[:otros_partido_percent]   = row.otros_partido_percent
+        break
+      end
+    end
+
+    years[year] = data
+  end
+
+  years
+end
+
+
 zoom_levels = [6,7,11]
 
 start_x = {
@@ -265,26 +313,49 @@ end_y = {
 
 length = [6714, 841]
 
-
 counter = 0
 i = ARGV.first.to_i
+max_requests = ARGV[1].to_i if ARGV.count > 1
 
-progress = ProgressBar.new(length[i])
+progress = ProgressBar.new(max_requests || length[i])
 
 zoom_levels.each do |z|
   y = start_y[z][i]
   while y <= end_y[z][i] do
     x = start_x[z][i]
     while x <= end_x[z][i] do
+
+      exit(0) if max_requests && counter >= max_requests
+
       json = {}
 
       query = queries_by_zoom(x, y, z)
 
-      # pp "#{x}, #{y}, #{z}, #{cartodb.query(query).rows.count}"
-
       json = nil
 
-      json = cartodb.query(query).rows.map{|r| {:id => r.delete(:proceso_electoral_id), :year => r.delete(:proceso_electoral_year), :data => r}}
+      municipalities = {}
+
+      cartodb.query(query).rows.each do |r|
+        if municipalities[r.id]
+          municipalities[r.delete(:id)] << r
+        else
+          municipalities[r.delete(:id)] = [r]
+        end
+      end
+
+      json = []
+
+      municipalities.each do |id, records|
+        json << {
+          :id => id,
+          :name => records.first.name,
+          :center_longitude => records.first.center_longitude,
+          :center_latitude => records.first.center_latitude,
+          :max_year => max_year,
+          :min_year => min_year,
+          :data => create_years_hash(records, variables, max_year, min_year)
+        }
+      end
 
       fd = File.open("../json/generated_data/tiles/#{z}_#{x}_#{y}.json",'w+')
       fd.write(json.to_json)
@@ -293,6 +364,7 @@ zoom_levels.each do |z|
       progress.increment!
 
       x += 1
+      counter += 1
     end
     y += 1
   end
