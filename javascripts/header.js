@@ -77,7 +77,7 @@
         $('div.info_tooltip a.close').live('click',function(ev){
           ev.stopPropagation();
           ev.preventDefault();
-          this.hideTooltip();
+          hideTooltip();
         });
 
       function hideTooltip() {
