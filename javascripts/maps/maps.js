@@ -9,7 +9,6 @@
   var projection = new MercatorProjection();
   var infowindow,comparewindow;
   var dragging = false;
-  var tileServers=["a","b","c","d"];
   var baseUrl="http://chart.apis.google.com/chart?chs=256x256";
   var chco = "6B6A6ADF|65432100";
   var chf = "bg,s,65432100";
