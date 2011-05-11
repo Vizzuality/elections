@@ -147,7 +147,7 @@
   
   
   
-  function refreshTiles() {
+  function refreshBubbles() {
     var flat = _.reduceRight(hash,function(a,b){ return a.concat(b); },[]);
     flat = _.select(flat, function(ele){ return ele!=undefined;});
     
