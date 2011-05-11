@@ -33,11 +33,7 @@
       //Remove play class and add pause class
       $(this).removeClass('play').addClass('stop');
       $(this).attr('href','#stop');
-      $("div.year_slider").slider('value',1987);
-      changeHash();
-      refreshTiles();
-      refreshBubbles();
-      setTimeout(function(){animate_interval = setInterval(function(){animateSlider()},3000)},3000);
+      animate_interval = setInterval(function(){animateSlider()},4000);
     });
     
     // Stop animation process
@@ -49,17 +45,6 @@
       $(this).attr('href','#play');
     });
 
-    // Procesos_electorales var
-    // $.ajax({
-    //   method: "GET",
-    //   dataType: 'jsonp',
-    //   url: 'https://api.cartodb.com/v1',
-    //   data: {sql:'SELECT * FROM procesos_electorales',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
-    //   success: function(data) {
-    //     procesos_electorales = data.rows;
-    //   },
-    //   error: function(e) {console.debug(e)}
-    // });
 
 
     // Year Slider
@@ -166,6 +151,8 @@
   function animateSlider() {
     var new_value = $("div.year_slider").slider('value') + 1;
     if (new_value>2011) {
+      $(this).removeClass('stop').addClass('play');
+      $(this).attr('href','#play');
       clearInterval(animate_interval);
       return false;
     } else {
