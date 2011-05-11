@@ -45,7 +45,7 @@ div#header div.right div.info_tooltip div.content ul li.right span {right:15px; 
 div#header div.right div.info_tooltip div.content a.more {float:left; width:100px; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 
-div#header div.right div.selects {display:inline; float:right; width:auto; height:50px; margin:5px 7px 0 0!important;}
+div#header div.right div.selects {display:inline; float:right; width:660px; height:50px; margin:5px 7px 0 0!important;}
 div#header div.right div.selects div.select {position:relative; float:right;}
 div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('/images/select_left.png') no-repeat 0 0;}
 div#header div.right div.selects div.select.selected div.outer_select {background-position:0 -97px;}
@@ -59,7 +59,7 @@ div#header div.right div.selects div.select div.outer_select.money span.icon {ba
 div#header div.right div.selects div.select div.outer_select.chat span.icon {background:url('/images/chat.png') no-repeat center;}
 div#header div.right div.selects div.select div.outer_select.people span.icon {background:url('/images/people.png') no-repeat center;}
 
-div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:auto; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
+div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:120px; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
 div#header div.right div.selects div.select.selected div.outer_select span.inner_select {background-position:right -97px;}
 div#header div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
 div#header div.right div.selects div.select div.outer_select:hover span.inner_select a {color:white;}
