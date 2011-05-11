@@ -3,6 +3,7 @@
     var offsetScreenX = 510;
     var offsetScreenY = 265;  
 
+    var graph_bubble_index = 100;
     var valuesHash = {};
     var nBubbles = 0;
 
@@ -11,10 +12,16 @@
     function initializeGraph() {
       $(".innerBubble").live({
         mouseenter: function () {
-          $(this).css("backgroundColor","#000000");
+          var radius = $(this).parent().height()/2;
+          var top = $(this).parent().css('top').replace('px','') - radius - 30;
+          var left = $(this).parent().css('left').replace('px','');
+          var text = $(this).parent().attr('id');
+          graphBubbleTooltip.show(left,top,text);
+          $(this).parent().css('zIndex',graph_bubble_index++);
+          $(this).parent().children('.outerBubble').css("background","#333333");
         },
         mouseleave: function () {
-          $(this).css("backgroundColor",valuesHash[$(this).parent().attr('id')]["color"]);
+          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
         },
         dblclick: function(){
           var url = valuesHash[$(this).parent().attr('id')]["children_json_url"];
@@ -88,17 +95,45 @@
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[$(this).parent().attr('id')]["resto_partidos_percent"]+'%)');
         },
-        hover: function() {
-          console.log($(this).parent().attr('id') + ' ('+valuesHash[$(this).parent().attr('id')]["cartodb_id"]+'): ' + valuesHash[$(this).parent().attr('id')]["x_coordinate"] + ', ' + valuesHash[$(this).parent().attr('id')]["y_coordinate"]);
-        }
+        // hover: function() {
+        //   console.log($(this).parent().attr('id') + ' ('+valuesHash[$(this).parent().attr('id')]["cartodb_id"]+'): ' + valuesHash[$(this).parent().attr('id')]["x_coordinate"] + ', ' + valuesHash[$(this).parent().attr('id')]["y_coordinate"]);
+        // }
       });
+      
+      
+      
+      
+      // Tooltip when hover some bubble
+      var graphBubbleTooltip = (function() {
+    	  $('div#graph_container').append('<p class="graph_bubble_tooltip">Comunidad de Madrid</p>');
+    	  
+    	  function hideTooltip() {
+          $('p.graph_bubble_tooltip').hide();
+    	  }
+
+    	  function showTooltip(left,top,text) {
+    	    $('p.graph_bubble_tooltip').text(text.replace('_',' '));
+    	    var offset = $('p.graph_bubble_tooltip').width()/2;
+    	    $('p.graph_bubble_tooltip').css('left',left-offset+'px');
+    	    $('p.graph_bubble_tooltip').css('top',top+'px');
+    	    
+          $('p.graph_bubble_tooltip').show();
+    	  }
+
+    	  return {
+    	    hide: hideTooltip,
+    	    show: showTooltip
+    	  }
+    	}());
     }
     
+    
     function restartGraph() {
-      $('div#graph_container').empty();
+      $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
       createBubbles("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
     }
+    
 
     function createBubbles(url){
       $.getJSON(url, function(data) {
@@ -180,3 +215,36 @@
         }
       );
     }
+    
+    
+    
+
+    
+    
+    
+    // Append graph infowindow
+    // $('#graph').append();
+    // <!-- Graph infowindow -->
+    // <div class="infowindow" id="graph_infowindow" style="opacity:1; top:0; right:70px">
+    //   <a class="close_infowindow"></a>
+    //   <div class="top">
+    //     <h2>Alaejos</h2>
+    //     <p class="province">11.982 habitantes.</p>
+    //     <div class="stats">
+    //       <h4>65% de participación</h4>
+    //       <div class="partido"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>
+    //       <div class="partido"><div class="bar"><span></span></div><p>PP (36%)</p></div>
+    //       <div class="partido"><div class="bar"><span></span></div><p>IU (12%)</p></div>
+    //       <div class="partido"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>
+    //     </div>
+    //   </div>
+    //   <div class="bottom">
+    //     <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>
+    //     <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />
+    //     <a class="compare">Comparar</a>
+    //   </div>
+    // </div>
+    // <!-- Graph Infowindow -->
+    
+    
+    
