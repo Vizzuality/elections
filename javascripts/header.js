@@ -24,7 +24,6 @@
       }
     });
 
-
     /* Animate electoral slider process */
     // Play animation process
     $('a.play').live('click',function(ev){
@@ -74,6 +73,11 @@
     });
 
     var infoTooltip = (function() {
+
+        $('div.info_tooltip').live('click',function(ev){
+          ev.stopPropagation();
+          ev.preventDefault();
+        });
 
       function hideTooltip(p) {
         $("div.info_tooltip").fadeOut("slow");
