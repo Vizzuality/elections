@@ -65,7 +65,8 @@
        urlPattern:'/tiles/',
        minZoom: 6,
        maxZoom: 12,
-       name: "Political parties tiles"
+       name: "Political parties tiles",
+       alt: ""
     });
     peninsula.overlayMapTypes.insertAt(1,political_parties);
     //canary_island.overlayMapTypes.setAt(0,political_parties);
@@ -107,7 +108,6 @@
     //   dragging = false;
     // });
 
-    console.log(peninsula.overlayMapTypes.getArray());
 
     /*zoom controls*/
     $('a.zoom_in').click(function(ev){
@@ -172,20 +172,25 @@
 
 
   function refreshTiles() {
-    //Political tiles
-    political_parties = new google.maps.ImageMapType({
-       getTileUrl: function(tile, zoom) {
-         return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
-       },
-       tileSize: new google.maps.Size(256, 256),
-       opacity:0.65,
-       isPng: true,
-       urlPattern:'/tiles/',
-       minZoom: 6,
-       maxZoom: 12,
-       name: "Political parties tiles"
+    $('div#peninsula div').each(function(i,ele){
+      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
+        
+        $(ele).animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
+          var old_url = $(this).children('img').attr('src');
+          var new_url = (old_url).substring(0, old_url.length-6) + procesos_electorales[year] +".png";
+          "/tiles/255_189_9_70.png";
+
+          $(this).children('img').attr('src',new_url);          
+          $(this).children('img').one("load",function(){
+            $(this).parent().animate({opacity:0.65},{duration:500,queue:true});
+          })
+          .each(function(){
+            if(this.complete) $(this).trigger("load");
+          });          
+        }
+        });
+      }
     });
-    peninsula.overlayMapTypes.setAt(1,political_parties);
   }
 
 
