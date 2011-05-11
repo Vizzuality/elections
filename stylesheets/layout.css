@@ -35,7 +35,7 @@ div#header div.right div.info_tooltip div.top{position:relative; top:-25px; floa
 div#header div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
 div#header div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div#header div.right div.info_tooltip div.content ul {clear:both; overflow:hidden; margin-bottom: 10px;}
+div#header div.right div.info_tooltip div.content ul {clear:both; overflow:hidden;}
 div#header div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content ul li span {position:absolute; padding-top: 7px;}
 div#header div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('/images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
@@ -68,11 +68,11 @@ div#header div.right div.selects div.select div.outer_select span a {font:normal
 div#header div.right div.selects div.select.selected div.outer_select span a {color:white;}
 div#header div.right div.selects div.select div.option_list {position:absolute; display:none; top:0; left:-2px; width:198px; z-index:50;}
 div#header div.right div.selects div.select.opened div.option_list {display:block;}
-div#header div.right div.selects div.select div.option_list div.top {width:100%; height:11px; background:url('/images/top_list_select.png') no-repeat 0 0;}
-div#header div.right div.selects div.select div.option_list div.bottom {width:100%; height:auto; padding:3px 0 21px 0; background:url('/images/bottom_list_select.png') no-repeat 0 bottom;}
+div#header div.right div.selects div.select div.option_list div.top {width:220px; height:11px; background:url('/images/top_list_select.png') no-repeat 0 0;}
+div#header div.right div.selects div.select div.option_list div.bottom {width:220px; height:auto; padding:3px 0 21px 0; background:url('/images/bottom_list_select.png') no-repeat 0 bottom;}
 div#header div.right div.selects div.select div.option_list div.bottom ul {padding:5px 0 0 0;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li {padding:0 0 5px 16px;}
-div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('/images/selected_arrows.png') no-repeat 170px 4px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('/images/selected_arrows.png') no-repeat 195px 4px;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 1px;}

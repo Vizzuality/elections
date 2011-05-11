@@ -11,7 +11,7 @@ var tooltipInfo = {
     right: "más jóvenes"
   },
   "Tasa de paro" : {
-    content: "Desviación respecto al número de parados.",
+    content: "Lorem ipsum dolor sit amet de, consectetur adipiscing elit. Donec vel libero ipsum, nec commodo ipsum. Sed elementum, odio et congue.",
     left: "más parados",
     right: "menos parados"
   }
