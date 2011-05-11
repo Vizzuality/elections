@@ -51,14 +51,15 @@ WHEN pp1.name = 'PP' THEN
   WHEN (v.primer_partido_percent >= 50) AND (v.primer_partido_percent < 75)  THEN 'blue_M' 
   WHEN (v.primer_partido_percent >= 0) AND (v.primer_partido_percent < 50)  THEN 'blue_L'
   END 
-ELSE 'other' 
+WHEN pp1.name IS NOT NULL THEN
+  pp1.name
+ELSE 'unknown' 
 END as color  
 FROM gadm4 AS g 
-INNER JOIN votaciones_por_municipio AS v ON g.cartodb_id=v.gadm4_cartodb_id 
-INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
-INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
-INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id 
-WHERE proceso_electoral_id=#{ELECTION_ID});
+LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.cartodb_id=v.gadm4_cartodb_id 
+LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
+LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
+LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 ALTER TABLE gadm4_processed ADD PRIMARY KEY (gid); 
 CREATE INDEX gadm4_processed_the_geom_webmercator_idx ON gadm4_processed USING gist(the_geom_webmercator); 
 CREATE INDEX gadm4_processed_the_geom_idx ON gadm4_processed USING gist(the_geom);
