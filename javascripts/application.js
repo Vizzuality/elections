@@ -2,6 +2,7 @@
   /*Application global vars*/
   var year = 2009;
   var compare = 'paro';
+  var state = "map";
 
 
   $(document).ready(function(){
@@ -76,7 +77,7 @@
     start_center = new google.maps.LatLng(parseFloat(route[0]),parseFloat(route[1]));
     start_zoom = parseInt(route[2]);
     year = parseInt(route[3]);
-    $("div.year_slider").slider("value",[year]);
+    $("div.year_slider").slider("value",year);
     compare = route[4];
     var value = $('div.option_list ul li a.'+route[4]).text();
     $('div.option_list ul li a.'+route[4]).closest('li').addClass('selected');

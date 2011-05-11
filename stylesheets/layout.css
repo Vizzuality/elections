@@ -72,8 +72,8 @@ div#header div.right {}
 div#header div.years_content {position:absolute; bottom:20px; left:15px; right:20px;  height:34px; z-index:10;}
 div#header div.years_content a.action {display:inline-block; width:33px; height:34px; background:url('/images/play_stop.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.years_content a.action.play:hover {background-position:-31px 0;}
-div#header div.years_content a.action.stop {background-position:-25px 0;}
-div#header div.years_content a.action.stop:hover {background-position:-25px -22px;}
+div#header div.years_content a.action.stop {background-position:-95px 0;}
+div#header div.years_content a.action.stop:hover {background-position:-127px 0;}
 div#header div.years_content div.slider_bkg {position:absolute; right:0; left:60px; top:15px; bottom:0; height:9px; padding:0 0 0 4px; background:url('/images/big_slider_left.png') no-repeat 0 0; z-index:0;}
 div#header div.years_content div.slider_bkg span.slider_right {float:left; width:100%; height:9px; background:url('/images/big_slider_right.png') no-repeat right 0;}
 div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:17%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
