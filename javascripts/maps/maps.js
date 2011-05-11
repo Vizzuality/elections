@@ -20,8 +20,7 @@
   function initializeMap() {
 
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
-    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12};
-
+    // var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12};
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
     //canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
@@ -53,19 +52,12 @@
     //Political tiles
     var political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         var c=Math.pow(2,zoom);
-         var d=c-1-tile.y;
-         var e=tile.x%c;
-
-         var rand_no = Math.floor((4)*Math.random());
-         var url = this.urlPattern.replace("{n}",tileServers[rand_no]);
-
-         return url+zoom+"/"+e+"/"+d+".png";
+         return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.65,
        isPng: true,
-       urlPattern:'http://{n}.tiles.mapbox.com/vizzuality/1.0.0/election_data_816f6c/'
+       urlPattern:'/tiles/'
     });
     peninsula.overlayMapTypes.setAt(1,political_parties);
     //canary_island.overlayMapTypes.setAt(0,political_parties);

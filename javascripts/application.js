@@ -33,7 +33,12 @@
     }
     
     // Check length of the array
-    if (route.length!=5) {
+    if (route.length!=6) {
+      return false;
+    }
+    
+    // Check provincia-autonomia-municipio
+    if (route[5]!="autonomia" && route[5]!="municipio" && route[5]!="provincia") {
       return false;
     }
     
@@ -84,6 +89,13 @@
   function changeHash() {
     var latlng = peninsula.getCenter();
     var zoom = peninsula.getZoom();
-    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare;
+    if (zoom==6) {
+      level = "autonomia";
+    } else if (zoom>6 && zoom<10) {
+      level = "provincia";
+    } else {
+      level = "municipio";
+    }
+    window.location.hash = "#" + latlng.lat().toFixed(3)+"_"+latlng.lng().toFixed(3)+"_"+zoom+"_"+year+"_"+compare+"_"+level;
   }
   
