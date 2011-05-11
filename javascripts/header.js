@@ -87,10 +87,19 @@
 
       function showInfoTooltip(title, position) {
         $("div.info_tooltip").fadeOut("slow", function() {
-          $("div.info_tooltip h5").text(title);
-          $("div.info_tooltip").css("left", position );
-          $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
-          refreshHeight();
+
+          var info = tooltipInfo[title];
+
+          if (info !== undefined) {
+            $("div.info_tooltip h5").text(title);
+            $("div.info_tooltip p").text(info.content);
+            $("div.info_tooltip ul li.left").html("<span>+25</span>" + info.left);
+            $("div.info_tooltip ul li.right").html("<span>-25</span>" + info.right);
+
+            $("div.info_tooltip").css("left", position );
+            $("div.info_tooltip").fadeIn("slow", function() { $('body').click(function(event) { hideTooltip();}); });
+            refreshHeight();
+          }
         });
       }
 
