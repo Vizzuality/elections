@@ -108,7 +108,7 @@
       }
 
       function refreshHeight() {
-        var height = $("div.info_tooltip div.content").height() + 65;
+        var height = $("div.info_tooltip div.content").height() + 50;
         height = (height > 231) ? 231 : height;
         $("div.info_tooltip").css("height", height + "px");
       }
