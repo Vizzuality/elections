@@ -80,8 +80,6 @@ div#header div.right div.selects div.select div.option_list.money div.bottom ul 
 div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -64px;}
 div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 0px;}
 
-div#header div.right {}
-
 
 /*YEARS SLIDER*/
 div#header div.years_content {position:absolute; bottom:20px; left:15px; right:20px;  height:34px; z-index:10;}
