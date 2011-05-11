@@ -30,6 +30,21 @@ div#header div.right div.share div.outer_share a.twitter {float:left; width:22px
 div#header div.right div.share div.outer_share a.twitter:hover {background-position:right -21px; cursor:pointer;}
 div#header div.right div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px;}
 
+div#header div.right div.info_tooltip{position:absolute; display:none; top:102px; width:231px; height:211px; background:url('/images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
+div#header div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('/images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
+div#header div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
+div#header div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content ul {clear:both; overflow:hidden; margin-bottom: 10px;}
+div#header div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content ul li span {position:absolute; padding-top: 7px;}
+div#header div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('/images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
+div#header div.right div.info_tooltip div.content ul li.left span {left:9px;}
+div#header div.right div.info_tooltip div.content ul li.right {width: 40px; padding-right: 40px; background:url('/images/orange_marker_tooltip.png') no-repeat right 0; text-align:right;}
+div#header div.right div.info_tooltip div.content ul li.right span {right:15px; color: #FF9900;}
+div#header div.right div.info_tooltip div.content a.more {float:left; width:100px; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white;}
+div#header div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
+
 div#header div.right div.selects {display:inline; float:right; width:auto; height:50px; margin:5px 7px 0 0!important;}
 div#header div.right div.selects div.select {position:relative; float:right;}
 div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('/images/select_left.png') no-repeat 0 0;}
