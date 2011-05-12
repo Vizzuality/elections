@@ -8,7 +8,7 @@ autonomies     = get_autonomies
 provinces      = get_provinces
 parties        = get_parties
 variables      = get_variables(1)
-psoe_id, pp_id = get_psoe_pp_id
+parties_known  = get_known_parties(parties)
 
 # votes per autonomy
 query = <<-SQL
@@ -49,10 +49,10 @@ variables.each do |variable|
     evolution[custom_variable_name][autonomy_hash[:name_1]] ||= get_autonomy_variable_evolution(variable, autonomy_hash[:name_1])
     json[autonomy_name] ||= {}
     json[autonomy_name][:cartodb_id]   = autonomy_hash[:cartodb_id]
-    json[autonomy_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, psoe_id, pp_id)
+    json[autonomy_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
     json[autonomy_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y)
     json[autonomy_name][:radius]       = get_radius(row)
-    json[autonomy_name][:color]        = get_color(x_coordinate)
+    json[autonomy_name][:color]        = get_color(row, x_coordinate, parties)
     json[autonomy_name][:children_json_url] = provinces_path(autonomy_name,variable)
     json[autonomy_name][:censo_total]  = row[:censo_total]
     json[autonomy_name][:porcentaje_participacion] = row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0
