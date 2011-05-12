@@ -278,16 +278,16 @@ div div.stats div.partido.pp p {color:#00B2EB;}
 /*iu*/
 div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.iu p {color:#009933;}
+div div.stats div.partido.iu p {color:#54A551;}
 
 /*ap*/
-div div.stats div.partido.ap div.bar {background-position:0 -42px!important;}
-div div.stats div.partido.ap div.bar span.c {background-position:right -42px!important}
+div div.stats div.partido.ap div.bar {background-position:0 -6px!important;}
+div div.stats div.partido.ap div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.ap p {color:#00B2EB;}
 
 /*indep*/
-div div.stats div.partido.indep div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.indep div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.indep div.bar {background-position:0 -24px!important;}
+div div.stats div.partido.indep div.bar span.c {background-position:right -24px!important}
 div div.stats div.partido.indep p {color:gray;}
 
 /*pa*/
@@ -301,28 +301,28 @@ div div.stats div.partido.bng div.bar span.c {background-position:right 0px!impo
 div div.stats div.partido.bng p {color:red;}
 
 /*pdp*/
-div div.stats div.partido.pdp div.bar {background-position:0 -60px!important;}
-div div.stats div.partido.pdp div.bar span.c {background-position:right -60px!important}
+div div.stats div.partido.pdp div.bar {background-position:0 -6px!important;}
+div div.stats div.partido.pdp div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.pdp p {color:#00B2EB;}
 
 /*erc-am*/
-div div.stats div.partido.erc_am div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.erc_am div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.erc_am div.bar {background-position:0 -30px!important;}
+div div.stats div.partido.erc_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc_am p {color:#EC7B37;}
 
 /*esquerra-am*/
-div div.stats div.partido.esquerra_am div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.esquerra_am div.bar {background-position:0 -30px!important;}
+div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.esquerra_am p {color:#EC7B37;}
 
 /*erc*/
-div div.stats div.partido.erc div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.erc div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.erc div.bar {background-position:0 -30px!important;}
+div div.stats div.partido.erc div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc p {color:#EC7B37;}
 
 /*hb*/
-div div.stats div.partido.hb div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.hb div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
+div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 
 /*ciu*/
@@ -338,13 +338,13 @@ div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.par p {color:#800080;}
 /*eaj-pnv*/
-div div.stats div.partido.eaj_pnv div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.eaj_pnv p {color:#800080;}
+div div.stats div.partido.eaj_pnv div.bar {background-position:0 -66px!important;}
+div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -66px!important}
+div div.stats div.partido.eaj_pnv p {color:#C4BE48;}
 /*ea*/
-div div.stats div.partido.ea div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.ea div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.ea p {color:#800080;}
+div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
+div div.stats div.partido.ea div.bar span.c {background-position:right -54px!important}
+div div.stats div.partido.ea p {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -12px!important}
