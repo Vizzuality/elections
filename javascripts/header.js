@@ -2,7 +2,17 @@
   var procesos_electorales;
   var animate_interval;
 
-  function initializeOptions() {
+  function initializeOptions() {    
+    // Graph - Map
+    if (state == "grafico") {
+      $('div#tab_menu a.map').removeClass('selected');
+      $('div#tab_menu a.stats').addClass('selected');
+      restartGraph();
+      $('div#map').css('zIndex',0);
+      $('div#graph').css('zIndex',10);
+    }
+    
+    
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
@@ -11,18 +21,19 @@
       if (!$(this).hasClass('selected')) {
         $('div#tab_menu a').removeClass('selected');
         if (className=='map') {
-          state = "map";
+          state = "mapa";
           //This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
-          state = "graph";
+          state = "grafico";
           restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
         }
-        $(this).addClass('selected')
+        $(this).addClass('selected');
+        changeHash();
       }
     });
 
@@ -67,11 +78,11 @@
         year = ui.value;
       },
       stop: function( event, ui ) {
-        if (state=="map") {
+        if (state=="mapa") {
           refreshTiles();
           refreshBubbles();
         } else {
-          setValue("/json/generated_data/autonomies/"+normalization[compare]+"_"+year+".json");
+          setValue("/json/generated_data/autonomias/"+normalization[compare]+"_"+graph_hack_year[year]+".json");
         }
         changeHash();
       }
@@ -164,6 +175,9 @@
       var value = $(this).text();
 
       if (!$(this).parent().hasClass('selected')) {
+        compare = $(this).attr('class');
+        changeHash();
+        
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});

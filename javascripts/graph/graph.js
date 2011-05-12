@@ -1,3 +1,8 @@
+    
+    // Graph global vars {#}
+    var deep = "autonomias";
+    var name = "España";
+
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -240,7 +245,7 @@
         }
         
         function changeData(results,names,parent_url) {
-          if (names.length!=0 && !_.isEmpty(results)) {
+          if (names!=undefined) {
             
             $('div.graph_legend h2').html(compare + ' en ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
@@ -333,7 +338,7 @@
       graph_bubble_index = 100;
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
-      createBubbles("/json/generated_data/autonomies/"+normalization[compare]+"_"+year+".json");
+      createBubbles("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
 
@@ -342,10 +347,9 @@
 
         var one = true;
         _.each(data, function(val, key) {
-
           //Check data for show legend or not
           if (one) {
-            graphLegend.change(data[key].parent_results, data[key].parents, data[key].parent_url);
+            graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
             one = false;
           }
 
@@ -405,7 +409,14 @@
 
     function goDeeper(url){
       graphLegend.hide();
-      //console.log("Going deep to " + url);
+      //Get new name and deep
+      var url_split = url.split('/');
+      deep = url_split[2];
+      console.log(url);
+      var length = url_split[url_split.length-1].split(compare)[0].length;
+      name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+      changeHash();
+
       for (key in valuesHash){
         //Destroy Bubbles
         destroyBubble(key, url);
