@@ -10,17 +10,23 @@ var tooltipInfo = {
   "Edad media" : {
     content: "Desviación respecto a la media de edad de cada municipio.",
     left: "más mayores",
-    right: "más jóvenes"
+    right: "más jóvenes",
+    legendTop: "Más edad",
+    legendBottom:"Menos edad"
   },
   "PIB per cápita" : {
     content: "Desviación respecto a la media de edad de cada municipio.",
     left: "más mayores",
-    right: "más jóvenes"
+    right: "más jóvenes",
+    legendTop: "Más % PIB ",
+    legendBottom:"Menos % PIB"
   },
   "Tasa de paro" : {
     content: "Lorem ipsum dolor sit amet de, consectetur adipiscing elit. Donec vel libero ipsum, nec commodo ipsum. Sed elementum, odio et congue.",
     left: "más parados",
-    right: "menos parados"
+    right: "menos parados",
+    legendTop: "Más % paro",
+    legendBottom:"Menos % paro"
   }
 };
 
