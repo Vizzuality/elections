@@ -101,7 +101,7 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
 
-      
+
     	if (info.name != undefined) {
         $('div#infowindow h2').text(info.name);
         $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
@@ -113,10 +113,10 @@
         });
         var bar_width;
 
-
         // First political party
         var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase();
-        if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
+
+        if (_.indexOf(parties, partido_1) !== -1) {
           $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
         } else {
           $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
@@ -127,7 +127,7 @@
 
         // Second political party
         var partido_2 = info['data'][year]['segundo_partido_name'].toLowerCase();
-        if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
+        if (_.indexOf(parties, partido_2) !== -1) {
           $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
         } else {
           $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
@@ -135,19 +135,19 @@
         bar_width = (info['data'][year]['segundo_partido_percent']*175)/100;
         $('div#infowindow div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
-        
+
         // Third political party
         var partido_3 = info['data'][year]['tercer_partido_name'].toLowerCase();
-        if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
+        if (_.indexOf(parties, partido_3) !== -1) {
           $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
         } else {
           $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
         }
-        
+
         bar_width = (info['data'][year]['tercer_partido_percent']*175)/100;
         $('div#infowindow div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
-        
+
         // Other
         bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
         $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
