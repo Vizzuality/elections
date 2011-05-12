@@ -17,6 +17,7 @@
 
       $(".innerBubble").live({
         mouseenter: function () {
+          console.log(graphBubbleInfowindow.isOpen());
           var radius = $(this).height()/2;
           var top = $(this).parent().css('top').replace('px','') - radius - 21;
           var left = $(this).parent().css('left').replace('px','');
@@ -24,6 +25,10 @@
           graphBubbleTooltip.show(left,top,text);
           $(this).parent().css('zIndex',graph_bubble_index++);
           $(this).parent().children('.outerBubble').css("background","#333333");
+
+          if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
+            $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+          }
         },
         mouseleave: function () {
           if (selectedBubble !== $(this).parent().attr("id")) {
@@ -50,20 +55,19 @@
 
           if (selectedBubble !== $(this).parent().attr("id")) {
             $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
-            graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-          } else {
-            graphBubbleInfowindow.show(left,top,$(this).parent().attr('id'));
           }
 
           selectedBubble = $(this).parent().attr("id");
           $("div#" + selectedBubble + " div.outerBubble").css("background", "#333");
 
           graphBubbleTooltip.hide();
+            graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
         },
       });
 
       // Bubble graph infowindow
       graphBubbleInfowindow = (function() {
+        var open = false;
 
         //Create infowindow and add it to DOM
         $('body').append(
@@ -92,7 +96,7 @@
           ev.preventDefault();
           hideInfowindow();
 
-          if (selectedBubble) {
+          if (selectedBubble !== undefined) {
             var $b = $("div#" + selectedBubble + " div.innerBubble");
             var radius = $b.height()/2;
             var top    = $b.parent().css('top').replace('px','') - radius - 21;
@@ -102,13 +106,17 @@
           }
         });
 
+        function isOpen() {
+          return open;
+        }
+
         function refreshInfowindow() {
           $('div#graph_infowindow').css({opacity:1,visibility:'visible'});
         }
 
         function showInfowindow(left, top) {
           $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
-          $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing');
+          $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
         }
 
         function hideInfowindow() {
@@ -117,6 +125,7 @@
             opacity: 0
           }, 100, 'swing', function(ev){
       			$('div#graph_infowindow').css({visibility:"hidden"});
+      			open = false;
       		});
         }
 
@@ -128,7 +137,7 @@
 
           $("#graph_infowindow").attr('alt',data_id);
           $("#graph_infowindow").find(".top").find("h2").empty();
-          $("#graph_infowindow").find(".top").find("h2").append(data_id);
+          $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
           $("#graph_infowindow").find(".top").find(".province").empty();
           $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id]["censo_total"] + " habitantes");
           $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
@@ -197,7 +206,8 @@
           show: showInfowindow,
           hide: hideInfowindow,
           refresh: refreshInfowindow,
-          change: changeData
+          change: changeData,
+          isOpen: isOpen
         }
       }());
 
