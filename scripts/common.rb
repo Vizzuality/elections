@@ -20,6 +20,28 @@ PROVINCES_VOTATIONS   = "votaciones_por_provincia"
 MUNICIPALITIES_TABLE  = "gadm4"
 MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
 VARIABLES = %W{ paro_normalizado }
+PARTIES = %W{PP PSOE CIU AP IU INDEP CDS PAR EAJ-PNV PA BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR UV}
+LEFT_PARTIES = %W{ PSOE IU INDEP BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR }
+THID_PARTY_COLORS = {
+  "CIU" => ["#EC7B37", "#003F7F"],
+  "AP" => ["#5AB0E9"],
+  "IU" =>	["#54A551"],
+  "INDEP"	=> ["#AAA"],
+  "CDS" => ["#DADC4D", "#62A558"],
+  "PAR" => ["#AAA"],
+  "EAJ-PNV"	=> ["#CE0E16", "#008140"],
+  "PA" =>["#54A551"],
+  "BNG"	=> ["#D8282A"],
+  "PDP"	=> ["#5AB0E9"],
+  "ERC-AM" => ["#EC7B37"],
+  "ESQUERRA-AM"	=> ["#EC7B37"],
+  "ERC" => ["#EC7B37"],
+  "EA" => ["#B41318", "#DADC4D"],
+  "HB" => ["#800080"],
+  "PRC"=> ["#C4BE48"],
+  "PR" => ["#CE0E16", "#008140"],
+  "UV" => ["#EC7B37", "#EABA4B"]
+}
 #####
 
 # Paths
@@ -40,14 +62,6 @@ $cartodb = CartoDB::Client::Connection.new
 
 def get_cartodb_connection
   $cartodb
-end
-
-def get_psoe_pp_id
-  # political parties
-  political_parties = $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES} where name = 'PSOE' OR name = 'PP'")[:rows]
-  psoe_id = political_parties.select{ |h| h[:name] == "PSOE"}.first[:cartodb_id].to_i
-  pp_id   = political_parties.select{ |h| h[:name] == "PP"}.first[:cartodb_id].to_i
-  return psoe_id, pp_id
 end
 
 def get_processes
@@ -105,71 +119,49 @@ def get_y_coordinate(row, variable, max)
   end
 end
 
-def get_x_coordinate(row, max, psoe_id, pp_id)
+def get_x_coordinate(row, max, known_parties)
   if max == 0
     return 0
   end
-  if row[:primer_partido_id].to_i != psoe_id && row[:primer_partido_id].to_i != pp_id
-    return 0
-  else
+  if known_parties.keys.include?(row[:primer_partido_id])
     x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
     x_coordinate += 100.0
-    x_coordinate = x_coordinate*-1 if row[:primer_partido_id] == psoe_id
+    x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return x_coordinate
+  else
+    return 0
   end
 end
 
 # ROJO : #D8282A, #D94B5F, #E08394
 # AZUL:  #5AB0E9, #64B7DE, #90D7F4
 # de mas intenso a menos intenso
-def get_color(x)
-  if x < 0
+def get_color(row, x, parties)
+  primer_partido = parties[row[:primer_partido_id]]
+  if primer_partido == "PSOE"
     if x > -100
-      "#E08394"
+      ["#E08394"]
     elsif x > -200
-      "#D94B5F"
+      ["#D94B5F"]
     else
-      "#D8282A"
+      ["#D8282A"]
     end
-  elsif x > 0
+  elsif primer_partido == "PP"
     if x < 100
-      "#90D7F4"
+      ["#90D7F4"]
     elsif x < 200
-      "#64B7DE"
+      ["#64B7DE"]
     else
-      "#5AB0E9"
+      ["#5AB0E9"]
     end
   else
-    "#AAA"
-  end
-end
-
-def get_party_color(party_name, votes_percentage)
-  colors = {
-    "PSOE" => ["#E08394", "#D94B5F", "#D8282A"],
-    "PP" => ["#90D7F4", "#64B7DE", "#5AB0E9"]
-  }
-  index = if votes_percentage < 30
-    0
-  elsif votes_percentage > 30 && votes_percentage < 70
-    1
-  else
-    2
-  end
-  case party_name
-    when "PSOE"
-      colors[party_name][index]
-    when "PP"
-      colors[party_name][index]
-    else
-      "#AAAAAA"
+    THID_PARTY_COLORS[primer_partido]
   end
 end
 
 def get_radius(row)
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
-    # puts "#{row[:ine_province_id]},#{row[:ine_municipality_id]}"
     return 80
   else
     return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
@@ -178,6 +170,15 @@ end
 
 def get_parties
   @get_parties ||= $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
+end
+
+def get_known_parties(parties)
+  h = {}
+  inverted = parties.invert
+  PARTIES.each do |p|
+    h[inverted[p]] = p
+  end
+  h
 end
 
 def autonomies_path(variable)
