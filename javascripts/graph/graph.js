@@ -9,7 +9,7 @@
 
     var selectedBubble;
 
-    var graphLegend,graphBubbleInfowindow;
+    var graphLegend,graphBubbleInfowindow, graphBubbleTooltip;
 
     jQuery.easing.def = "easeInOutCubic";
 
@@ -26,7 +26,9 @@
           $(this).parent().children('.outerBubble').css("background","#333333");
         },
         mouseleave: function () {
-          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+          if (selectedBubble !== $(this).parent().attr("id")) {
+            $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+          }
           graphBubbleTooltip.hide();
         },
         dblclick: function(){
@@ -41,24 +43,24 @@
           }
         },
         click: function() {
+
           var radius = $(this).height()/2;
           var top  = $(this).parent().offset().top - 260;
           var left = $(this).parent().offset().left - 118;
 
-          if (selectedBubble !== undefined) {
-            selectedBubble.css("background", selectedBubble.color);
+          if (selectedBubble !== $(this).parent().attr("id")) {
+            $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+            graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
+          } else {
+            graphBubbleInfowindow.show(left,top,$(this).parent().attr('id'));
           }
 
-          selectedBubble = $(this);
-          selectedBubble.color = $(this).css("backgroundColor");
-          $(this).css("background", "black");
+          selectedBubble = $(this).parent().attr("id");
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "#333");
 
           graphBubbleTooltip.hide();
-          graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
         },
       });
-
-
 
       // Bubble graph infowindow
       graphBubbleInfowindow = (function() {
@@ -85,17 +87,29 @@
           '  </div>'+
           '</div>');
 
-        $('div#graph_infowindow a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault(); hideInfowindow()});
+        $('div#graph_infowindow a.close_infowindow').click(function(ev){
+          ev.stopPropagation();
+          ev.preventDefault();
+          hideInfowindow();
 
+          if (selectedBubble) {
+            var $b = $("div#" + selectedBubble + " div.innerBubble");
+            var radius = $b.height()/2;
+            var top    = $b.parent().css('top').replace('px','') - radius - 21;
+            var left   = $b.parent().css('left').replace('px','');
+            var text   = $b.parent().attr('id');
+            graphBubbleTooltip.show(left,top,text);
+          }
+        });
 
-        function showInfowindow(left,top) {
-          $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
-          $('div#graph_infowindow').stop().animate({
-            top: '-=' + 10 + 'px',
-            opacity: 1
-          }, 250, 'swing');
+        function refreshInfowindow() {
+          $('div#graph_infowindow').css({opacity:1,visibility:'visible'});
         }
 
+        function showInfowindow(left, top) {
+          $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
+          $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing');
+        }
 
         function hideInfowindow() {
           $('div#graph_infowindow').stop().animate({
@@ -182,15 +196,14 @@
         return {
           show: showInfowindow,
           hide: hideInfowindow,
+          refresh: refreshInfowindow,
           change: changeData
         }
       }());
 
 
-
-
       // Tooltip when mouseover some bubble
-      var graphBubbleTooltip = (function() {
+      graphBubbleTooltip = (function() {
         // Create the element - add it to DOM
     	  $('div#graph_container').append('<p class="graph_bubble_tooltip">Comunidad de Madrid</p>');
 
@@ -240,7 +253,7 @@
         }
 
         function changeData(results,names) {
-          if (names.length!=0) {
+          if (names && names.length!=0) {
             showLegend();
           } else {
             hideLegend();
