@@ -36,9 +36,9 @@
             '<p class="province">Valladolid, 11.982 habitantes.</p>'+
             '<div class="stats">'+
               '<h4>65% de participación</h4>'+
-              '<div class="partido psoe"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>'+
-              '<div class="partido pp"><div class="bar"><span></span></div><p>PP (36%)</p></div>'+
-              '<div class="partido iu"><div class="bar"><span></span></div><p>IU (12%)</p></div>'+
+              '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
+              '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
+              '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
             '</div>'+
           '</div>'+
@@ -122,7 +122,7 @@
           $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
         }
         bar_width = (info['data'][year]['primer_partido_percent']*175)/100;
-        $('div#infowindow div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
 
         // Second political party
@@ -133,7 +133,7 @@
           $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
         }
         bar_width = (info['data'][year]['segundo_partido_percent']*175)/100;
-        $('div#infowindow div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
 
         // Third political party
@@ -145,12 +145,12 @@
         }
 
         bar_width = (info['data'][year]['tercer_partido_percent']*175)/100;
-        $('div#infowindow div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
 
         // Other
         bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
-        $('div#infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']*175+'%)');
 
         var max = 0; var count = 0; var find = false; var find_year;
@@ -161,7 +161,7 @@
 
         minGraphYear = 1987; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
         var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-        var chartBackgroundTopPadding = 33 * electionYears.indexOf(minGraphYear);
+        var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
         for (var i = minYear; i < maxYear; i++) {
           if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
