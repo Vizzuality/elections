@@ -1,3 +1,5 @@
+var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
+
 var normalization = {
   'paro': 'paro_normalizado'
 };
