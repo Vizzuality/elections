@@ -7,6 +7,8 @@
     var valuesHash = {};
     var nBubbles = 0;
 
+    var selectedBubble;
+
     var graphLegend,graphBubbleInfowindow;
 
     jQuery.easing.def = "easeInOutCubic";
@@ -42,6 +44,15 @@
           var radius = $(this).height()/2;
           var top  = $(this).parent().offset().top - 260;
           var left = $(this).parent().offset().left - 118;
+
+          if (selectedBubble !== undefined) {
+            selectedBubble.css("background", selectedBubble.color);
+          }
+
+          selectedBubble = $(this);
+          selectedBubble.color = $(this).css("backgroundColor");
+          $(this).css("background", "black");
+
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
         },
@@ -61,10 +72,10 @@
           '    <p class="province">11.982 habitantes.</p>'+
           '    <div class="stats">'+
           '      <h4>65% de participación</h4>'+
-          '      <div class="partido"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>'+
-          '      <div class="partido"><div class="bar"><span></span></div><p>PP (36%)</p></div>'+
-          '      <div class="partido"><div class="bar"><span></span></div><p>IU (12%)</p></div>'+
-          '      <div class="partido"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
+          '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
+          '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
+          '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
+          '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
           '    </div>'+
           '  </div>'+
           '  <div class="bottom">'+
@@ -117,7 +128,7 @@
               $('div#graph_infowindow div.top div.stats div.partido:eq(0)').removeClass(c1[c]);
             }
           })
-          if (partido_1=='psoe' || partido_1=="pp" || partido_1 == "iu") {
+          if (_.indexOf(parties, partido_1) !== -1) {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
@@ -134,7 +145,7 @@
               $('div#graph_infowindow div.top div.stats div.partido:eq(1)').removeClass(c2[c]);
             }
           })
-          if (partido_2=='psoe' || partido_2=="pp" || partido_2 == "iu") {
+          if (_.indexOf(parties, partido_2) !== -1) {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass(partido_2);
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
@@ -151,7 +162,7 @@
               $('div#graph_infowindow div.top div.stats div.partido:eq(2)').removeClass(c3[c]);
             }
           })
-          if (partido_3=='psoe' || partido_3=="pp" || partido_3 == "iu") {
+          if (_.indexOf(parties, partido_3) !== -1) {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass(partido_3);
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
