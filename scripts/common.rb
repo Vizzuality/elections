@@ -181,7 +181,7 @@ def get_parties
 end
 
 def autonomies_path(variable)
-  "../json/generated_data/autonomies_#{variable}.json"
+  "../json/generated_data/autonomies/#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
@@ -243,4 +243,55 @@ SQL
   else
     return {}
   end
+end
+
+def get_autonomy_variable_evolution(variable, autonomy_name)
+  custom_variable_name = variable.gsub(/_\d+/,'')
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.map do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      next if %W{ uso_regular_internet_2009 }.include?("#{raw_variable_hash[:codigo]}_#{year}")
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  # votes per autonomy
+  query = <<-SQL
+  select #{variables.join(',')}
+  from vars_socioeco_x_autonomia, gadm1
+  where vars_socioeco_x_autonomia.gadm1_cartodb_id = gadm1.cartodb_id AND gadm1.name_1 = '#{autonomy_name}'
+SQL
+  $cartodb.query(query)[:rows].first.try(:values) || []
+end
+
+def get_province_variable_evolution(custom_variable_name, province_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact  
+  query = <<-SQL
+  select #{variables.join(',')}
+  from vars_socioeco_x_provincia, gadm2
+  where vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{province_name}'
+SQL
+  $cartodb.query(query)[:rows].first.try(:values) || []  
+end
+
+def get_municipalities_variable_evolution(custom_variable_name, municipality_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact  
+  query = <<-SQL
+  select #{variables.join(',')}
+  from vars_socioeco_x_municipio, gadm4
+  where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name.gsub(/\'/,"\\\'")}'
+SQL
+  $cartodb.query(query)[:rows].first.try(:values) || []  
 end
