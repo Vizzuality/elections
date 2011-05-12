@@ -199,11 +199,11 @@ end
 def get_authonomy_results(autonomy_name, proceso_electoral_id)
   # votes per autonomy
   query = <<-SQL
-  select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id, 
-         primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent, 
+  select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id,
+         primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
          tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
   from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
-  where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND 
+  where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND
         gadm1.name_1 = '#{autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
         AND proceso_electoral_id = #{proceso_electoral_id}
 SQL
@@ -223,8 +223,8 @@ end
 def get_province_results(province_name, proceso_electoral_id)
   # votes per autonomy
   query = <<-SQL
-  select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
-         primer_partido_id, primer_partido_percent, tercer_partido_id, 
+  select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id,
+         primer_partido_id, primer_partido_percent, tercer_partido_id,
          segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
          censo_total, votantes_totales, resto_partido_percent
   from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
@@ -294,4 +294,58 @@ def get_municipalities_variable_evolution(custom_variable_name, municipality_nam
   where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name.gsub(/\'/,"\\\'")}'
 SQL
   $cartodb.query(query)[:rows].first.try(:values) || []  
+end
+
+def create_years_hash(records, variables, max_year, min_year)
+
+  years = {}
+
+  min_year.upto(max_year) do |year|
+    data = years[year] || {}
+
+    variables.each do |variable|
+      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
+      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
+      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
+    end
+
+    records.each do |row|
+      data[:censo_total]             = nil
+      data[:percen_participacion]    = nil
+      data[:primer_partido_percent]  = nil
+      data[:primer_partido_name]     = nil
+      data[:segundo_partido_percent] = nil
+      data[:segundo_partido_name]    = nil
+      data[:tercer_partido_percent]  = nil
+      data[:tercer_partido_name]     = nil
+      data[:otros_partido_percent]   = nil
+
+      if row.proceso_electoral_year == year || row.proceso_electoral_year < year
+        data[:censo_total]             = row.censo_total
+        data[:percen_participacion]    = row.percen_participacion
+        data[:primer_partido_percent]  = row.primer_partido_percent
+        data[:primer_partido_name]     = row.primer_partido_name
+        data[:segundo_partido_percent] = row.segundo_partido_percent
+        data[:segundo_partido_name]    = row.segundo_partido_name
+        data[:tercer_partido_percent]  = row.tercer_partido_percent
+        data[:tercer_partido_name]     = row.tercer_partido_name
+        data[:otros_partido_percent]   = row.otros_partido_percent
+        break
+      end
+    end
+
+    years[year] = data
+  end
+
+  years
+end
+
+def variables_vars
+  supported_variables = %w('paro_normalizado')
+  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
+  variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
+  max_year = variables.map(&:max_year).sort.last
+  min_year = variables.map(&:min_year).sort.first
+
+  [variables, variables_hash, max_year, min_year]
 end
