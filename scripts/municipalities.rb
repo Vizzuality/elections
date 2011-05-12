@@ -71,7 +71,7 @@ SQL
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:name_4].tr(' ','_')
-        evolution[custom_variable_name][municipality_name] ||= get_municipalities_variable_evolution(custom_variable_name, municipality_name).compact
+        evolution[custom_variable_name][municipality[:name_4]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:name_4]).compact
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, psoe_id, pp_id)
@@ -89,7 +89,7 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parents] = [autonomy_hash[:name_1], province_name]
         json[municipality_name][:parent_results] = province_results
-        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality_name].join(',')
+        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:name_4]].join(',')
       end
       fd = File.open(municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)

@@ -46,7 +46,7 @@ variables.each do |variable|
     end
     putc '.'
     autonomy_name = autonomy_hash[:name_1].tr(' ','_')
-    evolution[custom_variable_name][autonomy_name] ||= get_autonomy_variable_evolution(variable, autonomy_name)
+    evolution[custom_variable_name][autonomy_hash[:name_1]] ||= get_autonomy_variable_evolution(variable, autonomy_hash[:name_1])
     json[autonomy_name] ||= {}
     json[autonomy_name][:cartodb_id]   = autonomy_hash[:cartodb_id]
     json[autonomy_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, psoe_id, pp_id)
@@ -63,7 +63,7 @@ variables.each do |variable|
     json[autonomy_name][:info] = ""
     json[autonomy_name][:parents] = []
     json[autonomy_name][:parent_results] = nil
-    json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_name].join(',')
+    json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_hash[:name_1]].join(',')
    end
   fd = File.open(autonomies_path(variable),'w+')
   fd.write(json.to_json)
