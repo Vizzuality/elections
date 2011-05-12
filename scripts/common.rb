@@ -291,7 +291,7 @@ def get_municipalities_variable_evolution(custom_variable_name, municipality_nam
   query = <<-SQL
   select #{variables.join(',')}
   from vars_socioeco_x_municipio, gadm4
-  where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name}'
+  where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name.gsub(/\'/,"\\\'")}'
 SQL
   $cartodb.query(query)[:rows].first.try(:values) || []  
 end
