@@ -108,6 +108,8 @@
     var top = pixelCoordinate.y - tileCoordinate.y;
 
     var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
+    
+    
     var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
     var value = Math.abs(point['data'][year][normalization[compare]]);
     
