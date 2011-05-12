@@ -12,6 +12,8 @@
         $('div#tab_menu a').removeClass('selected');
         if (className=='map') {
           state = "map";
+          //This element belongs to body, not to graph container
+          graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
@@ -66,12 +68,12 @@
       },
       stop: function( event, ui ) {
         if (state=="map") {
-          changeHash();
           refreshTiles();
           refreshBubbles();
         } else {
-          setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
+          setValue("/json/generated_data/autonomies/"+normalization[compare]+"_"+year+".json");
         }
+        changeHash();
       }
     });
 
