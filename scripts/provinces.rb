@@ -50,7 +50,7 @@ variables.each do |variable|
       end
       putc '.'
       province_name = province[:name_2].tr(' ','_')
-      evolution[custom_variable_name][province_name] ||= get_province_variable_evolution(custom_variable_name, province_name)
+      evolution[custom_variable_name][province[:name_2]] ||= get_province_variable_evolution(custom_variable_name, province[:name_2])
       json[province_name] ||= {}
       json[province_name][:cartodb_id]   = province[:cartodb_id]
       json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, psoe_id, pp_id)
@@ -67,7 +67,7 @@ variables.each do |variable|
       json[province_name][:info] = ""
       json[province_name][:parents] = [autonomy_name]
       json[province_name][:parent_results] = authonomy_results
-      json[province_name][:evolution] = evolution[custom_variable_name][province_name].join(',')
+      json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open(provinces_path(autonomy_name,variable),'w+')
     fd.write(json.to_json)
