@@ -2,9 +2,10 @@
 
 require File.dirname(__FILE__) + "/common"
 
-cartodb        = get_cartodb_connection
+cartodb                                       = get_cartodb_connection
+variables, variables_hash, max_year, min_year = *variables_vars
+base_path                                     = FileUtils.pwd
 
-base_path = FileUtils.pwd
 FileUtils.rm_rf("#{base_path}/../json/generated_data/tiles")
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
 
@@ -235,54 +236,6 @@ def queries_by_zoom(x, y, z)
   queries[z]
 end
 
-supported_variables = %w('paro_normalizado')
-variables = cartodb.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
-max_year = variables.map(&:max_year).sort.last
-min_year = variables.map(&:min_year).sort.first
-
-def create_years_hash(records, variables, max_year, min_year)
-
-  years = {}
-
-  min_year.upto(max_year) do |year|
-    data = years[year] || {}
-
-    variables.each do |variable|
-      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
-      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
-      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
-    end
-
-    records.each do |row|
-      data[:censo_total]             = nil
-      data[:percen_participacion]    = nil
-      data[:primer_partido_percent]  = nil
-      data[:primer_partido_name]     = nil
-      data[:segundo_partido_percent] = nil
-      data[:segundo_partido_name]    = nil
-      data[:tercer_partido_percent]  = nil
-      data[:tercer_partido_name]     = nil
-      data[:otros_partido_percent]   = nil
-
-      if row.proceso_electoral_year == year || row.proceso_electoral_year < year
-        data[:censo_total]             = row.censo_total
-        data[:percen_participacion]    = row.percen_participacion
-        data[:primer_partido_percent]  = row.primer_partido_percent
-        data[:primer_partido_name]     = row.primer_partido_name
-        data[:segundo_partido_percent] = row.segundo_partido_percent
-        data[:segundo_partido_name]    = row.segundo_partido_name
-        data[:tercer_partido_percent]  = row.tercer_partido_percent
-        data[:tercer_partido_name]     = row.tercer_partido_name
-        data[:otros_partido_percent]   = row.otros_partido_percent
-        break
-      end
-    end
-
-    years[year] = data
-  end
-
-  years
-end
 
 
 zoom_levels = [6,7,11]
@@ -346,15 +299,16 @@ zoom_levels.each do |z|
       json = []
 
       municipalities.each do |id, records|
-        json << {
+        data = {
           :id => id,
           :name => records.first.name,
           :center_longitude => records.first.center_longitude,
           :center_latitude => records.first.center_latitude,
-          :max_year => max_year,
-          :min_year => min_year,
-          :data => create_years_hash(records, variables, max_year, min_year)
+          :variables => variables_hash
         }
+        data[:provincia] = records.first.provincia if records.first[:provincia]
+        data[:data] = create_years_hash(records, variables, max_year, min_year)
+        json << data
       end
 
       fd = File.open("../json/generated_data/tiles/#{z}_#{x}_#{y}.json",'w+')
