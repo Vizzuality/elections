@@ -268,7 +268,7 @@
         }
         
         function changeData(results,names,parent_url) {
-          if (names!=undefined) {
+          if (names.length>0) {
             
             $('div.graph_legend h2').html(compare + ' en ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
@@ -375,6 +375,7 @@
           }
 
           valuesHash[key] = val;
+                    
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -423,7 +424,7 @@
         width: (val-10).toString() + "px",
         top: (offset + 5).toString() + "px",
         left: (offset + 5).toString() + "px",
-        backgroundColor: c.toString() + "px"
+        backgroundColor: ((c!=null)?c[0].toString():"purple")
       }, 1000);
     }
 
