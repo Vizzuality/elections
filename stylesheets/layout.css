@@ -330,9 +330,9 @@ div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
 /*cds*/
-div div.stats div.partido.cds div.bar {background-position:0 -42px!important;}
-div div.stats div.partido.cds div.bar span.c {background-position:right -42px!important}
-div div.stats div.partido.cds p {color:#DADC4D;}
+div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
+div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
+div div.stats div.partido.cds p {color:#62A558;}
 /*par*/
 div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
@@ -373,7 +373,7 @@ div div.stats div.partido.par2 div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.par2 div.bar span.c {background-position:right -24px!important;}
 div div.stats div.partido.par2 p {color:orange;}
 /*par3*/
-div div.stats div.partido.par3 div.bar {background-position:0 -30px!important;}
-div div.stats div.partido.par3 div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.par3 p {color:blue;}
+div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
+div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
