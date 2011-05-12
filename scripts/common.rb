@@ -182,15 +182,15 @@ def get_known_parties(parties)
 end
 
 def autonomies_path(variable)
-  "json/generated_data/autonomies/#{variable}.json"
+  "json/generated_data/autonomias/#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
-  "json/generated_data/provinces/#{autonomy_name}_#{variable}.json"
+  "json/generated_data/provincias/#{autonomy_name}_#{variable}.json"
 end
 
 def municipalities_path(province_name, variable)
-  "json/generated_data/municipalities/#{province_name}_#{variable}.json"
+  "json/generated_data/municipios/#{province_name}_#{variable}.json"
 end
 
 def google_cache_path(file_name)
