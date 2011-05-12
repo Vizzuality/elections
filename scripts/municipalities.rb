@@ -36,6 +36,7 @@ FileUtils.mkdir_p(dir_path)
 puts 
 evolution = {}
 autonomies.each do |autonomy_hash|
+  autonomy_name = autonomy_hash[:name_1].tr(' ','_')
   selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
   if selected_provinces.empty?
     puts "Empty provinces for #{autonomy_hash.inspect}"
@@ -87,11 +88,12 @@ SQL
         json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
         json[municipality_name][:info] = ""
         json[municipality_name][:info] = ""
-        json[municipality_name][:parents] = [autonomy_hash[:name_1], province_name]
+        json[municipality_name][:parent] = province_name
+        json[municipality_name][:parent_url] = provinces_path(autonomy_name, variable) 
         json[municipality_name][:parent_results] = province_results
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:name_4]].join(',')
       end
-      fd = File.open(municipalities_path(province_name,variable),'w+')
+      fd = File.open('../' + municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
       fd.close        
     end
