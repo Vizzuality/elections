@@ -21,10 +21,10 @@
           '<p class="province">Valladolid, 11.982 habitantes.</p>'+
           '<div class="stats">'+
             '<h4>65% de participación</h4>'+
-            '<div class="partido psoe"><div class="bar"><span></span></div><p>PSOE (61%)</p></div>'+
-            '<div class="partido pp"><div class="bar"><span></span></div><p>PP (36%)</p></div>'+
-            '<div class="partido iu"><div class="bar"><span></span></div><p>IU (12%)</p></div>'+
-            '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
+            '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
+            '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
+            '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
+            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
           '</div>'+
           '<div class="compare_graph">'+
             '<a href="#" class="left">left</a>'+
