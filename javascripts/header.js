@@ -1,6 +1,7 @@
 
   var procesos_electorales;
   var animate_interval;
+  var previous_year;
 
   function initializeOptions() {
     //Control tab menu - map or graph
@@ -65,6 +66,13 @@
       change: function( event, ui ) {
         $(this).find('a.ui-slider-handle').text(ui.value);
         year = ui.value;
+      },
+      start: function(event, ui) {
+        if (state === "graph" && selectedBubble) {
+          graphBubbleInfowindow.hide();
+          graphBubbleTooltip.hide();
+        }
+        previous_year = ui.value;
       },
       stop: function( event, ui ) {
         if (state=="map") {
