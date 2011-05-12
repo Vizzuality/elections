@@ -126,7 +126,7 @@ div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; w
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
 div.outerBubble{position:absolute;background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
-div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;}
+div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('/images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
@@ -168,7 +168,7 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:254px; height:271px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div.infowindow {position:absolute; width:254px; height:275px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
 div.infowindow a.close_infowindow {position:absolute; right:4px; top:3px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
@@ -178,8 +178,10 @@ div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px
 div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
 div.infowindow div.top div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
 
-div.infowindow div.top div.stats div.bar {float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div.infowindow div.top div.stats div.bar span.c {float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
+div.infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
+div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
+div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 
 div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
@@ -201,10 +203,12 @@ div#comparewindow div p.province {margin:0 0 0 40px; font:normal 12px "Officina 
 div#comparewindow div div.stats {display:inline-block; width:276px; height:75px; margin:9px 0 0 40px;}
 div#comparewindow div div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
 div#comparewindow div div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
+
 div#comparewindow div div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div#comparewindow div div.stats div.bar span.c {float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
+div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
 div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div#comparewindow div.top div.compare_graph {position:relative; width:356px; height:110px; margin:10px 0 0;}
 div#comparewindow div.top div.compare_graph a {position:absolute; top:46px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
@@ -260,7 +264,7 @@ div.graph_legend div.partido.otros p {text-decoration:underline;}
 /*political bars*/
 div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
 div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div.stats div.bar span.c {float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
+div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
 div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
