@@ -1,6 +1,6 @@
 
   /*Application global vars*/
-  var year = 2009;
+  var year = 2003;
   var compare = 'paro';
   var state = "mapa";
 
@@ -76,6 +76,8 @@
     state = route[0];
     $("div.year_slider").slider("value",year);
     compare = route[5];
+    deep = route[6];
+    name = route[7];
     var value = $('div.option_list ul li a.'+compare).text();
     $('div.option_list ul li a.'+route[5]).closest('li').addClass('selected');
     $('div.option_list ul li a.'+route[5]).closest('div.select').addClass('selected');
