@@ -116,7 +116,7 @@
 	          </div>
 	          </div>
 	          <div class="select">
-	            <div class="outer_select chat"> <!-- other options are people or chat -->
+	            <div class="outer_select chat">
 	              <span class="icon"></span>
 	              <span class="inner_select"><a href="#Datos_sociologicos" title="Datos sociológicos">Datos sociológicos</a></span>
 	            </div>
@@ -124,31 +124,31 @@
 	              <div class="top"></div>
 	              <div class="bottom">
 	                <ul>
-	                  <li><a class="chat" href="#edad_media">Edad media</a></li>
-	                  <li><a class="chat" href="#envejecimiento">Envejecimiento</a></li>
-	                  <li><a class="chat" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
-	                  <li><a class="chat" href="#inmigracion">% Inmigración</a></li>
+	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
+	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
+	                  <li><a class="salgo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
+	                  <li><a class="inmigracion" href="#inmigracion">% Inmigración</a></li>
 	                </ul>
 	              </div>
 	            </div>
 	          </div>
-	          <div class="select">
-	            <div class="outer_select money"> <!-- other options are people or chat -->
+	          <div class="select selected">
+	            <div class="outer_select money">
 	              <span class="icon"></span>
-	              <span class="inner_select"><a href="#Datos_economicos" title="Datos económicos">Datos económicos</a></span>
+	              <span class="inner_select"><a href="#Datos_economicos" title="Datos económicos">Tasa de paro</a></span>
 	            </div>
 	            <div class="option_list money">
 	              <div class="top"></div>
 	              <div class="bottom">
 	                <ul>
-	                  <li><a class="paro" href="#Tasa_de_paro">Tasa de paro</a></li>
+	                  <li class="selected"><a class="paro" href="#Tasa_de_paro">Tasa de paro</a></li>
 	                  <li><a class="salario" href="#Salario_medio">Salario medio</a></li>
 	                </ul>
 	              </div>
 	            </div>
 	          </div>
 	          <div class="select">
-	            <div class="outer_select people"> <!-- other options are people or chat -->
+	            <div class="outer_select people">
 	              <span class="icon"></span>
 	              <span class="inner_select"><a href="#Datos_demograficos" title="Datos demográficos">Datos demográficos</a></span>
 	            </div>
@@ -156,7 +156,7 @@
 	              <div class="top"></div>
 	              <div class="bottom">
 	                <ul>
-	                  <li><a class="chat" href="#PIB_per_capita">PIB per cápita</a></li>
+	                  <li><a class="pib" href="#PIB_per_capita">PIB per cápita</a></li>
 	                </ul>
 	              </div>
 	            </div>
@@ -198,6 +198,7 @@
         <div id="top_legend" class="legend">Más % de paro</div>
         <div id="bottom_legend" class="legend">Menos % de paro</div>
         <div id="graph_container"></div>
+        <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a>
       </div>
     </div>
   </body>

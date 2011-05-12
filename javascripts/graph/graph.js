@@ -1,3 +1,8 @@
+    
+    // Graph global vars {#}
+    var deep = "autonomias";
+    var name = "España";
+
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -245,10 +250,10 @@
           '  <h2>Tasa de Paro en Palencia<sup>(2010)</sup></h2>'+
           '  <p class="autonomy"><a href="#">Castilla y León</a></p>'+
           '  <div class="stats">'+
-          '    <div class="partido psoe"><div class="bar"><span style="width:20px"></span></div><p>PSOE (61%)</p></div>'+
-          '    <div class="partido pp"><div class="bar"><span style="width:20px"></span></div><p>PP (36%)</p></div>'+
-          '    <div class="partido iu"><div class="bar"><span style="width:20px"></span></div><p>IU (12%)</p></div>'+
-          '    <div class="partido otros"><div class="bar"><span style="width:20px"></span></div><p>OTROS (11%)</p></div>'+
+              '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
+              '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
+              '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
+              '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
           '  </div>'+
           '</div>');
 
@@ -259,9 +264,65 @@
         function hideLegend() {
           $('div.graph_legend').fadeOut();
         }
-
-        function changeData(results,names) {
-          if (names && names.length!=0) {
+        
+        function changeData(results,names,parent_url) {
+          if (names!=undefined) {
+            
+            $('div.graph_legend h2').html(compare + ' en ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
+            if (names.length==1) {
+              $('div.graph_legend p.autonomy a').text('');
+              $('div.graph_legend p.autonomy a').removeAttr('href');
+            } else {
+              $('div.graph_legend p.autonomy a').text(names[1].replace(/_/g,' '));
+              $('div.graph_legend p.autonomy a').attr('href','javascript:void createBubbles("'+parent_url+'")');
+              
+            }
+                        
+            // Remove previous political style bars
+            $('div.graph_legend div.stats div.partido').each(function(i,ele){
+              $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+            });
+            var bar_width;
+            
+            // First political party
+            var partido_1 = results['partido_1'][0].toLowerCase().replace("-", "_");
+            
+            if (_.indexOf(parties, partido_1) !== -1) {
+              $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
+            } else {
+              $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
+            }
+            bar_width = (results['partido_1'][1]*175)/100;
+            $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
+            
+            // Second political party
+            var partido_2 = results['partido_2'][0].toLowerCase().replace("-", "_");
+            if (_.indexOf(parties, partido_2) !== -1) {
+              $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
+            } else {
+              $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
+            }
+            bar_width = (results['partido_2'][1]*175)/100;
+            $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
+            
+            // Third political party
+            var partido_3 = results['partido_3'][0].toLowerCase().replace("-", "_");
+            if (_.indexOf(parties, partido_3) !== -1) {
+              $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
+            } else {
+              $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
+            }
+            
+            bar_width = (results['partido_3'][1]*175)/100;
+            $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
+            
+            // Other
+            bar_width = (results['otros'][0]*175)/100;
+            $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*175+'%)');
             showLegend();
           } else {
             hideLegend();
@@ -296,7 +357,7 @@
       graph_bubble_index = 100;
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
-      createBubbles("/json/generated_data/autonomies/"+normalization[compare]+"_"+year+".json");
+      createBubbles("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
 
@@ -305,10 +366,9 @@
 
         var one = true;
         _.each(data, function(val, key) {
-
           //Check data for show legend or not
           if (one) {
-            graphLegend.change(data[key].parent_results, data[key].parents);
+            graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
             one = false;
           }
 
@@ -368,7 +428,14 @@
 
     function goDeeper(url){
       graphLegend.hide();
-      //console.log("Going deep to " + url);
+      //Get new name and deep
+      var url_split = url.split('/');
+      deep = url_split[2];
+      console.log(url);
+      var length = url_split[url_split.length-1].split(compare)[0].length;
+      name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+      changeHash();
+
       for (key in valuesHash){
         //Destroy Bubbles
         destroyBubble(key, url);
@@ -393,10 +460,3 @@
         }
       );
     }
-
-
-
-
-
-
-
