@@ -65,10 +65,13 @@
         year = ui.value;
       },
       stop: function( event, ui ) {
-        changeHash();
-        refreshTiles();
-        refreshBubbles();
-        setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
+        if (state=="map") {
+          changeHash();
+          refreshTiles();
+          refreshBubbles();
+        } else {
+          setValue("/json/generated_data/autonomies_"+normalization[compare]+"_"+year+".json");
+        }
       }
     });
 
