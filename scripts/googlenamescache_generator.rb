@@ -2,14 +2,17 @@
 
 require File.dirname(__FILE__) + "/common"
 
-cartodb                 = get_cartodb_connection
-processes               = get_processes
+cartodb                                       = get_cartodb_connection
+processes                                     = get_processes
+variables, variables_hash, max_year, min_year = *variables_vars
 
 def municipalities_data_sql
   <<-SQL
    SELECT
+    g.id_4 as id,
+    g.name_2 as provincia,
+    g.name_4 as name,
     g.google_maps_name,
-    proceso_electoral_id,
     pe.anyo proceso_electoral_year,
     censo_total,
     ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
@@ -78,7 +81,9 @@ def municipalities_data_sql
   SQL
 end
 
+
 base_path = FileUtils.pwd
+FileUtils.rm_rf("#{base_path}/../json/generated_data/google_names_cache")
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/google_names_cache")
 
 ## MUNICIPALITIES GOOGLE NAMES CACHE GENERATOR
@@ -110,16 +115,23 @@ puts 'done!'
 
 progress = ProgressBar.new(municipalities_data.keys.count)
 
-municipalities_data.each do |json_file_name, municipality_data|
-  json = nil
+municipalities_data.each do |google_maps_name, records|
+  json = {
+    :id => records.first.id,
+    :google_maps_name => google_maps_name,
+    :name => records.first.name,
+    :center_longitude => records.first.center_longitude,
+    :center_latitude => records.first.center_latitude,
+    :variables => variables_hash
+  }
+  json[:provincia] = records.first.provincia
+  json[:data] = create_years_hash(records, variables, max_year, min_year)
 
-  json = municipality_data.map{|r| {:id => r.delete(:proceso_electoral_id), :year => r.delete(:proceso_electoral_year), :data => r}}
-
-  fd = File.open(google_cache_path(json_file_name),'w+')
+  fd = File.open(google_cache_path(google_maps_name),'w+')
   fd.write(json.to_json)
   fd.close
 
-  progress.increment!
 end
+
 puts '... caching finished!'
 puts
