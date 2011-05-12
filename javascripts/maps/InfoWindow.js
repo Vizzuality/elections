@@ -109,12 +109,12 @@
 
         // Remove previous political style bars
         $('div#infowindow div.stats div.partido').each(function(i,ele){
-          $(ele).removeClass('psoe pp iu par1 par2 par3');
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
         var bar_width;
 
         // First political party
-        var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase();
+        var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
 
         if (_.indexOf(parties, partido_1) !== -1) {
           $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
@@ -126,7 +126,7 @@
         $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
 
         // Second political party
-        var partido_2 = info['data'][year]['segundo_partido_name'].toLowerCase();
+        var partido_2 = info['data'][year]['segundo_partido_name'].toLowerCase().replace("-", "_");
         if (_.indexOf(parties, partido_2) !== -1) {
           $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
         } else {
@@ -137,7 +137,7 @@
         $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
 
         // Third political party
-        var partido_3 = info['data'][year]['tercer_partido_name'].toLowerCase();
+        var partido_3 = info['data'][year]['tercer_partido_name'].toLowerCase().replace("-", "_");
         if (_.indexOf(parties, partido_3) !== -1) {
           $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
         } else {
