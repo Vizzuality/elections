@@ -155,7 +155,7 @@ def get_color(row, x, parties)
       ["#5AB0E9"]
     end
   else
-    THID_PARTY_COLORS[primer_partido]
+    THID_PARTY_COLORS[primer_partido] || ["#AAAAAA"]
   end
 end
 
