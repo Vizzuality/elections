@@ -34,6 +34,7 @@ FileUtils.mkdir_p(dir_path)
 # Get OAuth token from cartodb client, because we are goint to
 # fetch API via net/http library (because of the threads we use)
 puts 
+evolution = {}
 autonomies.each do |autonomy_hash|
   selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
   if selected_provinces.empty?
@@ -58,6 +59,8 @@ SQL
     request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query)}&#{oauth_token}")
     response = http.request(request)
     variables.each do |variable|
+      custom_variable_name = variable.gsub(/_\d+/,'')
+      evolution[custom_variable_name] ||= {} 
       proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
       province_results = get_province_results(province_name, proceso_electoral_id)
       json = {}
@@ -68,6 +71,7 @@ SQL
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:name_4].tr(' ','_')
+        evolution[custom_variable_name][municipality_name] ||= get_municipalities_variable_evolution(custom_variable_name, municipality_name).compact
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, psoe_id, pp_id)
@@ -85,6 +89,7 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parents] = [autonomy_hash[:name_1], province_name]
         json[municipality_name][:parent_results] = province_results
+        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality_name].join(',')
       end
       fd = File.open(municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
