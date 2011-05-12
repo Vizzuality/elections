@@ -28,13 +28,16 @@ FileUtils.mkdir_p("#{base_path}/../json/generated_data")
 #############
 puts
 dir_path = "#{base_path}/../json/generated_data/provinces"
+evolution = {}
 FileUtils.mkdir_p(dir_path)
 variables.each do |variable|
   puts
   puts "Variable: #{variable}"
+  custom_variable_name = variable.gsub(/_\d+/,'')
+  evolution[custom_variable_name] ||= {} 
   proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
   autonomies.each do |autonomy_hash|
-    autonomy_name = autonomy_hash[:name_1].tr(' ','_')
+    autonomy_name = autonomy_hash[:name_1].tr(' ','_')    
     authonomy_results = get_authonomy_results(autonomy_name, proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ] }.compact.max
     max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
@@ -47,6 +50,7 @@ variables.each do |variable|
       end
       putc '.'
       province_name = province[:name_2].tr(' ','_')
+      evolution[custom_variable_name][province_name] ||= get_province_variable_evolution(custom_variable_name, province_name)
       json[province_name] ||= {}
       json[province_name][:cartodb_id]   = province[:cartodb_id]
       json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, psoe_id, pp_id)
@@ -63,6 +67,7 @@ variables.each do |variable|
       json[province_name][:info] = ""
       json[province_name][:parents] = [autonomy_name]
       json[province_name][:parent_results] = authonomy_results
+      json[province_name][:evolution] = evolution[custom_variable_name][province_name].join(',')
     end
     fd = File.open(provinces_path(autonomy_name,variable),'w+')
     fd.write(json.to_json)
