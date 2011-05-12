@@ -53,7 +53,7 @@ variables.each do |variable|
     json[autonomy_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y)
     json[autonomy_name][:radius]       = get_radius(row)
     json[autonomy_name][:color]        = get_color(x_coordinate)
-    json[autonomy_name][:children_json_url] = provinces_path(autonomy_name,variable)[3..-1] # hack to remove ../ from path
+    json[autonomy_name][:children_json_url] = provinces_path(autonomy_name,variable)
     json[autonomy_name][:censo_total]  = row[:censo_total]
     json[autonomy_name][:porcentaje_participacion] = row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0
     json[autonomy_name][:partido_1]    = [parties[row[:primer_partido_id]], row[:primer_partido_percent].to_f]
@@ -61,11 +61,12 @@ variables.each do |variable|
     json[autonomy_name][:partido_3]    = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
     json[autonomy_name][:resto_partidos_percent] = row[:resto_partido_percent]
     json[autonomy_name][:info] = ""
-    json[autonomy_name][:parents] = []
+    json[autonomy_name][:parent] = nil
+    json[autonomy_name][:parent_url] = nil
     json[autonomy_name][:parent_results] = nil
     json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_hash[:name_1]].join(',')
    end
-  fd = File.open(autonomies_path(variable),'w+')
+  fd = File.open('../' + autonomies_path(variable),'w+')
   fd.write(json.to_json)
   fd.close
 end
