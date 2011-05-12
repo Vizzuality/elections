@@ -23,7 +23,7 @@ SQL
 votes_per_autonomy = cartodb.query(query)[:rows]
 
 base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../json/generated_data/autonomies")
+FileUtils.mkdir_p("#{base_path}/../json/generated_data/autonomias")
 
 ## AUTONOMIES
 #############
@@ -61,8 +61,8 @@ variables.each do |variable|
     json[autonomy_name][:partido_3]    = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
     json[autonomy_name][:resto_partidos_percent] = row[:resto_partido_percent]
     json[autonomy_name][:info] = ""
-    json[autonomy_name][:parent] = nil
-    json[autonomy_name][:parent_url] = nil
+    json[autonomy_name][:parent] = []
+    json[autonomy_name][:parent_url] = []
     json[autonomy_name][:parent_results] = nil
     json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_hash[:name_1]].join(',')
    end
