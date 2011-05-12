@@ -6,7 +6,6 @@ cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
 base_path                                     = FileUtils.pwd
 
-FileUtils.rm_rf("#{base_path}/../json/generated_data/tiles")
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
 
 def queries_by_zoom(x, y, z)
@@ -74,7 +73,7 @@ def queries_by_zoom(x, y, z)
             max(paro_normalizado_2009) as paro_normalizado_2009_max,
             min(paro_normalizado_2009) as paro_normalizado_2009_min
           FROM vars_socioeco_x_autonomia) AS p_n_min_max,
-          gadm2 AS g
+          gadm1 AS g
          INNER JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id
          INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
          INNER JOIN vars_socioeco_x_autonomia AS vsm ON vsm.gadm1_cartodb_id = v.gadm1_cartodb_id
