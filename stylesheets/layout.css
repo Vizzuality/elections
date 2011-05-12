@@ -125,7 +125,7 @@ div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:1
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.jpg'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center; z-index:100;}
 div.tabs div#graph div#top_legend { top: 87px;}
-div.tabs div#graph div#bottom_legend {bottom: 190px;}
+div.tabs div#graph div#bottom_legend {top: 530px;}
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
 div.outerBubble{position:absolute;background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
