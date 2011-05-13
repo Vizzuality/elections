@@ -27,7 +27,11 @@
           var left = $(this).parent().css('left').replace('px','');
           var text = $(this).parent().attr('id');
           graphBubbleTooltip.show(left,top,text);
-          $(this).parent().css('zIndex',graph_bubble_index++);
+
+          if (!$.browser.msie ) {
+            $(this).parent().css('zIndex',graph_bubble_index++);
+          }
+
           $(this).parent().children('.outerBubble').css("background","#333333");
 
           if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
@@ -121,12 +125,25 @@
         }
 
         function showInfowindow(left, top) {
-          $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
-          $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
+           if ( $.browser.msie ) {
+             $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
+             $('div#graph_infowindow').show();
+             open = true;
+           } else {
+             $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
+             $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
+           }
         }
 
         function hideInfowindow() {
           if (isOpen()) {
+           if ( $.browser.msie ) {
+
+            $('div#graph_infowindow').hide();
+             open = false;
+             return;
+           }
+
             $('div#graph_infowindow').stop().animate({
               top: '+=' + 10 + 'px',
               opacity: 0
