@@ -2,8 +2,7 @@
     // Graph global vars {#}
     var deep = "autonomias";
     var name = "España";
-    var bar_width_multiplier = 150;
-
+    var bar_width_multiplier = 140;
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -44,17 +43,6 @@
             $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
           }
           graphBubbleTooltip.hide();
-        },
-        dblclick: function(){
-          graphBubbleTooltip.hide();
-          graphBubbleInfowindow.hide();
-
-          var url = valuesHash[$(this).parent().attr('id')]["children_json_url"];
-          if (url == null) {
-            return false;
-          } else {
-            goDeeper(url);
-          }
         },
         click: function() {
 
@@ -98,9 +86,26 @@
             '<div class="chart">'+
           '    <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
           '  </div>'+
+          '    <a class="more">Ver más</a>'+
           '    <a class="compare">Comparar</a>'+
           '  </div>'+
           '</div>');
+
+        $('div#graph_infowindow a.more').click(function(ev){
+          ev.stopPropagation();
+          ev.preventDefault();
+
+          graphBubbleTooltip.hide();
+          graphBubbleInfowindow.hide();
+
+          var $selectedBubble = $("div#" + selectedBubble);
+          var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
+          if (url == null) {
+            return false;
+          } else {
+            goDeeper(url);
+          }
+        });
 
         $('div#graph_infowindow a.close_infowindow').click(function(ev){
           ev.stopPropagation();
