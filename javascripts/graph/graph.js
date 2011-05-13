@@ -2,6 +2,7 @@
     // Graph global vars {#}
     var deep = "autonomias";
     var name = "España";
+    var bar_width_multiplier = 150;
 
 
     //Vars determining the center of the graph
@@ -168,7 +169,7 @@
           $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[data_id]["porcentaje_participacion"])) + "% de participación");
 
           // First political party
-          var partido_1 = valuesHash[data_id]["partido_1"][0].toLowerCase();
+          var partido_1 = valuesHash[data_id].partido_1[0].toLowerCase();
           c1 = $('div#graph_infowindow div.top div.stats div.partido:eq(0)').attr('class').split(" ");
           $.each(c1, function(c){
             if(c1[c] != "partido"){
@@ -180,9 +181,10 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
-          bar_width = (valuesHash[data_id].partido_1[1]*175)/100;
+          bar_width = (valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100;
+          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*175)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
           // Second political party
           var partido_2 = valuesHash[data_id].partido_2[0].toLowerCase();
@@ -197,9 +199,10 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
-          bar_width = (valuesHash[data_id].partido_2[1]*175)/100;
+          bar_width = (valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100;
+          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*175)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
           // Third political party
           var partido_3 = valuesHash[data_id].partido_3[0].toLowerCase();
@@ -214,15 +217,16 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
-          bar_width = (valuesHash[data_id].partido_3[1]*175)/100;
+          bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
+          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*175)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
-          bar_width = (valuesHash[data_id].resto_partidos_percent * 175)/100;
+          bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
+          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
-
 
           var max = 0; var count = 0; var find = false; var find_year;
           var info = valuesHash[data_id].evolution.split(",");
@@ -377,7 +381,7 @@
             } else {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
             }
-            bar_width = (results['partido_1'][1]*175)/100;
+            bar_width = (results['partido_1'][1]*bar_width_multiplier)/100;
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
 
@@ -388,7 +392,7 @@
             } else {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
             }
-            bar_width = (results['partido_2'][1]*175)/100;
+            bar_width = (results['partido_2'][1]*bar_width_multiplier)/100;
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
 
@@ -400,14 +404,14 @@
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
 
-            bar_width = (results['partido_3'][1]*175)/100;
+            bar_width = (results['partido_3'][1]*bar_width_multiplier)/100;
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
 
             // Other
-            bar_width = (results['otros'][0]*175)/100;
+            bar_width = (results['otros'][0]*bar_width_multiplier)/100;
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*175+'%)');
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
             hideLegend();
