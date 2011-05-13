@@ -1,12 +1,20 @@
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
 
 var normalization = {
-  'paro': 'paro_normalizado'
+  'paro': 'paro_normalizado',
+  'envejecimiento': 'envejecimiento_normalizado'
 };
 
 var custom_map_style = [{featureType:"administrative.country",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"administrative.locality",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"all",stylers:[{lightness:7},{saturation:-91}]},{featureType:"all",elementType:"all",stylers:[]}];
 
 var tooltipInfo = {
+  "Envejecimiento" : {
+    content: "Desviación respecto a la media de edad de cada municipio.",
+    left: "más mayores",
+    right: "más jóvenes",
+    legendTop: "Más edad",
+    legendBottom:"Menos edad"
+  },
   "Edad media" : {
     content: "Desviación respecto a la media de edad de cada municipio.",
     left: "más mayores",
