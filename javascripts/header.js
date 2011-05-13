@@ -90,7 +90,7 @@
           refreshTiles();
           refreshBubbles();
         } else {
-          setValue("/json/generated_data/autonomias/"+normalization[compare]+"_"+graph_hack_year[year]+".json");
+          setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
         }
         changeHash();
       }
