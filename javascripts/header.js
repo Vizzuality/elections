@@ -8,7 +8,6 @@
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
       $('div#tab_menu a.stats').addClass('selected');
-      $('form.search input.text').val('Añade un municipio...');
       restartGraph();
       $('div#map').css('zIndex',0);
       $('div#graph').css('zIndex',10);
@@ -26,8 +25,6 @@
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
-          //Change search form value
-          $('form.search input.text').val('Busca un lugar...');
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
           // Refresh map to show last changes done in application
@@ -35,8 +32,6 @@
         } else {
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          //Change search form value
-          $('form.search input.text').val('Añade tu municipio...');
           state = "grafico";
           restartGraph();
           $('div#map').css('zIndex',0);
@@ -222,7 +217,6 @@
 
   function animateSlider() {
     var new_value = $("div.year_slider").slider('value') + 1;
-    console.log();
     if (new_value>2011) {
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');

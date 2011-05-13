@@ -8,7 +8,7 @@ div#header span.end_right {position:absolute; right:0; top:0; width:10px; height
 div#header div.left {float:left; width:320px;}
 div#header div.left h1 {margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
 div#header div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px; overflow:hidden;}
-div#header div.left form input.text {float:right; width:248px; height:15px; margin:0; padding:9px 7px 8px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
+div#header div.left form input.text {float:right; width:225px; height:15px; margin:0; padding:9px 30px 8px 7px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('/images/lens.png') no-repeat 0 0;}
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
@@ -255,13 +255,24 @@ div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#66
 
 /*GRAPH*/
 /*Legend*/
-div.graph_legend {position:absolute; display:none; top:20px; left:20px; z-index:10;}
+div.graph_legend {position:absolute; display:none; top:30px; left:30px; z-index:10;}
 div.graph_legend h2 {font:normal 21px "Officina Bold"; color:#333333; text-shadow:0 1px white; line-height:21px;}
 div.graph_legend h2 sup {font:normal 13px "Officina Regular";}
 div.graph_legend p.autonomy {padding:5px 0 10px 0;}
 div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.graph_legend p.autonomy a:hover {color:#666666;}
 div.graph_legend div.partido.otros p {}
+div.graph_legend form {position:relative; width:162px; height:32px; margin:20px 0 0 0;}
+div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('/images/region_search_bkg.png') no-repeat 0 0; border:none;}
+div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('/images/tiny_lens.png') no-repeat 0 0; border:none;}
+div.graph_legend form input.text:focus {outline:none; color:#333333;}
+div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
+div.graph_legend div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
+div.graph_legend div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
+  text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
 
 
 /*political bars*/
