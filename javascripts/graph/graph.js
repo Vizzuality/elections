@@ -531,7 +531,7 @@
           valuesHash[key] = val;
 
           nBubbles = nBubbles+1;
-          $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+          $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
