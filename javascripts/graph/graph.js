@@ -75,7 +75,7 @@
 
         //Create infowindow and add it to DOM
         $('body').append(
-          '<div class="infowindow" id="graph_infowindow" style="z-index:1000">'+
+          '<div class="infowindow" id="graph_infowindow" style="visibility:hidden; z-index:1000">'+
           '  <a class="close_infowindow"></a>'+
           '  <div class="top">'+
           '    <h2>Alaejos</h2>'+
@@ -266,16 +266,23 @@
 
         function changeData(results,names,parent_url) {
           if (names.length>0) {
-
-            $('div.graph_legend h2').html(compare + ' en ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
+            
+            $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
-              $('div.graph_legend p.autonomy a').text('');
-              $('div.graph_legend p.autonomy a').removeAttr('href');
+              $('div.graph_legend p.autonomy a').text('España');
+              $('div.graph_legend p.autonomy a').attr('href','#ver_España');
             } else {
               $('div.graph_legend p.autonomy a').text(names[1].replace(/_/g,' '));
-              $('div.graph_legend p.autonomy a').attr('href','javascript:void createBubbles("'+parent_url+'")');
-
+              $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[1].replace(/_/g,' '));
             }
+            
+            $('div.graph_legend p.autonomy a').unbind('click');
+            $('div.graph_legend p.autonomy a').click(function(ev){
+              ev.stopPropagation();
+              ev.preventDefault();
+              goDeeper(parent_url[parent_url.length-1]);
+            });
+            
 
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -431,9 +438,11 @@
       //Get new name and deep
       var url_split = url.split('/');
       deep = url_split[2];
-      console.log(url);
       var length = url_split[url_split.length-1].split(compare)[0].length;
       name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+      if (name == "") {
+        name = 'España';
+      }
       changeHash();
 
       for (key in valuesHash){
