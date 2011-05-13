@@ -262,7 +262,20 @@ def get_autonomy_variable_evolution(variable, autonomy_name)
   from vars_socioeco_x_autonomia, gadm1
   where vars_socioeco_x_autonomia.gadm1_cartodb_id = gadm1.cartodb_id AND gadm1.name_1 = '#{autonomy_name}'
 SQL
-  $cartodb.query(query)[:rows].first.try(:values) || []
+  values = $cartodb.query(query)[:rows].first.try(:values) || []
+  return [] if values.empty?
+  result = []
+  pos = 0
+  variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
+  1975.upto(2011) do |year|
+    if variables_years.include?(year)
+      result << values[pos]
+      pos += 1
+    else
+      result << 0
+    end
+  end
+  result
 end
 
 def get_province_variable_evolution(custom_variable_name, province_name)
