@@ -3,7 +3,7 @@
   var animate_interval;
   var previous_year;
 
-  function initializeOptions() {    
+  function initializeOptions() {
     // Graph - Map
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
@@ -12,8 +12,8 @@
       $('div#map').css('zIndex',0);
       $('div#graph').css('zIndex',10);
     }
-    
-    
+
+
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
@@ -79,7 +79,7 @@
         year = ui.value;
       },
       start: function(event, ui) {
-        if (state === "graph" && selectedBubble) {
+        if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
           graphBubbleTooltip.hide();
         }
@@ -201,7 +201,7 @@
       if (!$(this).parent().hasClass('selected')) {
         compare = $(this).attr('class');
         changeHash();
-        
+
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
