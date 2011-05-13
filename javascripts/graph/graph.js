@@ -163,12 +163,12 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
-          bar_width = (valuesHash[data_id]["partido_1"][2]*175)/100;
+          bar_width = (valuesHash[data_id].partido_1[1]*175)/100;
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*175)/100+'%)');
 
           // Second political party
-          var partido_2 = valuesHash[data_id]["partido_2"][0].toLowerCase();
+          var partido_2 = valuesHash[data_id].partido_2[0].toLowerCase();
           c2 = $('div#graph_infowindow div.top div.stats div.partido:eq(1)').attr('class').split(" ");
           $.each(c2, function(c){
             if(c2[c] != "partido"){
@@ -180,12 +180,12 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
-          bar_width = (valuesHash[data_id]["partido_2"][2]*175)/100;
+          bar_width = (valuesHash[data_id].partido_2[1]*175)/100;
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*175)/100+'%)');
 
           // Third political party
-          var partido_3 = valuesHash[data_id]["partido_3"][0].toLowerCase();
+          var partido_3 = valuesHash[data_id].partido_3[0].toLowerCase();
           c3 = $('div#graph_infowindow div.top div.stats div.partido:eq(2)').attr('class').split(" ");
           $.each(c3, function(c){
             if(c3[c] != "partido"){
@@ -197,12 +197,12 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
-          bar_width = (valuesHash[data_id]["partido_3"][2]*175)/100;
+          bar_width = (valuesHash[data_id].partido_3[1]*175)/100;
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*175)/100+'%)');
 
           // Other political party
-          bar_width = (valuesHash[data_id]["resto_partidos_percent"]*175)/100;
+          bar_width = (valuesHash[data_id].resto_partidos_percent * 175)/100;
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
 
@@ -218,26 +218,27 @@
           var electionYears = [1987,1991,1995,1999,2003,2007,2011];
           var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
-        for (var i = 0; i < info.length; i++) {
-          if (info[i]!=undefined) {
-            if (!find) {
-              if (year == minYear + i) {
-                find = true;
-                find_year = count;
+          for (var i = 0; i < info.length; i++) {
+            if (info[i]!=undefined) {
+              if (!find) {
+                if (year == minYear + i) {
+                  find = true;
+                  find_year = count;
+                }
               }
+              if (Math.abs(parseFloat(info[i]))>max) max = Math.ceil(Math.abs(parseFloat(info[i])));
+              paro += info[i]+ ',';
+            } else {
+              paro += '0,';
             }
-            if (Math.abs(parseFloat(info[i]))>max) max = Math.ceil(Math.abs(parseFloat(info[i])));
-            paro += info[i]+ ',';
-          } else {
-            paro += '0,';
+            count++;
           }
-          count++;
-        }
-        paro = paro.substring(0, paro.length-1);
+          paro = paro.substring(0, paro.length-1);
 
           $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
           $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
             $('div#graph_infowindow div.chart img').show();
+
           showInfowindow(left,top);
         }
 
@@ -319,7 +320,7 @@
         function hideLegend() {
           $('div.graph_legend').fadeOut();
         }
-        
+
         function hideFast() {
           $('div.graph_legend').hide();
         }
