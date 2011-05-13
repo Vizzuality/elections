@@ -1,4 +1,4 @@
-    
+
     // Graph global vars {#}
     var deep = "autonomias";
     var name = "España";
@@ -22,7 +22,6 @@
 
       $(".innerBubble").live({
         mouseenter: function () {
-          console.log(graphBubbleInfowindow.isOpen());
           var radius = $(this).height()/2;
           var top = $(this).parent().css('top').replace('px','') - radius - 21;
           var left = $(this).parent().css('left').replace('px','');
@@ -264,10 +263,10 @@
         function hideLegend() {
           $('div.graph_legend').fadeOut();
         }
-        
+
         function changeData(results,names,parent_url) {
           if (names.length>0) {
-            
+
             $('div.graph_legend h2').html(compare + ' en ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
               $('div.graph_legend p.autonomy a').text('');
@@ -275,18 +274,18 @@
             } else {
               $('div.graph_legend p.autonomy a').text(names[1].replace(/_/g,' '));
               $('div.graph_legend p.autonomy a').attr('href','javascript:void createBubbles("'+parent_url+'")');
-              
+
             }
-                        
+
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
               $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
             });
             var bar_width;
-            
+
             // First political party
             var partido_1 = results['partido_1'][0].toLowerCase().replace("-", "_");
-            
+
             if (_.indexOf(parties, partido_1) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
             } else {
@@ -295,7 +294,7 @@
             bar_width = (results['partido_1'][1]*175)/100;
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
-            
+
             // Second political party
             var partido_2 = results['partido_2'][0].toLowerCase().replace("-", "_");
             if (_.indexOf(parties, partido_2) !== -1) {
@@ -306,7 +305,7 @@
             bar_width = (results['partido_2'][1]*175)/100;
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
-            
+
             // Third political party
             var partido_3 = results['partido_3'][0].toLowerCase().replace("-", "_");
             if (_.indexOf(parties, partido_3) !== -1) {
@@ -314,11 +313,11 @@
             } else {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
-            
+
             bar_width = (results['partido_3'][1]*175)/100;
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
-            
+
             // Other
             bar_width = (results['otros'][0]*175)/100;
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
@@ -373,7 +372,7 @@
           }
 
           valuesHash[key] = val;
-                    
+
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
