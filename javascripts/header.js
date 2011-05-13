@@ -8,6 +8,7 @@
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
       $('div#tab_menu a.stats').addClass('selected');
+      $('form.search input.text').val('Añade un municipio...');
       restartGraph();
       $('div#map').css('zIndex',0);
       $('div#graph').css('zIndex',10);
@@ -23,16 +24,27 @@
         $('div#tab_menu a').removeClass('selected');
         if (className=='map') {
           state = "mapa";
-          //This element belongs to body, not to graph container
+          // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
+          //Change search form value
+          $('form.search input.text').val('Busca un lugar...');
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
+          // Refresh map to show last changes done in application
+          //refreshMap();
         } else {
+          // Hide the legend if this is visible...
+          graphLegend.hideFast();
+          //Change search form value
+          $('form.search input.text').val('Añade tu municipio...');
           state = "grafico";
           restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
         }
+        // Stop the slider animation if it is playing
+        clearInterval(animate_interval);
+        
         $(this).addClass('selected');
         changeHash();
       }
@@ -87,10 +99,11 @@
       },
       stop: function( event, ui ) {
         if (state=="mapa") {
-          refreshTiles();
-          refreshBubbles();
+          refreshMap();
         } else {
-          setValue("/json/generated_data/autonomias/"+normalization[compare]+"_"+graph_hack_year[year]+".json");
+          if (graph_hack_year[previous_year]!=graph_hack_year[year]) {
+            setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
+          }
         }
         changeHash();
       }
@@ -209,15 +222,21 @@
 
   function animateSlider() {
     var new_value = $("div.year_slider").slider('value') + 1;
+    console.log();
     if (new_value>2011) {
-      $(this).removeClass('stop').addClass('play');
-      $(this).attr('href','#play');
+      $('a.action').removeClass('stop').addClass('play');
+      $('a.action.play').attr('href','#play');
       clearInterval(animate_interval);
       return false;
     } else {
       $("div.year_slider").slider('value',new_value);
-      refreshBubbles();
+      
+      if (state == 'mapa') {
+        refreshMap();
+      } else {
+        setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
+      }
+      
       changeHash();
-      refreshTiles();
     }
   }
