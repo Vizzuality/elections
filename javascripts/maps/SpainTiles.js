@@ -50,13 +50,13 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
+      
       // Call service
       $.ajax({
         method: "GET",
         dataType: 'json',
         url: me.json_tile_url+z+'_'+x+'_'+y+'.json',
         success: function(points) {
-          
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ; 
           var worldcoord = new google.maps.Point(pixelcoord.x/Math.pow(2,zoom),pixelcoord.y/Math.pow(2,zoom)); 
@@ -108,6 +108,8 @@
     var top = pixelCoordinate.y - tileCoordinate.y;
 
     var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
+    
+    
     var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
     var value = Math.abs(point['data'][year][normalization[compare]]);
     

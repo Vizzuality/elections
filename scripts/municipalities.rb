@@ -8,7 +8,7 @@ autonomies     = get_autonomies
 provinces      = get_provinces
 variables      = get_variables(4)
 parties        = get_parties
-psoe_id, pp_id = get_psoe_pp_id
+parties_known  = get_known_parties(parties)
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
 
@@ -25,7 +25,7 @@ if ARGV[0] =~ /\d+/
 end
 
 base_path = FileUtils.pwd
-dir_path = "#{base_path}/../json/generated_data/municipalities"
+dir_path = "#{base_path}/../json/generated_data/municipios"
 FileUtils.mkdir_p(dir_path)
 
 ### MUNICIPALITIES
@@ -34,7 +34,9 @@ FileUtils.mkdir_p(dir_path)
 # Get OAuth token from cartodb client, because we are goint to
 # fetch API via net/http library (because of the threads we use)
 puts 
+evolution = {}
 autonomies.each do |autonomy_hash|
+  autonomy_name = autonomy_hash[:name_1].tr(' ','_')
   selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
   if selected_provinces.empty?
     puts "Empty provinces for #{autonomy_hash.inspect}"
@@ -58,22 +60,25 @@ SQL
     request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query)}&#{oauth_token}")
     response = http.request(request)
     variables.each do |variable|
+      custom_variable_name = variable.gsub(/_\d+/,'')
+      evolution[custom_variable_name] ||= {} 
       proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
       province_results = get_province_results(province_name, proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
       max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
-      votes_per_municipality.each do |municipality|
+      votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:name_4].tr(' ','_')
+        evolution[custom_variable_name][municipality[:name_4]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:name_4]).compact
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
-        json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, psoe_id, pp_id)
+        json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
         json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y)
         json[municipality_name][:radius]       = get_radius(municipality)
-        json[municipality_name][:color]        = get_color(x_coordinate)
+        json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
         json[municipality_name][:children_json_url] = nil
         json[municipality_name][:censo_total]  = municipality[:censo_total]
         json[municipality_name][:porcentaje_participacion] = municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0
@@ -83,10 +88,12 @@ SQL
         json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
         json[municipality_name][:info] = ""
         json[municipality_name][:info] = ""
-        json[municipality_name][:parents] = [autonomy_hash[:name_1], province_name]
+        json[municipality_name][:parent] = [autonomy_name,province_name]
+        json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
         json[municipality_name][:parent_results] = province_results
+        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:name_4]].join(',')
       end
-      fd = File.open(municipalities_path(province_name,variable),'w+')
+      fd = File.open('../' + municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
       fd.close        
     end
