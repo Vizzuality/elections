@@ -28,10 +28,10 @@
           graphBubbleInfowindow.hide();
           //Change search form value
           $('form.search input.text').val('Busca un lugar...');
-          // Refresh map to show last changes done in application
-          refreshMap();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
+          // Refresh map to show last changes done in application
+          //refreshMap();
         } else {
           // Hide the legend if this is visible...
           graphLegend.hideFast();

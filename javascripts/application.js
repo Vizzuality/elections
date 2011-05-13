@@ -10,7 +10,7 @@
   $(document).ready(function(){
     //Deep linking manage
     var route = window.location.hash.replace('#','').split('/');
-    goToHash(route);    
+    goToHash(route);
   });
   
   
@@ -23,8 +23,6 @@
     
     //initialize map and map modules
     initializeMap();
-    
-
   }
   
   
