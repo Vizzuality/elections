@@ -66,7 +66,7 @@
 
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-        },
+        }
       });
 
       // Bubble graph infowindow
