@@ -14,7 +14,7 @@
 
     var selectedBubble;
 
-    var graphLegend,graphBubbleInfowindow, graphBubbleTooltip;
+    var axisLegend, graphLegend,graphBubbleInfowindow, graphBubbleTooltip;
 
     jQuery.easing.def = "easeInOutCubic";
 
@@ -65,7 +65,7 @@
           $("div#" + selectedBubble + " div.outerBubble").css("background", "#333");
 
           graphBubbleTooltip.hide();
-            graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
+          graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
         },
       });
 
@@ -124,13 +124,15 @@
         }
 
         function hideInfowindow() {
-          $('div#graph_infowindow').stop().animate({
-            top: '+=' + 10 + 'px',
-            opacity: 0
-          }, 100, 'swing', function(ev){
-      			$('div#graph_infowindow').css({visibility:"hidden"});
-      			open = false;
-      		});
+          if (isOpen()) {
+            $('div#graph_infowindow').stop().animate({
+              top: '+=' + 10 + 'px',
+              opacity: 0
+            }, 100, 'swing', function(ev){
+              $('div#graph_infowindow').css({visibility:"hidden"});
+              open = false;
+            });
+          }
         }
 
         function changeData(left,top,data_id) {
@@ -240,7 +242,28 @@
     	  }
     	}());
 
+      axisLegend = (function() {
+        function updateLegend(info) {
 
+          if (info != undefined) {
+            $("#top_legend").fadeOut("fast", function() {
+              $("#top_legend").text(info.legendTop);
+              $("#top_legend").fadeIn("slow", function() {
+              });
+            });
+
+            $("#bottom_legend").fadeOut("fast", function() {
+              $("#bottom_legend").text(info.legendBottom);
+              $("#bottom_legend").fadeIn("slow", function() {
+              });
+            });
+          }
+        }
+
+        return {
+          update: updateLegend
+        }
+      }());
 
     	graphLegend = (function() {
     	  // Create the element - add it to DOM
@@ -350,12 +373,6 @@
       });
     }
 
-
-
-
-
-
-
     /*GRAPH FUNCTIONS!*/
 
     function restartGraph() {
@@ -363,7 +380,8 @@
       graph_bubble_index = 100;
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
-      createBubbles("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+      var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json";
+      createBubbles(url);
     }
 
 

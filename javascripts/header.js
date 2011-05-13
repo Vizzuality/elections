@@ -182,25 +182,14 @@
 
       var value = $(this).text();
 
-        var info = tooltipInfo[value];
-
-        if (info != undefined) {
-         $("#top_legend").fadeOut("fast", function() {
-           $("#top_legend").text(info.legendTop);
-           $("#top_legend").fadeIn("slow", function() {
-           });
-         });
-
-         $("#bottom_legend").fadeOut("fast", function() {
-           $("#bottom_legend").text(info.legendBottom);
-           $("#bottom_legend").fadeIn("slow", function() {
-           });
-         });
-        }
 
       if (!$(this).parent().hasClass('selected')) {
         compare = $(this).attr('class');
+        axisLegend.update(tooltipInfo[value]);
+        graphBubbleInfowindow.hide();
+
         changeHash();
+        restartGraph();
 
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
