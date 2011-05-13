@@ -14,7 +14,7 @@
 
     var selectedBubble;
 
-    var axisLegend, graphLegend,graphBubbleInfowindow, graphBubbleTooltip;
+    var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
     jQuery.easing.def = "easeInOutCubic";
 
@@ -66,7 +66,7 @@
 
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-        },
+        }
       });
 
       // Bubble graph infowindow
@@ -250,7 +250,6 @@
         }
       }());
 
-
       // Tooltip when mouseover some bubble
       graphBubbleTooltip = (function() {
         // Create the element - add it to DOM
@@ -320,17 +319,21 @@
         function hideLegend() {
           $('div.graph_legend').fadeOut();
         }
+        
+        function hideFast() {
+          $('div.graph_legend').hide();
+        }
 
         function changeData(results,names,parent_url) {
           if (names.length>0) {
-
-            $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
+              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
               $('div.graph_legend p.autonomy a').text('España');
               $('div.graph_legend p.autonomy a').attr('href','#ver_España');
             } else {
-              $('div.graph_legend p.autonomy a').text(names[1].replace(/_/g,' '));
-              $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[1].replace(/_/g,' '));
+              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>');
+              $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
+              $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
             }
 
             $('div.graph_legend p.autonomy a').unbind('click');
@@ -395,6 +398,7 @@
 
   	    return {
           hide: hideLegend,
+          hideFast: hideFast,
           show: showLegend,
           change: changeData
     	  }
@@ -432,7 +436,6 @@
           }
 
           valuesHash[key] = val;
-
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -448,7 +451,13 @@
 
     function setValue(url){
       $.getJSON(url, function(data) {
+        var one = true;
         _.each(data, function(v,key) {
+          //Check data for show legend or not
+          if (one) {
+            graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
+            one = false;
+          }
           valuesHash[key] = v;
           updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });

@@ -1,8 +1,8 @@
 
-  var canary_island,peninsula;
-  var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036);
+  var canary_island,peninsula;  // Maps
+  var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036); // Maps center position
   var start_zoom = 6;
-  var previous_zoom = 6;
+  var previous_zoom = 6;  // Hack for jump 10 zoom
   
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
   var allowedBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
@@ -81,7 +81,6 @@
     explanationwindow = new ExplanationWindow();
 
     peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
-
 
 
     /* initialize search component */
@@ -191,27 +190,6 @@
 
 
 
-  // function checkCanaryIsland() {
-  //   var peninsula_bounds_ne = peninsula.getBounds().getNorthEast();
-  //   var peninsula_bounds_sw = peninsula.getBounds().getSouthWest();
-  // 
-  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lat()<36.00) || (peninsula_bounds_ne.lng()>3.10) ) {
-  //     $('#canary_island').removeClass('left');
-  //     $('#canary_island').css('zIndex',1);
-  //     return false;
-  //   }
-  // 
-  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lng()< -9.5581) || (peninsula_bounds_ne.lat()>52) ) {
-  //     $('#canary_island').addClass('left');
-  //     $('#canary_island').css('zIndex',1);
-  //     return false;
-  //   } else {
-  //     $('#canary_island').css('zIndex',0);
-  //   }
-  // }
-
-
-
   function checkZoom(){
     //close infowindow
     infowindow.hide();
@@ -240,7 +218,12 @@
       $('div.canary_island').css('z-index',0);
     }
   }
+
   
+  function refreshMap() {
+    refreshTiles();
+    refreshBubbles();
+  }
 
 
   // Limit map area
@@ -261,6 +244,27 @@
   //     if (Y > AmaxY) {Y = AmaxY;}
   // 
   //     map.setCenter(new google.maps.LatLng(Y,X));
+  //   }
+  // }
+
+
+
+  // function checkCanaryIsland() {
+  //   var peninsula_bounds_ne = peninsula.getBounds().getNorthEast();
+  //   var peninsula_bounds_sw = peninsula.getBounds().getSouthWest();
+  // 
+  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lat()<36.00) || (peninsula_bounds_ne.lng()>3.10) ) {
+  //     $('#canary_island').removeClass('left');
+  //     $('#canary_island').css('zIndex',1);
+  //     return false;
+  //   }
+  // 
+  //   if ((peninsula.getZoom()==6) || (peninsula_bounds_sw.lng()< -9.5581) || (peninsula_bounds_ne.lat()>52) ) {
+  //     $('#canary_island').addClass('left');
+  //     $('#canary_island').css('zIndex',1);
+  //     return false;
+  //   } else {
+  //     $('#canary_island').css('zIndex',0);
   //   }
   // }
 
