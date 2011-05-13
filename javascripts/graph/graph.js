@@ -138,7 +138,7 @@
         }
 
         function changeData(left,top,data_id) {
-          if ($("#graph_infowindow").attr('alt')==data_id && $("#graph_infowindow").is(':visible')) {
+          if ($("#graph_infowindow").attr('alt')==data_id && isOpen()) {
             return false;
           }
 
