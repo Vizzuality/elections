@@ -261,7 +261,7 @@ div.graph_legend h2 sup {font:normal 13px "Officina Regular";}
 div.graph_legend p.autonomy {padding:5px 0 10px 0;}
 div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.graph_legend p.autonomy a:hover {color:#666666;}
-div.graph_legend div.partido.otros p {text-decoration:underline;}
+div.graph_legend div.partido.otros p {}
 
 
 /*political bars*/
