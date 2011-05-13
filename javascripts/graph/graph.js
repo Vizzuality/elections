@@ -85,7 +85,7 @@
           '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
           '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
           '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-          '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
+          '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
           '    </div>'+
           '  </div>'+
           '  <div class="bottom">'+
@@ -285,10 +285,13 @@
         function hideLegend() {
           $('div.graph_legend').fadeOut();
         }
+        
+        function hideFast() {
+          $('div.graph_legend').hide();
+        }
 
         function changeData(results,names,parent_url) {
           if (names.length>0) {
-            
             if (names.length==1) {
               $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
               $('div.graph_legend p.autonomy a').text('España');
@@ -298,14 +301,15 @@
               $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
               $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
             }
-            
+
             $('div.graph_legend p.autonomy a').unbind('click');
             $('div.graph_legend p.autonomy a').click(function(ev){
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleInfowindow.hide();
             });
-            
+
 
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -360,6 +364,7 @@
 
   	    return {
           hide: hideLegend,
+          hideFast: hideFast,
           show: showLegend,
           change: changeData
     	  }
@@ -397,7 +402,6 @@
           }
 
           valuesHash[key] = val;
-
           nBubbles = nBubbles+1;
           $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
