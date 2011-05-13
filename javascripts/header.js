@@ -182,11 +182,14 @@
 
       var value = $(this).text();
 
-      axisLegend.update(tooltipInfo[value]);
 
       if (!$(this).parent().hasClass('selected')) {
         compare = $(this).attr('class');
+        axisLegend.update(tooltipInfo[value]);
+        graphBubbleInfowindow.hide();
+
         changeHash();
+        restartGraph();
 
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
