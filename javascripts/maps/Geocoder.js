@@ -5,7 +5,7 @@
     function initializeSearch() { 
       $('form.search input.text').focusin(function(){
         var value = $(this).val();
-        if (value=="Busca un lugar...") {
+        if (value=="Busca un lugar..." || value=="Añade un municipio...") {
           $(this).val('');
         }
       });
@@ -13,7 +13,7 @@
       $('form.search input.text').focusout(function(){
         var value = $(this).val();
         if (value=="") {
-          $(this).val('Busca un lugar...');
+          (state == "mapa")?$(this).val('Busca un lugar...'):$(this).val('Añade un municipio...');
         }
       });
       
