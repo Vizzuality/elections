@@ -244,37 +244,46 @@
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
 
-          var max = 0; var count = 0; var find = false; var find_year;
-          var info = valuesHash[data_id].evolution.split(",");
-          console.log(info);
-          var paro = "";
 
-          var minYear = 1987; // 1987
-          var maxYear = 2011; // 2012
+          var data = valuesHash[data_id].evolution.split(",");
+          var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
+          var minYear = 1975; var maxYear = 2011;
 
-          minGraphYear = 1991; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
           var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-          var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
-          for (var i = 12; i < info.length; i++) {
-            if (info[i]!=undefined) {
+          var firstYearData = _.detect(data, function(num){ return num != 0; }); // index of the first year with information
+          var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
+          var firstYear = 1975 + firstYearIndex; // first year with information
+
+          var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
+          var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
+          var startYearIndex = nextElectionYearIndex - 1;
+
+          var chartBackgroundTopPadding = 33 * startYearIndex;
+
+          console.log(firstYearIndex);
+          for (var i = firstYearIndex; i <= data.length; i++) {
+            if (data[i]!=undefined) {
               if (!find) {
-                if (year == minYear + i - (minYear - 1975)) {
+                if (year - 1975 == i - 1 ) {
                   find = true;
                   find_year = count;
                 }
               }
-              if (Math.abs(parseFloat(info[i]))>max) max = Math.ceil(Math.abs(parseFloat(info[i])));
-              paro += info[i]+ ',';
+              if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
+              chartDataString += data[i]+ ',';
             } else {
-              paro += '0,';
+              chartDataString += '0,';
             }
             count++;
           }
-          paro = paro.substring(0, paro.length-1);
+          if (find_year == undefined && year == 2011) {
+            find_year = count;
+          }
+          chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-          //$('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-          $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+          $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
+          $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
             $('div#graph_infowindow div.chart img').show();
 
           showInfowindow(left,top);
@@ -359,15 +368,15 @@
               '<a class="close" href="#cerrar">Cerrar</a>'+
             '</div>'+
           '</div>');
-          
-        
+
+
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
           $(this).parent().fadeOut();
         });
-          
-          
+
+
         $('div.graph_legend form').submit(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
@@ -375,7 +384,7 @@
           var value = $(this).children('input.text').val();
           addNewBubble(value);
         });
-        
+
         $('div.graph_legend form input.text').focusin(function(){
           var value = $(this).val();
           if (value=="Busca tu municipio") {
@@ -389,7 +398,7 @@
             $(this).val('Busca tu municipio');
           }
         });
-        
+
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -415,7 +424,7 @@
               $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
               $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
             }
-            
+
             $('div.graph_legend p.autonomy').show();
             $('div.graph_legend p.autonomy a').unbind('click');
             $('div.graph_legend p.autonomy a').click(function(ev){
@@ -426,7 +435,7 @@
             });
 
             $('div.graph_legend div.stats').show();
-            
+
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
               $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
@@ -477,7 +486,7 @@
             showSearch();
           }
         }
-        
+
         function showSearch() {
           $('div.graph_legend h2').hide();
           $('div.graph_legend div.stats').hide();
@@ -522,7 +531,7 @@
           if (count>19) {
             return false;
           }
-          
+
           if (one) {
             graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
             one = false;
@@ -630,7 +639,7 @@
 
     function addNewBubble(region) {
       region = region.replace(/ /g,'_');
-      
+
       //Check the ball is in the graph
       if ($('div.bubbleContainer[id="'+region+'"]').length) {
         $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
