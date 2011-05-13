@@ -245,19 +245,20 @@
 
           var max = 0; var count = 0; var find = false; var find_year;
           var info = valuesHash[data_id].evolution.split(",");
+          console.log(info);
           var paro = "";
 
           var minYear = 1987; // 1987
-          var maxYear = 2012; // 2012
+          var maxYear = 2011; // 2012
 
-          minGraphYear = 1987; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
+          minGraphYear = 1991; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
           var electionYears = [1987,1991,1995,1999,2003,2007,2011];
           var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
-          for (var i = 0; i < info.length; i++) {
+          for (var i = 12; i < info.length; i++) {
             if (info[i]!=undefined) {
               if (!find) {
-                if (year == minYear + i) {
+                if (year == minYear + i - (minYear - 1975)) {
                   find = true;
                   find_year = count;
                 }
@@ -271,7 +272,7 @@
           }
           paro = paro.substring(0, paro.length-1);
 
-          $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
+          //$('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
           $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
             $('div#graph_infowindow div.chart img').show();
 
