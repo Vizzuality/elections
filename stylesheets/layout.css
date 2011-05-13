@@ -186,15 +186,16 @@ div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6
 div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 
-div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
+div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
 div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center;
-  line-height:13px;}
-div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
+div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}

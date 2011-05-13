@@ -246,6 +246,21 @@ SQL
   end
 end
 
+def get_from_every_year(variables, values)
+  result = []
+  pos = 0
+  variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
+  1975.upto(2011) do |year|
+    if variables_years.include?(year)
+      result << values[pos]
+      pos += 1
+    else
+      result << 0
+    end
+  end
+  result
+end
+
 def get_autonomy_variable_evolution(variable, autonomy_name)
   custom_variable_name = variable.gsub(/_\d+/,'')
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
@@ -262,7 +277,9 @@ def get_autonomy_variable_evolution(variable, autonomy_name)
   from vars_socioeco_x_autonomia, gadm1
   where vars_socioeco_x_autonomia.gadm1_cartodb_id = gadm1.cartodb_id AND gadm1.name_1 = '#{autonomy_name}'
 SQL
-  $cartodb.query(query)[:rows].first.try(:values) || []
+  values = $cartodb.query(query)[:rows].first.try(:values) || []
+  return [] if values.empty?
+  return get_from_every_year(variables, values)
 end
 
 def get_province_variable_evolution(custom_variable_name, province_name)
@@ -278,7 +295,9 @@ def get_province_variable_evolution(custom_variable_name, province_name)
   from vars_socioeco_x_provincia, gadm2
   where vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{province_name}'
 SQL
-  $cartodb.query(query)[:rows].first.try(:values) || []  
+  values = $cartodb.query(query)[:rows].first.try(:values) || []
+  return [] if values.empty?
+  return get_from_every_year(variables, values)
 end
 
 def get_municipalities_variable_evolution(custom_variable_name, municipality_name)
@@ -294,7 +313,9 @@ def get_municipalities_variable_evolution(custom_variable_name, municipality_nam
   from vars_socioeco_x_municipio, gadm4
   where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name.gsub(/\'/,"\\\'")}'
 SQL
-  $cartodb.query(query)[:rows].first.try(:values) || []  
+  values = $cartodb.query(query)[:rows].first.try(:values) || []
+  return [] if values.empty?
+  return get_from_every_year(variables, values)
 end
 
 def create_years_hash(records, variables, max_year, min_year)
