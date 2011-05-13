@@ -150,8 +150,7 @@
              return;
            }
 
-            $('div#graph_infowindow').stop().animate({
-              top: '+=' + 10 + 'px',
+            $('div#graph_infowindow').stop().animate({ top: '+=' + 10 + 'px',
               opacity: 0
             }, 100, 'swing', function(ev){
               $('div#graph_infowindow').css({visibility:"hidden"});
@@ -168,6 +167,17 @@
           $("#graph_infowindow").attr('alt',data_id);
           $("#graph_infowindow").find(".top").find("h2").empty();
           $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+
+          $("#graph_infowindow a.more").show();
+
+          if (deep == "autonomias") {
+            $("#graph_infowindow a.more").text("Ver provincias");
+          } else if (deep == "provincias") {
+            $("#graph_infowindow a.more").text("Ver municipios");
+          } else {
+            $("#graph_infowindow a.more").hide();
+          }
+
           $("#graph_infowindow").find(".top").find(".province").empty();
           $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id]["censo_total"] + " habitantes");
           $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
