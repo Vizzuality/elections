@@ -289,7 +289,7 @@
 
         function changeData(results,names,parent_url) {
           if (names.length>0) {
-            
+
             $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
             if (names.length==1) {
               $('div.graph_legend p.autonomy a').text('España');
@@ -298,14 +298,15 @@
               $('div.graph_legend p.autonomy a').text(names[1].replace(/_/g,' '));
               $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[1].replace(/_/g,' '));
             }
-            
+
             $('div.graph_legend p.autonomy a').unbind('click');
             $('div.graph_legend p.autonomy a').click(function(ev){
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleInfowindow.hide();
             });
-            
+
 
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
