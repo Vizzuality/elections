@@ -119,13 +119,7 @@
     });
 
     /*zoom slider*/
-		$("span.slider").slider({
-			orientation: "vertical",
-			range: "min",
-			min: 6,
-			max: 11,
-			value: 6,
-			step: 1,
+		$("span.slider").slider({orientation: "vertical",range: "min",min: 6,max: 11,value: 6,step: 1,
 			stop: function( event, ui ) {
         if (ui.value==10) {
           peninsula.setZoom(11);
@@ -163,6 +157,7 @@
         }
       }
 		});
+  
   }
 
 
@@ -219,11 +214,12 @@
     }
   }
 
-  
+
   function refreshMap() {
     refreshTiles();
     refreshBubbles();
   }
+
 
 
   // Limit map area

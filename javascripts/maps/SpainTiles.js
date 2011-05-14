@@ -50,13 +50,13 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
+      
       // Call service
       $.ajax({
         method: "GET",
         dataType: 'json',
         url: me.json_tile_url+z+'_'+x+'_'+y+'.json',
         success: function(points) {
-          
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ; 
           var worldcoord = new google.maps.Point(pixelcoord.x/Math.pow(2,zoom),pixelcoord.y/Math.pow(2,zoom)); 
