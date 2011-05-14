@@ -10,6 +10,7 @@
 
     var graph_bubble_index = 100;
     var valuesHash = {};
+    var possibleValues = {};
     var nBubbles = 0;
 
     var selectedBubble;
@@ -243,36 +244,46 @@
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
 
-          var max = 0; var count = 0; var find = false; var find_year;
-          var info = valuesHash[data_id].evolution.split(",");
-          var paro = "";
 
-          var minYear = 1987; // 1987
-          var maxYear = 2012; // 2012
+          var data = valuesHash[data_id].evolution.split(",");
+          var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
+          var minYear = 1975; var maxYear = 2011;
 
-          minGraphYear = 1987; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
           var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-          var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
-          for (var i = 0; i < info.length; i++) {
-            if (info[i]!=undefined) {
+          var firstYearData = _.detect(data, function(num){ return num != 0; }); // index of the first year with information
+          var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
+          var firstYear = 1975 + firstYearIndex; // first year with information
+
+          var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
+          var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
+          var startYearIndex = nextElectionYearIndex - 1;
+
+          var chartBackgroundTopPadding = 33 * startYearIndex;
+
+          console.log(firstYearIndex);
+          for (var i = firstYearIndex; i <= data.length; i++) {
+            if (data[i]!=undefined) {
               if (!find) {
-                if (year == minYear + i) {
+                if (year - 1975 == i - 1 ) {
                   find = true;
                   find_year = count;
                 }
               }
-              if (Math.abs(parseFloat(info[i]))>max) max = Math.ceil(Math.abs(parseFloat(info[i])));
-              paro += info[i]+ ',';
+              if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
+              chartDataString += data[i]+ ',';
             } else {
-              paro += '0,';
+              chartDataString += '0,';
             }
             count++;
           }
-          paro = paro.substring(0, paro.length-1);
+          if (find_year == undefined && year == 2011) {
+            find_year = count;
+          }
+          chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
           $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-          $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+          $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
             $('div#graph_infowindow div.chart img').show();
 
           showInfowindow(left,top);
@@ -347,7 +358,47 @@
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
           '  </div>'+
+            '<form>'+
+              '<input class="text" type="text" value="Busca tu municipio"/>'+
+              '<input class="submit" type="submit" value=""/>'+
+            '</form>'+
+            '<div class="search_error">'+
+              '<h5>Ops! No hemos podido encontrar lo que buscas</h5>'+
+              '<p>Comprueba que has escrito bien el nombre o prueba con otro</p>'+
+              '<a class="close" href="#cerrar">Cerrar</a>'+
+            '</div>'+
           '</div>');
+
+
+        $('div.graph_legend div.search_error a.close').click(function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          $(this).parent().fadeOut();
+        });
+
+
+        $('div.graph_legend form').submit(function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          $('div.graph_legend div.search_error a.close').trigger('click');
+          var value = $(this).children('input.text').val();
+          addNewBubble(value);
+        });
+
+        $('div.graph_legend form input.text').focusin(function(){
+          var value = $(this).val();
+          if (value=="Busca tu municipio") {
+            $(this).val('');
+          }
+        });
+
+        $('div.graph_legend form input.text').focusout(function(){
+          var value = $(this).val();
+          if (value=="") {
+            $(this).val('Busca tu municipio');
+          }
+        });
+
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -359,20 +410,22 @@
 
         function hideFast() {
           $('div.graph_legend').hide();
+          $('div.graph_legend div.search_error').hide();
         }
 
         function changeData(results,names,parent_url) {
           if (names.length>0) {
             if (names.length==1) {
-              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>');
-              $('div.graph_legend p.autonomy a').text('España');
+              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
+              $('div.graph_legend p.autonomy a').text('España')
               $('div.graph_legend p.autonomy a').attr('href','#ver_España');
             } else {
-              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>');
+              $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
               $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
               $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
             }
 
+            $('div.graph_legend p.autonomy').show();
             $('div.graph_legend p.autonomy a').unbind('click');
             $('div.graph_legend p.autonomy a').click(function(ev){
               ev.stopPropagation();
@@ -381,6 +434,7 @@
               graphBubbleInfowindow.hide();
             });
 
+            $('div.graph_legend div.stats').show();
 
             // Remove previous political style bars
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -429,8 +483,15 @@
             $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
-            hideLegend();
+            showSearch();
           }
+        }
+
+        function showSearch() {
+          $('div.graph_legend h2').hide();
+          $('div.graph_legend div.stats').hide();
+          $('div.graph_legend p.autonomy').hide();
+          $('div.graph_legend').show();
         }
 
   	    return {
@@ -440,8 +501,6 @@
           change: changeData
     	  }
     	}());
-
-
 
       //Control resize window
       $(window).resize(function(){
@@ -456,6 +515,7 @@
       graph_bubble_index = 100;
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
+      possibleValues = {};
       var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json";
       createBubbles(url);
     }
@@ -463,24 +523,31 @@
 
     function createBubbles(url){
       $.getJSON(url, function(data) {
-
         var one = true;
+        possibleValues = data;
+        count = 0;
         _.each(data, function(val, key) {
           //Check data for show legend or not
+          if (count>19) {
+            return false;
+          }
+
           if (one) {
             graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
             one = false;
           }
 
           valuesHash[key] = val;
+
           nBubbles = nBubbles+1;
-          $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+          $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
           updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          count ++;
         });
       });
     }
@@ -567,4 +634,35 @@
           }
         }
       );
+    }
+
+
+    function addNewBubble(region) {
+      region = region.replace(/ /g,'_');
+
+      //Check the ball is in the graph
+      if ($('div.bubbleContainer[id="'+region+'"]').length) {
+        $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
+        $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
+      } else {
+        var count = 0;
+        _.each(possibleValues,function(val,key){
+          if (key.toLowerCase() == region.toLowerCase()) {
+            valuesHash[key] = val;
+            count++;
+            $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+            $('#'+key).css("left",(offsetScreenX).toString()+"px");
+            $('#'+key).css("top",(offsetScreenY).toString()+"px");
+            $('#'+key).css("zIndex",graph_bubble_index);
+            $('#'+key).css("opacity","0");
+            $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
+            updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          }
+        });
+        if (count==0) {
+          var position = $('div.graph_legend form').position();
+          $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
+          $('div.graph_legend div.search_error').fadeIn();
+        }
+      }
     }

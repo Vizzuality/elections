@@ -102,7 +102,7 @@ tile_extents.each do |extent|
       if File.exists? "images/#{file_name}"
         total_tiles -= 1
       else  
-        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cgadm2%7Cgadm3%7Cgadm4_processed"
+        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cgadm4_processed%7Cgadm4%7Cgadm3%7Cgadm2%7Cgadm1"
         tile_request = Typhoeus::Request.new(file_url)
         tile_request.on_complete do |response|
           start_tiles += 1
