@@ -25,16 +25,16 @@ LEFT_PARTIES = %W{ PSOE IU INDEP BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR }
 THID_PARTY_COLORS = {
   "CIU" => ["#EC7B37", "#003F7F"],
   "AP" => ["#5AB0E9"],
-  "IU" =>	["#54A551"],
-  "INDEP"	=> ["#AAA"],
+  "IU" =>  ["#54A551"],
+  "INDEP"  => ["#AAA"],
   "CDS" => ["#DADC4D", "#62A558"],
   "PAR" => ["#AAA"],
-  "EAJ-PNV"	=> ["#CE0E16", "#008140"],
+  "EAJ-PNV"  => ["#CE0E16", "#008140"],
   "PA" =>["#54A551"],
-  "BNG"	=> ["#D8282A"],
-  "PDP"	=> ["#5AB0E9"],
+  "BNG"  => ["#D8282A"],
+  "PDP"  => ["#5AB0E9"],
   "ERC-AM" => ["#EC7B37"],
-  "ESQUERRA-AM"	=> ["#EC7B37"],
+  "ESQUERRA-AM"  => ["#EC7B37"],
   "ERC" => ["#EC7B37"],
   "EA" => ["#B41318", "#DADC4D"],
   "HB" => ["#800080"],
@@ -289,7 +289,7 @@ def get_province_variable_evolution(custom_variable_name, province_name)
     raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
       variables << "#{raw_variable_hash[:codigo]}_#{year}"
     end
-  end.flatten.compact  
+  end.flatten.compact
   query = <<-SQL
   select #{variables.join(',')}
   from vars_socioeco_x_provincia, gadm2
@@ -307,7 +307,7 @@ def get_municipalities_variable_evolution(custom_variable_name, municipality_nam
     raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
       variables << "#{raw_variable_hash[:codigo]}_#{year}"
     end
-  end.flatten.compact  
+  end.flatten.compact
   query = <<-SQL
   select #{variables.join(',')}
   from vars_socioeco_x_municipio, gadm4
@@ -332,17 +332,7 @@ def create_years_hash(records, variables, max_year, min_year)
     end
 
     records.each do |row|
-      data[:censo_total]             = nil
-      data[:percen_participacion]    = nil
-      data[:primer_partido_percent]  = nil
-      data[:primer_partido_name]     = nil
-      data[:segundo_partido_percent] = nil
-      data[:segundo_partido_name]    = nil
-      data[:tercer_partido_percent]  = nil
-      data[:tercer_partido_name]     = nil
-      data[:otros_partido_percent]   = nil
-
-      if row.proceso_electoral_year == year || row.proceso_electoral_year < year
+      if row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
         data[:primer_partido_percent]  = row.primer_partido_percent
@@ -352,6 +342,7 @@ def create_years_hash(records, variables, max_year, min_year)
         data[:tercer_partido_percent]  = row.tercer_partido_percent
         data[:tercer_partido_name]     = row.tercer_partido_name
         data[:otros_partido_percent]   = row.otros_partido_percent
+      else
         break
       end
     end

@@ -22,7 +22,7 @@ def municipalities_data_sql
     pp2.name AS segundo_partido_name,
     tercer_partido_percent,
     pp3.name AS tercer_partido_name,
-    0 AS otros_partido_percent,
+    resto_partido_percent AS otros_partido_percent,
     center_longitude,
     center_latitude,
     vsm.paro_normalizado_1996,
