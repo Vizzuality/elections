@@ -102,16 +102,14 @@
       stop: function( event, ui ) {
         if (state == "mapa") {
           refreshMap();
-        } else {
-          console.log(year);
-          if (graph_hack_year[previous_year] != graph_hack_year[year]) {
-            setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
-          }
         }
+
+          var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+          setValue(url);
+
         changeHash();
       }
     });
-
 
     /*Info tooltip when you select a variable*/
     var infoTooltip = (function() {
@@ -213,7 +211,7 @@
         if (state == 'mapa') {
           refreshMap();
         } else {
-          setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
+          setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         changeHash();
@@ -245,7 +243,7 @@
       if (state == 'mapa') {
         refreshMap();
       } else {
-        setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
+        setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
 
       changeHash();
