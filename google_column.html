@@ -36,7 +36,7 @@
           method: "GET",
           dataType: 'jsonp',
           url: 'https://api.cartodb.com/v1',
-          data: {sql:'SELECT * FROM gadm4 WHERE cartodb_id<50',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+          data: {sql:'SELECT * FROM ine_poly WHERE center_latitude IS NULL OR ine_prov_int=38 LIMIT 100',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
           success: function(data) {
             if (data.rows.length>0) {
               places = data.rows;
@@ -56,7 +56,7 @@
       function findLocation() {
         if (places.length>0) {
           place = places.shift();
-          place.address = place.name_4 +','+place.name_2+',Spain';
+          place.address = place.nombre +','+place.provincia_name+',Spain';
           
           console.log('Searching '+place.address);
 
@@ -65,13 +65,13 @@
               map.setCenter(results[0].geometry.location);
               console.log('Founded '+place.address);
               //results[0].geometry.location
-              saveRegionPosition(results[0].formatted_address);
+              saveRegionPosition(results[0].formatted_address,results[0].geometry.location);
             } else {
               console.log('Not founded '+place.address);
               count++;
               console.log(count+'/'+total);
               findLocation();
-              alert("Geocode was not successful for the following reason: " + status);
+              //alert("Geocode was not successful for the following reason: " + status);
             }
           });
         } else {
@@ -81,13 +81,16 @@
       }
       
       
-      function saveRegionPosition(google_name) {
+      function saveRegionPosition(google_name,location) {
         console.log('Saving '+place.address);
         
         $.ajax({
           type: "GET",
           url: 'https://api.cartodb.com/v1',
-          data: {sql:"UPDATE gadm4 SET google_maps_name='"+google_name.replace(/\'/g,"\"")+"' WHERE cartodb_id="+place.cartodb_id,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+          data: {sql:"UPDATE ine_poly SET center_latitude="+location.lat()+","+
+          "center_longitude="+location.lng()+","+
+          "google_maps_name='"+google_name.replace(/\'/g,"\"")+
+          "' WHERE cartodb_id="+place.cartodb_id,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
           dataType: 'jsonp',
           success: function(data) {
             console.log('Saved!');

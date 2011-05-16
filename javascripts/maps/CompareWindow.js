@@ -6,6 +6,8 @@
       this.firstData = {};
       this.secondData = {};
       this.search_url = "/json/generated_data/google_names_cache/";
+      this.slider_position = 0;
+      this.total_variables = 10; // Calculate!! TODO
     }
 
     CompareWindow.prototype = {};
@@ -30,7 +32,8 @@
           '<div class="compare_graph">'+
             '<a href="#" class="left">left</a>'+
             '<a href="#" class="right">right</a>'+
-            '<div class="stats_slider">'+
+            '<div class="outer_stats_slider">'+
+              '<div class="stats_slider"></div>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -59,7 +62,19 @@
       $('div#map').prepend(this.div);
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
-
+      
+      $('div.compare_graph a.right').click(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        $('div.outer_stats_slider').scrollTo({top:'+=0',left:'+=299'}, 500);
+      });
+      
+      $('div.compare_graph a.left').click(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        $('div.outer_stats_slider').scrollTo( {top:'+=0',left:'-=299'}, 500);
+      });
+      
       $('form.search_compare input.text').focusin(function(){
         var value = $(this).val();
         if (value=="Busca una localidad...") {
@@ -85,16 +100,32 @@
         ev.preventDefault();
         me.removeRegion($(this).closest('div').attr('class'));
       });
+     
+     
+      $('a.resumen').live('click',function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
+      });
+      
+      $('a.evolucion').live('click',function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
+      });
     }
 
 
-    CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
-      //console.log(info);
+    CompareWindow.prototype.compareFirstRegion = function(info,zoom) {      
     	var me = this;
     	var div = this.div;
     	this.firstZoom = zoom;
+    	// Reset graphs containers
+      $('div.stats_slider').empty();
     	//Reset
     	this.resetSearch();
+    	//Create charts
+    	this.createChart(info);
       
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -161,6 +192,7 @@
         url: me.search_url+'/'+formatted_address+'.json',
         success: function(info) {
           me.secondData = info;
+          me.createChart(info);
           
           $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
           $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
@@ -264,3 +296,114 @@
         return false;
       }
     }
+    
+    
+    CompareWindow.prototype.createChart = function(info) {
+      $('div.stats_slider').width(_.size(normalization)*298);
+      var width = 130;
+
+      
+      //Add top blocks
+      _.each(normalization,function(ele,i){
+        if (info['data'][year][ele]!=undefined) {
+          
+          // Calculate min-max from variable
+          var max = Math.max(Math.abs(info['data'][year][ele+'_min']),Math.abs(info['data'][year][ele+'_max']));
+          
+          if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
+            $('div.stats_slider div[alt="'+i+'"].up').append(
+              '<span style="width:'+((Math.abs(info['data'][year][ele]*width))/max)+'px" class="bar '+((info['data'][year][ele]>0)?'positive':'negative')+' second"></span>'
+            );
+          } else {
+            $('div.stats_slider').append(
+              '<div alt="'+i+'" class="up block">'+
+                '<h3>% '+i+'</h3>'+
+                '<span style="width:'+((Math.abs(info['data'][year][ele]*width))/max)+'px" class="bar '+((info['data'][year][ele]>0)?'positive':'negative')+' first"></span>'+
+                '<a class="evolucion" href="#ver_evolucion">ver evolución</a>'+
+              '</div>'
+            );
+          }
+        } else {
+          if ($('div.stats_slider div[alt="'+i+'"]').length==0) {
+            $('div.stats_slider').append(
+              '<div alt="'+i+'" class="up block">'+
+                '<h3>% '+i+'</h3>'+
+                '<a class="evolucion" href="#ver_evolucion">ver evolución</a>'+
+              '</div>'
+            );
+          }
+        }
+      });
+      
+      // Add bottom blocks
+      _.each(normalization,function(ele,i){
+        if (info['data'][year][ele]!=undefined) {
+          
+          if ($('div.stats_slider div[alt="'+i+'"].down').length>0) {
+            var src = createImage(info,ele,true);
+            
+            $('div.stats_slider div[alt="'+i+'"].down').append(
+              '<img class="second" src="'+src+'" title="" alt="Evolución '+year+' '+i+'"/>'
+            );
+          } else {
+            var src = createImage(info,ele,false);
+            $('div.stats_slider').append(
+              '<div alt="'+i+'" class="down block">'+
+                '<h3>% '+i+'</h3>'+
+                '<a class="resumen" href="#ver_resumen">ver resumen</a>'+
+                '<img class="first" src="'+src+'" />'+
+              '</div>'
+            );
+          }
+
+        } else {
+          if ($('div.stats_slider div[alt="'+i+'"].down').length==0) {
+            $('div.stats_slider').append(
+              '<div alt="'+i+'" class="down block">'+
+                '<h3>% '+i+'</h3>'+
+                '<a class="resumen" href="#ver_resumen">ver resumen</a>'+
+              '</div>'
+            );
+          }
+        }
+      });
+      
+    }
+    
+    
+    
+    /*Auxiliar function to get evolution image */
+    function createImage(info,ele,second) {
+      /* create graph */
+      var max = 0; var count = 0; var find = false; var find_year;
+      var param = "";
+      var minYear = 1987; // 1987
+      var maxYear = 2012; // 2012
+      minGraphYear = 1987; 
+      var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+      var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
+      for (var i = minYear; i < maxYear; i++) {
+        if (info['data'][i]!=undefined && info['data'][i][ele] != undefined) {
+          if (!find) {
+            if (year == i) {
+              find = true;
+              find_year = count;
+            }
+          }
+          if (Math.abs(parseFloat(info['data'][i][ele]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][ele])));
+          param += info['data'][i][ele] + ',';
+        } else {
+          param += '0,';
+        }
+        count++;
+      }
+      param = param.substring(0, param.length-1);
+      
+      if (second) {
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=280x100&cht=ls&chco=FF6600&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6600,0,'+find_year+',8&chma=3,3,3,3';
+      } else {
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=280x100&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,3,3,3';
+      }
+    }
+    
+    

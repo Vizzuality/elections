@@ -61,7 +61,7 @@ select nombre, votantes_totales, censo_total,
    #{variables.join(',')}
 from  vars_socioeco_x_municipio, votaciones_por_municipio, ine_poly, gadm2
 where ine_poly.ine_prov_int = votaciones_por_municipio.codineprov::integer and ine_poly.ine_muni_int = votaciones_por_municipio.codinemuni::integer and
-      vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.gid and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province[:id_2]}
+      vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province[:id_2]}
 SQL
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -93,12 +93,12 @@ SQL
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
-        json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y)
+        json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y, min_y)
         json[municipality_name][:radius]       = get_radius(municipality)
         json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
         json[municipality_name][:children_json_url] = nil
         json[municipality_name][:censo_total]  = municipality[:censo_total]
-        json[municipality_name][:porcentaje_participacion] = ("%.2f" % municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0).to_f
+        json[municipality_name][:porcentaje_participacion] = ("%.2f" % (municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0)).to_f
         json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],  municipality[:primer_partido_percent].to_f]
         json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent].to_f]
         json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
