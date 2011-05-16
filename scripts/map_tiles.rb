@@ -33,7 +33,6 @@ DROP TABLE IF EXISTS map_tiles_data;
 
 CREATE TABLE map_tiles_data AS (  
 SELECT 
-(id SERIAL PRIMARY KEY),
 g.cartodb_id as gid, 
 v.primer_partido_id,pp1.name primer_nombre,v.primer_partido_percent,v.primer_partido_votos,
 v.segundo_partido_id,pp2.name segundo_nombre,v.segundo_partido_percent,v.segundo_partido_votos,
