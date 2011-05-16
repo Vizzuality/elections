@@ -15,10 +15,9 @@ require 'fileutils'
 
 # sanity check arguments
 ENVR         = ARGV[0]
-ELECTION_ID = ARGV[1]
-if (ENVR != 'development' && ENVR != 'production') || (ELECTION_ID == nil)
-  puts "./rtve.rb [environment] [election_id]"
-  puts "environments: [development, production], election_id: [see procesos_electorales table]"
+if ENVR != 'development' && ENVR != 'production'
+  puts "./rtve.rb [environment]"
+  puts "environments: [development, production]"
   Process.exit!(true)
 end
 
@@ -28,9 +27,7 @@ setup      = {:development => {:host => 'localhost', :user => 'publicuser', :dbn
               :production  => {:host => '10.211.14.63', :user => 'postgres', :dbname => "cartodb_user_#{user}_db"}}           
 settings   = setup[ENVR.to_sym]           
 conn = PGconn.open(settings)  
-elecs_sql  = "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
-
-pos = conn.exec elecs_sql
+pos = conn.exec "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
 
 # menu screen
 begin
@@ -52,9 +49,8 @@ rescue
   retry
 end    
 
-puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
-
 # Create denomalised version of GADM4 table with votes, and party names
+puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
 sql = <<-EOS  
 DROP TABLE IF EXISTS map_tiles_data; 
 
@@ -93,7 +89,6 @@ ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid);
 CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
 CREATE INDEX map_tiles_data_the_geom_idx ON map_tiles_data USING gist(the_geom);
 EOS
-
 conn.exec sql
 
 # there are 2 bounding boxes at each zoom level. one for spain, one for canaries 
