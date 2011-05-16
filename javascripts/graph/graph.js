@@ -534,7 +534,6 @@
 
 
     function createBubbles(url){
-      console.log(url);
       $.getJSON(url, function(data) {
         var one = true;
         possibleValues = data;
@@ -557,7 +556,6 @@
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
-          console.log(key, val["color"]);
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
           updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
