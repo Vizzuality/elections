@@ -410,15 +410,15 @@
 
         function updateSearchInput() {
           $input = $('div.graph_legend form input.text');
-            if (deep == "autonomias") {
-              $input.val('Busca tu CCAA');
-            } else if (deep == "provincias") {
-              $input.val('Busca tu provincia');
-            } else {
-              $input.val('Busca tu municipio');
-            }
-
+          if (deep == "autonomias") {
+            $input.val('Busca tu CCAA');
+          } else if (deep == "provincias") {
+            $input.val('Busca tu provincia');
+          } else {
+            $input.val('Busca tu municipio');
+          }
         }
+
         $('div.graph_legend form input.text').focusout(function(){
           var value = $(this).val();
           if (value == "") {
@@ -539,15 +539,15 @@
           showLegend();
         }
 
-  	    return {
+        return {
           hide: hideLegend,
           hideFast: hideFast,
           show: showLegend,
           showError: showSearchError,
           hideError: hideSearchError,
           change: changeData
-    	  }
-    	}());
+        }
+      }());
 
       //Control resize window
       $(window).resize(function(){
@@ -623,11 +623,11 @@
       var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
       $(bubble).animate({
-          left: x.toString() + "px",
-          top: y.toString() + "px",
-          opacity: 1
-        }, 1000, function(){
-          //console.log("ukelele");
+        left: x.toString() + "px",
+        top: y.toString() + "px",
+        opacity: 1
+      }, 1000, function(){
+        //console.log("ukelele");
       });
 
       $(bubble).find('.outerBubble').animate({
@@ -678,14 +678,14 @@
         top: displacementY,
         opacity: "0"
       }, 500, function(){
-          //console.log("Removing "+b);
-          $("#"+b).remove();
-          nBubbles=nBubbles-1;
-          if(nBubbles==0){
-            createBubbles(url);
-          }
+        //console.log("Removing "+b);
+        $("#"+b).remove();
+        nBubbles=nBubbles-1;
+        if(nBubbles==0){
+          createBubbles(url);
         }
-      );
+      }
+                        );
     }
 
 
@@ -694,12 +694,24 @@
 
       //Check the ball is in the graph
       if ($('div.bubbleContainer[id="'+region+'"]').length) {
+
+        if (selected !== undefined) {
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+        }
+        selectedBubble = region;
+
         $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
         $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
       } else {
         var count = 0;
         _.each(possibleValues,function(val,key){
           if (key.toLowerCase() == region.toLowerCase()) {
+
+            if (selected !== undefined) {
+              $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+            }
+            selectedBubble = key;
+
             valuesHash[key] = val;
             count++;
             $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
