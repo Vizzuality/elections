@@ -345,9 +345,10 @@ div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
 div div.stats div.partido.cds p {color:#62A558;}
 /*par*/
-div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.par p {color:#800080;}
+div.innerBubble.par{background:url('/images/backgrounds/par.png'); }
+div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
+div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
+div div.stats div.partido.par p {color:red;}
 /*eaj-pnv*/
 div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
 div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
