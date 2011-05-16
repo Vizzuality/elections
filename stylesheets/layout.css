@@ -352,8 +352,9 @@ div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important
 div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
-div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.ea div.bar span.c {background-position:right -54px!important}
+div.innerBubble.ea{background:url('/images/backgrounds/ea.png'); }
+div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
+div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
 div div.stats div.partido.ea p {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
