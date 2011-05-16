@@ -232,7 +232,6 @@
 
           var chartBackgroundTopPadding = 33 * startYearIndex;
 
-          console.log(firstYearIndex);
           for (var i = firstYearIndex; i <= data.length; i++) {
             if (data[i]!=undefined) {
               if (!find) {
@@ -384,13 +383,11 @@
             '</div>'+
           '</div>');
 
-
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
           $(this).parent().fadeOut();
         });
-
 
         $('div.graph_legend form').submit(function(ev){
           ev.preventDefault();
@@ -413,7 +410,6 @@
             $(this).val('Busca tu municipio');
           }
         });
-
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -446,6 +442,7 @@
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleTooltip.hide();
               graphBubbleInfowindow.hide();
             });
 
@@ -537,6 +534,7 @@
 
 
     function createBubbles(url){
+      console.log(url);
       $.getJSON(url, function(data) {
         var one = true;
         possibleValues = data;
@@ -559,6 +557,7 @@
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
           $('#'+key).css("top",(offsetScreenY).toString()+"px");
           $('#'+key).css("opacity","0");
+          console.log(key, val["color"]);
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
           updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
