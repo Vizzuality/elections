@@ -563,7 +563,7 @@
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
       possibleValues = {};
-      var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json";
+      var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
       createBubbles(url);
     }
 
@@ -600,6 +600,29 @@
       });
     }
 
+    var failCircle = (function() {
+      var data_not_found;
+
+      $(".fail_circle a").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
+
+      function showError() {
+        if (data_not_found != true) {
+          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
+        }
+      }
+
+      function hideError() {
+        $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      return {
+        show: showError,
+        hide: hideError
+      }
+    })();
 
     function setValue(url){
       $.getJSON(url, function(data) {
@@ -613,7 +636,9 @@
           valuesHash[key] = v;
           updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
-      });
+      })
+      .success(function(){ failCircle.hide(); })
+      .error(function(){ failCircle.show(); });
     }
 
     //Function for update the values of the bubbles that are being visualized
