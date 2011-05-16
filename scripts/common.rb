@@ -383,6 +383,7 @@ def create_years_hash(records, variables, max_year, min_year)
     end
 
     records.each do |row|
+
       if row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
@@ -394,7 +395,7 @@ def create_years_hash(records, variables, max_year, min_year)
         data[:tercer_partido_name]     = row.tercer_partido_name
         data[:otros_partido_percent]   = row.otros_partido_percent
       else
-        break
+        next
       end
     end
 
@@ -519,6 +520,9 @@ class String
     n.gsub!(/[ÝŸŶ]/i,         'Y')
     n.gsub!(/[ŽŻŹ]/i,         'Z')
     n.gsub!(/\s/i,         '_')
+    n.gsub!(/"/i,         "'")
+    n.gsub!(/\//i,         "")
+    n = n.downcase
     n
   end
 end
