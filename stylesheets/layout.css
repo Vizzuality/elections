@@ -122,7 +122,7 @@ div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.jpg'); z-index:0;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center; z-index:100;}
 div.tabs div#graph div#top_legend { top: 87px;}
 div.tabs div#graph div#bottom_legend {top: 530px;}
@@ -274,10 +274,10 @@ div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:po
 div.graph_legend div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
 div.graph_legend div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
-  text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
-
+div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
+div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
 
 /*political bars*/
 div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
