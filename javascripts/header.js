@@ -3,7 +3,7 @@
   var animate_interval;
   var previous_year;
 
-  function initializeOptions() {
+  function initializeHeader() {
     // Graph - Map
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
@@ -12,7 +12,6 @@
       $('div#map').css('zIndex',0);
       $('div#graph').css('zIndex',10);
     }
-
 
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
@@ -39,7 +38,7 @@
         }
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
-        
+
         $(this).addClass('selected');
         changeHash();
       }
@@ -224,13 +223,13 @@
       return false;
     } else {
       $("div.year_slider").slider('value',new_value);
-      
+
       if (state == 'mapa') {
         refreshMap();
       } else {
         setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
       }
-      
+
       changeHash();
     }
   }
