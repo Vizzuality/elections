@@ -19,12 +19,14 @@
 
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
-      if (state == "grafico") {
-        if (e.keyCode == 27) {
+      if (e.keyCode == 27) {
+        if (state == "grafico") {
           graphBubbleInfowindow.hide();
         } else {
+          infowindow.hide();
         }
-      }});
+      }
+    });
   }
 
   function goToHash(route) {
