@@ -553,7 +553,7 @@
 
           valuesHash[key] = val;
 
-            console.log(val);
+
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -561,7 +561,7 @@
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
-          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
           count ++;
         });
       });
@@ -584,10 +584,10 @@
     }
 
     //Function for update the values of the bubbles that are being visualized
-    function updateBubble (bubble,x,y,val,c){
+    function updateBubble (bubble,x,y,val,colors,party){
       var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
-      var dominantColor = (c.length == 1) ? c[0].toString() : c[0].toString();
-      var backgroundColor = ((c != null) ? dominantColor : "purple");
+      var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
+      var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
       $(bubble).animate({
           left: x.toString() + "px",
@@ -612,7 +612,7 @@
         left: (offset + 5).toString() + "px",
         backgroundColor: backgroundColor
       }, 1000);
-      //$(bubble).find('.innerBubble').addClass();
+      $(bubble).find('.innerBubble').addClass(normalizePartyName(party));
     }
 
 
