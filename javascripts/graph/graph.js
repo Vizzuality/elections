@@ -19,7 +19,6 @@
 
     jQuery.easing.def = "easeInOutCubic";
 
-
     function initializeGraph() {
 
       $(".innerBubble").live({
