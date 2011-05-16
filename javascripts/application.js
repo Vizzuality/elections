@@ -17,7 +17,7 @@
     initializeGraph();
 
     //initialize header options (selects and more) and graph/map menu
-    initializeOptions();
+    initializeHeader();
 
     //initialize map and map modules
     initializeMap();
