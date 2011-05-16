@@ -35,11 +35,20 @@ variables.each do |variable|
   puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
-  proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
+  all_evolutions = get_provinces_variable_evolution(custom_variable_name)
+  unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
+    year = variable.match(/\d+/)[0].to_i - 1
+    while proceso_electoral_id.nil? && year > 1974
+      proceso_electoral_id = processes[year]
+      year -= 1
+    end
+  end
+  next if year == 1974
   autonomies.each do |autonomy_hash|
-    autonomy_name = autonomy_hash[:name_1].tr(' ','_')    
+    autonomy_name = autonomy_hash[:name_1].normalize
     authonomy_results = get_authonomy_results(autonomy_hash[:name_1], proceso_electoral_id)
-    max_y = votes_per_province.map{ |h| h[variable.to_sym ] }.compact.max
+    max_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.max
+    min_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.min
     max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
     json = {}
     provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
@@ -49,17 +58,18 @@ variables.each do |variable|
         next
       end
       putc '.'
-      province_name = province[:name_2].tr(' ','_')
-      evolution[custom_variable_name][province[:name_2]] ||= get_province_variable_evolution(custom_variable_name, province[:name_2])
+      province_name = province[:name_2].normalize
+      evolution[custom_variable_name][province[:name_2]] ||= all_evolutions[province[:name_2]]
       json[province_name] ||= {}
       json[province_name][:cartodb_id]   = province[:cartodb_id]
+      json[province_name][:name]         = province[:name_2] 
       json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
-      json[province_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y)
+      json[province_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y, min_y)
       json[province_name][:radius]       = get_radius(row)
       json[province_name][:color]        = get_color(row, x_coordinate, parties)
       json[province_name][:children_json_url] = municipalities_path(province_name,variable)
       json[province_name][:censo_total]  = row[:censo_total]
-      json[province_name][:porcentaje_participacion] = row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0
+      json[province_name][:porcentaje_participacion] = ("%.2f" % (row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0)).to_f
       json[province_name][:partido_1] = [parties[row[:primer_partido_id]], row[:primer_partido_percent].to_f]
       json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_percent].to_f]
       json[province_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
