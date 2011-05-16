@@ -100,17 +100,21 @@
 
     hash[coord.x+'_'+coord.y+'_'+zoom][point.id] = point;
 
-    var latlng = new google.maps.LatLng(point.center_latitude,point.center_longitude);
+    var latlng          = new google.maps.LatLng(point.center_latitude,point.center_longitude);
     var normalizedPoint = peninsula.getProjection().fromLatLngToPoint(latlng); // returns x,y normalized to 0~255
     var pixelCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
 
     var left = pixelCoordinate.x - tileCoordinate.x;
     var top = pixelCoordinate.y - tileCoordinate.y;
 
-    var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
-
-    var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
-    var value = Math.abs(point['data'][year][normalization[compare]]);
+    try {
+      var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
+      var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
+      var value = Math.abs(point['data'][year][normalization[compare]]);
+    } catch(e){
+      console.log(e);
+      return false;
+    };
 
     var radius;
     if ((desv*0)>=value && value<(desv*1)) {
