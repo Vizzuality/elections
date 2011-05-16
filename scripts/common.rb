@@ -301,7 +301,7 @@ SQL
   return get_from_every_year(variables, values)
 end
 
-def get_provinces_variable_evolution(custom_variable_name, province_name)
+def get_provinces_variable_evolution(custom_variable_name)
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
   raw_variables.each do |raw_variable_hash|
@@ -316,12 +316,10 @@ def get_provinces_variable_evolution(custom_variable_name, province_name)
 SQL
   values = $cartodb.query(query)[:rows] || []
   result = {}
-  variable_year = variable.match(/\d+/)[0].to_i
-  variable_name = variable.match(/[^\d]+/)[0][0..-2]
   values.each do |v|
     result[v[:name]] = []
     1975.upto(2011) do |year|
-      temp_variable = "#{variable_name}_#{year}"
+      temp_variable = "#{custom_variable_name}_#{year}"
       result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
     end
   end
