@@ -39,7 +39,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
             '</div>'+
           '</div>'+
           '<div class="bottom">'+
@@ -151,7 +151,8 @@
         // Other
         bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']*175+'%)');
+        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+
 
         var max = 0; var count = 0; var find = false; var find_year;
         var paro = "";
@@ -159,7 +160,7 @@
         var minYear = 1987; // 1987
         var maxYear = 2012; // 2012
 
-        minGraphYear = 1987; // TODO: calculate minGraphYear using information from the new version of the json that Ferdev is generating
+        minGraphYear = 1987; 
         var electionYears = [1987,1991,1995,1999,2003,2007,2011];
         var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
 
