@@ -344,6 +344,31 @@ SQL
   return get_from_every_year(variables, values)
 end
 
+def get_municipalities_variables_evolution(province_id, custom_variable_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  query = <<-SQL
+  select #{variables.join(',')}, ine_poly.nombre as name
+  from  vars_socioeco_x_municipio, ine_poly, gadm2
+  where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province_id}
+SQL
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{custom_variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
+end
+
 def create_years_hash(records, variables, max_year, min_year)
 
   years = {}

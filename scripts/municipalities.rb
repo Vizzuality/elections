@@ -44,6 +44,7 @@ autonomies.each do |autonomy_hash|
   end
   selected_provinces.each do |province|
     province_name = province[:name_2].tr(' ','_')
+    province_id = province[:id_2]
 #     query = <<-SQL
 # select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
 #    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
@@ -71,6 +72,7 @@ SQL
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+/,'')
       evolution[custom_variable_name] ||= {} 
+      all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
         year = variable.match(/\d+/)[0].to_i - 1
         while proceso_electoral_id.nil? && year > 1975
@@ -89,7 +91,7 @@ SQL
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:nombre].tr(' ','_')
-        evolution[custom_variable_name][municipality[:nombre]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:nombre]).compact
+        evolution[custom_variable_name][municipality[:nombre]] ||= all_evolutions[municipality[:nombre]]
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
