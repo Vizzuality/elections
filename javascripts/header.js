@@ -60,7 +60,7 @@
       //Remove play class and add pause class
       $(this).removeClass('play').addClass('stop');
       $(this).attr('href','#stop');
-      animate_interval = setInterval(function(){animateSlider()},4000);
+      animate_interval = setInterval(function(){animateSlider();},4000);
     });
 
     // Stop animation process
@@ -100,10 +100,11 @@
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
-        if (state=="mapa") {
+        if (state == "mapa") {
           refreshMap();
         } else {
-          if (graph_hack_year[previous_year]!=graph_hack_year[year]) {
+          console.log(year);
+          if (graph_hack_year[previous_year] != graph_hack_year[year]) {
             setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
           }
         }
@@ -164,7 +165,7 @@
       return {
         hide: hideTooltip,
         show: showInfoTooltip
-      }
+      };
     }());
 
 
@@ -193,7 +194,7 @@
         if (!$(event.target).closest('div.option_list').length) {
           $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
           $('body').unbind('click');
-        };
+        }
       });
     });
 
@@ -217,7 +218,7 @@
 
         changeHash();
 
-        $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
+        $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'));});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
 
@@ -230,8 +231,6 @@
       }
     });
   }
-
-
 
   function animateSlider() {
     var new_value = $("div.year_slider").slider('value') + 1;
