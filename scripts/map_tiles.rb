@@ -27,6 +27,30 @@ user       = 123
 setup      = {:development => {:host => 'localhost', :user => 'publicuser', :dbname => "cartodb_dev_user_#{user}_db"},
               :production  => {:host => '10.211.14.63', :user => 'postgres', :dbname => "cartodb_user_#{user}_db"}}           
 settings   = setup[ENVR.to_sym]           
+conn = PGconn.open(settings)  
+elecs_sql  = "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
+
+pos = conn.exec elecs_sql
+
+# menu screen
+begin
+  puts "RTVE Tile Generator"
+  puts "===================\n"
+
+  printf("%-5s %5s %5s \n", "id", "anyo/year", "mes")
+  pos.each do |p|
+    printf("%-5s %5s %5s \n", pos.first["cartodb_id"], pos.first["anyo"], pos.first["mes"])
+  end
+  ids = pos.map { |x| x['cartodb_id'] }
+
+  print "Choose a procesos electorales id to render (#{ids.join(", ")}): "
+  ELECTION_ID = gets
+  
+  raise "invalid id" unless ids.include?(ELECTION_ID)
+rescue
+  puts "please enter a correct procesos electorales id"
+  retry
+end    
 
 puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
 
@@ -70,7 +94,6 @@ CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gis
 CREATE INDEX map_tiles_data_the_geom_idx ON map_tiles_data USING gist(the_geom);
 EOS
 
-conn = PGconn.open(settings)  
 conn.exec sql
 
 # there are 2 bounding boxes at each zoom level. one for spain, one for canaries 
