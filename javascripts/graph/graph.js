@@ -430,6 +430,16 @@
           $('div.graph_legend').fadeIn();
         }
 
+        function hideSearchError() {
+          $('div.graph_legend div.search_error').hide();
+        }
+
+        function showSearchError() {
+          var formTopPosition = $('div.graph_legend form ').position().top;
+          $('div.graph_legend div.search_error').css("top", formTopPosition + 40);
+          $('div.graph_legend div.search_error').fadeIn();
+        }
+
         function hideLegend() {
           $('div.graph_legend').fadeOut("slow", function() { updateSearchInput(); });
         }
@@ -533,6 +543,8 @@
           hide: hideLegend,
           hideFast: hideFast,
           show: showLegend,
+          showError: showSearchError,
+          hideError: hideSearchError,
           change: changeData
     	  }
     	}());
@@ -645,6 +657,8 @@
       var length = url_split[url_split.length-1].split(compare)[0].length;
       name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
 
+      graphLegend.hideError();
+
       if (name == "") {
         name = 'España';
       }
@@ -655,7 +669,6 @@
         destroyBubble(key, url);
       }
     }
-
 
     function destroyBubble(b, url){
       (parseInt($("#"+b).css("left")) < offsetScreenX) ? displacementX = "-=30px" : displacementX = "+=30px";
@@ -699,10 +712,7 @@
           }
         });
         if (count == 0) {
-          var position = $('div.graph_legend form').position();
-          var formTopPosition = $('div.graph_legend form ').position().top;
-          $('div.graph_legend div.search_error').css("top", formTopPosition + 40);
-          $('div.graph_legend div.search_error').fadeIn();
+          graphLegend.showError();
         }
       }
     }
