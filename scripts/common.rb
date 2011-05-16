@@ -28,7 +28,7 @@ THIRD_PARTY_COLORS = {
   "IU" =>  ["#54A551"],
   "INDEP"  => ["#AAA"],
   "CDS" => ["#DADC4D", "#62A558"],
-  "PAR" => ["#AAA"],
+  "PAR" => ["#D8282A", "#EABA4B"],
   "EAJ-PNV" => ["#CE0E16", "#008140"],
   "EAJ-PNV/EA" => ["#CE0E16", "#008140"],
   "PA" =>["#54A551"],
@@ -102,27 +102,13 @@ def get_variables(gadm_level)
   variables.flatten.compact
 end
 
-def get_y_coordinate(row, variable, max)
+def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
-  if variable.to_s =~ /^paro_normalizado/
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      val = (row[variable].to_f * 150.0) / max.to_f
-      if val > 0
-        return val + 100
-      elsif val < 0
-        return -100 - val
-      end
-    end
-  elsif variable.to_s =~ /^edad_media_normalizada/
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      return (row[variable].to_f * 100.0) / 9.0
-    end
+  var = row[variable].to_f
+  if var > 0
+    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
   else
-    row[variable]
+    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
   end
 end
 
@@ -134,7 +120,7 @@ def get_x_coordinate(row, max, known_parties)
     x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
     x_coordinate += 100.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
-    return x_coordinate
+    return ("%.2f" % x_coordinate).to_f
   else
     return 0
   end
@@ -171,7 +157,7 @@ def get_radius(row)
   if row[:votantes_totales] > row[:censo_total]
     return 80
   else
-    return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
+    return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0)).to_f
   end
 end
 
