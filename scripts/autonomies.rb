@@ -34,6 +34,7 @@ variables.each do |variable|
   puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
+  all_evolutions = get_autonomies_variable_evolution(variable)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
     year = variable.match(/\d+/)[0].to_i - 1
     while proceso_electoral_id.nil? && year > 1975
@@ -53,7 +54,7 @@ variables.each do |variable|
     end
     putc '.'
     autonomy_name = autonomy_hash[:name_1].tr(' ','_')
-    evolution[custom_variable_name][autonomy_hash[:name_1]] ||= get_autonomy_variable_evolution(variable, autonomy_hash[:name_1])
+    evolution[custom_variable_name][autonomy_hash[:name_1]] ||= all_evolutions[autonomy_hash[:name_1]]
     json[autonomy_name] ||= {}
     json[autonomy_name][:cartodb_id]   = autonomy_hash[:cartodb_id]
     json[autonomy_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
