@@ -335,6 +335,7 @@ div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 /*ciu*/
+div.innerBubble.ciu{background:url('/images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
@@ -366,6 +367,7 @@ div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
 /*uv*/
+div.innerBubble.uv{background:url('/images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
 div div.stats div.partido.uv p {color:#EC7B37;}
