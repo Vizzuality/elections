@@ -155,10 +155,9 @@ end
 def get_radius(row)
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
-    return 80
-  else
-    return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0)).to_f
+    row[:votantes_totales] = row[:censo_total]
   end
+  return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 80.0) + 10.0)).to_f
 end
 
 def get_parties
@@ -254,7 +253,7 @@ def get_from_every_year(variables, values)
   result
 end
 
-def get_autonomy_variable_evolution(variable, autonomy_name)
+def get_autonomies_variable_evolution(variable)
   custom_variable_name = variable.gsub(/_\d+/,'')
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
@@ -266,13 +265,22 @@ def get_autonomy_variable_evolution(variable, autonomy_name)
   end.flatten.compact
   # votes per autonomy
   query = <<-SQL
-  select #{variables.join(',')}
+  select #{variables.join(',')}, gadm1.name_1 as name
   from vars_socioeco_x_autonomia, gadm1
-  where vars_socioeco_x_autonomia.gadm1_cartodb_id = gadm1.cartodb_id AND gadm1.name_1 = '#{autonomy_name}'
+  where gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
 SQL
-  values = $cartodb.query(query)[:rows].first.try(:values) || []
-  return [] if values.empty?
-  return get_from_every_year(variables, values)
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  variable_year = variable.match(/\d+/)[0].to_i
+  variable_name = variable.match(/[^\d]+/)[0][0..-2]
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
 end
 
 def get_province_variable_evolution(custom_variable_name, province_name)
@@ -291,6 +299,33 @@ SQL
   values = $cartodb.query(query)[:rows].first.try(:values) || []
   return [] if values.empty?
   return get_from_every_year(variables, values)
+end
+
+def get_provinces_variable_evolution(custom_variable_name, province_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  query = <<-SQL
+  select #{variables.join(',')}, name_2 as name
+  from vars_socioeco_x_provincia, gadm2
+  where vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id
+SQL
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  variable_year = variable.match(/\d+/)[0].to_i
+  variable_name = variable.match(/[^\d]+/)[0][0..-2]
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
 end
 
 def get_municipalities_variable_evolution(custom_variable_name, municipality_name)
