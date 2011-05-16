@@ -49,8 +49,8 @@
         click: function() {
 
           var radius = $(this).height()/2;
-          var top  = $(this).parent().offset().top - 260;
-          var left = $(this).parent().offset().left - 118;
+          var top  = $(this).parent().offset().top - 274;
+          var left = $(this).parent().offset().left - 117;
 
           if (selectedBubble !== $(this).parent().attr("id")) {
             $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");

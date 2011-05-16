@@ -44,15 +44,24 @@ autonomies.each do |autonomy_hash|
   end
   selected_provinces.each do |province|
     province_name = province[:name_2].tr(' ','_')
+#     query = <<-SQL
+# select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
+#    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
+#    ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
+#    #{variables.join(',')}
+# from   #{MUNICIPALITIES_TABLE}, #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
+# where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{MUNICIPALITIES_TABLE}.cartodb_id AND 
+#   vars_socioeco_x_municipio.gadm4_cartodb_id = #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id AND
+#   #{MUNICIPALITIES_TABLE}.id_2 = #{province[:id_2]}
+# SQL
     query = <<-SQL
-select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
+select nombre, votantes_totales, censo_total,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-   ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
+   tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
    #{variables.join(',')}
-from   #{MUNICIPALITIES_TABLE}, #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
-where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{MUNICIPALITIES_TABLE}.cartodb_id AND 
-  vars_socioeco_x_municipio.gadm4_cartodb_id = #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id AND
-  #{MUNICIPALITIES_TABLE}.id_2 = #{province[:id_2]}
+from  vars_socioeco_x_municipio, votaciones_por_municipio, ine_poly, gadm2
+where ine_poly.ine_prov_int = votaciones_por_municipio.codineprov::integer and ine_poly.ine_muni_int = votaciones_por_municipio.codinemuni::integer and
+      vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.gid and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province[:id_2]}
 SQL
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -69,6 +78,7 @@ SQL
           year -= 1
         end
       end
+      next if year == 1974
       province_results = get_province_results(province_name, proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
@@ -77,8 +87,8 @@ SQL
       votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
         municipality.symbolize_keys!
         putc '.'
-        municipality_name = municipality[:name_4].tr(' ','_')
-        evolution[custom_variable_name][municipality[:name_4]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:name_4]).compact
+        municipality_name = municipality[:nombre].tr(' ','_')
+        evolution[custom_variable_name][municipality[:nombre]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:nombre]).compact
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
@@ -97,7 +107,7 @@ SQL
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
         json[municipality_name][:parent_results] = province_results
-        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:name_4]].join(',')
+        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
