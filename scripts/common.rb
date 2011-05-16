@@ -84,16 +84,22 @@ end
 def get_variables(gadm_level)
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
-  raw_variables.map do |raw_variable_hash|
+  variables = []
+  raw_variables.each do |raw_variable_hash|
     # next if !VARIABLES.include?(raw_variable_hash[:codigo])
     next if gadm_level.to_i < raw_variable_hash[:min_gadm].to_i || gadm_level.to_i > raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
-    processes.map do |k,v|
-      next if k.to_i < min_year || k.to_i > max_year
-      "#{raw_variable_hash[:codigo]}_#{k}"
+    # processes.map do |k,v|
+    #   next if k.to_i < min_year || k.to_i > max_year
+    #   "#{raw_variable_hash[:codigo]}_#{k}"
+    # end
+    min_year.upto(max_year) do |year|
+      next if %W{ uso_regular_internet_2009 }.include?("#{raw_variable_hash[:codigo]}_#{year}")
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
     end
-  end.flatten.compact
+  end
+  variables.flatten.compact
 end
 
 def get_y_coordinate(row, variable, max)
