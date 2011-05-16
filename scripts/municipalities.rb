@@ -36,14 +36,15 @@ FileUtils.mkdir_p(dir_path)
 puts 
 evolution = {}
 autonomies.each do |autonomy_hash|
-  autonomy_name = autonomy_hash[:name_1].tr(' ','_')
+  autonomy_name = autonomy_hash[:name_1].normalize
   selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
   if selected_provinces.empty?
     puts "Empty provinces for #{autonomy_hash.inspect}"
     next
   end
   selected_provinces.each do |province|
-    province_name = province[:name_2].tr(' ','_')
+    province_name = province[:name_2].normalize
+    province_id = province[:id_2]
 #     query = <<-SQL
 # select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
 #    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
@@ -71,6 +72,7 @@ SQL
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+/,'')
       evolution[custom_variable_name] ||= {} 
+      all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
         year = variable.match(/\d+/)[0].to_i - 1
         while proceso_electoral_id.nil? && year > 1975
@@ -88,10 +90,11 @@ SQL
       votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
         municipality.symbolize_keys!
         putc '.'
-        municipality_name = municipality[:nombre].tr(' ','_')
-        evolution[custom_variable_name][municipality[:nombre]] ||= get_municipalities_variable_evolution(custom_variable_name, municipality[:nombre]).compact
+        municipality_name = municipality[:nombre].normalize
+        evolution[custom_variable_name][municipality[:nombre]] ||= all_evolutions[municipality[:nombre]]
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
+        json[municipality_name][:name] = municipality[:nombre]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
         json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y, min_y)
         json[municipality_name][:radius]       = get_radius(municipality)
