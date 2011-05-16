@@ -155,10 +155,9 @@ end
 def get_radius(row)
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
-    return 80
-  else
-    return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0)).to_f
+    row[:votantes_totales] = row[:censo_total]
   end
+  return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 80.0) + 10.0)).to_f
 end
 
 def get_parties
@@ -187,7 +186,7 @@ def municipalities_path(province_name, variable)
 end
 
 def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{file_name}.json"
+  "../json/generated_data/google_names_cache/#{file_name.normalize}.json"
 end
 
 def get_authonomy_results(autonomy_name, proceso_electoral_id)
@@ -245,7 +244,7 @@ def get_from_every_year(variables, values)
   variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
   1975.upto(2011) do |year|
     if variables_years.include?(year)
-      result << values[pos]
+      result << (values[pos].nil? ? 0 : ("%.2f" % values[pos]).to_f)
       pos += 1
     else
       result << 0
@@ -254,7 +253,7 @@ def get_from_every_year(variables, values)
   result
 end
 
-def get_autonomy_variable_evolution(variable, autonomy_name)
+def get_autonomies_variable_evolution(variable)
   custom_variable_name = variable.gsub(/_\d+/,'')
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
@@ -266,13 +265,22 @@ def get_autonomy_variable_evolution(variable, autonomy_name)
   end.flatten.compact
   # votes per autonomy
   query = <<-SQL
-  select #{variables.join(',')}
+  select #{variables.join(',')}, gadm1.name_1 as name
   from vars_socioeco_x_autonomia, gadm1
-  where vars_socioeco_x_autonomia.gadm1_cartodb_id = gadm1.cartodb_id AND gadm1.name_1 = '#{autonomy_name}'
+  where gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
 SQL
-  values = $cartodb.query(query)[:rows].first.try(:values) || []
-  return [] if values.empty?
-  return get_from_every_year(variables, values)
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  variable_year = variable.match(/\d+/)[0].to_i
+  variable_name = variable.match(/[^\d]+/)[0][0..-2]
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
 end
 
 def get_province_variable_evolution(custom_variable_name, province_name)
@@ -293,6 +301,31 @@ SQL
   return get_from_every_year(variables, values)
 end
 
+def get_provinces_variable_evolution(custom_variable_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  query = <<-SQL
+  select #{variables.join(',')}, name_2 as name
+  from vars_socioeco_x_provincia, gadm2
+  where vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id
+SQL
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{custom_variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
+end
+
 def get_municipalities_variable_evolution(custom_variable_name, municipality_name)
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
@@ -311,6 +344,31 @@ SQL
   return get_from_every_year(variables, values)
 end
 
+def get_municipalities_variables_evolution(province_id, custom_variable_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  query = <<-SQL
+  select #{variables.join(',')}, ine_poly.nombre as name
+  from  vars_socioeco_x_municipio, ine_poly, gadm2
+  where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province_id}
+SQL
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{custom_variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
+end
+
 def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
@@ -325,6 +383,7 @@ def create_years_hash(records, variables, max_year, min_year)
     end
 
     records.each do |row|
+
       if row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
@@ -336,7 +395,7 @@ def create_years_hash(records, variables, max_year, min_year)
         data[:tercer_partido_name]     = row.tercer_partido_name
         data[:otros_partido_percent]   = row.otros_partido_percent
       else
-        break
+        next
       end
     end
 
@@ -347,11 +406,123 @@ def create_years_hash(records, variables, max_year, min_year)
 end
 
 def variables_vars
-  supported_variables = %w('paro_normalizado')
-  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
+  supported_variables = %w('actividad_economica_normalizado' 'audiencia_diaria_tv' 'comercial_normalizado' 'edad_media_normalizada' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'lineas_adsl' 'paro_normalizado' 'penetracion_internet' 'pib_normalizado' 'prensa_diaria' 'restauracion_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada' 'uso_regular_internet')
+  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
   variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
   max_year = variables.map(&:max_year).sort.last
   min_year = variables.map(&:min_year).sort.first
 
   [variables, variables_hash, max_year, min_year]
+end
+
+def vars_sql_select(socioeco_table)
+  variables = *variables_vars.first
+  tables = {
+    1 => 'vars_socioeco_x_autonomia',
+    2 => 'vars_socioeco_x_provincia',
+    4 => 'vars_socioeco_x_municipio'
+  }
+
+  select = []
+  variables.each do |variable|
+    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    fields = []
+    variable.min_year.upto(variable.max_year) do |year|
+      select << "#{variable.codigo}_#{year}"
+    end
+    select << "#{variable.codigo}_min_max.*"
+
+  end
+
+  select.join(', ')
+end
+
+def vars_sql_froms(socioeco_table)
+  variables = *variables_vars.first
+  tables = {
+    1 => 'vars_socioeco_x_autonomia',
+    2 => 'vars_socioeco_x_provincia',
+    4 => 'vars_socioeco_x_municipio'
+  }
+
+  froms = []
+  variables.each do |variable|
+    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    fields = []
+    variable.min_year.upto(variable.max_year) do |year|
+      fields << <<-SQL
+        max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max,
+        min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min
+      SQL
+    end
+
+    froms << <<-SQL
+      (SELECT
+        #{fields.join(', ')}
+      FROM #{socioeco_table}) AS #{variable.codigo}_min_max
+    SQL
+  end
+
+  "#{froms.join(', ')},"
+end
+
+class String
+  def normalize
+    str = self.downcase
+    return '' if str.blank?
+    n = str.force_encoding("UTF-8")
+    n.gsub!(/[àáâãäåāă]/,   'a')
+    n.gsub!(/æ/,            'ae')
+    n.gsub!(/[ďđ]/,          'd')
+    n.gsub!(/[çćčĉċ]/,       'c')
+    n.gsub!(/[èéêëēęěĕė]/,   'e')
+    n.gsub!(/ƒ/,             'f')
+    n.gsub!(/[ĝğġģ]/,        'g')
+    n.gsub!(/[ĥħ]/,          'h')
+    n.gsub!(/[ììíîïīĩĭ]/,    'i')
+    n.gsub!(/[įıĳĵ]/,        'j')
+    n.gsub!(/[ķĸ]/,          'k')
+    n.gsub!(/[łľĺļŀ]/,       'l')
+    n.gsub!(/[ñńňņŉŋ]/,      'n')
+    n.gsub!(/[òóôõöøōőŏŏ]/,  'o')
+    n.gsub!(/œ/,            'oe')
+    n.gsub!(/ą/,             'q')
+    n.gsub!(/[ŕřŗ]/,         'r')
+    n.gsub!(/[śšşŝș]/,       's')
+    n.gsub!(/[ťţŧț]/,        't')
+    n.gsub!(/[ùúûüūůűŭũų]/,  'u')
+    n.gsub!(/ŵ/,             'w')
+    n.gsub!(/[ýÿŷ]/,         'y')
+    n.gsub!(/[žżź]/,         'z')
+    n.gsub!(/[ÀÁÂÃÄÅĀĂ]/i,    'A')
+    n.gsub!(/Æ/i,            'AE')
+    n.gsub!(/[ĎĐ]/i,          'D')
+    n.gsub!(/[ÇĆČĈĊ]/i,       'C')
+    n.gsub!(/[ÈÉÊËĒĘĚĔĖ]/i,   'E')
+    n.gsub!(/Ƒ/i,             'F')
+    n.gsub!(/[ĜĞĠĢ]/i,        'G')
+    n.gsub!(/[ĤĦ]/i,          'H')
+    n.gsub!(/[ÌÌÍÎÏĪĨĬ]/i,    'I')
+    n.gsub!(/[ĲĴ]/i,          'J')
+    n.gsub!(/[Ķĸ]/i,          'J')
+    n.gsub!(/[ŁĽĹĻĿ]/i,       'L')
+    n.gsub!(/[ÑŃŇŅŉŊ]/i,      'M')
+    n.gsub!(/[ÒÓÔÕÖØŌŐŎŎ]/i,  'N')
+    n.gsub!(/Œ/i,            'OE')
+    n.gsub!(/Ą/i,             'Q')
+    n.gsub!(/[ŔŘŖ]/i,         'R')
+    n.gsub!(/[ŚŠŞŜȘ]/i,       'S')
+    n.gsub!(/[ŤŢŦȚ]/i,        'T')
+    n.gsub!(/[ÙÚÛÜŪŮŰŬŨŲ]/i,  'U')
+    n.gsub!(/Ŵ/i,             'W')
+    n.gsub!(/[ÝŸŶ]/i,         'Y')
+    n.gsub!(/[ŽŻŹ]/i,         'Z')
+    n.gsub!(/\s/i,         '_')
+    n.gsub!(/"/i,         "'")
+    n.gsub!(/\//i,         "")
+    n = n.downcase
+    n
+  end
 end

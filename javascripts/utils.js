@@ -52,6 +52,63 @@ var tooltipInfo = {
   }
 };
 
+var textInfoWindow = {
+  "Envejecimiento" : {
+    before_positive: "Aquí hay un ",
+    after_negative: " menos de personas mayores de 65 años, que en el resto de España",
+    before_positive: "Aquí hay un ",
+    after_positive: " mas de personas mayores de 65 años, que en el resto de España"
+  },
+  "Tasa de Paro" : {
+    before_positive: "La tasa de paro se encuentra a un ",
+    after_negative: " por debajo de la media",
+    before_positive: "La tasa de paro se encuentra a un ",
+    after_positive: " por encima de la media"
+  },
+  "PIB per cápita" : {
+    before_positive: "El PIB per cápita aquí es un ",
+    after_negative: " mas bajo que la media nacional",
+    before_positive: "El PIB per cápita aquí es un ",
+    after_positive: " mas alto que la media nacional"
+  },
+  "Edad media" : {
+    before_positive: "Su población es ",
+    after_negative: " años mas jóven que la media nacional",
+    before_positive: "Su población es ",
+    after_positive: " años mas mayor que la media nacional"
+  },
+  "Inmigración" : {
+    before_positive: "El porcentaje de inmigración en este municipio está ",
+    after_negative: " por debajo de la media",
+    before_positive: "El porcentaje de inmigración en este municipio está ",
+    after_positive: " por encima de la media"
+  },
+  "Saldo vegetativo": {
+    before_positive: "El crecimiento de la población está un ",
+    after_negative: " por debajo de la media",
+    before_positive: "El crecimiento de la población está un ",
+    after_positive: " por encima de la media"
+  },
+  "Salario medio": {
+    before_positive: "El salario medio aquí está un ",
+    after_negative: " por debajo de la media",
+    before_positive: "El salario medio aquí está un ",
+    after_positive: " por encima de la media"
+  },
+  "Estudios acabados": {
+    before_positive: "Un ",
+    after_negative: " menos que la media nacional, tiene los estudios secundarios terminados",
+    before_positive: "Un ",
+    after_positive: " mas que la media nacional, tiene los estudios secundarios terminados"
+  },
+  "Penetracion internet": {
+    before_positive: "Un ",
+    after_negative: " menos que la media, tiene acceso a internet aquí",
+    before_positive: "Un ",
+    after_positive: " mas que la media, tiene acceso a internet aquí"
+  }
+};
+
 var table_zoom = {
   12:'gadm4',
   11:'gadm4',
@@ -135,3 +192,4 @@ function replaceWeirdCharacters(string) {
   string = string.replace(/\//g,             '');
   return string.toLowerCase();
 }
+
