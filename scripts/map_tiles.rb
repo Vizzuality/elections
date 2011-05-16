@@ -27,6 +27,8 @@ setup      = {:development => {:host => 'localhost', :user => 'publicuser', :dbn
               :production  => {:host => '10.211.14.63', :user => 'postgres', :dbname => "cartodb_user_#{user}_db"}}           
 settings   = setup[ENVR.to_sym]           
 
+puts "ELECTION ID: #{ELECTION_ID}"
+
 # Create denomalised version of GADM4 table with votes, and party names
 sql = <<-EOS  
 DROP TABLE IF EXISTS map_tiles_data; 
@@ -57,10 +59,10 @@ WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BN
 ELSE 'unknown' 
 END as color  
 FROM ine_poly AS g 
-INNER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni 
-INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
-INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
-INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
+LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni AND i.ine_prov_int = v.codineprov 
+LEFT OUTER partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
+LEFT OUTER partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
+LEFT OUTER partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 
 ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
 CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
