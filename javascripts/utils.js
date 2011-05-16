@@ -7,6 +7,10 @@ function normalizePartyName(name) {
   return name.toLowerCase().replace("-", "_").substring(0, pos);
 }
 
+function normalizeBarWidth(bar_width) {
+  return (bar_width < 7) ? bar_min_size : bar_width;
+}
+
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
 
 var normalization = {
