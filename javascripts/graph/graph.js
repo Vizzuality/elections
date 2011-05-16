@@ -603,19 +603,21 @@
     var failCircle = (function() {
       var data_not_found;
 
-      $(".fail_circle a").live("click", function(ev) {
+      $("#fail_circle a").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
       });
 
       function showError() {
         if (data_not_found != true) {
-          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
+          $('#fail_circle').fadeIn("slow", function() { data_not_found = true; });
+          $('#fail_background').fadeIn("slow");
         }
       }
 
       function hideError() {
-        $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+        $('#fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+        $('#fail_background').fadeOut("slow");
       }
 
       return {
