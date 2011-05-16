@@ -519,6 +519,9 @@ class String
     n.gsub!(/[ÝŸŶ]/i,         'Y')
     n.gsub!(/[ŽŻŹ]/i,         'Z')
     n.gsub!(/\s/i,         '_')
+    n.gsub!(/"/i,         "'")
+    n.gsub!(/\//i,         "")
+    n = n.downcase
     n
   end
 end
