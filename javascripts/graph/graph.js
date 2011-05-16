@@ -385,6 +385,8 @@
             '</div>'+
           '</div>');
 
+
+
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
@@ -406,10 +408,21 @@
           }
         });
 
+        function updateSearchInput() {
+          $input = $('div.graph_legend form input.text');
+            if (deep == "autonomias") {
+              $input.val('Busca tu CCAA');
+            } else if (deep == "provincias") {
+              $input.val('Busca tu provincia');
+            } else {
+              $input.val('Busca tu municipio');
+            }
+
+        }
         $('div.graph_legend form input.text').focusout(function(){
           var value = $(this).val();
-          if (value=="") {
-            $(this).val('Busca tu municipio');
+          if (value == "") {
+            updateSearchInput();
           }
         });
 
@@ -418,7 +431,7 @@
         }
 
         function hideLegend() {
-          $('div.graph_legend').fadeOut();
+          $('div.graph_legend').fadeOut("slow", function() { updateSearchInput(); });
         }
 
         function hideFast() {
@@ -505,15 +518,15 @@
           } else {
             $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
             $('div.graph_legend p.autonomy').show();
+            $('div.graph_legend p.autonomy a').unbind('click');
             showSearch();
           }
         }
 
         function showSearch() {
-      //    $('div.graph_legend h2').hide();
           $('div.graph_legend div.stats').hide();
           $('div.graph_legend p.autonomy').hide();
-          $('div.graph_legend').show();
+          showLegend();
         }
 
   	    return {
