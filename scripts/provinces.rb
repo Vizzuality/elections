@@ -35,7 +35,14 @@ variables.each do |variable|
   puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
-  proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
+  unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
+    year = variable.match(/\d+/)[0].to_i - 1
+    while proceso_electoral_id.nil? && year > 1974
+      proceso_electoral_id = processes[year]
+      year -= 1
+    end
+  end
+  next if year == 1974
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].tr(' ','_')    
     authonomy_results = get_authonomy_results(autonomy_hash[:name_1], proceso_electoral_id)
