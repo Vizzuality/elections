@@ -67,7 +67,7 @@ variables.each do |variable|
       json[province_name][:color]        = get_color(row, x_coordinate, parties)
       json[province_name][:children_json_url] = municipalities_path(province_name,variable)
       json[province_name][:censo_total]  = row[:censo_total]
-      json[province_name][:porcentaje_participacion] = ("%.2f" % row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0).to_f
+      json[province_name][:porcentaje_participacion] = ("%.2f" % (row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0)).to_f
       json[province_name][:partido_1] = [parties[row[:primer_partido_id]], row[:primer_partido_percent].to_f]
       json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_percent].to_f]
       json[province_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]

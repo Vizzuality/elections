@@ -29,6 +29,7 @@
     });
   }
 
+
   function goToHash(route) {
     //Check variable application state
     if (route[0]!="mapa" && route[0]!="grafico") {
