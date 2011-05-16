@@ -218,6 +218,7 @@
 
 
           var data = valuesHash[data_id].evolution.split(",");
+          console.log(data);
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
           var minYear = 1975; var maxYear = 2011;
 
@@ -363,7 +364,7 @@
 
     	graphLegend = (function() {
     	  // Create the element - add it to DOM
-    	  $('div#graph').append(
+    	  $('div#graph_container').append(
       	  '<div class="graph_legend">'+
           '  <h2>Tasa de Paro en Palencia<sup>(2010)</sup></h2>'+
           '  <p class="autonomy"><a href="#">Castilla y León</a></p>'+
@@ -559,7 +560,7 @@
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
-          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
           count ++;
         });
       });
@@ -576,7 +577,7 @@
             one = false;
           }
           valuesHash[key] = v;
-          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
       });
     }
@@ -669,7 +670,7 @@
             $('#'+key).css("zIndex",graph_bubble_index);
             $('#'+key).css("opacity","0");
             $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-            updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+            updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
           }
         });
         if (count==0) {
