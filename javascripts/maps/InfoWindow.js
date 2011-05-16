@@ -114,6 +114,7 @@
         var bar_width;
 
         // First political party
+        console.log(info['data']);
         var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
 
         if (_.indexOf(parties, partido_1) !== -1) {

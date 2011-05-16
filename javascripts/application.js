@@ -24,7 +24,6 @@
   }
 
 
-
   
   function goToHash(route) {
     //Check variable application state
