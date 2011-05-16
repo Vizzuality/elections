@@ -13,6 +13,10 @@
       $('div#graph').css('zIndex',10);
     }
 
+    // Initialize select
+    $('div.option_list ul li a.'+compare).closest('li').addClass('selected');
+    $('div.option_list ul li a.'+compare).closest('div.select').addClass('selected');
+
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
