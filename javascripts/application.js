@@ -3,11 +3,14 @@
   var compare = 'paro';
   var state   = "mapa";
 
+
   $(document).ready(function(){
     //Deep linking manage
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
   });
+
+
 
   function initializeApp() {
     //initialize graph
@@ -20,6 +23,9 @@
     initializeMap();
   }
 
+
+
+  
   function goToHash(route) {
     //Check variable application state
     if (route[0]!="mapa" && route[0]!="grafico") {
@@ -67,6 +73,11 @@
     deep = route[6];
     name = route[7];
     var value = $('div.option_list ul li a.'+compare).text();
+    // Remove selected variable
+    $('div.option_list ul li.selected').each(function(i,ele){$(ele).removeClass('selected');});
+    $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
+    $('div.select span.inner_select a').each(function(i,ele){var text = $(ele).attr('title'); $(ele).text(text);});
+    // Add new selected variable
     $('div.option_list ul li a.'+route[5]).closest('li').addClass('selected');
     $('div.option_list ul li a.'+route[5]).closest('div.select').addClass('selected');
     $('div.option_list ul li a.'+route[5]).closest('div.select').find('span.inner_select a').text(value);
