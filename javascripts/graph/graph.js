@@ -20,6 +20,10 @@
 
     jQuery.easing.def = "easeInOutCubic";
 
+	function normalizeBarWidth(bar_width) {
+		return (bar_width < bar_min_size) ? bar_min_size : bar_width;
+	}
+	
     function initializeGraph() {
 
       $(".innerBubble").live({
@@ -170,8 +174,8 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
-          bar_width = (valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100);
+          
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
@@ -188,8 +192,8 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
-          bar_width = (valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100);
+          
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
@@ -206,14 +210,14 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
-          bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100);
+          
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
-          bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width; $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100);
+           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
 
@@ -465,8 +469,8 @@
             } else {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
             }
-            bar_width = (results.partido_1[1]*bar_width_multiplier)/100;
-            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+            bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
+            
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
@@ -477,8 +481,8 @@
             } else {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
             }
-            bar_width = (results.partido_2[1]*bar_width_multiplier)/100;
-            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+            bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
+            
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
@@ -490,14 +494,14 @@
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
 
-            bar_width = (results.partido_3[1]*bar_width_multiplier)/100;
-            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+            bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
+            
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = (results.otros[0]*bar_width_multiplier)/100;
-            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+            bar_width = normalizeBarWidth((results.otros[0]*bar_width_multiplier)/100);
+            
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
             $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
