@@ -62,7 +62,13 @@ SQL
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+/,'')
       evolution[custom_variable_name] ||= {} 
-      proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]
+      unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
+        year = variable.match(/\d+/)[0].to_i - 1
+        while proceso_electoral_id.nil? && year > 1975
+          proceso_electoral_id = processes[year]
+          year -= 1
+        end
+      end
       province_results = get_province_results(province_name, proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
