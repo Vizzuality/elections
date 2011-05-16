@@ -1,7 +1,15 @@
 function normalizePartyName(name) {
+  if (name === undefined) {
+    return;
+  }
   var slashPos = name.indexOf("/");
   var pos = (slashPos == -1) ? name.length : slashPos;
   return name.toLowerCase().replace("-", "_").substring(0, pos);
+}
+
+function normalizeBarWidth(bar_width) {
+  var bar_min_size = 7;
+  return (bar_width < bar_min_size) ? bar_min_size : bar_width;
 }
 
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
