@@ -14,10 +14,10 @@ div#header div.left form input.submit {position:absolute; right:5px; top:4px; wi
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
 div#header div.left form input.submit:focus {outline:none; background-position:0 -25px;}
 div#header div.left form input.text:focus {outline:none; color:#333333;}
-div#header div.left div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div#header div.left div.search_error {position:absolute; display:none; top:74px; left:36px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div#header div.left div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
-div#header div.left div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
+div#header div.left div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
   text-align:center; line-height:13px; text-decoration:none;}
 div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div#header div.right {float:right; width:650px;}
@@ -171,14 +171,14 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:254px; height:281px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
-div.infowindow a.close_infowindow {position:absolute; right:4px; top:3px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div.infowindow {position:absolute; width:252px; height:294px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:9px 0 0 0;}
-div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 0;}
+div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
+div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
 div.infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
 
 div.infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
@@ -192,9 +192,9 @@ div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
@@ -271,10 +271,10 @@ div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px
 div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('/images/tiny_lens.png') no-repeat 0 0; border:none;}
 div.graph_legend form input.text:focus {outline:none; color:#333333;}
 div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
-div.graph_legend div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
-div.graph_legend div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
 div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
@@ -335,34 +335,41 @@ div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 /*ciu*/
+div.innerBubble.ciu{background:url('/images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
 /*cds*/
+div.innerBubble.cds{background:url('/images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
 div div.stats div.partido.cds p {color:#62A558;}
 /*par*/
-div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.par p {color:#800080;}
+div.innerBubble.par{background:url('/images/backgrounds/par.png'); }
+div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
+div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
+div div.stats div.partido.par p {color:#fdb202;}
 /*eaj-pnv*/
-div div.stats div.partido.eaj_pnv div.bar {background-position:0 -66px!important;}
-div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -66px!important}
+div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
+div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
+div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
-div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.ea div.bar span.c {background-position:right -54px!important}
+div.innerBubble.ea{background:url('/images/backgrounds/ea.png'); }
+div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
+div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
 div div.stats div.partido.ea p {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.prc p {color:#800080;}
 /*pr*/
+div.innerBubble.pr{background:url('/images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
 /*uv*/
+div.innerBubble.uv{background:url('/images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
 div div.stats div.partido.uv p {color:#EC7B37;}
@@ -383,3 +390,4 @@ div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
+

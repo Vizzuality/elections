@@ -121,7 +121,7 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
         }
-        bar_width = (info['data'][year]['primer_partido_percent']*175)/100;
+        bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
 
@@ -132,7 +132,7 @@
         } else {
           $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
         }
-        bar_width = (info['data'][year]['segundo_partido_percent']*175)/100;
+        bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
 
@@ -144,12 +144,12 @@
           $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
         }
 
-        bar_width = (info['data'][year]['tercer_partido_percent']*175)/100;
+        bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
 
         // Other
-        bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
+        bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
 

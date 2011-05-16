@@ -3,7 +3,6 @@
     var deep = "autonomias";
     var name = "España";
     var bar_width_multiplier = 140;
-    var bar_min_size = 7;
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -19,6 +18,7 @@
     var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
     jQuery.easing.def = "easeInOutCubic";
+
 
     function initializeGraph() {
 
@@ -49,8 +49,8 @@
         click: function() {
 
           var radius = $(this).height()/2;
-          var top  = $(this).parent().offset().top - 260;
-          var left = $(this).parent().offset().left - 118;
+          var top  = $(this).parent().offset().top - 274;
+          var left = $(this).parent().offset().left - 117;
 
           if (selectedBubble !== $(this).parent().attr("id")) {
             $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -170,8 +170,8 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
-          bar_width = (valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
@@ -188,8 +188,8 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
-          bar_width = (valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
@@ -206,15 +206,15 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
-          bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*bar_width_multiplier)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
-          bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
-          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width; $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100);
+           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
 
           var data = valuesHash[data_id].evolution.split(",");
@@ -380,7 +380,7 @@
             '</form>'+
             '<div class="search_error">'+
               '<h5>Ops! No hemos podido encontrar lo que buscas</h5>'+
-              '<p>Comprueba que has escrito bien el nombre o prueba con otro</p>'+
+              '<p>Comprueba que has escrito bien el nombre que buscabas</p>'+
               '<a class="close" href="#cerrar">Cerrar</a>'+
             '</div>'+
           '</div>');
@@ -427,8 +427,8 @@
         }
 
         function changeData(results,names,parent_url) {
-          if (names.length>0) {
-            if (names.length==1) {
+          if (names.length > 0) {
+            if (names.length == 1) {
               $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
               $('div.graph_legend p.autonomy a').text('España')
               $('div.graph_legend p.autonomy a').attr('href','#ver_España');
@@ -454,47 +454,52 @@
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
               $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
             });
+
             var bar_width;
 
             // First political party
-            var partido_1 = normalizePartyName(results['partido_1'][0]);
+            var partido_1 = normalizePartyName(results.partido_1[0]);
 
             if (_.indexOf(parties, partido_1) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
             } else {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
             }
-            bar_width = (results['partido_1'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
             // Second political party
-            var partido_2 = normalizePartyName(results['partido_2'][0]);
+            var partido_2 = normalizePartyName(results.partido_2[0]);
             if (_.indexOf(parties, partido_2) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
             } else {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
             }
-            bar_width = (results['partido_2'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
             // Third political party
-            var partido_3 = normalizePartyName(results['partido_3'][0]);
+            var partido_3 = normalizePartyName(results.partido_3[0]);
             if (_.indexOf(parties, partido_3) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
             } else {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
 
-            bar_width = (results['partido_3'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = (results['otros'][0]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.otros[0]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*bar_width_multiplier+'%)');
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
             showSearch();
@@ -553,7 +558,7 @@
 
           valuesHash[key] = val;
 
-            console.log(val);
+
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -561,7 +566,7 @@
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
-          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
           count ++;
         });
       });
@@ -584,10 +589,10 @@
     }
 
     //Function for update the values of the bubbles that are being visualized
-    function updateBubble (bubble,x,y,val,c){
+    function updateBubble (bubble,x,y,val,colors,party){
       var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
-      var dominantColor = (c.length == 1) ? c[0].toString() : c[0].toString();
-      var backgroundColor = ((c != null) ? dominantColor : "purple");
+      var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
+      var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
       $(bubble).animate({
           left: x.toString() + "px",
@@ -612,7 +617,7 @@
         left: (offset + 5).toString() + "px",
         backgroundColor: backgroundColor
       }, 1000);
-      //$(bubble).find('.innerBubble').addClass();
+      $(bubble).find('.innerBubble').addClass(normalizePartyName(party));
     }
 
 
@@ -678,7 +683,7 @@
         });
         if (count==0) {
           var position = $('div.graph_legend form').position();
-          $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
+          // $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
           $('div.graph_legend div.search_error').fadeIn();
         }
       }
