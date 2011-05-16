@@ -409,7 +409,7 @@
         $('div.graph_legend form input.text').focusout(function(){
           var value = $(this).val();
           if (value=="") {
-            $(this).val('Busca tu municipio');
+            $(this).val('Busca tu CCAA');
           }
         });
 

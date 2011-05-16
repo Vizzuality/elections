@@ -80,6 +80,7 @@
       }
     };
 
+
     InfoWindow.prototype.remove = function() {
       if (this.div_) {
         this.div_.parentNode.removeChild(this.div_);
@@ -88,10 +89,7 @@
     };
 
 
-
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
-      //console.log(info);
-      comparewindow.hide();
     	var me = this;
     	var div = this.div_;
     	this.latlng_ = latlng;
@@ -226,7 +224,11 @@
 
     InfoWindow.prototype.openCompare = function() {
       this.hide();
-      comparewindow.compareFirstRegion(this.information,this.actualZoom);
+      if (comparewindow.isVisible()) {
+        comparewindow.compareSecondRegion(this.information,this.actualZoom);
+      } else {
+        comparewindow.compareFirstRegion(this.information,this.actualZoom);
+      }
     }
 
 
