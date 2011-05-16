@@ -156,13 +156,14 @@
           $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[data_id]["porcentaje_participacion"])) + "% de participación");
 
           // First political party
-          var partido_1 = valuesHash[data_id].partido_1[0].toLowerCase();
+          var partido_1 = normalizePartyName(valuesHash[data_id].partido_1[0]);
           c1 = $('div#graph_infowindow div.top div.stats div.partido:eq(0)').attr('class').split(" ");
           $.each(c1, function(c){
             if(c1[c] != "partido"){
               $('div#graph_infowindow div.top div.stats div.partido:eq(0)').removeClass(c1[c]);
             }
           })
+
           if (_.indexOf(parties, partido_1) !== -1) {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
           } else {
@@ -174,7 +175,7 @@
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
           // Second political party
-          var partido_2 = valuesHash[data_id].partido_2[0].toLowerCase();
+          var partido_2 = normalizePartyName(valuesHash[data_id].partido_2[0]);
           c2 = $('div#graph_infowindow div.top div.stats div.partido:eq(1)').attr('class').split(" ");
           $.each(c2, function(c){
             if(c2[c] != "partido"){
@@ -192,7 +193,7 @@
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
           // Third political party
-          var partido_3 = valuesHash[data_id].partido_3[0].toLowerCase();
+          var partido_3 = normalizePartyName(valuesHash[data_id].partido_3[0]);
           c3 = $('div#graph_infowindow div.top div.stats div.partido:eq(2)').attr('class').split(" ");
           $.each(c3, function(c){
             if(c3[c] != "partido"){
@@ -232,7 +233,6 @@
 
           var chartBackgroundTopPadding = 33 * startYearIndex;
 
-          console.log(firstYearIndex);
           for (var i = firstYearIndex; i <= data.length; i++) {
             if (data[i]!=undefined) {
               if (!find) {
@@ -384,13 +384,11 @@
             '</div>'+
           '</div>');
 
-
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
           $(this).parent().fadeOut();
         });
-
 
         $('div.graph_legend form').submit(function(ev){
           ev.preventDefault();
@@ -413,7 +411,6 @@
             $(this).val('Busca tu municipio');
           }
         });
-
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -446,6 +443,7 @@
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleTooltip.hide();
               graphBubbleInfowindow.hide();
             });
 
@@ -458,7 +456,7 @@
             var bar_width;
 
             // First political party
-            var partido_1 = results['partido_1'][0].toLowerCase().replace("-", "_");
+            var partido_1 = normalizePartyName(results['partido_1'][0]);
 
             if (_.indexOf(parties, partido_1) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
@@ -470,7 +468,7 @@
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
 
             // Second political party
-            var partido_2 = results['partido_2'][0].toLowerCase().replace("-", "_");
+            var partido_2 = normalizePartyName(results['partido_2'][0]);
             if (_.indexOf(parties, partido_2) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
             } else {
@@ -481,7 +479,7 @@
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
 
             // Third political party
-            var partido_3 = results['partido_3'][0].toLowerCase().replace("-", "_");
+            var partido_3 = normalizePartyName(results['partido_3'][0]);
             if (_.indexOf(parties, partido_3) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
             } else {
@@ -583,11 +581,11 @@
       });
     }
 
-
-
     //Function for update the values of the bubbles that are being visualized
     function updateBubble (bubble,x,y,val,c){
       var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
+      var dominantColor = (c.length == 1) ? c[0].toString() : c[0].toString();
+      var backgroundColor = ((c != null) ? dominantColor : "purple");
 
       $(bubble).animate({
           left: x.toString() + "px",
@@ -609,7 +607,7 @@
         width: (val-10).toString() + "px",
         top: (offset + 5).toString() + "px",
         left: (offset + 5).toString() + "px",
-        backgroundColor: ((c!=null)?c[0].toString():"purple")
+        backgroundColor: backgroundColor
       }, 1000);
     }
 
