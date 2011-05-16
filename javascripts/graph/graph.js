@@ -380,7 +380,7 @@
             '</form>'+
             '<div class="search_error">'+
               '<h5>Ops! No hemos podido encontrar lo que buscas</h5>'+
-              '<p>Comprueba que has escrito bien el nombre o prueba con otro</p>'+
+              '<p>Comprueba que has escrito bien el nombre que buscabas</p>'+
               '<a class="close" href="#cerrar">Cerrar</a>'+
             '</div>'+
           '</div>');
@@ -678,7 +678,7 @@
         });
         if (count==0) {
           var position = $('div.graph_legend form').position();
-          $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
+          // $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
           $('div.graph_legend div.search_error').fadeIn();
         }
       }
