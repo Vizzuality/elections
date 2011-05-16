@@ -46,7 +46,7 @@
   }
 
   ExplanationWindow.prototype.show = function() {
-    $(this.div).css('margin','-200px 0 0 -178px').css('top','50%').css('left','50%');
+    $(this.div).css({margin:'-257px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
   }
 

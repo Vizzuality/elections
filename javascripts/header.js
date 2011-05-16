@@ -3,7 +3,7 @@
   var animate_interval;
   var previous_year;
 
-  function initializeOptions() {
+  function initializeHeader() {
     // Graph - Map
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
@@ -13,6 +13,9 @@
       $('div#graph').css('zIndex',10);
     }
 
+    // Initialize select
+    $('div.option_list ul li a.'+compare).closest('li').addClass('selected');
+    $('div.option_list ul li a.'+compare).closest('div.select').addClass('selected');
 
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
@@ -39,7 +42,7 @@
         }
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
-        
+
         $(this).addClass('selected');
         changeHash();
       }
@@ -108,10 +111,17 @@
     /*Info tooltip when you select a variable*/
     var infoTooltip = (function() {
 
-      $('div.info_tooltip a.close').live('click',function(ev){
+      $('div.info_tooltip a.close').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         hideTooltip();
+      });
+      
+      $('div.info_tooltip a.more').click(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideTooltip();
+        explanationwindow.show();
       });
 
       function hideTooltip() {
@@ -195,9 +205,14 @@
         compare = $(this).attr('class');
         axisLegend.update(tooltipInfo[value]);
         graphBubbleInfowindow.hide();
-
+        
+        if (state == 'mapa') {
+          refreshMap();
+        } else {
+          setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
+        }
+        
         changeHash();
-        restartGraph();
 
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
@@ -224,13 +239,13 @@
       return false;
     } else {
       $("div.year_slider").slider('value',new_value);
-      
+
       if (state == 'mapa') {
         refreshMap();
       } else {
         setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
       }
-      
+
       changeHash();
     }
   }
