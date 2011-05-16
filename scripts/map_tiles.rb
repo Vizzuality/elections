@@ -11,6 +11,7 @@ require 'rubygems'
 require 'pg'
 require 'typhoeus'
 require 'json'
+require 'fileutils'
 
 # sanity check arguments
 ENVR         = ARGV[0]
@@ -27,7 +28,7 @@ setup      = {:development => {:host => 'localhost', :user => 'publicuser', :dbn
               :production  => {:host => '10.211.14.63', :user => 'postgres', :dbname => "cartodb_user_#{user}_db"}}           
 settings   = setup[ENVR.to_sym]           
 
-puts "ELECTION ID: #{ELECTION_ID}"
+puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
 
 # Create denomalised version of GADM4 table with votes, and party names
 sql = <<-EOS  
@@ -90,6 +91,8 @@ tile_extents = [
   {:zoom => 12, :xmin => 1832, :ymin => 1688, :xmax => 1902, :ymax => 1732},  
 ] 
 
+base_path   = "#{Dir.pwd}/tiles"
+save_path   = "#{base_path}/#{ELECTION_ID}"
 tile_url    = "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles"
 hydra       = Typhoeus::Hydra.new(:max_concurrency => 200)
 time_start  = Time.now
@@ -99,21 +102,26 @@ total_tiles = tile_extents.inject(0) do |sum, extent|
   sum
 end  
 
+puts "creating tile path: #{save_path}"
+FileUtils.mkdir_p save_path
+
+puts "Saving tiles for map_tiles_data to #{save_path}..."
+
 tile_extents.each do |extent|
   (extent[:xmin]..extent[:xmax]).to_a.each do |x|
     (extent[:ymin]..extent[:ymax]).to_a.each do |y|
       file_name = "#{x}_#{y}_#{extent[:zoom]}_#{ELECTION_ID}.png"
-      if File.exists? "images/#{file_name}"
+      if File.exists? "#{save_path}/#{file_name}"
         total_tiles -= 1
       else  
-        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cgadm4_processed%7Cgadm4%7Cgadm3%7Cgadm2%7Cgadm1"
+        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm3%7Cgadm2%7Cgadm1"
         tile_request = Typhoeus::Request.new(file_url)
         tile_request.on_complete do |response|
-          start_tiles += 1
-          puts "#{start_tiles}/#{total_tiles}: downloaded #{file_name}"
-          File.open("images/#{file_name}", "w+") do|f|
+          start_tiles += 1          
+          File.open("#{save_path}/#{file_name}", "w+") do|f|
             f.write response.body
           end
+          puts "#{start_tiles}/#{total_tiles}: saved #{save_path}/#{file_name}"
         end
         hydra.queue tile_request  
       end  
