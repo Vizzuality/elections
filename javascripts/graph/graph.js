@@ -3,7 +3,6 @@
     var deep = "autonomias";
     var name = "España";
     var bar_width_multiplier = 140;
-    var data_not_found;
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -602,6 +601,25 @@
     }
 
 
+    var failCircle = (function() {
+      var data_not_found;
+
+      function showError() {
+        if (data_not_found != true) {
+          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
+        }
+      }
+
+      function hideError() {
+        $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      return {
+        show: showError,
+        hide: hideError
+      }
+    })();
+
     function setValue(url){
       $.getJSON(url, function(data) {
         var one = true;
@@ -615,12 +633,8 @@
           updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
       })
-      .success(function() { $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; }); })
-      .error(function() {
-        if (data_not_found != true) {
-          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
-        }
-      });
+      .success(function(){ failCircle.hide(); })
+      .error(function(){ failCircle.show(); });
     }
 
     //Function for update the values of the bubbles that are being visualized
