@@ -29,10 +29,11 @@ settings   = setup[ENVR.to_sym]
 
 # Create denomalised version of GADM4 table with votes, and party names
 sql = <<-EOS  
-DROP TABLE IF EXISTS gadm4_processed; 
-CREATE TABLE gadm4_processed AS (  
+DROP TABLE IF EXISTS map_tiles_data; 
+
+CREATE TABLE map_tiles_data AS (  
 SELECT 
-g.gid gid, 
+g.cartodb_id as gid, 
 v.primer_partido_id,pp1.name primer_nombre,v.primer_partido_percent,v.primer_partido_votos,
 v.segundo_partido_id,pp2.name segundo_nombre,v.segundo_partido_percent,v.segundo_partido_votos,
 v.tercer_partido_id,pp3.name tercer_nombre,v.tercer_partido_percent,v.tercer_partido_votos,
@@ -51,20 +52,21 @@ WHEN pp1.name = 'PP' THEN
   WHEN (v.primer_partido_percent >= 50) AND (v.primer_partido_percent < 75)  THEN 'blue_M' 
   WHEN (v.primer_partido_percent >= 0) AND (v.primer_partido_percent < 50)  THEN 'blue_L'
   END 
-WHEN pp1.name IS NOT NULL THEN
+WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BNG', 'PDP', 'ERC-AM', 'ESQUERRA-AM', 'ERC', 'EA', 'HB', 'PRC', 'PR', 'UV') THEN
   pp1.name
 ELSE 'unknown' 
 END as color  
-FROM gadm4 AS g 
-LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.cartodb_id=v.gadm4_cartodb_id 
+FROM ine_poly AS g 
+LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni 
 LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
 LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
 LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
-ALTER TABLE gadm4_processed ADD PRIMARY KEY (gid); 
-CREATE INDEX gadm4_processed_the_geom_webmercator_idx ON gadm4_processed USING gist(the_geom_webmercator); 
-CREATE INDEX gadm4_processed_the_geom_idx ON gadm4_processed USING gist(the_geom);
-EOS
 
+
+CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
+CREATE INDEX map_tiles_data_the_geom_idx ON map_tiles_data USING gist(the_geom);
+EOS
+#ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
 conn = PGconn.open(settings)  
 conn.exec sql
 

@@ -35,6 +35,7 @@ variables.each do |variable|
   puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
+  all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
     year = variable.match(/\d+/)[0].to_i - 1
     while proceso_electoral_id.nil? && year > 1974
@@ -44,7 +45,7 @@ variables.each do |variable|
   end
   next if year == 1974
   autonomies.each do |autonomy_hash|
-    autonomy_name = autonomy_hash[:name_1].tr(' ','_')    
+    autonomy_name = autonomy_hash[:name_1].normalize
     authonomy_results = get_authonomy_results(autonomy_hash[:name_1], proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.max
     min_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.min
@@ -57,10 +58,11 @@ variables.each do |variable|
         next
       end
       putc '.'
-      province_name = province[:name_2].tr(' ','_')
-      evolution[custom_variable_name][province[:name_2]] ||= get_province_variable_evolution(custom_variable_name, province[:name_2])
+      province_name = province[:name_2].normalize
+      evolution[custom_variable_name][province[:name_2]] ||= all_evolutions[province[:name_2]]
       json[province_name] ||= {}
       json[province_name][:cartodb_id]   = province[:cartodb_id]
+      json[province_name][:name]         = province[:name_2] 
       json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
       json[province_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y, min_y)
       json[province_name][:radius]       = get_radius(row)

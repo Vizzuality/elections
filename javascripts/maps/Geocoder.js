@@ -60,7 +60,7 @@
           $('div#comparewindow p.refer a').click(function(ev){
             ev.stopPropagation();
             ev.preventDefault();
-            comparewindow.compareSecondRegion(results[0].formatted_address);
+            comparewindow.compareSecondRegion(null,results[0].formatted_address);
           });
           $('div#comparewindow p.refer').stop(true).show();
         } else {
