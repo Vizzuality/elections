@@ -22,14 +22,15 @@ MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
 VARIABLES = %W{ paro_normalizado }
 PARTIES = %W{PP PSOE CIU AP IU INDEP CDS PAR EAJ-PNV PA BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR UV}
 LEFT_PARTIES = %W{ PSOE IU INDEP BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR }
-THID_PARTY_COLORS = {
+THIRD_PARTY_COLORS = {
   "CIU" => ["#EC7B37", "#003F7F"],
   "AP" => ["#5AB0E9"],
   "IU" =>  ["#54A551"],
   "INDEP"  => ["#AAA"],
   "CDS" => ["#DADC4D", "#62A558"],
   "PAR" => ["#AAA"],
-  "EAJ-PNV"  => ["#CE0E16", "#008140"],
+  "EAJ-PNV" => ["#CE0E16", "#008140"],
+  "EAJ-PNV/EA" => ["#CE0E16", "#008140"],
   "PA" =>["#54A551"],
   "BNG"  => ["#D8282A"],
   "PDP"  => ["#5AB0E9"],
@@ -138,7 +139,7 @@ end
 # de mas intenso a menos intenso
 def get_color(row, x, parties)
   primer_partido = parties[row[:primer_partido_id]]
-  if primer_partido == "PSOE"
+  if primer_partido == "PSOE" || primer_partido.include?("PSOE")
     if x > -100
       ["#E08394"]
     elsif x > -200
@@ -146,7 +147,7 @@ def get_color(row, x, parties)
     else
       ["#D8282A"]
     end
-  elsif primer_partido == "PP"
+  elsif primer_partido == "PP" || primer_partido.include?("PP")
     if x < 100
       ["#90D7F4"]
     elsif x < 200
@@ -155,7 +156,7 @@ def get_color(row, x, parties)
       ["#5AB0E9"]
     end
   else
-    THID_PARTY_COLORS[primer_partido] || ["#AAAAAA"]
+    THIRD_PARTY_COLORS[primer_partido] || ["#AAAAAA"]
   end
 end
 
