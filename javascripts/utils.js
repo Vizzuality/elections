@@ -23,11 +23,25 @@ var custom_map_style = [{featureType:"administrative.country",elementType:"all",
 
 var tooltipInfo = {
   "Envejecimiento" : {
-    content: "Desviación respecto a la media de edad de cada municipio.",
-    left: "más mayores",
-    right: "más jóvenes",
-    legendTop: "Más edad",
-    legendBottom:"Menos edad"
+    content: "Desviación respecto a la media del porcentaje de personas mayores de 65 años",
+    left: "mas mayores",
+    right: "mas jóvenes",
+    legendTop: "Más % de mayores de 65 años",
+    legendBottom:"Menos % de mayores de 65 años"
+  },
+  "Tasa de paro" : {
+    content: "Desviación respecto a la media de la tasa de paro registrado",
+    left: "más parados",
+    right: "menos parados",
+    legendTop: "Más % paro",
+    legendBottom:"Menos % paro"
+  },
+  "PIB per capita" : {
+    content: "Desviación respecto a la media del producto interior bruto per cápita",
+    left: "más pobres",
+    right: "más ricos",
+    legendTop: "Más PIB per cápita",
+    legendBottom:"Menos PIB per cápita"
   },
   "Edad media" : {
     content: "Desviación respecto a la media de edad de cada municipio.",
@@ -36,19 +50,40 @@ var tooltipInfo = {
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
-  "PIB per cápita" : {
-    content: "Desviación respecto a la media de edad de cada municipio.",
-    left: "más mayores",
-    right: "más jóvenes",
-    legendTop: "Más % PIB ",
-    legendBottom:"Menos % PIB"
+  "Inmigracion" : {
+    content: "Desviación respecto a la media del % de inmigración",
+    left: "menos inmigrantes",
+    right: "mas inmigrantes",
+    legendTop: "Mayor % de inmigración",
+    legendBottom:"Menor % de inmigración"
   },
-  "Tasa de paro" : {
-    content: "Lorem ipsum dolor sit amet de, consectetur adipiscing elit. Donec vel libero ipsum, nec commodo ipsum. Sed elementum, odio et congue.",
-    left: "más parados",
-    right: "menos parados",
-    legendTop: "Más % paro",
-    legendBottom:"Menos % paro"
+  "Saldo Vegetativo" : {
+    content: "Desviación respecto a la media del crecimiento de la población",
+    left: "menor crecimiento",
+    right: "mayor crecimiento",
+    legendTop: "Mayor crecimiento",
+    legendBottom:"Menor crecimiento"
+  },
+  "Salario medio" : {
+    content: "Desviación respecto a la media del salario medio por habitante",
+    left: "sueldos mas bajos",
+    right: "sueldos mas altos",
+    legendTop: "Sueldos mas altos",
+    legendBottom:"Sueldos mas bajos"
+  },
+  "Estudios acabados" : {
+    content: "Desviación respecto a la media del porcentaje de personas con estudios acabados",
+    left: "menos habitantes",
+    right: "mas habitantes",
+    legendTop: "Mas habitantes",
+    legendBottom:"Menos habitantes"
+  },
+  "Penetración internet" : {
+    content: "Desviación respecto a la media del porcentaje de personas acceso a internet",
+    left: "menos habitantes",
+    right: "mas habitantes",
+    legendTop: "Mas habitantes",
+    legendBottom:"Menos habitantes"
   }
 };
 
