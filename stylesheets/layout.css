@@ -335,10 +335,12 @@ div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 /*ciu*/
+div.innerBubble.ciu{background:url('/images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
 /*cds*/
+div.innerBubble.cds{background:url('/images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
 div div.stats div.partido.cds p {color:#62A558;}
@@ -347,22 +349,26 @@ div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.par p {color:#800080;}
 /*eaj-pnv*/
-div div.stats div.partido.eaj_pnv div.bar {background-position:0 -66px!important;}
-div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -66px!important}
+div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
+div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
+div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
-div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.ea div.bar span.c {background-position:right -54px!important}
+div.innerBubble.ea{background:url('/images/backgrounds/ea.png'); }
+div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
+div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
 div div.stats div.partido.ea p {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.prc p {color:#800080;}
 /*pr*/
+div.innerBubble.pr{background:url('/images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
 /*uv*/
+div.innerBubble.uv{background:url('/images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
 div div.stats div.partido.uv p {color:#EC7B37;}
@@ -383,3 +389,4 @@ div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
+
