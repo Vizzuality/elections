@@ -115,7 +115,6 @@
 
         // First political party
         var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
-
         if (_.indexOf(parties, partido_1) !== -1) {
           $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
         } else {

@@ -95,8 +95,8 @@
       start: function(event, ui) {
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
-          graphBubbleTooltip.hide();
         }
+          graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
