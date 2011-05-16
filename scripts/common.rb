@@ -245,7 +245,7 @@ def get_from_every_year(variables, values)
   variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
   1975.upto(2011) do |year|
     if variables_years.include?(year)
-      result << values[pos]
+      result << (values[pos].nil? ? 0 : ("%.2f" % values[pos]).to_f)
       pos += 1
     else
       result << 0
