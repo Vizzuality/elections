@@ -48,8 +48,8 @@
         click: function() {
 
           var radius = $(this).height()/2;
-          var top  = $(this).parent().offset().top - 260;
-          var left = $(this).parent().offset().left - 118;
+          var top  = $(this).parent().offset().top - 274;
+          var left = $(this).parent().offset().left - 117;
 
           if (selectedBubble !== $(this).parent().attr("id")) {
             $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -156,25 +156,27 @@
           $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[data_id]["porcentaje_participacion"])) + "% de participación");
 
           // First political party
-          var partido_1 = valuesHash[data_id].partido_1[0].toLowerCase();
+          var partido_1 = normalizePartyName(valuesHash[data_id].partido_1[0]);
           c1 = $('div#graph_infowindow div.top div.stats div.partido:eq(0)').attr('class').split(" ");
           $.each(c1, function(c){
             if(c1[c] != "partido"){
               $('div#graph_infowindow div.top div.stats div.partido:eq(0)').removeClass(c1[c]);
             }
           })
+
           if (_.indexOf(parties, partido_1) !== -1) {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
-          bar_width = (valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100);
+          //console.log(key, bar_width);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
           // Second political party
-          var partido_2 = valuesHash[data_id].partido_2[0].toLowerCase();
+          var partido_2 = normalizePartyName(valuesHash[data_id].partido_2[0]);
           c2 = $('div#graph_infowindow div.top div.stats div.partido:eq(1)').attr('class').split(" ");
           $.each(c2, function(c){
             if(c2[c] != "partido"){
@@ -186,13 +188,13 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
-          bar_width = (valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
           // Third political party
-          var partido_3 = valuesHash[data_id].partido_3[0].toLowerCase();
+          var partido_3 = normalizePartyName(valuesHash[data_id].partido_3[0]);
           c3 = $('div#graph_infowindow div.top div.stats div.partido:eq(2)').attr('class').split(" ");
           $.each(c3, function(c){
             if(c3[c] != "partido"){
@@ -204,19 +206,19 @@
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
-          bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = normalizeBarWidth((valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100);
+
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*bar_width_multiplier)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
-          bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
-          $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100);
+           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
 
           var data = valuesHash[data_id].evolution.split(",");
+          console.log(data);
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
           var minYear = 1975; var maxYear = 2011;
 
@@ -232,7 +234,6 @@
 
           var chartBackgroundTopPadding = 33 * startYearIndex;
 
-          console.log(firstYearIndex);
           for (var i = firstYearIndex; i <= data.length; i++) {
             if (data[i]!=undefined) {
               if (!find) {
@@ -255,7 +256,7 @@
 
           $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
           $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-            $('div#graph_infowindow div.chart img').show();
+          $('div#graph_infowindow div.chart img').show();
 
           showInfowindow(left,top);
         }
@@ -363,9 +364,9 @@
 
     	graphLegend = (function() {
     	  // Create the element - add it to DOM
-    	  $('div#graph').append(
+    	  $('div#graph_container').append(
       	  '<div class="graph_legend">'+
-          '  <h2>Tasa de Paro en Palencia<sup>(2010)</sup></h2>'+
+          '  <h2>Tasa de Paro en España<sup>(2010)</sup></h2>'+
           '  <p class="autonomy"><a href="#">Castilla y León</a></p>'+
           '  <div class="stats">'+
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
@@ -374,23 +375,21 @@
               '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
           '  </div>'+
             '<form>'+
-              '<input class="text" type="text" value="Busca tu municipio"/>'+
+              '<input class="text" type="text" value="Busca tu CCAA"/>'+
               '<input class="submit" type="submit" value=""/>'+
             '</form>'+
             '<div class="search_error">'+
               '<h5>Ops! No hemos podido encontrar lo que buscas</h5>'+
-              '<p>Comprueba que has escrito bien el nombre o prueba con otro</p>'+
+              '<p>Comprueba que has escrito bien el nombre que buscabas</p>'+
               '<a class="close" href="#cerrar">Cerrar</a>'+
             '</div>'+
           '</div>');
-
 
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
           $(this).parent().fadeOut();
         });
-
 
         $('div.graph_legend form').submit(function(ev){
           ev.preventDefault();
@@ -402,7 +401,7 @@
 
         $('div.graph_legend form input.text').focusin(function(){
           var value = $(this).val();
-          if (value=="Busca tu municipio") {
+          if (value == "Busca tu CCAA" || value == "Busca tu provincia" || value == "Busca tu municipio") {
             $(this).val('');
           }
         });
@@ -413,7 +412,6 @@
             $(this).val('Busca tu municipio');
           }
         });
-
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -429,8 +427,9 @@
         }
 
         function changeData(results,names,parent_url) {
-          if (names.length>0) {
-            if (names.length==1) {
+
+          if (names.length > 0) {
+            if (names.length == 1) {
               $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
               $('div.graph_legend p.autonomy a').text('España')
               $('div.graph_legend p.autonomy a').attr('href','#ver_España');
@@ -446,6 +445,7 @@
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleTooltip.hide();
               graphBubbleInfowindow.hide();
             });
 
@@ -455,55 +455,62 @@
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
               $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
             });
+
             var bar_width;
 
             // First political party
-            var partido_1 = results['partido_1'][0].toLowerCase().replace("-", "_");
+            var partido_1 = normalizePartyName(results.partido_1[0]);
 
             if (_.indexOf(parties, partido_1) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
             } else {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
             }
-            bar_width = (results['partido_1'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
             // Second political party
-            var partido_2 = results['partido_2'][0].toLowerCase().replace("-", "_");
+            var partido_2 = normalizePartyName(results.partido_2[0]);
             if (_.indexOf(parties, partido_2) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
             } else {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
             }
-            bar_width = (results['partido_2'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
             // Third political party
-            var partido_3 = results['partido_3'][0].toLowerCase().replace("-", "_");
+            var partido_3 = normalizePartyName(results.partido_3[0]);
             if (_.indexOf(parties, partido_3) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
             } else {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
 
-            bar_width = (results['partido_3'][1]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = (results['otros'][0]*bar_width_multiplier)/100;
+            bar_width = normalizeBarWidth((results.otros[0]*bar_width_multiplier)/100);
+
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*bar_width_multiplier+'%)');
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
+            $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
+            $('div.graph_legend p.autonomy').show();
             showSearch();
           }
         }
 
         function showSearch() {
-          $('div.graph_legend h2').hide();
+      //    $('div.graph_legend h2').hide();
           $('div.graph_legend div.stats').hide();
           $('div.graph_legend p.autonomy').hide();
           $('div.graph_legend').show();
@@ -554,6 +561,7 @@
 
           valuesHash[key] = val;
 
+
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -561,7 +569,7 @@
           $('#'+key).css("opacity","0");
           $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
-          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
           count ++;
         });
       });
@@ -578,16 +586,16 @@
             one = false;
           }
           valuesHash[key] = v;
-          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY+parseInt(v["y_coordinate"]),v["radius"],v["color"]);
+          updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
       });
     }
 
-
-
     //Function for update the values of the bubbles that are being visualized
-    function updateBubble (bubble,x,y,val,c){
+    function updateBubble (bubble,x,y,val,colors,party){
       var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
+      var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
+      var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
       $(bubble).animate({
           left: x.toString() + "px",
@@ -604,13 +612,15 @@
         left: offset.toString() + "px"
       }, 1000);
 
+
       $(bubble).find('.innerBubble').animate({
         height: (val-10).toString() + "px",
         width: (val-10).toString() + "px",
         top: (offset + 5).toString() + "px",
         left: (offset + 5).toString() + "px",
-        backgroundColor: ((c!=null)?c[0].toString():"purple")
+        backgroundColor: backgroundColor
       }, 1000);
+      $(bubble).find('.innerBubble').addClass(normalizePartyName(party));
     }
 
 
@@ -621,13 +631,14 @@
       deep = url_split[2];
       var length = url_split[url_split.length-1].split(compare)[0].length;
       name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+
       if (name == "") {
         name = 'España';
       }
+
       changeHash();
 
       for (key in valuesHash){
-        //Destroy Bubbles
         destroyBubble(key, url);
       }
     }
@@ -671,12 +682,12 @@
             $('#'+key).css("zIndex",graph_bubble_index);
             $('#'+key).css("opacity","0");
             $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-            updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY+parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+            updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
           }
         });
         if (count==0) {
           var position = $('div.graph_legend form').position();
-          $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
+          // $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
           $('div.graph_legend div.search_error').fadeIn();
         }
       }

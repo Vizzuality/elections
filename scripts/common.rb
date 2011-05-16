@@ -22,14 +22,15 @@ MUNICIPALITIES_VOTATIONS = "votaciones_por_municipio"
 VARIABLES = %W{ paro_normalizado }
 PARTIES = %W{PP PSOE CIU AP IU INDEP CDS PAR EAJ-PNV PA BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR UV}
 LEFT_PARTIES = %W{ PSOE IU INDEP BNG PDP ERC-AM ESQUERRA-AM ERC EA HB PRC PR }
-THID_PARTY_COLORS = {
+THIRD_PARTY_COLORS = {
   "CIU" => ["#EC7B37", "#003F7F"],
   "AP" => ["#5AB0E9"],
   "IU" =>  ["#54A551"],
   "INDEP"  => ["#AAA"],
   "CDS" => ["#DADC4D", "#62A558"],
-  "PAR" => ["#AAA"],
-  "EAJ-PNV"  => ["#CE0E16", "#008140"],
+  "PAR" => ["#D8282A", "#EABA4B"],
+  "EAJ-PNV" => ["#CE0E16", "#008140"],
+  "EAJ-PNV/EA" => ["#CE0E16", "#008140"],
   "PA" =>["#54A551"],
   "BNG"  => ["#D8282A"],
   "PDP"  => ["#5AB0E9"],
@@ -83,39 +84,31 @@ end
 def get_variables(gadm_level)
   processes = get_processes
   raw_variables = $cartodb.query("select codigo, min_year, max_year, min_gadm, max_gadm from variables")[:rows]
-  raw_variables.map do |raw_variable_hash|
+  variables = []
+  raw_variables.each do |raw_variable_hash|
     # next if !VARIABLES.include?(raw_variable_hash[:codigo])
     next if gadm_level.to_i < raw_variable_hash[:min_gadm].to_i || gadm_level.to_i > raw_variable_hash[:max_gadm].to_i
     min_year = raw_variable_hash[:min_year].to_i
     max_year = raw_variable_hash[:max_year].to_i
-    processes.map do |k,v|
-      next if k.to_i < min_year || k.to_i > max_year
-      "#{raw_variable_hash[:codigo]}_#{k}"
+    # processes.map do |k,v|
+    #   next if k.to_i < min_year || k.to_i > max_year
+    #   "#{raw_variable_hash[:codigo]}_#{k}"
+    # end
+    min_year.upto(max_year) do |year|
+      next if %W{ uso_regular_internet_2009 }.include?("#{raw_variable_hash[:codigo]}_#{year}")
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
     end
-  end.flatten.compact
+  end
+  variables.flatten.compact
 end
 
-def get_y_coordinate(row, variable, max)
+def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
-  if variable.to_s =~ /^paro_normalizado/
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      val = (row[variable].to_f * 150.0) / max.to_f
-      if val > 0
-        return val + 100
-      elsif val < 0
-        return -100 - val
-      end
-    end
-  elsif variable.to_s =~ /^edad_media_normalizada/
-    if row[variable].to_s == "9999999"
-      return nil
-    else
-      return (row[variable].to_f * 100.0) / 9.0
-    end
+  var = row[variable].to_f
+  if var > 0
+    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
   else
-    row[variable]
+    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
   end
 end
 
@@ -127,7 +120,7 @@ def get_x_coordinate(row, max, known_parties)
     x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
     x_coordinate += 100.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
-    return x_coordinate
+    return ("%.2f" % x_coordinate).to_f
   else
     return 0
   end
@@ -138,7 +131,7 @@ end
 # de mas intenso a menos intenso
 def get_color(row, x, parties)
   primer_partido = parties[row[:primer_partido_id]]
-  if primer_partido == "PSOE"
+  if primer_partido == "PSOE" || primer_partido.include?("PSOE")
     if x > -100
       ["#E08394"]
     elsif x > -200
@@ -146,7 +139,7 @@ def get_color(row, x, parties)
     else
       ["#D8282A"]
     end
-  elsif primer_partido == "PP"
+  elsif primer_partido == "PP" || primer_partido.include?("PP")
     if x < 100
       ["#90D7F4"]
     elsif x < 200
@@ -155,7 +148,7 @@ def get_color(row, x, parties)
       ["#5AB0E9"]
     end
   else
-    THID_PARTY_COLORS[primer_partido] || ["#AAAAAA"]
+    THIRD_PARTY_COLORS[primer_partido] || ["#AAAAAA"]
   end
 end
 
@@ -164,7 +157,7 @@ def get_radius(row)
   if row[:votantes_totales] > row[:censo_total]
     return 80
   else
-    return ((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0
+    return ("%.2f" % (((row[:votantes_totales].to_f / row[:censo_total].to_f) * 60.0) + 20.0)).to_f
   end
 end
 
