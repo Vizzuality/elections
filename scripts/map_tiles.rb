@@ -60,9 +60,9 @@ ELSE 'unknown'
 END as color  
 FROM ine_poly AS g 
 LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni AND i.ine_prov_int = v.codineprov 
-LEFT OUTER partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
-LEFT OUTER partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
-LEFT OUTER partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
+LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
+LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
+LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 
 ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
 CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
