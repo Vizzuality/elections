@@ -698,9 +698,10 @@
             updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
           }
         });
-        if (count==0) {
+        if (count == 0) {
           var position = $('div.graph_legend form').position();
-          // $('div.graph_legend div.search_error').css({'left':'-30px','top':position.top+40+'px'});
+          var formTopPosition = $('div.graph_legend form ').position().top;
+          $('div.graph_legend div.search_error').css("top", formTopPosition + 40);
           $('div.graph_legend div.search_error').fadeIn();
         }
       }
