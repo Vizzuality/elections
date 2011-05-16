@@ -232,7 +232,6 @@
 
           var chartBackgroundTopPadding = 33 * startYearIndex;
 
-          console.log(firstYearIndex);
           for (var i = firstYearIndex; i <= data.length; i++) {
             if (data[i]!=undefined) {
               if (!find) {
@@ -384,13 +383,11 @@
             '</div>'+
           '</div>');
 
-
         $('div.graph_legend div.search_error a.close').click(function(ev){
           ev.preventDefault();
           ev.stopPropagation();
           $(this).parent().fadeOut();
         });
-
 
         $('div.graph_legend form').submit(function(ev){
           ev.preventDefault();
@@ -413,7 +410,6 @@
             $(this).val('Busca tu municipio');
           }
         });
-
 
         function showLegend() {
           $('div.graph_legend').fadeIn();
@@ -446,6 +442,7 @@
               ev.stopPropagation();
               ev.preventDefault();
               goDeeper(parent_url[parent_url.length-1]);
+              graphBubbleTooltip.hide();
               graphBubbleInfowindow.hide();
             });
 
