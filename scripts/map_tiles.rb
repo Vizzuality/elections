@@ -33,6 +33,7 @@ DROP TABLE IF EXISTS map_tiles_data;
 
 CREATE TABLE map_tiles_data AS (  
 SELECT 
+(id SERIAL PRIMARY KEY),
 g.cartodb_id as gid, 
 v.primer_partido_id,pp1.name primer_nombre,v.primer_partido_percent,v.primer_partido_votos,
 v.segundo_partido_id,pp2.name segundo_nombre,v.segundo_partido_percent,v.segundo_partido_votos,
@@ -58,9 +59,9 @@ ELSE 'unknown'
 END as color  
 FROM ine_poly AS g 
 LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni 
-LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
-LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
-LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
+INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
+INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
+INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 
 
 CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
