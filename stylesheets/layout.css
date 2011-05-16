@@ -14,10 +14,10 @@ div#header div.left form input.submit {position:absolute; right:5px; top:4px; wi
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
 div#header div.left form input.submit:focus {outline:none; background-position:0 -25px;}
 div#header div.left form input.text:focus {outline:none; color:#333333;}
-div#header div.left div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div#header div.left div.search_error {position:absolute; display:none; top:74px; left:36px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div#header div.left div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
-div#header div.left div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
+div#header div.left div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
   text-align:center; line-height:13px; text-decoration:none;}
 div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div#header div.right {float:right; width:650px;}
@@ -122,8 +122,8 @@ div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.jpg'); z-index:0;}
-div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center; z-index:100;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.png'); z-index:0;}
+div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 div.tabs div#graph div#top_legend { top: 87px;}
 div.tabs div#graph div#bottom_legend {top: 530px;}
 /*graph*/
@@ -131,7 +131,7 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('/images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
-div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 
 /*MAP CONTROLS*/
@@ -152,7 +152,7 @@ div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
-div#map a.vizzuality {position:absolute; left:70px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality_white.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#map a.vizzuality {position:absolute; left:70px; bottom:5px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 /*MENU MAP/GRAPH*/
 div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
@@ -171,15 +171,15 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:254px; height:281px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
-div.infowindow a.close_infowindow {position:absolute; right:4px; top:3px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div.infowindow {position:absolute; width:252px; height:294px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:9px 0 0 0;}
-div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
-div.infowindow div.top div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
+div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
+div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
+div.infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
 
 div.infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
 div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
@@ -192,9 +192,9 @@ div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:5px 0 0 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
@@ -203,23 +203,39 @@ div#comparewindow a.close_infowindow {position:absolute; right:14px; top:1px; wi
 div#comparewindow a.close_infowindow:hover {background-position:0 -18px;}
 div#comparewindow div.top {display:inline-block; width:356px; height:244px; padding:25px 0 0 0;  background:url('/images/compare_top_bkg.png') no-repeat 0 0;}
 div#comparewindow div h2 {margin:0 0 0 40px; font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div#comparewindow div h2 a.remove_compare {display:inline-block; vertical-align:top; width:52px; height:9px; padding:1px 0 3px; margin:4px 0 0 3px; text-align:center; font:normal 9px Arial; color:white; background:url('/images/delete_bkg.png') no-repeat 0 0; text-decoration:none; line-height:9px;}
+div#comparewindow div h2 a.remove_compare:hover {background-position:0 -13px;}
 div#comparewindow div p.province {margin:0 0 0 40px; font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div#comparewindow div div.stats {display:inline-block; width:276px; height:75px; margin:9px 0 0 40px;}
 div#comparewindow div div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
 div#comparewindow div div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
-
 div#comparewindow div div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
 div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
 div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
-
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
-div#comparewindow div.top div.compare_graph {position:relative; width:356px; height:110px; margin:10px 0 0;}
-div#comparewindow div.top div.compare_graph a {position:absolute; top:46px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
-div#comparewindow div.top div.compare_graph a.left {position:absolute; left:11px; width:24px; height:24px; background-position: 0 0;}
-div#comparewindow div.top div.compare_graph a.left:hover {background-position:0 -24px;}
-div#comparewindow div.top div.compare_graph a.right {position:absolute; right:11px; width:24px; height:24px; background-position:right 0;}
-div#comparewindow div.top div.compare_graph a.right:hover {background-position:right -24px;}
+/*compare stats slider*/
+div.compare_graph {position:relative; width:356px; height:110px; margin:13px 0 0;}
+div.compare_graph a.left {position:absolute; top:43px; left:9px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.left:hover {background-position:0 -24px;}
+div.compare_graph a.right {position:absolute; top:43px; right:9px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.right:hover {background-position:right -24px;}
+div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden;}
+div.compare_graph div.stats_slider {width:298px;; height:220px;} /* each block 299px x 110px */
+div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; }
+div.compare_graph div.stats_slider div.up {background:url('/images/compare_graph_bkg.png') no-repeat center center;}
+div.compare_graph div.stats_slider div.down {background:url('/images/graph_compare_evolution_bkg.png') no-repeat center center;}
+div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:10px; left:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
+div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:10px; left:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
+div.compare_graph div.stats_slider div.block h3 {position:absolute; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
+div.compare_graph div.stats_slider div.block span.bar {position:absolute; top:20px; width:10px; height:6px; background-image:url('/images/compare_graph_bars.png');}
+div.compare_graph div.stats_slider div.block span.bar.positive {left:50%; background-position:right -6px;}
+div.compare_graph div.stats_slider div.block span.bar.negative {right:50%; background-position:0 0px;}
+div.compare_graph div.stats_slider div.block span.bar.first {top:40px;}
+div.compare_graph div.stats_slider div.block span.bar.second {top:65px;}
+div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; left:50%; margin:-51px 0 0 -140px; z-index:0;}
+
+/*end compare slider*/
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('/images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}
 div#comparewindow div.bottom.search div.region {display:none;}
@@ -256,33 +272,33 @@ div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#66
 
 /*GRAPH*/
 /*Legend*/
-div.graph_legend {position:absolute; display:none; top:30px; left:30px; z-index:10;}
+div.graph_legend {display:none; margin: 39px 0 0 50px; }
 div.graph_legend h2 {font:normal 21px "Officina Bold"; color:#333333; text-shadow:0 1px white; line-height:21px;}
 div.graph_legend h2 sup {font:normal 13px "Officina Regular";}
 div.graph_legend p.autonomy {padding:5px 0 10px 0;}
-div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div.graph_legend p.autonomy a:hover {color:#666666;}
+div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px #dddddd;}
+div.graph_legend p.autonomy a:hover {color:#333333;}
 div.graph_legend div.partido.otros p {}
 div.graph_legend form {position:relative; width:162px; height:32px; margin:20px 0 0 0;}
-div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('/images/region_search_bkg.png') no-repeat 0 0; border:none;}
+div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('/images/region_search_bkg.png') no-repeat 0 0; border:none;}
 div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('/images/tiny_lens.png') no-repeat 0 0; border:none;}
 div.graph_legend form input.text:focus {outline:none; color:#333333;}
 div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
-div.graph_legend div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
-div.graph_legend div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
-  text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
-
+div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
+div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
 
 /*political bars*/
-div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
+div.stats div {width:100%; height:10px; margin:3px 0 0 0;}
 div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
 div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
 div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
-div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
+div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #dddddd; text-transform:uppercase;}
 /*psoe*/
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
 div.stats div.partido.psoe div.bar span.c {background-position:right -0px!important;}
@@ -332,34 +348,41 @@ div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 /*ciu*/
+div.innerBubble.ciu{background:url('/images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
 /*cds*/
+div.innerBubble.cds{background:url('/images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
 div div.stats div.partido.cds p {color:#62A558;}
 /*par*/
-div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
-div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.par p {color:#800080;}
+div.innerBubble.par{background:url('/images/backgrounds/par.png'); }
+div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
+div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
+div div.stats div.partido.par p {color:#fdb202;}
 /*eaj-pnv*/
-div div.stats div.partido.eaj_pnv div.bar {background-position:0 -66px!important;}
-div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -66px!important}
+div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
+div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
+div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
-div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.ea div.bar span.c {background-position:right -54px!important}
+div.innerBubble.ea{background:url('/images/backgrounds/ea.png'); }
+div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
+div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
 div div.stats div.partido.ea p {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.prc p {color:#800080;}
 /*pr*/
+div.innerBubble.pr{background:url('/images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
 /*uv*/
+div.innerBubble.uv{background:url('/images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
 div div.stats div.partido.uv p {color:#EC7B37;}
@@ -380,3 +403,6 @@ div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
+div.fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('/images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
+div.fail_circle p {font:normal 21px "Officina Regular"; line-height: 28px;}
+div.fail_circle a {font-size:14px; color:#8C1F76}

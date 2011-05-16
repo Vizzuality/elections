@@ -39,7 +39,7 @@
           peninsula.fitBounds(results[0].geometry.bounds);
           $('a.map').trigger('click');
         } else {
-          $('div.search_error').fadeIn();
+          $('div#header div.left div.search_error').fadeIn();
         }
       });
     }

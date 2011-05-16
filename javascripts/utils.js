@@ -1,3 +1,17 @@
+function normalizePartyName(name) {
+  if (name === undefined) {
+    return;
+  }
+  var slashPos = name.indexOf("/");
+  var pos = (slashPos == -1) ? name.length : slashPos;
+  return name.toLowerCase().replace("-", "_").substring(0, pos);
+}
+
+function normalizeBarWidth(bar_width) {
+  var bar_min_size = 7;
+  return (bar_width < bar_min_size) ? bar_min_size : bar_width;
+}
+
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
 
 var normalization = {
@@ -38,6 +52,63 @@ var tooltipInfo = {
   }
 };
 
+var textInfoWindow = {
+  "Envejecimiento" : {
+    before_positive: "Aquí hay un ",
+    after_negative: " menos de personas mayores de 65 años, que en el resto de España",
+    before_positive: "Aquí hay un ",
+    after_positive: " mas de personas mayores de 65 años, que en el resto de España"
+  },
+  "Tasa de Paro" : {
+    before_positive: "La tasa de paro se encuentra a un ",
+    after_negative: " por debajo de la media",
+    before_positive: "La tasa de paro se encuentra a un ",
+    after_positive: " por encima de la media"
+  },
+  "PIB per cápita" : {
+    before_positive: "El PIB per cápita aquí es un ",
+    after_negative: " mas bajo que la media nacional",
+    before_positive: "El PIB per cápita aquí es un ",
+    after_positive: " mas alto que la media nacional"
+  },
+  "Edad media" : {
+    before_positive: "Su población es ",
+    after_negative: " años mas jóven que la media nacional",
+    before_positive: "Su población es ",
+    after_positive: " años mas mayor que la media nacional"
+  },
+  "Inmigración" : {
+    before_positive: "El porcentaje de inmigración en este municipio está ",
+    after_negative: " por debajo de la media",
+    before_positive: "El porcentaje de inmigración en este municipio está ",
+    after_positive: " por encima de la media"
+  },
+  "Saldo vegetativo": {
+    before_positive: "El crecimiento de la población está un ",
+    after_negative: " por debajo de la media",
+    before_positive: "El crecimiento de la población está un ",
+    after_positive: " por encima de la media"
+  },
+  "Salario medio": {
+    before_positive: "El salario medio aquí está un ",
+    after_negative: " por debajo de la media",
+    before_positive: "El salario medio aquí está un ",
+    after_positive: " por encima de la media"
+  },
+  "Estudios acabados": {
+    before_positive: "Un ",
+    after_negative: " menos que la media nacional, tiene los estudios secundarios terminados",
+    before_positive: "Un ",
+    after_positive: " mas que la media nacional, tiene los estudios secundarios terminados"
+  },
+  "Penetracion internet": {
+    before_positive: "Un ",
+    after_negative: " menos que la media, tiene acceso a internet aquí",
+    before_positive: "Un ",
+    after_positive: " mas que la media, tiene acceso a internet aquí"
+  }
+};
+
 var table_zoom = {
   12:'gadm4',
   11:'gadm4',
@@ -47,7 +118,7 @@ var table_zoom = {
   6:'gadm1'
 };
 
-procesos_electorales = {
+var procesos_electorales = {
   "1987":"68","1988":"68","1989":"68","1990":"68",
   "1991":"69","1992":"69","1993":"69","1994":"69",
   "1995":"70","1996":"70","1997":"70","1998":"70",
@@ -57,12 +128,12 @@ procesos_electorales = {
   "2011":"74"
 };
 
-graph_hack_year = {
-  "1987":"1987","1988":"1987","1989":"1987","1990":"1987",
-  "1991":"1991","1992":"1991","1993":"1991","1994":"1991",
-  "1995":"1995","1996":"1995","1997":"1995","1998":"1995",
-  "1999":"1999","2000":"1999","2001":"1999","2002":"1999",
-  "2003":"2003","2004":"2003","2005":"2003","2006":"2003",
-  "2007":"2007","2008":"2007","2009":"2007","2010":"2007",
-  "2011":"74"
-};
+//var graph_hack_year = {
+// "1987":"1987","1988":"1987","1989":"1987","1990":"1987",
+//  "1991":"1991","1992":"1991","1993":"1991","1994":"1991",
+//  "1995":"1995","1996":"1995","1997":"1995","1998":"1995",
+//  "1999":"1999","2000":"1999","2001":"1999","2002":"1999",
+//  "2003":"2003","2004":"2003","2005":"2003","2006":"2003",
+//  "2007":"2007","2008":"2007","2009":"2007","2010":"2007",
+//  "2011":"74"
+//};
