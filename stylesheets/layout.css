@@ -415,4 +415,6 @@ div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
-
+div.fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('/images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
+div.fail_circle p {font:normal 21px "Officina Regular"; line-height: 28px;}
+div.fail_circle a {font-size:14px; color:#8C1F76}
