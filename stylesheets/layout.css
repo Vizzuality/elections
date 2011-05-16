@@ -348,7 +348,7 @@ div div.stats div.partido.cds p {color:#62A558;}
 div.innerBubble.par{background:url('/images/backgrounds/par.png'); }
 div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
-div div.stats div.partido.par p {color:red;}
+div div.stats div.partido.par p {color:#fdb202;}
 /*eaj-pnv*/
 div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
 div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
