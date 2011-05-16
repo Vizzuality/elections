@@ -83,6 +83,7 @@ SQL
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
+      min_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.min
       max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
       votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
         municipality.symbolize_keys!
@@ -97,7 +98,7 @@ SQL
         json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
         json[municipality_name][:children_json_url] = nil
         json[municipality_name][:censo_total]  = municipality[:censo_total]
-        json[municipality_name][:porcentaje_participacion] = municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0
+        json[municipality_name][:porcentaje_participacion] = ("%.2f" % municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0).to_f
         json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],  municipality[:primer_partido_percent].to_f]
         json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent].to_f]
         json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
