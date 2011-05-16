@@ -92,36 +92,7 @@
           '  </div>'+
           '</div>');
 
-        $('div#graph_infowindow a.more').click(function(ev){
-          ev.stopPropagation();
-          ev.preventDefault();
-
-          graphBubbleTooltip.hide();
-          graphBubbleInfowindow.hide();
-
-          var $selectedBubble = $("div#" + selectedBubble);
-          var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
-          if (url == null) {
-            return false;
-          } else {
-            goDeeper(url);
-          }
-        });
-
-        $('div#graph_infowindow a.close_infowindow').click(function(ev){
-          ev.stopPropagation();
-          ev.preventDefault();
-          hideInfowindow();
-
-          if (selectedBubble !== undefined) {
-            var $b = $("div#" + selectedBubble + " div.innerBubble");
-            var radius = $b.height()/2;
-            var top    = $b.parent().css('top').replace('px','') - radius - 21;
-            var left   = $b.parent().css('left').replace('px','');
-            var text   = $b.parent().attr('id');
-            graphBubbleTooltip.show(left,top,text);
-          }
-        });
+          bindEvents();
 
         function isOpen() {
           return open;
@@ -287,6 +258,50 @@
             $('div#graph_infowindow div.chart img').show();
 
           showInfowindow(left,top);
+        }
+
+        function bindEvents() {
+
+          $('div#graph_infowindow a.compare').click(function(ev){
+            try{
+              ev.stopPropagation();
+            }
+            catch(e){
+              event.cancelBubble=true;
+            };
+            hideInfowindow();
+          });
+
+          $('div#graph_infowindow a.more').click(function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            graphBubbleTooltip.hide();
+            graphBubbleInfowindow.hide();
+
+            var $selectedBubble = $("div#" + selectedBubble);
+            var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
+            if (url == null) {
+              return false;
+            } else {
+              goDeeper(url);
+            }
+          });
+
+          $('div#graph_infowindow a.close_infowindow').click(function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
+            hideInfowindow();
+
+            if (selectedBubble !== undefined) {
+              var $b = $("div#" + selectedBubble + " div.innerBubble");
+              var radius = $b.height()/2;
+              var top    = $b.parent().css('top').replace('px','') - radius - 21;
+              var left   = $b.parent().css('left').replace('px','');
+              var text   = $b.parent().attr('id');
+              graphBubbleTooltip.show(left,top,text);
+            }
+          });
         }
 
         return {
