@@ -1,4 +1,7 @@
 function normalizePartyName(name) {
+  if (name === undefined) {
+    return;
+  }
   var slashPos = name.indexOf("/");
   var pos = (slashPos == -1) ? name.length : slashPos;
   return name.toLowerCase().replace("-", "_").substring(0, pos);
