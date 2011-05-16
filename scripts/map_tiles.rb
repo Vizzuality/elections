@@ -62,9 +62,9 @@ LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_i
 LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
 LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 
-ALTER TABLE gadm4_processed ADD PRIMARY KEY (gid); 
-CREATE INDEX gadm4_processed_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
-CREATE INDEX gadm4_processed_the_geom_idx ON map_tiles_data USING gist(the_geom);
+ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
+CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
+CREATE INDEX map_tiles_data_the_geom_idx ON map_tiles_data USING gist(the_geom);
 EOS
 
 conn = PGconn.open(settings)  
