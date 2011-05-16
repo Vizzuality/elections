@@ -3,6 +3,7 @@
     var deep = "autonomias";
     var name = "España";
     var bar_width_multiplier = 140;
+    var bar_min_size = 7;
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -170,7 +171,7 @@
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
           bar_width = (valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
@@ -188,7 +189,7 @@
             $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
           }
           bar_width = (valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
@@ -206,18 +207,18 @@
             $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
           }
           bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
+          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
           bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
-          bar_width = (bar_width < 5 && bar_width > 1) ? 5 : bar_width;
-          $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width; $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
 
 
           var data = valuesHash[data_id].evolution.split(",");
+          console.log(data);
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
           var minYear = 1975; var maxYear = 2011;
 
@@ -255,7 +256,7 @@
 
           $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
           $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-            $('div#graph_infowindow div.chart img').show();
+          $('div#graph_infowindow div.chart img').show();
 
           showInfowindow(left,top);
         }
@@ -552,6 +553,7 @@
 
           valuesHash[key] = val;
 
+            console.log(val);
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -602,6 +604,7 @@
         left: offset.toString() + "px"
       }, 1000);
 
+
       $(bubble).find('.innerBubble').animate({
         height: (val-10).toString() + "px",
         width: (val-10).toString() + "px",
@@ -609,6 +612,7 @@
         left: (offset + 5).toString() + "px",
         backgroundColor: backgroundColor
       }, 1000);
+      //$(bubble).find('.innerBubble').addClass();
     }
 
 
