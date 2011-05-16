@@ -361,6 +361,7 @@ div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.prc p {color:#800080;}
 /*pr*/
+div.innerBubble.pr{background:url('/images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
