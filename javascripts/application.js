@@ -10,22 +10,23 @@
     goToHash(route);
   });
 
-
-
   function initializeApp() {
-    //initialize graph
-    initializeGraph();
-
-    //initialize header options (selects and more) and graph/map menu
-    initializeHeader();
-
-    //initialize map and map modules
-    initializeMap();
+    initializeGraph();       //initialize graph
+    initializeHeader();      //initialize header options (selects and more) and graph/map menu
+    initializeMap();         //initialize map and map modules
+    initializeKeyBindings();
   }
 
+  function initializeKeyBindings() {
+    $(document).keyup(function(e) {
+      if (state == "grafico") {
+        if (e.keyCode == 27) {
+          graphBubbleInfowindow.hide();
+        } else {
+        }
+      }});
+  }
 
-
-  
   function goToHash(route) {
     //Check variable application state
     if (route[0]!="mapa" && route[0]!="grafico") {
