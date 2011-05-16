@@ -60,7 +60,7 @@
       //Remove play class and add pause class
       $(this).removeClass('play').addClass('stop');
       $(this).attr('href','#stop');
-      animate_interval = setInterval(function(){animateSlider();},4000);
+      animate_interval = setInterval(function(){animateSlider();},1000);
     });
 
     // Stop animation process
