@@ -23,8 +23,12 @@
       ev.preventDefault();
       var className = ($(this).hasClass('map'))?'map':'graph';
       if (!$(this).hasClass('selected')) {
+
+        infoTooltip.hide();
+
         $('div#tab_menu a').removeClass('selected');
-        if (className=='map') {
+
+        if (className == 'map') {
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
@@ -116,7 +120,7 @@
         ev.preventDefault();
         hideTooltip();
       });
-      
+
       $('div.info_tooltip a.more').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
@@ -200,18 +204,17 @@
 
       var value = $(this).text();
 
-
       if (!$(this).parent().hasClass('selected')) {
         compare = $(this).attr('class');
         axisLegend.update(tooltipInfo[value]);
         graphBubbleInfowindow.hide();
-        
+
         if (state == 'mapa') {
           refreshMap();
         } else {
           setValue("/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json");
         }
-        
+
         changeHash();
 
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'))});
