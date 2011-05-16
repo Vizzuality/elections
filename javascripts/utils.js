@@ -8,7 +8,8 @@ function normalizePartyName(name) {
 }
 
 function normalizeBarWidth(bar_width) {
-  return (bar_width < 7) ? bar_min_size : bar_width;
+  var bar_min_size = 7;
+  return (bar_width < bar_min_size) ? bar_min_size : bar_width;
 }
 
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
