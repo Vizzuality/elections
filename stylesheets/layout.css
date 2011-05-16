@@ -131,7 +131,7 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('/images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
-div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 
 /*MAP CONTROLS*/
@@ -152,7 +152,7 @@ div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
-div#map a.vizzuality {position:absolute; left:70px; bottom:4px; width:75px; height:40px; background:url('/images/vizzuality_white.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#map a.vizzuality {position:absolute; left:70px; bottom:5px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 /*MENU MAP/GRAPH*/
 div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
