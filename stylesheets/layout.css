@@ -347,8 +347,9 @@ div div.stats div.partido.par div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.par p {color:#800080;}
 /*eaj-pnv*/
-div div.stats div.partido.eaj_pnv div.bar {background-position:0 -66px!important;}
-div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -66px!important}
+div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
+div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
+div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
 div div.stats div.partido.ea div.bar {background-position:0 -54px!important;}
@@ -383,3 +384,4 @@ div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.par3 p {color:#666;}
 /*end bars*/
+
