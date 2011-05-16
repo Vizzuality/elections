@@ -209,12 +209,12 @@
           bar_width = (valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100;
           bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id]["partido_3"][0]+' ('+(valuesHash[data_id]["partido_3"][1]*bar_width_multiplier)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
           bar_width = (valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100;
           bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width; $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id]["resto_partidos_percent"]+'%)');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
 
           var data = valuesHash[data_id].evolution.split(",");
@@ -427,8 +427,8 @@
         }
 
         function changeData(results,names,parent_url) {
-          if (names.length>0) {
-            if (names.length==1) {
+          if (names.length > 0) {
+            if (names.length == 1) {
               $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
               $('div.graph_legend p.autonomy a').text('España')
               $('div.graph_legend p.autonomy a').attr('href','#ver_España');
@@ -454,47 +454,52 @@
             $('div.graph_legend div.stats div.partido').each(function(i,ele){
               $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
             });
+
             var bar_width;
 
             // First political party
-            var partido_1 = normalizePartyName(results['partido_1'][0]);
+            var partido_1 = normalizePartyName(results.partido_1[0]);
 
             if (_.indexOf(parties, partido_1) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
             } else {
               $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
             }
-            bar_width = (results['partido_1'][1]*bar_width_multiplier)/100;
+            bar_width = (results.partido_1[1]*bar_width_multiplier)/100;
+            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
             $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(0) p').text(results['partido_1'][0]+' ('+results['partido_1'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
             // Second political party
-            var partido_2 = normalizePartyName(results['partido_2'][0]);
+            var partido_2 = normalizePartyName(results.partido_2[0]);
             if (_.indexOf(parties, partido_2) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
             } else {
               $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
             }
-            bar_width = (results['partido_2'][1]*bar_width_multiplier)/100;
+            bar_width = (results.partido_2[1]*bar_width_multiplier)/100;
+            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
             $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(1) p').text(results['partido_2'][0]+' ('+results['partido_2'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
             // Third political party
-            var partido_3 = normalizePartyName(results['partido_3'][0]);
+            var partido_3 = normalizePartyName(results.partido_3[0]);
             if (_.indexOf(parties, partido_3) !== -1) {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
             } else {
               $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
             }
 
-            bar_width = (results['partido_3'][1]*bar_width_multiplier)/100;
+            bar_width = (results.partido_3[1]*bar_width_multiplier)/100;
+            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
             $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(2) p').text(results['partido_3'][0]+' ('+results['partido_3'][1]+'%)');
+            $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = (results['otros'][0]*bar_width_multiplier)/100;
+            bar_width = (results.otros[0]*bar_width_multiplier)/100;
+            bar_width = (bar_width < bar_min_size && bar_width > 1) ? bar_min_size : bar_width;
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results['otros'][1]*bar_width_multiplier+'%)');
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
             showSearch();
