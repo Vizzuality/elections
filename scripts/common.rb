@@ -187,7 +187,7 @@ def municipalities_path(province_name, variable)
 end
 
 def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{file_name}.json"
+  "../json/generated_data/google_names_cache/#{CGI::escape(file_name)}.json"
 end
 
 def get_authonomy_results(autonomy_name, proceso_electoral_id)
@@ -347,11 +347,64 @@ def create_years_hash(records, variables, max_year, min_year)
 end
 
 def variables_vars
-  supported_variables = %w('paro_normalizado')
-  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
+  supported_variables = %w('actividad_economica_normalizado' 'audiencia_diaria_tv' 'comercial_normalizado' 'edad_media_normalizada' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'lineas_adsl' 'paro_normalizado' 'penetracion_internet' 'pib_normalizado' 'prensa_diaria' 'restauracion_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada' 'uso_regular_internet')
+  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
   variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
   max_year = variables.map(&:max_year).sort.last
   min_year = variables.map(&:min_year).sort.first
 
   [variables, variables_hash, max_year, min_year]
+end
+
+def vars_sql_select(socioeco_table)
+  variables = *variables_vars.first
+  tables = {
+    1 => 'vars_socioeco_x_autonomia',
+    2 => 'vars_socioeco_x_provincia',
+    4 => 'vars_socioeco_x_municipio'
+  }
+
+  select = []
+  variables.each do |variable|
+    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    fields = []
+    variable.min_year.upto(variable.max_year) do |year|
+      select << "#{variable.codigo}_#{year}"
+    end
+    select << "#{variable.codigo}_min_max.*"
+
+  end
+
+  select.join(', ')
+end
+
+def vars_sql_froms(socioeco_table)
+  variables = *variables_vars.first
+  tables = {
+    1 => 'vars_socioeco_x_autonomia',
+    2 => 'vars_socioeco_x_provincia',
+    4 => 'vars_socioeco_x_municipio'
+  }
+
+  froms = []
+  variables.each do |variable|
+    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    fields = []
+    variable.min_year.upto(variable.max_year) do |year|
+      fields << <<-SQL
+        max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max,
+        min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min
+      SQL
+    end
+
+    froms << <<-SQL
+      (SELECT
+        #{fields.join(', ')}
+      FROM #{socioeco_table}) AS #{variable.codigo}_min_max
+    SQL
+  end
+
+  "#{froms.join(', ')},"
 end
