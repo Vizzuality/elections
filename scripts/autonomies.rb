@@ -53,10 +53,11 @@ variables.each do |variable|
       next
     end
     putc '.'
-    autonomy_name = autonomy_hash[:name_1].tr(' ','_')
+    autonomy_name = autonomy_hash[:name_1].normalize
     evolution[custom_variable_name][autonomy_hash[:name_1]] ||= all_evolutions[autonomy_hash[:name_1]]
     json[autonomy_name] ||= {}
     json[autonomy_name][:cartodb_id]   = autonomy_hash[:cartodb_id]
+    json[autonomy_name][:name] = autonomy_hash[:name_1]
     json[autonomy_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
     json[autonomy_name][:y_coordinate] = get_y_coordinate(row, variable.to_sym, max_y, min_y)
     json[autonomy_name][:radius]       = get_radius(row)
