@@ -186,7 +186,7 @@ def municipalities_path(province_name, variable)
 end
 
 def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{CGI::escape(file_name)}.json"
+  "../json/generated_data/google_names_cache/#{file_name.normalize}.json"
 end
 
 def get_authonomy_results(autonomy_name, proceso_electoral_id)
@@ -344,6 +344,31 @@ SQL
   return get_from_every_year(variables, values)
 end
 
+def get_municipalities_variables_evolution(province_id, custom_variable_name)
+  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
+  variables = []
+  raw_variables.each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  query = <<-SQL
+  select #{variables.join(',')}, ine_poly.nombre as name
+  from  vars_socioeco_x_municipio, ine_poly, gadm2
+  where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province_id}
+SQL
+  values = $cartodb.query(query)[:rows] || []
+  result = {}
+  values.each do |v|
+    result[v[:name]] = []
+    1975.upto(2011) do |year|
+      temp_variable = "#{custom_variable_name}_#{year}"
+      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+    end
+  end
+  result
+end
+
 def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
@@ -440,4 +465,60 @@ def vars_sql_froms(socioeco_table)
   end
 
   "#{froms.join(', ')},"
+end
+
+class String
+  def normalize
+    str = self.downcase
+    return '' if str.blank?
+    n = str.force_encoding("UTF-8")
+    n.gsub!(/[àáâãäåāă]/,   'a')
+    n.gsub!(/æ/,            'ae')
+    n.gsub!(/[ďđ]/,          'd')
+    n.gsub!(/[çćčĉċ]/,       'c')
+    n.gsub!(/[èéêëēęěĕė]/,   'e')
+    n.gsub!(/ƒ/,             'f')
+    n.gsub!(/[ĝğġģ]/,        'g')
+    n.gsub!(/[ĥħ]/,          'h')
+    n.gsub!(/[ììíîïīĩĭ]/,    'i')
+    n.gsub!(/[įıĳĵ]/,        'j')
+    n.gsub!(/[ķĸ]/,          'k')
+    n.gsub!(/[łľĺļŀ]/,       'l')
+    n.gsub!(/[ñńňņŉŋ]/,      'n')
+    n.gsub!(/[òóôõöøōőŏŏ]/,  'o')
+    n.gsub!(/œ/,            'oe')
+    n.gsub!(/ą/,             'q')
+    n.gsub!(/[ŕřŗ]/,         'r')
+    n.gsub!(/[śšşŝș]/,       's')
+    n.gsub!(/[ťţŧț]/,        't')
+    n.gsub!(/[ùúûüūůűŭũų]/,  'u')
+    n.gsub!(/ŵ/,             'w')
+    n.gsub!(/[ýÿŷ]/,         'y')
+    n.gsub!(/[žżź]/,         'z')
+    n.gsub!(/[ÀÁÂÃÄÅĀĂ]/i,    'A')
+    n.gsub!(/Æ/i,            'AE')
+    n.gsub!(/[ĎĐ]/i,          'D')
+    n.gsub!(/[ÇĆČĈĊ]/i,       'C')
+    n.gsub!(/[ÈÉÊËĒĘĚĔĖ]/i,   'E')
+    n.gsub!(/Ƒ/i,             'F')
+    n.gsub!(/[ĜĞĠĢ]/i,        'G')
+    n.gsub!(/[ĤĦ]/i,          'H')
+    n.gsub!(/[ÌÌÍÎÏĪĨĬ]/i,    'I')
+    n.gsub!(/[ĲĴ]/i,          'J')
+    n.gsub!(/[Ķĸ]/i,          'J')
+    n.gsub!(/[ŁĽĹĻĿ]/i,       'L')
+    n.gsub!(/[ÑŃŇŅŉŊ]/i,      'M')
+    n.gsub!(/[ÒÓÔÕÖØŌŐŎŎ]/i,  'N')
+    n.gsub!(/Œ/i,            'OE')
+    n.gsub!(/Ą/i,             'Q')
+    n.gsub!(/[ŔŘŖ]/i,         'R')
+    n.gsub!(/[ŚŠŞŜȘ]/i,       'S')
+    n.gsub!(/[ŤŢŦȚ]/i,        'T')
+    n.gsub!(/[ÙÚÛÜŪŮŰŬŨŲ]/i,  'U')
+    n.gsub!(/Ŵ/i,             'W')
+    n.gsub!(/[ÝŸŶ]/i,         'Y')
+    n.gsub!(/[ŽŻŹ]/i,         'Z')
+    n.gsub!(/\s/i,         '_')
+    n
+  end
 end
