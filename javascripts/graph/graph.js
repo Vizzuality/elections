@@ -600,9 +600,13 @@
       });
     }
 
-
     var failCircle = (function() {
       var data_not_found;
+
+      $(".fail_circle a").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
 
       function showError() {
         if (data_not_found != true) {
