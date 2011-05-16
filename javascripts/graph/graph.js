@@ -3,6 +3,7 @@
     var deep = "autonomias";
     var name = "España";
     var bar_width_multiplier = 140;
+    var data_not_found;
 
     //Vars determining the center of the graph
     var offsetScreenX = 510;
@@ -563,7 +564,7 @@
       $('div#graph_container .bubbleContainer').remove();
       valuesHash = {};
       possibleValues = {};
-      var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+graph_hack_year[year]+".json";
+      var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
       createBubbles(url);
     }
 
@@ -613,6 +614,12 @@
           valuesHash[key] = v;
           updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
         });
+      })
+      .success(function() { $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; }); })
+      .error(function() {
+        if (data_not_found != true) {
+          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
+        }
       });
     }
 
