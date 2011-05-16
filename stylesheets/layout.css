@@ -271,10 +271,10 @@ div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:po
 div.graph_legend div.search_error {position:absolute; display:none; top:76px; left:36px; width:182px; height:114px; padding:35px 21px 21px 21px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
 div.graph_legend div.search_error p {padding:10px 0 0 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
-  text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
-
+div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
+div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
 
 /*political bars*/
 div.stats div {width:100%; height:10px; margin:5px 0 0 0;}
