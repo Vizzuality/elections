@@ -462,7 +462,6 @@ def next_folder(path)
   next_dir += 1 unless last_dir.nil?
   next_dir = "#{path}#{next_dir}/"
   FileUtils.mkdir_p(next_dir)
-  pp next_dir
   next_dir
 end
 
