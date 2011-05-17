@@ -517,7 +517,7 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = json_url + "/json/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+  var url = global_url + "graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
   createBubbles(url);
 }
 

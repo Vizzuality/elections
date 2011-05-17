@@ -105,7 +105,7 @@
         }
 
         comparewindow.hide();
-        var url = json_url + "/json/generated_data/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+        var url = general_url + "/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
         setValue(url);
 
         changeHash();
