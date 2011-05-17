@@ -133,12 +133,13 @@
 
         function drawPartyBar(data_id, party_id){
           var id = party_id - 1;
-          console.log(data_id);
           var partido = normalizePartyName(valuesHash[data_id]["partido_"+party_id][0]);
-          c1 = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
-          $.each(c1, function(c){
-            if(c1[c] != "partido"){
-              $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(c1[c]);
+
+          p = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
+
+          $.each(p, function(c){
+            if (p[c] != "partido"){
+              $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(p[c]);
             }
           })
 
