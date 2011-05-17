@@ -82,7 +82,7 @@ SQL
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:nombre].normalize
-        evolution[custom_variable_name][municipality[:nombre]] ||= all_evolutions[municipality[:nombre]]
+        evolution[custom_variable_name][municipality[:nombre]] ||= (all_evolutions[municipality[:nombre]] rescue [])
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:name] = municipality[:nombre]
