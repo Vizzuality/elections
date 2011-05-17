@@ -5,6 +5,7 @@
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
     this.json_tile_url = "/bubbles/";
+    this.loading_tiles = 0;
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -53,14 +54,22 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
-    //if (x==61 && y==47 && z==7) {
-      //console.log(x,y,z);
       // Call service
+      
+      // Loading tiles spinner
+      this.loading_tiles++;
+      showLoader();
+      
       $.ajax({
         method: "GET",
         dataType: 'json',
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
+          me.loading_tiles--;
+          if (me.loading_tiles == 0) {
+            hideLoader();
+          }
+          
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
           var worldcoord = new google.maps.Point(pixelcoord.x/Math.pow(2,zoom),pixelcoord.y/Math.pow(2,zoom));
@@ -82,6 +91,10 @@
           return div;
         },
         error: function(e) {
+          me.loading_tiles--;
+          if (me.loading_tiles == 0) {
+            hideLoader();
+          }
           return div;
         }
       });
@@ -114,19 +127,19 @@
     var radius;
     if (point['data'][year]!=undefined) {
       var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
-      var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
-      var value = Math.abs(point['data'][year][normalization[compare]]);
+      var desv = Math.max(Math.round(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.round(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
+      var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
       
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=10;
-      } else if ((desv*1)>=value && value<(desv*2)) {
-        radius=12;
-      } else if ((desv*2)>=value && value<(desv*3)) {
         radius=14;
-      } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=17;
-      } else {
+      } else if ((desv*1)>=value && value<(desv*2)) {
         radius=19;
+      } else if ((desv*2)>=value && value<(desv*3)) {
+        radius=23;
+      } else if ((desv*3)>=value && value<(desv*4)) {
+        radius=28;
+      } else {
+        radius=32;
       }
     } else {
       radius = 8;
@@ -142,7 +155,7 @@
     }
 
     var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
-                    '<img src="/images/'+className+'_marker.png"/>'+
+                    '<img src="images/'+className+'_marker.png"/>'+
                     '<p class="'+className+'">'+data+'</p>'+
                   '</div>';
     $(div).append(bubble);
@@ -172,21 +185,21 @@
           data = '';
           className = "red";
         } else {
-          data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.ceil(ele['data'][year][normalization[compare]])):(Math.floor(ele['data'][year][normalization[compare]])));
+          data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
         $('div#'+ele.id+' p').text(data);
         $('div#'+ele.id+' p').removeClass().addClass(className);
 
         //change color of the ball
-        $('div#'+ele.id+' img').attr('src','/images/'+className+'_marker.png');
+        $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
 
         //change heigth-width of the ball
         var radius;
         if (ele['data'][year]!=undefined) {
           var less = Math.floor(ele['data'][year][normalization[compare]+'_min']);
           var desv = Math.max(Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_min'])))/5;
-          var value = Math.abs(ele['data'][year][normalization[compare]]);
+          var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
 
           if ((desv*0)>=value && value<(desv*1)) {
             radius=10;
@@ -203,12 +216,24 @@
           radius = 8;
         }
         
-        var old_radius = ($('div#'+ele.id).width()/2);
-        var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
-        var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
+        if ($('div#'+ele.id).length) {
+          var old_radius = ($('div#'+ele.id).width()/2);
+          var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
+          var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
 
-        $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+          $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+        }
+
       });
     });
+  }
+  
+  
+  function showLoader() {
+    $('div#map span.loader').fadeIn();
+  }
+  
+  function hideLoader() {
+    $('div#map span.loader').fadeOut();
   }
 
