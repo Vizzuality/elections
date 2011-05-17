@@ -71,7 +71,9 @@ SQL
       year ||= variable.match(/\d+/)[0].to_i
       variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
       json = {}
-      votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
+      votes_per_municipality = JSON.parse(response.body)["rows"]
+      next if votes_per_municipality.nil?
+      votes_per_municipality = votes_per_municipality.select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
       min_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.min
       max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
