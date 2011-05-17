@@ -3,23 +3,32 @@
   var compare         = 'paro';
   var state           = "mapa";
   var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
-  var tiles_version   = 0;
-  var bubbles_version = 3;
+  var proxy_url      = "proxy.php";
+  var tiles_version   = 2;
+  var bubbles_version = 4;
   var gmaps_version   = 1;
-  var graph_version   = 0;
-  
+  var graph_version   = "v1";
+
 
   $(document).ready(function(){
-    //Deep linking manage
+
+    /* -- domain name -- */
+      var domain_name = window.location.hostname;
+      if (domain_name == "localhost" || domain_name == "elections") {
+        global_url = proxy_url+"?proxy_url="+global_url;
+      }
+    /* -- end proxy domain name -- */
+
+    //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
   });
 
   function initializeApp() {
-    initializeGraph();       //initialize graph
-    initializeHeader();      //initialize header options (selects and more) and graph/map menu
-    initializeMap();         //initialize map and map modules
-    initializeKeyBindings();
+    initializeGraph();        // initialize graph
+    initializeHeader();       // initialize header options (selects and more) and graph/map menu
+    initializeMap();          // initialize map and map modules
+    initializeKeyBindings();  // initialize key bindings
   }
 
   function initializeKeyBindings() {
@@ -78,10 +87,10 @@
     year = parseInt(route[4]);
     state = route[0];
     $("div.year_slider").slider("value",year);
-    compare = route[5];
+    compare = route[5].replace(/_/g," ");
     deep = route[6];
     name = route[7];
-    var value = $('div.option_list ul li a.'+compare).text();
+    var value = $('div.option_list ul li a.'+route[5]).text();
     // Remove selected variable
     $('div.option_list ul li.selected').each(function(i,ele){$(ele).removeClass('selected');});
     $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
@@ -97,5 +106,5 @@
   function changeHash() {
     var latlng = peninsula.getCenter();
     var zoom = peninsula.getZoom();
-    window.location.hash = "#"+ state + "/" + latlng.lat().toFixed(3)+"/"+latlng.lng().toFixed(3)+"/"+zoom+"/"+year+"/"+compare+"/"+deep+"/"+name;
+    window.location.hash = "#"+ state + "/" + latlng.lat().toFixed(3)+"/"+latlng.lng().toFixed(3)+"/"+zoom+"/"+year+"/"+compare.replace(/ /g,'_')+"/"+deep+"/"+name;
   }

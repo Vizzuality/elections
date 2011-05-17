@@ -29,9 +29,11 @@ FileUtils.mkdir_p("#{base_path}/../graphs/autonomias/#{$graphs_next_version}")
 #############
 evolution = {}
 puts
+variables_json = {}
 variables.each do |variable|
   puts
   custom_variable_name = variable.gsub(/_\d+/,'')
+  variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_autonomies_variable_evolution(variable)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
@@ -42,6 +44,7 @@ variables.each do |variable|
     end
   end
   puts "Variable: #{variable} - #{year} - #{proceso_electoral_id}"
+  variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
   max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.max
   min_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.min
   max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
@@ -75,8 +78,15 @@ variables.each do |variable|
     json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_hash[:name_1]].join(',')
    end
   fd = File.open('../' + autonomies_path(variable),'w+')
-  fd.write("func("+json.to_json+");")
+  fd.write(json.to_json)
   fd.close
 end
 
 puts 
+
+variables_json.each do |k,v|
+  variables_json[k] = v.compact.uniq.sort
+end
+fd = File.open('../graphs/meta/autonomias.json','w+')
+fd.write(variables_json.to_json)
+fd.close

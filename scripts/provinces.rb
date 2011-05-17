@@ -29,10 +29,12 @@ base_path = FileUtils.pwd
 dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
 FileUtils.mkdir_p(dir_path)
 evolution = {}
+variables_json = {}
 variables.each do |variable|
   year = nil
   puts
   custom_variable_name = variable.gsub(/_\d+/,'')
+  variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
@@ -45,6 +47,7 @@ variables.each do |variable|
   next if year == 1974
   year ||= variable.match(/\d+/)[0].to_i
   puts "Variable: #{variable} - #{year}"
+  variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].normalize
     authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
@@ -82,7 +85,14 @@ variables.each do |variable|
       json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open('../' + provinces_path(autonomy_name,variable),'w+')
-    fd.write("func("+json.to_json+");")
+    fd.write(json.to_json)
     fd.close        
   end
 end
+
+variables_json.each do |k,v|
+  variables_json[k] = v.compact.uniq.sort
+end
+fd = File.open('../graphs/meta/provincias.json','w+')
+fd.write(variables_json.to_json)
+fd.close
