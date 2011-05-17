@@ -4,7 +4,7 @@
 
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
-    this.json_tile_url = "/json/generated_data/tiles/";
+    this.json_tile_url = "/bubbles/tiles/";
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -57,7 +57,8 @@
       $.ajax({
         method: "GET",
         dataType: 'json',
-        url: me.json_tile_url+z+'_'+x+'_'+y+'.json',
+        url: global_url + me.json_tile_url+z+'_'+x+'_'+y+'.json',
+        jsonpCallback: 'func',
         success: function(points) {
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
@@ -88,8 +89,6 @@
 
     return div;
   };
-
-
 
 
   CoordMapType.prototype.releaseTile = function(tile) {
@@ -151,8 +150,6 @@
 
     return div;
   };
-
-
 
 
   function refreshBubbles() {
