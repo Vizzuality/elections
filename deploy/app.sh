@@ -1,3 +1,4 @@
+git pull ../
 rm -rf /home/ubuntu/elections_deploy
 cp -R /home/ubuntu/elections /home/ubuntu/elections_deploy
 rm -rf /home/ubuntu/elections_deploy/.git
