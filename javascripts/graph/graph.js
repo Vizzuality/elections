@@ -150,7 +150,7 @@
             $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
           }
           bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
-          console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
+          //console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
 
           $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
@@ -188,7 +188,7 @@
           bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-          console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
+          //console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
           var data = valuesHash[data_id].evolution.split(",");
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -344,7 +344,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span></span></div><p>OTROS (11%)</p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
           '  </div>'+
             '<form>'+
               '<input class="text" type="text" value="Busca tu CCAA"/>'+
@@ -421,6 +421,22 @@
           $('div.graph_legend div.search_error').hide();
         }
 
+        function drawPartyBar(party_data, party_id) {
+          var id = party_id - 1;
+          var partido = normalizePartyName(party_data["partido_"+party_id][0]);
+
+          if (_.indexOf(parties, partido) !== -1) {
+            $('div.graph_legend div.stats div.partido:eq('+id+')').addClass(partido);
+          } else {
+            $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+          }
+          bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
+          console.log(partido,party_data["partido_" + party_id][1], bar_width);
+
+          $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
+          $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
+        }
+
         function changeData(results,names,parent_url) {
 
           if (names.length > 0) {
@@ -453,49 +469,17 @@
 
             var bar_width;
 
-            // First political party
-            var partido_1 = normalizePartyName(results.partido_1[0]);
+            drawPartyBar(results,1);
+            drawPartyBar(results,2);
+            drawPartyBar(results,3);
 
-            if (_.indexOf(parties, partido_1) !== -1) {
-              $('div.graph_legend div.stats div.partido:eq(0)').addClass(partido_1);
-            } else {
-              $('div.graph_legend div.stats div.partido:eq(0)').addClass('par1');
-            }
-            bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
-
-            $('div.graph_legend div.stats div.partido:eq(0) span.c').width(bar_width);
-            $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
-
-            // Second political party
-            var partido_2 = normalizePartyName(results.partido_2[0]);
-            if (_.indexOf(parties, partido_2) !== -1) {
-              $('div.graph_legend div.stats div.partido:eq(1)').addClass(partido_2);
-            } else {
-              $('div.graph_legend div.stats div.partido:eq(1)').addClass('par2');
-            }
-            bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
-
-            $('div.graph_legend div.stats div.partido:eq(1) span.c').width(bar_width);
-            $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
-
-            // Third political party
-            var partido_3 = normalizePartyName(results.partido_3[0]);
-            if (_.indexOf(parties, partido_3) !== -1) {
-              $('div.graph_legend div.stats div.partido:eq(2)').addClass(partido_3);
-            } else {
-              $('div.graph_legend div.stats div.partido:eq(2)').addClass('par3');
-            }
-
-            bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
-
-            $('div.graph_legend div.stats div.partido:eq(2) span.c').width(bar_width);
-            $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
             bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
+            console.log(results.otros[1], bar_width);
 
             $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
-            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
+            $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
             showLegend();
           } else {
             $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
