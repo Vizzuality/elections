@@ -5,7 +5,6 @@
       this.firstZoom = 12;
       this.firstData = {};
       this.secondData = {};
-      this.search_url = "/json/generated_data/google_names_cache";
       this.slider_position = 0;
       this.total_variables = 10; // Calculate!! TODO
     }
@@ -200,7 +199,6 @@
             fillData(info);
           },
           error: function(error) {
-            console.log(error);
             $('div#comparewindow div.bottom').addClass('search').removeClass('region')
             $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
           }
@@ -402,6 +400,8 @@
         }
       });
       
+      
+      setTimeout(function(){$('div.outer_stats_slider').scrollTo($('div.stats_slider div[alt="'+compare+'"].up'),1);},20);
     }
     
     
@@ -420,7 +420,7 @@
     /*Auxiliar function to get evolution image */
     function createImage(info,ele,second) {
       /* create graph */
-      var max = 0; var count = 0; var find = false; var find_year;
+      var max = 0; var count = 0; var find = false; var find_year; var new_no_data = 0; var start = false;
       var param = "";
       var minYear = 1987; // 1987
       var maxYear = 2012; // 2012
@@ -435,19 +435,24 @@
               find_year = count;
             }
           }
+          if (!start) {
+            start = true;
+          }
+          count++;
           if (Math.abs(parseFloat(info['data'][i][ele]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][ele])));
           param += info['data'][i][ele] + ',';
         } else {
-          param += '0,';
+          if (start) {
+            new_no_data ++;
+          }
         }
-        count++;
       }
       param = param.substring(0, param.length-1);
       
       if (second) {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=280x100&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,3,3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       } else {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=280x100&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,3,3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       }
     }
     

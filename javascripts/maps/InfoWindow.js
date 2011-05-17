@@ -166,7 +166,7 @@
       
       
       if (info['data'][year][normalization[compare]]!=null) {
-    	  var max = 0; var count = 0; var find = false; var find_year;
+    	  var max = 0; var count = 0; var find = false; var find_year; var new_no_data = 0; var start = false;
         var paro = "";
 
         var minYear = 1987; // 1987
@@ -184,19 +184,26 @@
                 find_year = count;
               }
             }
+            if (!start) {
+              start = true;
+            }
             if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
             paro += info['data'][i][normalization[compare]] + ',';
+            count++;
           } else {
-            paro += '0,';
+            if (start) {
+              new_no_data ++;
+            }
           }
-          count++;
         }
+
         paro = paro.substring(0, paro.length-1);
         $('div#infowindow div.chart').show();
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,5,5,5');
+        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((count*8)+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,0,5,0');
+        $('div#infowindow div.chart img').css({margin:'0 '+(new_no_data*7)+'px 0 0'});
         $('div#infowindow div.chart img').show();
-        $('div#infowindow p.info').html('<strong>'+parseFloat(info['data'][year][normalization[compare]]).toFixed(2)+'</strong>');
+        $('div#infowindow p.info').html('Su población es <strong>'+Math.abs(parseFloat(info['data'][year][normalization[compare]]).toFixed(2))+'%</strong> '+((parseFloat(info['data'][year][normalization[compare]]).toFixed(2)>0)?'mayor':'menor')+' que la media nacional');
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
@@ -264,8 +271,8 @@
     		left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
     	}
 
-    	if ((pixPosition.y + this.offsetVertical_ - 30) < 0) {
-    		top = (pixPosition.y + this.offsetVertical_ - 30);
+    	if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
+    		top = (pixPosition.y + this.offsetVertical_ - 40);
     	}
 
     	this.map_.panBy(left,top);

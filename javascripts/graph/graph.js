@@ -1,8 +1,9 @@
-
 // Graph global vars {#}
 var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
+var availableData = {};
+var failCircle;
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -19,14 +20,35 @@ var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
 
+function getNextAvailableYear() {
+  var data = availableData[deep][normalization[compare]];
+  if (year > data[data.length - 1]) {
+    return data[data.length - 1];
+  } else {
+    return _.detect(data, function(num){ return year < num; }); // next election year to the firstYear
+  }
+}
+
+function initAvailableData(deep) {
+  $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
+}
+
 function initializeGraph() {
+
+  initAvailableData("autonomias");
+  initAvailableData("provincias");
+  //initAvailableData("municipios");
 
   $(".innerBubble").live({
     mouseenter: function () {
+      if (failCircle.failed() == true) {
+        return;
+      }
+
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().attr('id');
+      var text = $(this).parent().find('span.name').html();
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -46,6 +68,9 @@ function initializeGraph() {
       graphBubbleTooltip.hide();
     },
     click: function() {
+      if (failCircle.failed() == true) {
+        return;
+      }
 
       var radius = $(this).height()/2;
       var top  = $(this).parent().offset().top - 274;
@@ -150,7 +175,6 @@ function initializeGraph() {
       $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
     }
     bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
-    //console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
 
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
@@ -163,7 +187,9 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+    var name = $("div#" + selectedBubble + " span.name").html();
+
+    $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
 
@@ -188,7 +214,6 @@ function initializeGraph() {
     bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
     $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
     $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-    //console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
     var data = valuesHash[data_id].evolution.split(",");
     var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -228,9 +253,9 @@ function initializeGraph() {
 
     $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#graph_infowindow div.chart img').show();
+    $('div#graph_infowindow div.chart img').show();
 
-      showInfowindow(left,top);
+    showInfowindow(left,top);
   }
 
   function bindEvents() {
@@ -257,7 +282,7 @@ function initializeGraph() {
       if (url == null) {
         return false;
       } else {
-        goDeeper(url);
+        goDeeper(global_url + "/" + url);
       }
     });
 
@@ -296,7 +321,7 @@ function initializeGraph() {
     }
 
     function showTooltip(left,top,text) {
-      $('p.graph_bubble_tooltip').text(text.replace(/_/g,' '));
+      $('p.graph_bubble_tooltip').text(text);
       var offset = $('p.graph_bubble_tooltip').width()/2;
       $('p.graph_bubble_tooltip').css('left',left-offset+10+'px');
       $('p.graph_bubble_tooltip').css('top',top+'px');
@@ -429,7 +454,6 @@ function initializeGraph() {
       $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
     }
     bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
-    console.log(partido,party_data["partido_" + party_id][1], bar_width);
 
     $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
     $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
@@ -453,7 +477,7 @@ function initializeGraph() {
       $('div.graph_legend p.autonomy a').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        goDeeper(parent_url[parent_url.length-1]);
+        goDeeper(global_url + "/" + parent_url[parent_url.length-1]);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
       });
@@ -474,7 +498,6 @@ function initializeGraph() {
 
       // Other
       bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-      console.log(results.otros[1], bar_width);
 
       $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
       $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
@@ -517,14 +540,13 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = global_url + "/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+  var url = global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
   createBubbles(url);
 }
 
 
 function createBubbles(url){
-
-  $.ajax({url:url, dataType:"jsonp", jsonpCallback:"func", success:function(data) {
+  $.getJSON(url, function(data) {
     var one = true;
     possibleValues = data;
     count = 0;
@@ -542,24 +564,34 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
+      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
     });
-  }});
+  })
+  .success(function(){ createdBubbles = true; failCircle.hide(); })
+  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
-var failCircle = (function() {
+failCircle = (function() {
   var data_not_found;
 
-  $("#fail_circle a").live("click", function(ev) {
+  $("#fail_circle a.why").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
+    explanationwindow.show();
+  });
+
+  $("#fail_circle a.next").live("click", function(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    goToNextYear();
   });
 
   function showError() {
@@ -572,28 +604,41 @@ var failCircle = (function() {
     $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
   }
 
+  function goToNextYear() {
+    var next_available_year = getNextAvailableYear();
+    year = next_available_year;
+    $("div.year_slider").slider('value', year);
+    changeHash();
+    setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+  }
+
+  function hasFailed() {
+    return data_not_found;
+  }
+
   return {
     show: showError,
-    hide: hideError
+    hide: hideError,
+    failed: hasFailed
   }
 })();
 
 function setValue(url){
-console.log("setValue");
-  $.ajax({url: url, dataType:"jsonp", jsonpCallback:"func", success: function(data) {
+
+  $.getJSON(url, function(data) {
     var one = true;
     _.each(data, function(v,key) {
-      //Check data for show legend or not
-      if (one) {
+      if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         one = false;
       }
       valuesHash[key] = v;
+      //console.log('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
     });
-  }});
-  //.success(function(){ failCircle.hide(); })
-  //.error(function(){ failCircle.show(); });
+  })
+  .success(function(){ failCircle.hide(); })
+  .error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
@@ -633,9 +678,14 @@ function goDeeper(url){
   graphLegend.hide();
   //Get new name and deep
   var url_split = url.split('/');
-  deep = url_split[2];
+
+  deep = url_split[5];
+  //console.log("deep", deep);
+
   var length = url_split[url_split.length-1].split(compare)[0].length;
+
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+  //console.log("name", name);
 
   graphLegend.hideError();
 
@@ -668,12 +718,12 @@ function destroyBubble(b, url){
 }
 
 function addNewBubble(region) {
-  region = region.replace(/ /g,'_');
+  region = region.toLowerCase().replace(/ñ/,'n').replace(/ /g,'_');
 
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
 
-    if (selected !== undefined) {
+    if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
     }
     selectedBubble = region;
@@ -685,7 +735,7 @@ function addNewBubble(region) {
     _.each(possibleValues,function(val,key){
       if (key.toLowerCase() == region.toLowerCase()) {
 
-        if (selected !== undefined) {
+        if (selectedBubble !== undefined) {
           $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
         }
         selectedBubble = key;
