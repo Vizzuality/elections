@@ -146,7 +146,7 @@ election_ids.each do |election_id|
   tile_extents.each do |extent|
     (extent[:xmin]..extent[:xmax]).to_a.each do |x|
       (extent[:ymin]..extent[:ymax]).to_a.each do |y|
-        file_name = "#{x}_#{y}_#{extent[:zoom]}_#{election_id}.png"
+        file_name = "#{x}_#{y}_#{extent[:zoom]}.png"
         if File.exists? "#{save_path}/#{file_name}"
           total_tiles -= 1
         else  
