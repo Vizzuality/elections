@@ -14,7 +14,7 @@
 
     /* -- domain name -- */
       var domain_name = window.location.hostname;
-      if (domain_name == "localhost") {
+      if (domain_name == "localhost" || domain_name == "elections") {
         global_url = proxy_url+"?proxy_url="+global_url;
       }
     /* -- end proxy domain name -- */
