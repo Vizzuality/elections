@@ -3,7 +3,7 @@ var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
 var availableData = {};
-var failCircle;
+var graphFailCircle;
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -41,7 +41,7 @@ function initializeGraph() {
 
   $(".innerBubble").live({
     mouseenter: function () {
-      if (failCircle.failed() == true) {
+      if (graphFailCircle.failed() == true) {
         return;
       }
 
@@ -68,7 +68,7 @@ function initializeGraph() {
       graphBubbleTooltip.hide();
     },
     click: function() {
-      if (failCircle.failed() == true) {
+      if (graphFailCircle.failed() == true) {
         return;
       }
 
@@ -589,11 +589,11 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){ createdBubbles = true; failCircle.hide(); })
-  .error(function(){ createdBubbles = false; failCircle.show(); });
+  .success(function(){ createdBubbles = true; graphFailCircle.hide(); })
+  .error(function(){ createdBubbles = false; graphFailCircle.show(); });
 }
 
-failCircle = (function() {
+graphFailCircle = (function() {
   var data_not_found;
 
   $("#graph_fail_circle a.why").live("click", function(ev) {
