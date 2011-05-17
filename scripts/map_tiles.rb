@@ -56,6 +56,14 @@ if election_id == nil
   end      
 end
 
+# version path
+base_path     = "/mnt/www/data/tiles"
+versions      = Dir["#{base_path}/*/"]
+v_dir         = versions.map{|x| x.split("/").last}
+v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
+version_path  = "#{base_path}/#{v_next}" 
+
+
 # render each one entered
 election_ids = election_id.split(",")
 
@@ -120,15 +128,7 @@ election_ids.each do |election_id|
     {:zoom => 12, :xmin => 1832, :ymin => 1688, :xmax => 1902, :ymax => 1732},  
   ] 
 
-  #base_path      = "#{Dir.pwd}/tiles"
-  base_path     = "/mnt/www/data/tiles"
-  versions       = Dir["#{base_path}/*/"]
-  v_dir          = versions.map{|x| x.split("/").last}
-  v_next         = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
-  save_path      = "#{base_path}/#{v_next}/#{election_id}" 
-                                                        
-  # base_path   = "#{Dir.pwd}/tiles"
-  # save_path   = "#{base_path}/#{election_id}"
+  save_path      = "#{version_path}/#{election_id}" 
   tile_url    = "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles"
   hydra       = Typhoeus::Hydra.new(:max_concurrency => 200)
   time_start  = Time.now
