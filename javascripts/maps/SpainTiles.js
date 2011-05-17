@@ -85,6 +85,8 @@
           return div;
         }
       });
+    } else {
+      div.style.display = "none";
     }
 
 
