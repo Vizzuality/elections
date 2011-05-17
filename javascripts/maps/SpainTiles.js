@@ -116,13 +116,13 @@
       var value = Math.abs(point['data'][year][normalization[compare]]);
       
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=7;
-      } else if ((desv*1)>=value && value<(desv*2)) {
         radius=10;
+      } else if ((desv*1)>=value && value<(desv*2)) {
+        radius=12;
       } else if ((desv*2)>=value && value<(desv*3)) {
-        radius=13;
+        radius=14;
       } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=16;
+        radius=17;
       } else {
         radius=19;
       }
@@ -135,7 +135,7 @@
       data = '';
       className = "red";
     } else {
-      data = ((point['data'][year][normalization[compare]]>0)?('+'+Math.ceil(point['data'][year][normalization[compare]])):(Math.floor(point['data'][year][normalization[compare]])));
+      data = ((point['data'][year][normalization[compare]]>0.5)?('+'+Math.round(point['data'][year][normalization[compare]])):(Math.round(point['data'][year][normalization[compare]])));
       className = (point['data'][year][normalization[compare]]>0)?'yellow':'grey';
     }
 
@@ -189,13 +189,13 @@
           var value = Math.abs(ele['data'][year][normalization[compare]]);
 
           if ((desv*0)>=value && value<(desv*1)) {
-            radius=7;
-          } else if ((desv*1)>=value && value<(desv*2)) {
             radius=10;
+          } else if ((desv*1)>=value && value<(desv*2)) {
+            radius=12;
           } else if ((desv*2)>=value && value<(desv*3)) {
-            radius=13;
+            radius=14;
           } else if ((desv*3)>=value && value<(desv*4)) {
-            radius=16;
+            radius=17;
           } else {
             radius=19;
           }

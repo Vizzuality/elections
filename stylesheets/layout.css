@@ -113,7 +113,6 @@ div#header div.years_content .ui-slider-horizontal .ui-state-focus {cursor:move;
 div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move;}
 
 
-
 /*APPLICATION TABS*/
 div.tabs {position:absolute; left:0; right:0; top:225px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
@@ -197,6 +196,8 @@ div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial
 div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
 div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
+div.infowindow div.bottom p.info a {color:#333333;}
+div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
