@@ -105,9 +105,7 @@
         }
 
         comparewindow.hide();
-        var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-        setValue(url);
-
+        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         changeHash();
       }
     });
@@ -212,7 +210,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          setValue("/graphs/"+deep+"/"+graph_version+"/"+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         changeHash();
