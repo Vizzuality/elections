@@ -16,7 +16,16 @@ var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", 
 
 var normalization = {
   'paro': 'paro_normalizado',
-  'envejecimiento': 'envejecimiento_normalizado'
+  'envejecimiento': 'envejecimiento_normalizado',
+  'edad media': 'edad_media_normalizada',
+  'inmigracion': 'inmigracion_normalizado',
+  'saldo vegetativo': 'saldo_vegetativo_normalizado',
+  'pib': 'pib_normalizado',
+  'salario': 'salario_medio_normalizado',
+  'secundaria acabada': 'secundaria_acabada',
+  'consumo tv': 'audiencia_diaria_tv',
+  'consumo prensa': 'prensa_diaria',
+  'penetracion internet': 'lineas_adsl'
 };
 
 var custom_map_style = [{featureType:"administrative.country",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"administrative.locality",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"all",stylers:[{lightness:7},{saturation:-91}]},{featureType:"all",elementType:"all",stylers:[]}];
