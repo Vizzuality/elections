@@ -167,7 +167,8 @@
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
         $(ele).animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
           var old_url = $(this).children('img').attr('src');
-          var old_process = (old_url).substring(old_url.length-6,old_url.length-4);
+          var tm = old_url.split("/");
+          var old_process = tm[tm.length-2];
           var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
 
           $(this).children('img').attr('src',new_url);          
