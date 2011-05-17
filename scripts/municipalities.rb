@@ -34,6 +34,7 @@ FileUtils.mkdir_p(dir_path)
 # fetch API via net/http library (because of the threads we use)
 puts 
 evolution = {}
+variables_json = {}
 autonomies.each do |autonomy_hash|
   autonomy_name = autonomy_hash[:name_1].normalize
   selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
@@ -60,6 +61,7 @@ SQL
     response = http.request(request)
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+/,'')
+      variables_json[custom_variable_name] ||= []
       evolution[custom_variable_name] ||= {} 
       all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
@@ -71,6 +73,7 @@ SQL
       end
       next if year == 1974
       year ||= variable.match(/\d+/)[0].to_i
+      variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
       province_results = get_province_results(autonomy_name, year, province[:name_2], proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
@@ -103,8 +106,15 @@ SQL
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
-      fd.write("func("+json.to_json+");")
+      fd.write(json.to_json)
       fd.close        
     end
   end
 end
+
+variables_json.each do |k,v|
+  variables_json[k] = v.compact.uniq.sort
+end
+fd = File.open('../graphs/meta/municipios.json','w+')
+fd.write(variables_json.to_json)
+fd.close
