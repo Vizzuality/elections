@@ -212,7 +212,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          setValue("/json/generated_data/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          setValue("/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         changeHash();
@@ -244,7 +244,7 @@
       if (state == 'mapa') {
         refreshMap();
       } else {
-        setValue("/json/generated_data/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+        setValue("/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
 
       changeHash();
