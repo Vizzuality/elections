@@ -3,6 +3,9 @@
   var procesos_electorales;
   var animate_interval;
   var previous_year;
+  
+  var years_nodata = {}
+  
 
   function initializeHeader() {
     // Graph - Map
@@ -297,3 +300,10 @@
       changeHash();
     }
   }
+  
+  
+  
+  
+
+
+  
