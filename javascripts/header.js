@@ -34,8 +34,6 @@
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
-          // Refresh map to show last changes done in application
-          //refreshMap();
         } else {
           // Hide the legend if this is visible...
           graphLegend.hideFast();
@@ -96,12 +94,15 @@
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
         }
-          graphBubbleTooltip.hide();
+        graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
         if (state == "mapa") {
-          refreshMap();
+          if (graph_hack_year[previous_year] != graph_hack_year[ui.value]) {
+            refreshTiles();
+          }
+          refreshBubbles();
         }
 
         comparewindow.hide();
@@ -240,7 +241,10 @@
       $("div.year_slider").slider('value',new_value);
 
       if (state == 'mapa') {
-        refreshMap();
+        if (graph_hack_year[new_value-1] != graph_hack_year[new_value]) {
+          refreshTiles();
+        }
+        refreshBubbles();
       } else {
         setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
