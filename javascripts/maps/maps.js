@@ -59,10 +59,11 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
+         return "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles/"+tile.x+"/"+tile.y+"/"+zoom+"/users/123/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1?1305624750511";
+         //return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
        },
        tileSize: new google.maps.Size(256, 256),
-       opacity:0.65,
+       opacity:0.75,
        isPng: true,
        urlPattern:'/tiles/',
        minZoom: 6,
@@ -161,6 +162,7 @@
   }
 
 
+
   function refreshTiles() {
     $('div#peninsula div').each(function(i,ele){
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
@@ -182,7 +184,6 @@
       }
     });
   }
-
 
 
   function checkZoom(){
