@@ -15,7 +15,7 @@ require 'fileutils'
 
 # sanity check arguments
 ENVR         = ARGV[0]
-ELECTION_ID  = ARGV[1]
+election_id  = ARGV[1]
 
 if ENVR != 'development' && ENVR != 'production'
   puts "ruby map_tiles.rb [environment] [electoral process id (optional)]"
@@ -32,7 +32,7 @@ conn = PGconn.open(settings)
 pos = conn.exec "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
 
 # menu screen
-if ELECTION_ID == nil
+if election_id == nil
   begin
     puts "\nRTVE Tile Generator"
     puts "===================\n\n"
@@ -46,10 +46,10 @@ if ELECTION_ID == nil
     ids = pos.map { |x| x['cartodb_id'] }
 
     print "\nChoose a electoral process to render (#{ids.sort.join(", ")}) [q=quit]: "
-    ELECTION_ID = STDIN.gets.chomp
+    election_id = STDIN.gets.chomp
   
-    Process.exit if ELECTION_ID == 'q'
-    raise "invalid id" unless ids.include?(ELECTION_ID)
+    Process.exit if election_id == 'q'
+    raise "invalid id" unless ids.include?(election_id)
   rescue
     puts "\n** ERROR: please enter a correct procesos electorales id \n\n"
     retry
@@ -57,7 +57,7 @@ if ELECTION_ID == nil
 end
 
 # Create denomalised version of GADM4 table with votes, and party names
-puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
+puts "Generating map_tiles_data table for election id: #{election_id}..."
 sql = <<-EOS  
 DROP TABLE IF EXISTS map_tiles_data; 
 
@@ -82,12 +82,12 @@ WHEN pp1.name = 'PP' THEN
   WHEN (v.primer_partido_percent >= 50) AND (v.primer_partido_percent < 75)  THEN 'blue_M' 
   WHEN (v.primer_partido_percent >= 0) AND (v.primer_partido_percent < 50)  THEN 'blue_L'
   END 
-WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BNG', 'PDP', 'ERC-AM', 'ESQUERRA-AM', 'ERC', 'EA', 'HB', 'PRC', 'PR', 'UV') THEN
+WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BNG', 'PDP', 'ERC-AM', 'ESQUERRA-AM', 'ERC', 'EA', 'HB', 'PRC', 'PR', 'UV', 'EAJ-PNV/EA', 'EH') THEN
   pp1.name
 ELSE 'unknown' 
 END as color  
 FROM ine_poly AS g 
-LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni AND g.ine_prov_int = v.codineprov 
+LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{election_id}) AS v ON g.ine_muni_int=v.codinemuni AND g.ine_prov_int = v.codineprov 
 LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
 LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
 LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
@@ -117,7 +117,7 @@ tile_extents = [
 ] 
 
 base_path   = "#{Dir.pwd}/tiles"
-save_path   = "#{base_path}/#{ELECTION_ID}"
+save_path   = "#{base_path}/#{election_id}"
 tile_url    = "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles"
 hydra       = Typhoeus::Hydra.new(:max_concurrency => 200)
 time_start  = Time.now
@@ -135,7 +135,7 @@ puts "Saving tiles for map_tiles_data to #{save_path}..."
 tile_extents.each do |extent|
   (extent[:xmin]..extent[:xmax]).to_a.each do |x|
     (extent[:ymin]..extent[:ymax]).to_a.each do |y|
-      file_name = "#{x}_#{y}_#{extent[:zoom]}_#{ELECTION_ID}.png"
+      file_name = "#{x}_#{y}_#{extent[:zoom]}_#{election_id}.png"
       if File.exists? "#{save_path}/#{file_name}"
         total_tiles -= 1
       else  
