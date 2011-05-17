@@ -180,7 +180,9 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+    var name = $("div#" + selectedBubble + " span.name").html();
+
+    $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
 
@@ -556,10 +558,11 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
+      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
