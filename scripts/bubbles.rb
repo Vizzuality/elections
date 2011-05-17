@@ -186,7 +186,7 @@ zoom_levels = ARGV.map(&:to_i)
         end
 
         fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
-        fd.write("func(#{json.to_json});")
+        fd.write(json.to_json)
         fd.close
 
         progress.increment!
