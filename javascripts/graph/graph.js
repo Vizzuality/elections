@@ -517,14 +517,14 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = global_url + "graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+  var url = global_url + "/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
   createBubbles(url);
 }
 
 
 function createBubbles(url){
 
-  $.ajax({url:url, jsonpCallback:"func", success:function(data) {
+  $.ajax({url:url, dataType:"jsonp", jsonpCallback:"func", success:function(data) {
     var one = true;
     possibleValues = data;
     count = 0;
