@@ -447,9 +447,9 @@ def vars_sql_froms(socioeco_table)
 end
 
 def next_folder(path)
-  last_dir = Dir[path].map{|folder| folder.to_i}.sort.last
-  next_dir = 1
-  next_dir += 1 unless last_dir.nil?
+  last_dir = Dir.entries(path).map(&:to_i).sort.last
+p last_dir
+  next_dir = last_dir + 1
   next_dir = "#{path}#{next_dir}/"
   FileUtils.mkdir_p(next_dir)
   next_dir

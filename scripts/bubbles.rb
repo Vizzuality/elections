@@ -140,7 +140,6 @@ length = [6714, 841]
 
 counter = 0
 zoom_levels = ARGV.map(&:to_i)
-max_requests = ARGV[1].to_i if ARGV.count > 1
 
 # progress = ProgressBar.new(max_requests || length[i])
 
@@ -150,8 +149,6 @@ max_requests = ARGV[1].to_i if ARGV.count > 1
     while y <= end_y[z][i] do
       x = start_x[z][i]
       while x <= end_x[z][i] do
-
-        exit(0) if max_requests && counter >= max_requests
 
         json = {}
 
@@ -185,7 +182,7 @@ max_requests = ARGV[1].to_i if ARGV.count > 1
         end
 
         fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
-        fd.write(json.to_json)
+        fd.write("func(#{json.to_json});")
         fd.close
 
         # progress.increment!
