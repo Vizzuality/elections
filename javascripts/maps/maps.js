@@ -20,7 +20,7 @@
 
   function initializeMap() {
 
-    var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
+    var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,scrollwheel: false, minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
     var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']},draggable:false};
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
@@ -120,12 +120,12 @@
     });
 
     /*zoom slider*/
-		$("span.slider").slider({orientation: "vertical",range: "min",min: 6,max: 11,value: 6,step: 1,
+		$("span.slider").slider({orientation: "vertical",range: "min",min: 6,max: 10,value: 6,step: 1,
 			stop: function( event, ui ) {
         if (ui.value==10) {
-          peninsula.setZoom(11);
-        } else if (ui.value==11) {
           peninsula.setZoom(12);
+        } else if (ui.value==9) {
+          peninsula.setZoom(11);
         } else {
           peninsula.setZoom(ui.value);
         }
@@ -193,14 +193,14 @@
     //Jump hack
     if (peninsula.getZoom()==10 && previous_zoom<peninsula.getZoom()) {
       peninsula.setZoom(11);
-      $("span.slider").slider({value: 10});
-    } else if (peninsula.getZoom()==10 && previous_zoom>peninsula.getZoom()) {
-      peninsula.setZoom(9);
       $("span.slider").slider({value: 9});
+    } else if (peninsula.getZoom()==10 && previous_zoom>peninsula.getZoom()) {
+      peninsula.setZoom(8);
+      $("span.slider").slider({value: 8});
     } else if (peninsula.getZoom()==12) {
-      $("span.slider").slider({value: 11});
-    } else if (peninsula.getZoom()==11) {
       $("span.slider").slider({value: 10});
+    } else if (peninsula.getZoom()==11) {
+      $("span.slider").slider({value: 9});
     } else {
       $("span.slider").slider({value: peninsula.getZoom()});
     }
