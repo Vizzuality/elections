@@ -43,19 +43,9 @@ THIRD_PARTY_COLORS = {
   "PR" => ["#CE0E16", "#008140"],
   "UV" => ["#EC7B37", "#EABA4B"]
 }
-#####
 
-# Paths
-# =====
-# Autonomies:
-#  - json/generated_data/autonomies_<var_name>.json
-# Provinces:
-#  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
-#    example: json/generated_data/provinces/Andalucia_paro_1999.json
-# Municipalities:
-#  - json/generated_data/municipalities/<province_name>_<var_name>.json
-#    example: json/generated_data/provinces/Sevilla_paro_1999.json
-###
+# Versions
+$graphs_next_version = "v1"
 
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
@@ -106,9 +96,9 @@ def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
   var = row[variable].to_f
   if var > 0
-    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
+    return ("%.2f" % ((var * 200.0) / max.to_f)).to_f
   else
-    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
+    return ("%.2f" % ((var * -200.0) / min.to_f)).to_f
   end
 end
 
@@ -117,8 +107,8 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
   if known_parties.keys.include?(row[:primer_partido_id])
-    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
-    x_coordinate += 100.0
+    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    x_coordinate += 50.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
   else
@@ -174,23 +164,19 @@ def get_known_parties(parties)
 end
 
 def autonomies_path(variable)
-  "json/generated_data/autonomias/#{variable}.json"
+  "graphs/autonomias/#{$graphs_next_version}/#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
-  "json/generated_data/provincias/#{autonomy_name}_#{variable}.json"
+  "graphs/provincias/#{$graphs_next_version}/#{autonomy_name}_#{variable}.json"
 end
 
 def municipalities_path(province_name, variable)
-  "json/generated_data/municipios/#{province_name}_#{variable}.json"
-end
-
-def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{file_name.normalize}.json"
+  "graphs/municipios/#{$graphs_next_version}/#{province_name}_#{variable}.json"
 end
 
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
-  file_path = "../json/generated_data/autonomias/paro_normalizado_#{year}.json"
+  file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
     json = JSON.parse(File.read(file_path))[autonomy_name]
     return {
@@ -225,7 +211,7 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
 end
 
 def get_province_results(autonomy_name, year, raw_province_name, proceso_electoral_id)
-  file_path = "../json/generated_data/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
+  file_path = "../graphs/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
   if File.file?(file_path)
     json = JSON.parse(File.read(file_path))[raw_province_name.normalize]
     return {
@@ -357,7 +343,7 @@ rescue
   return {}
 end
 
-def create_years_hash(records, variables, max_year, min_year)
+def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   years = {}
 
@@ -366,8 +352,8 @@ def create_years_hash(records, variables, max_year, min_year)
 
     variables.each do |variable|
       data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
-      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
-      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
+      data["#{variable.codigo}_max".to_sym] = max_min_vars["#{variable.codigo}_#{year}_max".to_sym]
+      data["#{variable.codigo}_min".to_sym] = max_min_vars["#{variable.codigo}_#{year}_min".to_sym]
     end
 
     records.each do |row|
@@ -419,24 +405,29 @@ def vars_sql_select(socioeco_table)
     variable.min_year.upto(variable.max_year) do |year|
       select << "#{variable.codigo}_#{year}"
     end
-    select << "#{variable.codigo}_min_max.*"
 
   end
 
   select.join(', ')
 end
 
-def vars_sql_froms(socioeco_table)
-  variables = *variables_vars.first
+def max_min_vars_query(zoom_level)
+
   tables = {
     1 => 'vars_socioeco_x_autonomia',
     2 => 'vars_socioeco_x_provincia',
-    4 => 'vars_socioeco_x_municipio'
+    4 => 'vars_socioeco_x_municipio',
+    6 => 'vars_socioeco_x_autonomia',
+    7 => 'vars_socioeco_x_provincia',
+    11 => 'vars_socioeco_x_municipio'
   }
 
+  variables = *variables_vars.first
+
+  selects = []
   froms = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == socioeco_table
+    next unless tables[variable.max_gadm.to_i] == tables[zoom_level]
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
@@ -446,19 +437,25 @@ def vars_sql_froms(socioeco_table)
       SQL
     end
 
+    selects << <<-SQL
+      #{variable.codigo}_min_max.*
+    SQL
+
     froms << <<-SQL
       (SELECT
         #{fields.join(', ')}
-      FROM #{socioeco_table}) AS #{variable.codigo}_min_max
+      FROM #{tables[zoom_level]}) AS #{variable.codigo}_min_max
     SQL
   end
 
-  "#{froms.join(', ')},"
+  <<-SQL
+    SELECT #{selects.join(', ')}
+    FROM #{froms.join(', ')}
+  SQL
 end
 
 def next_folder(path)
   last_dir = Dir.entries(path).map(&:to_i).sort.last
-p last_dir
   next_dir = last_dir + 1
   next_dir = "#{path}#{next_dir}/"
   FileUtils.mkdir_p(next_dir)
