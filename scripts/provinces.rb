@@ -21,15 +21,14 @@ where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_
 SQL
 votes_per_province = cartodb.query(query)[:rows]
 
-base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../json/generated_data")
 
 ### PROVINCES
 #############
 puts
-dir_path = "#{base_path}/../json/generated_data/provincias"
-evolution = {}
+base_path = FileUtils.pwd
+dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
 FileUtils.mkdir_p(dir_path)
+evolution = {}
 variables.each do |variable|
   year = nil
   puts
@@ -83,7 +82,7 @@ variables.each do |variable|
       json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open('../' + provinces_path(autonomy_name,variable),'w+')
-    fd.write(json.to_json)
+    fd.write("func("+json.to_json+");")
     fd.close        
   end
 end
