@@ -361,7 +361,7 @@ def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
     records.each do |row|
 
-      if row.proceso_electoral_year <= year
+      if row.proceso_electoral_year && row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
         data[:primer_partido_percent]  = row.primer_partido_percent
@@ -392,8 +392,9 @@ def variables_vars
   [variables, variables_hash, max_year, min_year]
 end
 
-def vars_sql_select(socioeco_table)
+def vars_sql_select(gadm_level)
   variables = *variables_vars.first
+
   tables = {
     1 => 'vars_socioeco_x_autonomia',
     2 => 'vars_socioeco_x_provincia',
@@ -402,11 +403,15 @@ def vars_sql_select(socioeco_table)
 
   select = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    next if variable.min_gadm.to_i > gadm_level
+    next unless variable.max_gadm.to_i  >= gadm_level
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
-      select << "#{variable.codigo}_#{year}"
+      select << <<-SQL
+        #{variable.codigo}_#{year}
+      SQL
     end
 
   end
@@ -415,6 +420,12 @@ def vars_sql_select(socioeco_table)
 end
 
 def max_min_vars_query(zoom_level)
+
+  gadm_levels_for_zoom_leves = {
+    6 => 1,
+    7 => 2,
+    11 => 4
+  }
 
   tables = {
     1 => 'vars_socioeco_x_autonomia',
@@ -430,7 +441,8 @@ def max_min_vars_query(zoom_level)
   selects = []
   froms = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == tables[zoom_level]
+    next if variable.min_gadm.to_i > gadm_levels_for_zoom_leves[zoom_level]
+    next unless variable.max_gadm.to_i  >= gadm_levels_for_zoom_leves[zoom_level]
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
