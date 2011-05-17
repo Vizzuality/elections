@@ -131,7 +131,6 @@ function initializeGraph() {
 
   function updateInfoText() {
     var comparison_variable = normalization[compare];
-    console.log(comparison_variable);
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong> " + info_text["after_" + sign];
@@ -251,7 +250,7 @@ function initializeGraph() {
           if (year - 1975 == i - 1 ) {
             find = true;
             find_year = count;
-            selected_value = parseFloat(data[i])
+            selected_value = parseFloat(data[i - 1])
           }
         }
         if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
@@ -597,13 +596,13 @@ function createBubbles(url){
 failCircle = (function() {
   var data_not_found;
 
-  $("#fail_circle a.why").live("click", function(ev) {
+  $("#graph_fail_circle a.why").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     explanationwindow.show();
   });
 
-  $("#fail_circle a.next").live("click", function(ev) {
+  $("#graph_fail_circle a.next").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     goToNextYear();
@@ -611,12 +610,12 @@ failCircle = (function() {
 
   function showError() {
     if (data_not_found != true) {
-      $('#fail_background, #fail_circle').fadeIn("slow", function() { data_not_found = true; });
+      $('#graph_fail_background, #graph_fail_circle').fadeIn("slow", function() { data_not_found = true; });
     }
   }
 
   function hideError() {
-    $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+    $('#graph_fail_background, #graph_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
   }
 
   function goToNextYear() {
@@ -700,7 +699,7 @@ function goDeeper(url){
   var length = url_split[url_split.length-1].split(compare)[0].length;
 
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
-  console.log("name", name);
+  //console.log("name", name);
 
   graphLegend.hideError();
 
