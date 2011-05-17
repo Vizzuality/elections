@@ -711,7 +711,7 @@ function addNewBubble(region) {
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
 
-    if (selected !== undefined) {
+    if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
     }
     selectedBubble = region;
