@@ -4,7 +4,8 @@
   var state           = "mapa";
   var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
   var tiles_version   = 0;
-  var bubbles_version = 0;
+  var bubbles_version = 3;
+  var gmaps_version   = 1;
   var graph_version   = 0;
   
 
