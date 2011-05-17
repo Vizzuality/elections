@@ -185,9 +185,10 @@
           drawPartyBar(data_id, 3);
 
           // Other political party
-          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent));
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
           var data = valuesHash[data_id].evolution.split(",");
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
