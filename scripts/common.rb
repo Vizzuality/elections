@@ -353,6 +353,8 @@ SQL
     end
   end
   result
+rescue
+  return {}
 end
 
 def create_years_hash(records, variables, max_year, min_year)
