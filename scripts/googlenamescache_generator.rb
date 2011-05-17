@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + "/common"
 cartodb                                       = get_cartodb_connection
 processes                                     = get_processes
 variables, variables_hash, max_year, min_year = *variables_vars
+json_folder                                   = next_folder('../json/generated_data/google_names_cache/')
 
 def municipalities_data_sql
   <<-SQL
@@ -26,9 +27,7 @@ def municipalities_data_sql
     center_longitude,
     center_latitude,
     #{vars_sql_select('vars_socioeco_x_municipio')}
-   FROM
-    #{vars_sql_froms('vars_socioeco_x_municipio')}
-    ine_poly AS i
+   FROM ine_poly AS i
    INNER JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
    INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
    INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
@@ -37,10 +36,6 @@ def municipalities_data_sql
    INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
   SQL
 end
-
-base_path = FileUtils.pwd
-FileUtils.rm_rf("#{base_path}/../json/generated_data/google_names_cache")
-FileUtils.mkdir_p("#{base_path}/../json/generated_data/google_names_cache")
 
 ## MUNICIPALITIES GOOGLE NAMES CACHE GENERATOR
 ##############################################
@@ -55,6 +50,8 @@ reading = Thread.new do
     print '.'
   end
 end
+
+max_min_vars = cartodb.query(max_min_vars_query(11)).rows.first
 
 municipalities_data = {}
 
@@ -81,10 +78,10 @@ municipalities_data.each do |google_maps_name, records|
     :variables => variables_hash
   }
   json[:provincia] = records.first.provincia
-  json[:data] = create_years_hash(records, variables, max_year, min_year)
+  json[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
-  fd = File.open(google_cache_path(google_maps_name),'w+')
-  fd.write("func(#{json.to_json});")
+  fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
+  fd.write(json.to_json)
   fd.close
 
 end

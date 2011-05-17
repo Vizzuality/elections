@@ -57,8 +57,7 @@
       // Call service
       $.ajax({
         method: "GET",
-        dataType: 'jsonp',
-        jsonpCallback: 'func',
+        dataType: 'json',
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
           // Normalize latlng of the tile to transform it to point(x,y)
