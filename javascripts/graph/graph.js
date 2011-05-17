@@ -44,7 +44,7 @@ function initializeGraph() {
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().attr('id');
+      var text = $(this).parent().find('span.name').html();
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -246,9 +246,9 @@ function initializeGraph() {
 
     $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#graph_infowindow div.chart img').show();
+    $('div#graph_infowindow div.chart img').show();
 
-      showInfowindow(left,top);
+    showInfowindow(left,top);
   }
 
   function bindEvents() {
