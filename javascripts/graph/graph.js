@@ -719,7 +719,7 @@ function destroyBubble(b, url){
 }
 
 function addNewBubble(region) {
-  region = region.replace(/ /g,'_');
+  region = region.toLowerCase().replace(/ñ/,'n').replace(/ /g,'_');
 
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
