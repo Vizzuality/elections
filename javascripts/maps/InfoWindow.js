@@ -98,8 +98,10 @@
 
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
+    	
+    	console.log(info);
 
-    	if (info.name != undefined || info['data'][year]!=undefined) {
+    	if (info.name != undefined || info['data'][year]!=undefined || info['data'][year][normalization[compare]]!=null) {
     	  //Set dimensions and bkg first
     	  this.offsetVertical_ = -276;
         this.offsetHorizontal_ = -127;
@@ -107,10 +109,9 @@
         this.width_ = 254;
         $('div#infowindow').css({background:'url("/images/infowindow.png") no-repeat 0 0'});
       } else {
-        //dimensions: 254 x 269  ||  offset: 127 x 256
-        this.offsetVertical_ = -276;
+        this.offsetVertical_ = -256;
         this.offsetHorizontal_ = -127;
-        this.height_ = 289;
+        this.height_ = 269;
         this.width_ = 254;
         $('div#infowindow').css({background:'url("/images/infowindow_error_bkg.png") no-repeat 0 0'});
       }

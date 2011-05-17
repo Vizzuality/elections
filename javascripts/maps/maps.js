@@ -59,10 +59,7 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         
          return "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles/"+tile.x+"/"+tile.y+"/"+zoom+"/users/123/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1?1305624750511";
-         
-         
          //return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
        },
        tileSize: new google.maps.Size(256, 256),
