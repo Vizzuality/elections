@@ -610,14 +610,12 @@
 
       function showError() {
         if (data_not_found != true) {
-          $('#fail_circle').fadeIn("slow", function() { data_not_found = true; });
-          $('#fail_background').fadeIn("slow");
+          $('#fail_background, #fail_circle').fadeIn("slow", function() { data_not_found = true; });
         }
       }
 
       function hideError() {
-        $('#fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
-        $('#fail_background').fadeOut("slow");
+        $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
       }
 
       return {
