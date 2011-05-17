@@ -642,12 +642,12 @@
     }
 
     //Function for update the values of the bubbles that are being visualized
-    function updateBubble (bubble,x,y,val,colors,party){
-      var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
+    function updateBubble (id,x,y,val,colors,party){
+      var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
       var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
       var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
-      $(bubble).animate({
+      $(id).animate({
         left: x.toString() + "px",
         top: y.toString() + "px",
         opacity: 1
@@ -655,7 +655,7 @@
         //console.log("ukelele");
       });
 
-      $(bubble).find('.outerBubble').animate({
+      $(id).find('.outerBubble').animate({
         height: val.toString() + "px",
         width: val.toString() + "px",
         top: offset.toString() + "px",
@@ -663,14 +663,14 @@
       }, 1000);
 
 
-      $(bubble).find('.innerBubble').animate({
+      $(id).find('.innerBubble').animate({
         height: (val-10).toString() + "px",
         width: (val-10).toString() + "px",
         top: (offset + 5).toString() + "px",
         left: (offset + 5).toString() + "px",
         backgroundColor: backgroundColor
       }, 1000);
-      $(bubble).find('.innerBubble').addClass(normalizePartyName(party));
+      $(id).find('.innerBubble').addClass(normalizePartyName(party));
     }
 
 
