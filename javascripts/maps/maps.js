@@ -173,6 +173,7 @@
         new_image.css('position','absolute');
         new_image.css('top',0);
         new_image.css('left',0);
+        new_image.css('display',"hidden");
 
         $(ele).prepend(new_image);        
 
@@ -184,7 +185,8 @@
         new_image.attr('src',new_url);          
 
         // when it loads the new image, fade out the old one
-        new_image.one("load",function(){          
+        new_image.one("load",function(){
+          new_image.animate({opacity:100},{ duration: 500, queue: false});          
           old_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
               old_image.remove();
             }
