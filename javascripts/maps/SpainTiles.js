@@ -139,8 +139,10 @@
         radius=23 * (actual_zoom==12?1.5:1);
       } else if ((desv*3)>=value && value<(desv*4)) {
         radius=28 * (actual_zoom==12?1.5:1);
-      } else {
+      } else if ((desv*4)>=value && value<(desv*5)) {
         radius=32 * (actual_zoom==12?1.5:1);
+      } else {
+        radius = 13;
       }
     } else {
       radius = 12;
@@ -213,8 +215,10 @@
             radius=23 * (actual_zoom==12?1.5:1);
           } else if ((desv*3)>=value && value<(desv*4)) {
             radius=28 * (actual_zoom==12?1.5:1);
-          } else {
+          } else if ((desv*4)>=value && value<(desv*5)) {
             radius=32 * (actual_zoom==12?1.5:1);
+          } else {
+            radius = 13;
           }
         } else {
           radius = 12;
