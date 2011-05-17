@@ -169,12 +169,16 @@
         // duplicate tile and add to div below current tile
         var old_image = $(ele).children('img');
         var new_image = old_image.clone();
+        new_image.css('display',"hidden");
         new_image.css('z-index', old_image.css('z-index') - 1);                
         new_image.css('position','absolute');
+        new_image.css('opacity','0');
         new_image.css('top',0);
         new_image.css('left',0);
-        new_image.css('display',"hidden");
 
+        // new_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+        // old_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+        
         $(ele).prepend(new_image);        
 
         // update new tile with new url
@@ -187,7 +191,7 @@
         // when it loads the new image, fade out the old one
         new_image.one("load",function(){
 
-          old_image.animate({opacity:0},{ duration: 400, queue: true ,complete: function() {
+          old_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
               old_image.remove();
             }
           });
