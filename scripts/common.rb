@@ -178,7 +178,7 @@ end
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
   file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
-    json = JSON.parse(File.read(file_path)[5..-3])[autonomy_name]
+    json = JSON.parse(File.read(file_path))[autonomy_name]
     return {
       :partido_1 => json["partido_1"],
       :partido_2 => json["partido_2"],
