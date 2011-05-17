@@ -155,7 +155,37 @@ var textInfoWindow = {
 
 var explanationContent = {
   "Edad Media" : {
-    htmlContent: "<h1>Edad Media de la Población</h1><p>La edad  media de la población española se ha calculado en base a los datos de población inlcuidos en el censo nacional y publicados en la página web del INE.</p><p>Para calcular la edad media hemos multiplicado el valor medio de cada quinquenio por el número de personas situadas en ese rango, para después, volver a dividir entre el total.</p>"
+    htmlContent: "<h1>Edad media de la población</h1><p class='rango'>Datos disponibles a nivel de municipio entre X y Y</p><p>Cálculo de la edad media de la población a partir de los grupos quinquenales de distribución de edad del Instituto Nacional de Estadística, considerando el valor medio para cada tramo.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Envejecimiento" : {
+    htmlContent: "<h1>Envejecimiento de la población</h1><p class='rango'>Datos disponibles a nivel provincial entre X y Y</p><p>Proporción existente entre el número de personas mayores y el de niños para una población determinada. Se calcula como el número de adultos mayores de 65 años por cada 100 niños menores de 15.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=57'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Porcentaje de inmigración" : {
+    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre X y Y</p><p>X.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245%2F&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Saldo vegetativo" : {
+    htmlContent: "<h1>Saldo vegetativo</h1><p class='rango'>Datos disponibles a nivel de provincia entre X y Y</p><p>Indicador demográfico básico que expresa el crecimiento natural de una población, calculado como el número de nacimientos menos el de defunciones por cada mil habitantes.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=51'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Tasa de paro" : {
+    htmlContent: "<h1>Tasa de paro</h1><p class='rango'>Datos disponibles a nivel de municipio entre X y Y</p><p>Paro registrado como porcentaje sobre la población total. Se muestra solamente para poblaciones superiores a 1000 habitantes.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.anuarieco.lacaixa.comunicacions.com/java/X?cgi=caixa.le_DEM.pattern&CLEAR=YES'>el Anuario Económico de España 2011 de La Caixa</a></p>"
+  },
+  "PIB per cápita" : {
+    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre X y Y</p><p>Producto Interior Bruto a precios de mercado. Los valores correspondientes a los años 2007-2010 son estimaciones.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Salario medio" : {
+    htmlContent: "<h1>Salario medio</h1><p class='rango'>Datos disponibles a nivel de comunidad entre X y Y</p><p>Salario medio calculado mediante la división de la remuneración total de los asalariados entre el número total de asalariados.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Estudios acabados" : {
+    htmlContent: "<h1>Estudios acabados</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre X y Y</p><p>Porcentaje de la población con la educación secundaria terminada.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.educacion.gob.es/mecd/jsp/plantilla.jsp?id=3131&area=estadisticas'>la web del Ministerio de Educación y Ciencia</a></p>"
+  },
+  "Consumo de TV" : {
+    htmlContent: "<h1>Consumo de televisión</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre X y Y</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40044.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Consumo de prensa" : {
+    htmlContent: "<h1>Consumo de prensa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre X y Y</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40022.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+  },
+  "Penetración de internet" : {
+    htmlContent: "<h1>Penetración de internet</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre X y Y</p><p>Indicador de la penetración de Internet en la población española.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.aimc.es/-Audiencia-de-Internet-en-el-EGM-.html'>el Estudio General de Medios de la AIMC de Octubre / Noviembre de 2010.</a></p>"
   }
 };
 

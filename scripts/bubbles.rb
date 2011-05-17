@@ -177,8 +177,7 @@ zoom_levels = ARGV.map(&:to_i)
             :id => id,
             :name => records.first.name,
             :center_longitude => records.first.center_longitude,
-            :center_latitude => records.first.center_latitude,
-            :variables => variables_hash
+            :center_latitude => records.first.center_latitude
           }
           data[:provincia] = records.first.provincia if records.first[:provincia]
           data[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
