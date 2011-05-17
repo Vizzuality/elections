@@ -145,8 +145,12 @@
           comparewindow.hide();
           var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
-           // Let's decide if we must update (setValue) or create the bubbles
-          (createdBubbles == true) ? setValue(url) : createBubbles(url);
+          // Let's decide if we must update (setValue) or create the bubbles
+          if (createdBubbles == true) {
+            setValue(url);
+          } else {
+            createBubbles(url);
+          }
           changeHash();
         }
       }
