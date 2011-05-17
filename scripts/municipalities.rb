@@ -9,6 +9,10 @@ provinces      = get_provinces
 variables      = get_variables(4)
 parties        = get_parties
 parties_known  = get_known_parties(parties)
+puts "Starting evolution...."
+evolution      = get_variables_evolution_in_municipalities
+puts "Finishing..."
+debugger
 province_results = get_province_results
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
@@ -34,7 +38,6 @@ FileUtils.mkdir_p(dir_path)
 # Get OAuth token from cartodb client, because we are goint to
 # fetch API via net/http library (because of the threads we use)
 puts 
-evolution = {}
 variables_json = {}
 autonomies.each do |autonomy_hash|
   autonomy_name = autonomy_hash[:name_1].normalize
@@ -58,12 +61,6 @@ SQL
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+/,'')
       variables_json[custom_variable_name] ||= []
-      evolution[custom_variable_name] ||= {} 
-      all_evolutions = {}
-      begin
-        all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
-      rescue
-      end
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
         year = variable.match(/\d+/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
@@ -81,9 +78,7 @@ SQL
       max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
       votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
         municipality.symbolize_keys!
-        putc '.'
         municipality_name = municipality[:nombre].normalize
-        evolution[custom_variable_name][municipality[:nombre]] ||= (all_evolutions[municipality[:nombre]] rescue [])
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:name] = municipality[:nombre]
@@ -104,6 +99,7 @@ SQL
         json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_i]
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
+      putc '.'
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
       fd.write(json.to_json)
       fd.close        

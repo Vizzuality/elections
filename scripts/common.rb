@@ -332,6 +332,38 @@ SQL
   end
 end
 
+def get_variables_evolution_in_municipalities
+  result = {}
+  raw_variables = []
+  $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4")[:rows].each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      raw_variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  variables = raw_variables.map{ |v| v.gsub(/_\d+$/,'') }.compact.uniq
+
+  $cartodb.query("select id_2 from #{PROVINCES_TABLE}")[:rows].each do |row|
+    next if row[:id_2].blank?
+    query = <<-SQL
+    select #{raw_variables.join(',')}, ine_poly.nombre as name
+    from  vars_socioeco_x_municipio, ine_poly, gadm2
+    where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{row[:id_2]}
+SQL
+    $cartodb.query(query)[:rows].each do |m|
+      variables.each do |variable|
+        result[variable] ||= {}
+        result[variable][m[:name]] ||= []
+        1975.upto(2011) do |year|
+          temp_variable = "#{variable}_#{year}".to_sym
+          result[variable][m[:name]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
+        end
+      end
+    end
+    putc '.'
+  end
+  result
+end
+
 def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   years = {}
