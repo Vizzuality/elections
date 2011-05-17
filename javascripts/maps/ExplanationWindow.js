@@ -16,9 +16,25 @@
         '<h3>¿DE DÓNDE SALEN LOS DATOS?</h3>'+
         '<h4>Datos demográficos</h4>'+
         '<ul>'+
-          '<li class="selected"><a href="#Inmigración">Edad Media</a></li>'+
-          '<li><a href="#Inmigración">Other</a></li>'+          
+          '<li class="selected"><a href="#Edad Media">Edad Media</a></li>'+
+          '<li><a href="#Envejecimiento">Envejecimiento</a></li>'+
+          '<li><a href="#Inmigración">Porcentaje de inmigración</a></li>'+
+          '<li><a href="#Inmigración">Saldo vegetativo</a></li>'+
         '</ul>'+
+        '<h4>Datos económicos</h4>'+
+        '<ul>'+
+          '<li><a href="#Inmigración">Tasa de paro</a></li>'+
+          '<li><a href="#Inmigración">PIB per cápita</a></li>'+
+          '<li><a href="#Inmigración">Salario medio</a></li>'+
+        '</ul>'+
+        '<h4>Datos sociológicos</h4>'+
+        '<ul>'+
+          '<li><a href="#Inmigración">Estudios acabados</a></li>'+
+          '<li><a href="#Inmigración">Consumo de TV</a></li>'+
+          '<li><a href="#Inmigración">Consumo de prensa</a></li>'+
+          '<li><a href="#Inmigración">Penetración de internet</a></li>'+
+        '</ul>'+
+
       '</div>'+
       '<div class="explain"></div>';
 
