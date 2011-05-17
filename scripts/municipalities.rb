@@ -12,7 +12,6 @@ parties_known  = get_known_parties(parties)
 puts "Starting evolution...."
 evolution      = get_variables_evolution_in_municipalities
 puts "Finishing..."
-debugger
 province_results = get_province_results
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
@@ -58,52 +57,56 @@ SQL
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query)}&#{oauth_token}")
     response = http.request(request)
+    threads = []
     variables.each do |variable|
-      custom_variable_name = variable.gsub(/_\d+/,'')
-      variables_json[custom_variable_name] ||= []
-      unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-        year = variable.match(/\d+/)[0].to_i
-        while proceso_electoral_id.nil? && year > 1975
-          year -= 1
-          proceso_electoral_id = processes[year]
+      threads << Thread.new(variable) do |variable|
+        custom_variable_name = variable.gsub(/_\d+/,'')
+        variables_json[custom_variable_name] ||= []
+        unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
+          year = variable.match(/\d+/)[0].to_i
+          while proceso_electoral_id.nil? && year > 1975
+            year -= 1
+            proceso_electoral_id = processes[year]
+          end
         end
+        next if year == 1974
+        year ||= variable.match(/\d+/)[0].to_i
+        variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
+        json = {}
+        votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
+        max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
+        min_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.min
+        max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
+        votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
+          municipality.symbolize_keys!
+          municipality_name = municipality[:nombre].normalize
+          json[municipality_name] ||= {}
+          json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
+          json[municipality_name][:name] = municipality[:nombre]
+          json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
+          json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y, min_y)
+          json[municipality_name][:radius]       = get_radius(municipality)
+          json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
+          json[municipality_name][:children_json_url] = nil
+          json[municipality_name][:censo_total]  = municipality[:censo_total]
+          json[municipality_name][:porcentaje_participacion] = ("%.2f" % (municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0)).to_f
+          json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],  municipality[:primer_partido_percent].to_f]
+          json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent].to_f]
+          json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
+          json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
+          json[municipality_name][:info] = ""
+          json[municipality_name][:parent] = [autonomy_name,province_name]
+          json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
+          json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_i]
+          json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
+        end
+        putc '.'
+        fd = File.open('../' + municipalities_path(province_name,variable),'w+')
+        fd.write(json.to_json)
+        fd.close        
       end
-      next if year == 1974
-      year ||= variable.match(/\d+/)[0].to_i
-      variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
-      json = {}
-      votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
-      max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
-      min_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.min
-      max_x = votes_per_municipality.map{|h| h["primer_partido_percent"].to_f - h["segundo_partido_percent"].to_f }.compact.max
-      votes_per_municipality.sort{ |b,a| a["censo_total"].to_i <=> b["censo_total"].to_i}.each do |municipality|
-        municipality.symbolize_keys!
-        municipality_name = municipality[:nombre].normalize
-        json[municipality_name] ||= {}
-        json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
-        json[municipality_name][:name] = municipality[:nombre]
-        json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
-        json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y, min_y)
-        json[municipality_name][:radius]       = get_radius(municipality)
-        json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
-        json[municipality_name][:children_json_url] = nil
-        json[municipality_name][:censo_total]  = municipality[:censo_total]
-        json[municipality_name][:porcentaje_participacion] = ("%.2f" % (municipality[:votantes_totales].to_f / municipality[:censo_total].to_f * 100.0)).to_f
-        json[municipality_name][:partido_1] = [parties[municipality[:primer_partido_id]],  municipality[:primer_partido_percent].to_f]
-        json[municipality_name][:partido_2] = [parties[municipality[:segundo_partido_id]], municipality[:segundo_partido_percent].to_f]
-        json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
-        json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
-        json[municipality_name][:info] = ""
-        json[municipality_name][:parent] = [autonomy_name,province_name]
-        json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
-        json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_i]
-        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
-      end
-      putc '.'
-      fd = File.open('../' + municipalities_path(province_name,variable),'w+')
-      fd.write(json.to_json)
-      fd.close        
     end
+    threads.each{ |t| t.join }
   end
 end
 
