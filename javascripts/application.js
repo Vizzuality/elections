@@ -74,11 +74,11 @@
     }
 
     function goToNextYear() {
-      var next_available_year = getNextAvailableYear();
-      year = next_available_year;
-      $("div.year_slider").slider('value', year);
-      changeHash();
-      setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+      // var next_available_year = getNextAvailableYear();
+      // year = next_available_year;
+      // $("div.year_slider").slider('value', year);
+      // changeHash();
+      // setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
     function hasFailed() {

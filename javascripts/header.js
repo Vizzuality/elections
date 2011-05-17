@@ -153,9 +153,15 @@
             refreshTiles();
           }
           if (ui.value!=previous_year) {
+            if (!checkFailYear(ui.value)) {
+              failCircle.show();
+            } else {
+              failCircle.hide();
+            }
             refreshBubbles();
           }
         }
+        
 
         if (ui.value!=previous_year) {
           comparewindow.hide();
@@ -375,6 +381,32 @@
         $('span.slider_no_data_right').hide();
       }
     }
+    
+    if (!checkFailYear(year)) {
+      failCircle.show();
+    } else {
+      failCircle.hide();
+    }
+  }
+  
+  
+  function checkFailYear(year) {
+    var deep;
+    var zoom = peninsula.getZoom();
+    if (zoom==6) {
+      deep = "autonomias";
+    } else if (zoom>6 && zoom<11) {
+      deep = "provincias";
+    } else {
+      deep = "municipios";
+    }
+    if (years_nodata[deep][normalization[compare]]!=undefined) {
+      var length_array = years_nodata[deep][normalization[compare]].length;
+      return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
+    } else {
+      return false;
+    }
+    
   }
   
   
