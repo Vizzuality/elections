@@ -62,10 +62,17 @@ versions      = Dir["#{base_path}/*/"]
 v_dir         = versions.map{|x| x.split("/").last}
 v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
 version_path  = "#{base_path}/#{v_next}" 
+all_time_start  = Time.now
+total_tile_count = 0
 
+# spinner
+cr = "\r"           
+clear = "\e[0K"     
+reset = cr + clear
 
 # render each one entered
 election_ids = election_id.split(",")
+
 
 election_ids.each do |election_id|
   # Create denomalised version of GADM4 table with votes, and party names
@@ -153,11 +160,13 @@ election_ids.each do |election_id|
           file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1"
           tile_request = Typhoeus::Request.new(file_url)
           tile_request.on_complete do |response|
-            start_tiles += 1          
+            start_tiles += 1
+            total_tile_count += 1          
             File.open("#{save_path}/#{file_name}", "w+") do|f|
               f.write response.body
               #puts file_url
-              puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
+              print "#{reset}#{start_tiles}/#{total_tiles}"
+              $stdout.flush
             end          
           end
           hydra.queue tile_request  
@@ -169,5 +178,9 @@ election_ids.each do |election_id|
   hydra.run
   time_end = Time.now
   secs = time_end - time_start
-  puts "Total time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tiles/secs)} tiles per second."
-end  
+  puts "\nTotal time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tiles/secs)} tiles per second."
+end
+
+all_time_end = Time.now  
+secs = all_time_end - all_time_start
+puts "Overall time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tiles/secs)} tiles per second."
