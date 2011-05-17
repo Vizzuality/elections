@@ -97,4 +97,5 @@ PLATFORMS
 
 DEPENDENCIES
   cartodb-rb-client!
+  libxml-ruby
   progress_bar
