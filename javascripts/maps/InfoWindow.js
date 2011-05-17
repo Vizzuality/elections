@@ -43,7 +43,7 @@
             '</div>'+
           '</div>'+
           '<div class="bottom">'+
-            '<p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
+            '<p class="info">La region tiene <strong></strong> de la media en España.</p>'+
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
             '</div>'+
@@ -99,7 +99,6 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
     	
-    	console.log(info);
 
     	if (info.name != undefined || info['data'][year]!=undefined || info['data'][year][normalization[compare]]!=undefined) {
     	  //Set dimensions and bkg first
@@ -195,9 +194,9 @@
       paro = paro.substring(0, paro.length-1);
       
       $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-      $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+      $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,5,5,5');
       $('div#infowindow div.chart img').show();
-      
+      $('div#infowindow p.info strong').text(info['data'][year][normalization[compare]]);
       
 
 
