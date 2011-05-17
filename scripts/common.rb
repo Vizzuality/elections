@@ -211,6 +211,10 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
 end
 
 def get_province_results
+  file_path = "../graphs/municipios/#{$graphs_next_version}/get_province_results.json"
+  if File.file?(file_path)
+    return JSON.parse(File.read(file_path))
+  end
   results = {}
   query = <<-SQL
   select #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, gadm2.name_2,
@@ -229,6 +233,9 @@ SQL
       :otros     => ["Otros",                           row[:resto_partido_percent]  ]
     }
   end
+  fd = File.open(file_path,'w+')
+  fd.write(results.to_json)
+  fd.close
   results
 end
 
@@ -333,6 +340,10 @@ SQL
 end
 
 def get_variables_evolution_in_municipalities
+  file_path = "../graphs/municipios/#{$graphs_next_version}/variables_evolution_in_municipalities.json"
+  if File.file?(file_path)
+    return JSON.parse(File.read(file_path))
+  end
   result = {}
   raw_variables = []
   $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4")[:rows].each do |raw_variable_hash|
@@ -361,6 +372,9 @@ SQL
     end
     putc '.'
   end
+  fd = File.open(file_path,'w+')
+  fd.write(result.to_json)
+  fd.close
   result
 end
 
