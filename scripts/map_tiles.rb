@@ -165,7 +165,7 @@ election_ids.each do |election_id|
             File.open("#{save_path}/#{file_name}", "w+") do|f|
               f.write response.body
               #puts file_url
-              print "#{reset}#{start_tiles}/#{total_tiles}"
+              print "#{reset}#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
               $stdout.flush
             end          
           end
