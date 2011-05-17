@@ -85,7 +85,7 @@ variables.each do |variable|
       json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open('../' + provinces_path(autonomy_name,variable),'w+')
-    fd.write(json.to_json)
+    fd.write(Yajl::Encoder.encode(json))
     fd.close        
   end
 end
@@ -94,5 +94,5 @@ variables_json.each do |k,v|
   variables_json[k] = v.compact.uniq.sort
 end
 fd = File.open('../graphs/meta/provincias.json','w+')
-fd.write(variables_json.to_json)
+fd.write(Yajl::Encoder.encode(variables_json))
 fd.close
