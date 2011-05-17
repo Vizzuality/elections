@@ -99,7 +99,6 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
     	
-      console.log(info['data'][year][normalization[compare]]);
     	if (info['data'][year][normalization[compare]]!=null) {
     	  //Set dimensions and bkg first
     	  this.offsetVertical_ = -276;
@@ -197,14 +196,12 @@
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
         $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,5,5,5');
         $('div#infowindow div.chart img').show();
-        $('div#infowindow p.info').html('<strong>'+info['data'][year][normalization[compare]]+'</strong>');
+        $('div#infowindow p.info').html('<strong>'+parseFloat(info['data'][year][normalization[compare]]).toFixed(2)+'</strong>');
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
       }
-      
 
-      
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       if (pixPosition) {
