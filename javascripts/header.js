@@ -207,7 +207,7 @@
 
       var value = $(this).text();
 
-      if (!$(this).parent().hasClass('selected')) {
+      if (!$(this).parent().hasClass('selected') && !$(this).parent().hasClass('disabled')) {
         compare = $(this).attr('class').replace(/_/g,' ');
         axisLegend.update(tooltipInfo[value]);
         graphBubbleInfowindow.hide();

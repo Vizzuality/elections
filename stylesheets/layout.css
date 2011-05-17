@@ -4,54 +4,54 @@ body {height:auto; background:white; min-width:1000px;}
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
 /*HEADER*/
-div#header {position:absolute; left:0; right:0; top:80px; height:164px; min-width:1000px; background:url('/images/header_bkg.png') repeat-x 0 0; z-index:50;}
-div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('/images/end_left.jpg') no-repeat 0 0;}
-div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('/images/end_right.jpg') no-repeat 0 0;}
+div#header {position:absolute; left:0; right:0; top:80px; height:164px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
+div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
+div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
 div#header div.left {float:left; width:320px;}
 div#header div.left h1 {margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
 div#header div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px; overflow:hidden;}
-div#header div.left form input.text {float:right; width:225px; height:15px; margin:0; padding:9px 30px 8px 7px; background:url('/images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
+div#header div.left form input.text {float:right; width:225px; height:15px; margin:0; padding:9px 30px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
-div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('/images/lens.png') no-repeat 0 0;}
+div#header div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('../images/lens.png') no-repeat 0 0;}
 div#header div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}
 div#header div.left form input.submit:focus {outline:none; background-position:0 -25px;}
 div#header div.left form input.text:focus {outline:none; color:#333333;}
-div#header div.left div.search_error {position:absolute; display:none; top:74px; left:36px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div#header div.left div.search_error {position:absolute; display:none; top:74px; left:36px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('../images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div#header div.left div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
 div#header div.left div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
+div#header div.left div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('../images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333;
   text-align:center; line-height:13px; text-decoration:none;}
 div#header div.left div.search_error a.close:hover {color:black; background-position:0 -32px;}
 div#header div.right {float:right; width:650px;}
 div#header div.right div.share {float:right; width:100%; height:24px; margin:20px 0 0 0;}
-div#header div.right div.share div.outer_share {float:right; width:134px!important; height:24px; padding:0; margin:0; background:url('/images/share_bkg.png') no-repeat 0 0;}
+div#header div.right div.share div.outer_share {float:right; width:134px!important; height:24px; padding:0; margin:0; background:url('../images/share_bkg.png') no-repeat 0 0;}
 div#header div.right div.share div.outer_share p {float:left; width:64px; height:19px; padding:5px 0 0 7px; font:normal 13px "Officina Bold"; color:white; text-shadow:0 1px #371530; line-height:13px;}
-div#header div.right div.share div.outer_share a.facebook {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('/images/share_icons.png') no-repeat 2px 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
+div#header div.right div.share div.outer_share a.facebook {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat 2px 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.right div.share div.outer_share a.facebook:hover {background-position:2px -21px; cursor:pointer;}
-div#header div.right div.share div.outer_share a.twitter {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('/images/share_icons.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
+div#header div.right div.share div.outer_share a.twitter {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.right div.share div.outer_share a.twitter:hover {background-position:right -21px; cursor:pointer;}
 div#header div.right div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px;}
 
-div#header div.right div.info_tooltip{position:absolute; display:none; top:102px; width:231px; height:211px; background:url('/images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
-div#header div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('/images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
+div#header div.right div.info_tooltip{position:absolute; display:none; top:102px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
+div#header div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('../images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
 div#header div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
 div#header div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content ul {clear:both; overflow:hidden;}
 div#header div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content ul li span {position:absolute; padding-top: 7px;}
-div#header div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('/images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
+div#header div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('../images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
 div#header div.right div.info_tooltip div.content ul li.left span {left:9px;}
-div#header div.right div.info_tooltip div.content ul li.right {width: 40px; padding-right: 40px; background:url('/images/orange_marker_tooltip.png') no-repeat right 0; text-align:right;}
+div#header div.right div.info_tooltip div.content ul li.right {width: 40px; padding-right: 40px; background:url('../images/orange_marker_tooltip.png') no-repeat right 0; text-align:right;}
 div#header div.right div.info_tooltip div.content ul li.right span {right:15px; color: #FF9900;}
 div#header div.right div.info_tooltip div.content a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white;}
 div#header div.right div.info_tooltip div.content a.more:hover {color:black;}
-div#header div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
+div#header div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('../images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div#header div.right div.info_tooltip div.content a.close:hover {background-position:0 -32px;}
 
 div#header div.right div.selects {display:inline; float:right; width:660px; height:50px; margin:5px 7px 0 0!important;}
 div#header div.right div.selects div.select {position:relative; float:right;}
-div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('/images/select_left.png') no-repeat 0 0;}
+div#header div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('../images/select_left.png') no-repeat 0 0;}
 div#header div.right div.selects div.select.selected div.outer_select {background-position:0 -97px;}
 div#header div.right div.selects div.select div.outer_select img {position:absolute; left:20px; top:18px; z-index:10;}
 div#header div.right div.selects div.select div.outer_select.chat img {left:23px;}
@@ -59,11 +59,11 @@ div#header div.right div.selects div.select div.outer_select.money img {left:23p
 div#header div.right div.selects div.select div.outer_select.people img {left:23px;}
 
 div#header div.right div.selects div.select div.outer_select span.icon {position:absolute; top: 10px; left:13px; height:32px; width:32px;}
-div#header div.right div.selects div.select div.outer_select.money span.icon {background:url('/images/money.png') no-repeat center;}
-div#header div.right div.selects div.select div.outer_select.chat span.icon {background:url('/images/chat.png') no-repeat center;}
-div#header div.right div.selects div.select div.outer_select.people span.icon {background:url('/images/people.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.money span.icon {background:url('../images/money.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.chat span.icon {background:url('../images/chat.png') no-repeat center;}
+div#header div.right div.selects div.select div.outer_select.people span.icon {background:url('../images/people.png') no-repeat center;}
 
-div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:120px; height:15px; padding:17px 38px 18px 10px; background:url('/images/select_right.png') no-repeat right 0;}
+div#header div.right div.selects div.select div.outer_select span.inner_select {float:left; width:120px; height:15px; padding:17px 38px 18px 10px; background:url('../images/select_right.png') no-repeat right 0;}
 div#header div.right div.selects div.select.selected div.outer_select span.inner_select {background-position:right -97px;}
 div#header div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
 div#header div.right div.selects div.select div.outer_select:hover span.inner_select a {color:white;}
@@ -72,39 +72,41 @@ div#header div.right div.selects div.select div.outer_select span a {font:normal
 div#header div.right div.selects div.select.selected div.outer_select span a {color:white;}
 div#header div.right div.selects div.select div.option_list {position:absolute; display:none; top:0; left:-2px; width:198px; z-index:50;}
 div#header div.right div.selects div.select.opened div.option_list {display:block;}
-div#header div.right div.selects div.select div.option_list div.top {width:220px; height:11px; background:url('/images/top_list_select.png') no-repeat 0 0;}
-div#header div.right div.selects div.select div.option_list div.bottom {width:220px; height:auto; padding:3px 0 21px 0; background:url('/images/bottom_list_select.png') no-repeat 0 bottom;}
+div#header div.right div.selects div.select div.option_list div.top {width:220px; height:11px; background:url('../images/top_list_select.png') no-repeat 0 0;}
+div#header div.right div.selects div.select div.option_list div.bottom {width:220px; height:auto; padding:3px 0 21px 0; background:url('../images/bottom_list_select.png') no-repeat 0 bottom;}
 div#header div.right div.selects div.select div.option_list div.bottom ul {padding:5px 0 0 0;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li {padding:0 0 5px 16px;}
-div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('/images/selected_arrows.png') no-repeat 195px 4px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('../images/selected_arrows.png') no-repeat 195px 4px;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
-div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 1px;}
-div#header div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -32px;}
-div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -64px;}
-div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 0px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 1px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#bbbbbb!important;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#bbbbbb!important; cursor:default;}
+div#header div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -32px;}
+div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -64px;}
+div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 0px;}
 
 
 /*YEARS SLIDER*/
 div#header div.years_content {position:absolute; bottom:20px; left:15px; right:20px;  height:34px; z-index:10;}
-div#header div.years_content a.action {display:inline-block; width:33px; height:34px; background:url('/images/play_stop.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
+div#header div.years_content a.action {display:inline-block; width:33px; height:34px; background:url('../images/play_stop.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.years_content a.action.play:hover {background-position:-31px 0;}
 div#header div.years_content a.action.stop {background-position:-95px 0;}
 div#header div.years_content a.action.stop:hover {background-position:-127px 0;}
-div#header div.years_content div.slider_bkg {position:absolute; right:0; left:60px; top:15px; bottom:0; height:9px; padding:0 0 0 4px; background:url('/images/big_slider_left.png') no-repeat 0 0; z-index:0;}
-div#header div.years_content div.slider_bkg span.slider_right {float:left; width:100%; height:9px; background:url('/images/big_slider_right.png') no-repeat right 0;}
-div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:17%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_2 {position:absolute; top:-3px; left:33%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_3 {position:absolute; top:-3px; left:49%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_4 {position:absolute; top:-3px; left:66%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_5 {position:absolute; top:-3px; left:82%; width:2px; height:14px; background:url('/images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg {position:absolute; right:0; left:60px; top:15px; bottom:0; height:9px; padding:0 0 0 4px; background:url('../images/big_slider_left.png') no-repeat 0 0; z-index:0;}
+div#header div.years_content div.slider_bkg span.slider_right {float:left; width:100%; height:9px; background:url('../images/big_slider_right.png') no-repeat right 0;}
+div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:17%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_2 {position:absolute; top:-3px; left:33%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_3 {position:absolute; top:-3px; left:49%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_4 {position:absolute; top:-3px; left:66%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_5 {position:absolute; top:-3px; left:82%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
 div#header div.years_content div.year_slider {position:absolute; right:20px; left:70px; top:8px; bottom:0; height:9px; z-index:10;}
 div#header div.years_content .ui-slider { position: relative; text-align: left;}
 div#header div.years_content .ui-slider .ui-slider-handle { position: absolute; z-index: 20; width:1.2em!important; height:1.2em!important; cursor: default;}
 div#header div.years_content .ui-slider .ui-slider-handle
 div#header div.years_content .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
 div#header div.years_content .ui-slider-horizontal {height:9px;}
-div#header div.years_content .ui-slider-horizontal .ui-slider-handle {top:0; margin-left:-39px; height:19px!important; width:68px!important; padding:4px 10px 0 0; background:url('/images/big_slider_handle.png') no-repeat 0 0; font:normal 11px Arial;
+div#header div.years_content .ui-slider-horizontal .ui-slider-handle {top:0; margin-left:-39px; height:19px!important; width:68px!important; padding:4px 10px 0 0; background:url('../images/big_slider_handle.png') no-repeat 0 0; font:normal 11px Arial;
   color:#59204D; text-align:right; text-decoration:none;}
 div#header div.years_content .ui-slider-horizontal .ui-slider-range {top:0; height:100%;}
 div#header div.years_content .ui-slider-horizontal .ui-slider-range-min {left:0px;}
@@ -123,10 +125,10 @@ div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:560px; margin:0 0 0 -512px; background:url('/images/graph_bkg.png'); z-index:0;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:560px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
-div.tabs div#graph div#fail_background {display:none; position:relative; width:100%; height:100%; background:url('/images/fail_background.png'); z-index:-100;}
-div.tabs div#graph div#fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('/images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
+div.tabs div#graph div#fail_background {display:none; position:relative; width:100%; height:100%; background:url('../images/fail_background.png'); z-index:-100;}
+div.tabs div#graph div#fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
 div.tabs div#graph div#fail_circle p {font:normal 21px "Officina Regular"; line-height: 28px;}
 div.tabs div#graph div#fail_circle a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
 div.tabs div#graph div#fail_circle a.why {position:relative; display:block; top: 85px;}
@@ -137,15 +139,20 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.bubbleContainer span.name{display:none;}
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
-p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('/images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
-div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
+div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 
 /*MAP CONTROLS*/
-div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('/images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
+div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
+div#map span.loader p {margin:8px 0 0 13px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
+/*<span class="loader">
+  <p>Cargando</p>
+</span>*/
+div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('../images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
   text-indent:-9999%; font-size:0; display:block; line-height:0;}
-div#zoom_control a.zoom_in {position:absolute; top:8px; left:12px; width:34px; height:32px; background:url('/images/zooms.png') no-repeat -34px 0; z-index:15;}
-div#zoom_control a.zoom_out {position:absolute; bottom:16px; left:12px; width:34px; height:32px; background:url('/images/zooms.png') no-repeat 0 0; z-index:15;}
+div#zoom_control a.zoom_in {position:absolute; top:8px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat -34px 0; z-index:15;}
+div#zoom_control a.zoom_out {position:absolute; bottom:16px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat 0 0; z-index:15;}
 div#zoom_control a.zoom_in:hover {background-position:-34px -32px;}
 div#zoom_control a.zoom_out:hover {background-position:0 -32px;}
 div#zoom_control span.slider {position:absolute; top:53px; left:27px; height:157px; width:4px; }
@@ -153,19 +160,19 @@ div#zoom_control .ui-slider { position: relative; text-align: left;}
 div#zoom_control .ui-slider .ui-slider-handle { position: absolute; z-index: 20; width:1.2em!important; height:1.2em!important; cursor: default;}
 div#zoom_control .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
 div#zoom_control .ui-slider-vertical { width: .8em; height: 100px; }
-div#zoom_control .ui-slider-vertical .ui-slider-handle { left: -6px; margin-left: 0; margin-bottom: -.6em; height:16px!important; width:16px!important; background:url('/images/handle.png') no-repeat 0 0;}
+div#zoom_control .ui-slider-vertical .ui-slider-handle { left: -6px; margin-left: 0; margin-bottom: -.6em; height:16px!important; width:16px!important; background:url('../images/handle.png') no-repeat 0 0;}
 div#zoom_control .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 div#zoom_control .ui-slider-vertical .ui-slider-range-max { top: 0; }
 div#zoom_control .ui-slider-vertical .ui-state-focus {cursor:pointer;}
 div#zoom_control .ui-slider-vertical .ui-state-active {cursor:pointer;}
-div#map a.vizzuality {position:absolute; left:70px; bottom:5px; width:82px; height:43px; background:url('/images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#map a.vizzuality {position:absolute; left:70px; bottom:5px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 /*MENU MAP/GRAPH*/
-div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('/images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
+div#tab_menu {position:absolute; right:9px; top:10px; width:58px; height:87px; background:url('../images/tab.png') no-repeat 0 0; z-index:40; overflow: hidden; text-indent:-9999%;
   font-size:0; display:block; line-height:0;}
-div#tab_menu a.map {float:left; width:32px; height:31px; margin:8px 0 0 13px; background:url('/images/map_icon.png') no-repeat -1px 0;}
-div#tab_menu a.stats {float:left; width:32px; height:31px; margin:1px 0 0 13px; background:url('/images/stats_icon.png') no-repeat -1px 0;}
+div#tab_menu a.map {float:left; width:32px; height:31px; margin:8px 0 0 13px; background:url('../images/map_icon.png') no-repeat -1px 0;}
+div#tab_menu a.stats {float:left; width:32px; height:31px; margin:1px 0 0 13px; background:url('../images/stats_icon.png') no-repeat -1px 0;}
 div#tab_menu a.selected {background-position: -1px -31px;}
 div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 
@@ -178,8 +185,8 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:252px; height:294px; background:url('/images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
-div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div.infowindow {position:absolute; width:252px; height:294px; background:url('../images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
@@ -189,9 +196,9 @@ div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:norm
 div.infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
 
 div.infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
-div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
-div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
+div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 
 div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
@@ -199,45 +206,45 @@ div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a {color:#333333;}
 div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
-div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
+div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}
-div#comparewindow a.close_infowindow {position:absolute; right:14px; top:1px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div#comparewindow a.close_infowindow {position:absolute; right:14px; top:1px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div#comparewindow a.close_infowindow:hover {background-position:0 -18px;}
-div#comparewindow div.top {display:inline-block; width:356px; height:244px; padding:25px 0 0 0;  background:url('/images/compare_top_bkg.png') no-repeat 0 0;}
+div#comparewindow div.top {display:inline-block; width:356px; height:244px; padding:25px 0 0 0;  background:url('../images/compare_top_bkg.png') no-repeat 0 0;}
 div#comparewindow div h2 {margin:0 0 0 40px; font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
-div#comparewindow div h2 a.remove_compare {display:inline-block; vertical-align:top; width:52px; height:13px; margin:4px 0 0 3px; background:url('/images/delete_bkg.png') no-repeat 0 0; text-decoration:none;  overflow: hidden; text-indent:-9999%; font-size:0; line-height:0;}
+div#comparewindow div h2 a.remove_compare {display:inline-block; vertical-align:top; width:52px; height:13px; margin:4px 0 0 3px; background:url('../images/delete_bkg.png') no-repeat 0 0; text-decoration:none;  overflow: hidden; text-indent:-9999%; font-size:0; line-height:0;}
 div#comparewindow div h2 a.remove_compare:hover {background-position:0 -13px;}
 div#comparewindow div p.province {margin:0 0 0 40px; font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div#comparewindow div div.stats {display:inline-block; width:276px; height:75px; margin:8px 0 0 40px;}
 div#comparewindow div div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
 div#comparewindow div div.stats div {width:100%; height:10px; margin:3px 0 0 0;}
 div#comparewindow div div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
-div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
-div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
+div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 /*compare stats slider*/
 div.compare_graph {position:relative; width:356px; height:110px; margin:13px 0 0;}
-div.compare_graph a.left {position:absolute; top:44px; left:10px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.left {position:absolute; top:44px; left:10px; width:24px; height:24px; background:url('../images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.left:hover {background-position:0 -24px;}
-div.compare_graph a.right {position:absolute; top:44px; right:9px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.right {position:absolute; top:44px; right:9px; width:24px; height:24px; background:url('../images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.right:hover {background-position:right -24px;}
 div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden;}
 div.compare_graph div.stats_slider {width:298px; height:220px;} /* each block 299px x 110px */
 div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; overflow:hidden;}
-div.compare_graph div.stats_slider div.up {background:url('/images/compare_graph_bkg.png') no-repeat center center;}
-div.compare_graph div.stats_slider div.down {background:url('/images/graph_compare_evolution_bkg.png') no-repeat center center;}
+div.compare_graph div.stats_slider div.up {background:url('../images/compare_graph_bkg.png') no-repeat center center;}
+div.compare_graph div.stats_slider div.down {background:url('../images/graph_compare_evolution_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:10px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
-div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:5px; left:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
+div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block h3 {position:absolute; top:5px; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
-div.compare_graph div.stats_slider div.block span.bar {position:absolute; width:10px; height:6px; background-image:url('/images/compare_graph_bars.png');}
+div.compare_graph div.stats_slider div.block span.bar {position:absolute; width:10px; height:6px; background-image:url('../images/compare_graph_bars.png');}
 div.compare_graph div.stats_slider div.block span.data {position:absolute; font:normal 13px "Officina Regular"; color:#666666;}
 div.compare_graph div.stats_slider div.block span.bar.positive {left:50%; background-position:right -6px;}
 div.compare_graph div.stats_slider div.block span.bar.negative {right:50%; background-position:0 0px;}
@@ -247,7 +254,7 @@ div.compare_graph div.stats_slider div.block span.data.positive {color:#FF9820; 
 div.compare_graph div.stats_slider div.block span.data.negative {color:#666666; right:50%;}
 div.compare_graph div.stats_slider div.block span.data.first {top:23px;}
 div.compare_graph div.stats_slider div.block span.data.second {top:71px;}
-div.compare_graph div.stats_slider div.block span.name {position:absolute; left:15px; background:url('/images/graph_evolution_name_bkg.png') no-repeat 0 5px; padding:0 0 0 10px; font:normal 13px "Officina Regular"; color:#999999;}
+div.compare_graph div.stats_slider div.block span.name {position:absolute; left:15px; background:url('../images/graph_evolution_name_bkg.png') no-repeat 0 5px; padding:0 0 0 10px; font:normal 13px "Officina Regular"; color:#999999;}
 div.compare_graph div.stats_slider div.block span.name.first {top:10px;}
 div.compare_graph div.stats_slider div.block span.name.second {bottom:10px; background-position:0 -25px;}
 div.compare_graph div.stats_slider div.block span.error {position:absolute; left:118px; font:normal 12px "Officina Regular"; color:#999999;}
@@ -255,15 +262,15 @@ div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}
 div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:5px; margin:-40px 0 0 -140px; z-index:0;}
 /*end compare slider*/
-div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('/images/compare_bottom_bkg.png') no-repeat 0 bottom;}
+div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('../images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}
 div#comparewindow div.bottom.search div.region {display:none;}
 div#comparewindow div.bottom.region div.search {display:none;}
 div#comparewindow div.bottom.region div.region {display:block;}
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div.bottom form {position:relative; width:276px; height:28px; margin:5px 0 0 40px;}
-div#comparewindow div.bottom form input.text {width:276px; height:13px; padding:8px 7px 7px; background:url('/images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
-div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('/images/tiny_search_len.png') no-repeat 0 0;}
+div#comparewindow div.bottom form input.text {width:276px; height:13px; padding:8px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('../images/tiny_search_len.png') no-repeat 0 0;}
 div#comparewindow div.bottom form input.submit:hover {background-position:0 -13px; cursor:pointer;}
 div#comparewindow div.bottom p.refer {display:none; width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:right; font:normal 13px "Officina Regular"; color:#666666;}
 div#comparewindow div.bottom p.refer a {width:auto; color:#8C1F74;}
@@ -271,11 +278,11 @@ div#comparewindow div.bottom p.refer a:hover {color:#5C134C;}
 
 
 /*START WINDOW*/
-div#appInfo {position:absolute; display:none; width:775px; height:514px; left:50%; top:50%; margin:-257px 0 0 -385px; z-index:100; background:url('/images/info_bkg.png') no-repeat 0 0;}
-div#appInfo a.close_info {position:absolute; right:3px; top:1px; width:18px; height:18px; cursor:pointer; background:url('/images/close_infowindow.png') no-repeat 0 0;}
+div#appInfo {position:absolute; display:none; width:775px; height:514px; left:50%; top:50%; margin:-257px 0 0 -385px; z-index:100; background:url('../images/info_bkg.png') no-repeat 0 0;}
+div#appInfo a.close_info {position:absolute; right:3px; top:1px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div#appInfo a.close_info:hover {background-position:0 -18px;}
 div#appInfo div.options {position:relative; float:left; width:190px; height:450px; margin:8px 0 0 12px; padding:20px 22px 20px 21px;}
-div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('/images/welcome_arrow.jpg') no-repeat 0 0;}
+div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.jpg') no-repeat 0 0;}
 div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
 div#appInfo div.options h4 {width:100%; margin:20px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
 div#appInfo div.options ul {width:100%; padding:10px 0 0 0;}
@@ -299,24 +306,24 @@ div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Offi
 div.graph_legend p.autonomy a:hover {color:#333333;}
 div.graph_legend div.partido.otros p {}
 div.graph_legend form {position:relative; width:162px; height:32px; margin:20px 0 0 0;}
-div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('/images/region_search_bkg.png') no-repeat 0 0; border:none;}
-div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('/images/tiny_lens.png') no-repeat 0 0; border:none;}
+div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('../images/region_search_bkg.png') no-repeat 0 0; border:none;}
+div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('../images/tiny_lens.png') no-repeat 0 0; border:none;}
 div.graph_legend form input.text:focus {outline:none; color:#333333;}
 div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
-div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('/images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
+div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('../images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
 div.graph_legend div.search_error h5 {font:normal 15px "Officina Regular"; color:#000000; line-height:15px; text-shadow:0 1px white;}
 div.graph_legend div.search_error p {padding:6px 10px 3px 0; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
-div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('/images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
+div.graph_legend div.search_error a.close {float:right; width:56px; height:13px; margin:7px 8px 0 0; padding:9px 0 10px; background:url('../images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div.graph_legend div.search_error a.close:hover {color:black; background-position:0 -32px;}
-div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
-div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
+div.graph_legend div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask_legend.png') no-repeat left bottom; width:4px; height:6px;}
+div.graph_legend div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask_legend.png') no-repeat right bottom; width:4px; height:6px;}
 
 /*political bars*/
 div.stats div {width:100%; height:10px; margin:3px 0 0 0;}
 div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('/images/right_bars.png') no-repeat right bottom;}
-div.stats div.bar span.l{position:absolute; left:0px; background:url('/images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
-div.stats div.bar span.r{position:absolute; right:0px; background: url('/images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
+div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #dddddd; text-transform:uppercase;}
 /*psoe*/
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
@@ -367,27 +374,27 @@ div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.hb p {color:#800080;}
 /*ciu*/
-div.innerBubble.ciu{background:url('/images/backgrounds/ciu.png'); }
+div.innerBubble.ciu{background:url('../images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
 div div.stats div.partido.ciu p {color:#ec7b37;}
 /*cds*/
-div.innerBubble.cds{background:url('/images/backgrounds/cds.png'); }
+div.innerBubble.cds{background:url('../images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
 div div.stats div.partido.cds p {color:#62A558;}
 /*par*/
-div.innerBubble.par{background:url('/images/backgrounds/par.png'); }
+div.innerBubble.par{background:url('../images/backgrounds/par.png'); }
 div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
 div div.stats div.partido.par p {color:#fdb202;}
 /*eaj-pnv*/
-div.innerBubble.eaj_pnv{background:url('/images/backgrounds/eaj_pnv.png'); }
+div.innerBubble.eaj_pnv{background:url('../images/backgrounds/eaj_pnv.png'); }
 div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
 /*ea*/
-div.innerBubble.ea{background:url('/images/backgrounds/ea.png'); }
+div.innerBubble.ea{background:url('../images/backgrounds/ea.png'); }
 div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
 div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
 div div.stats div.partido.ea p {color:#B41318;}
@@ -396,12 +403,12 @@ div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.prc p {color:#800080;}
 /*pr*/
-div.innerBubble.pr{background:url('/images/backgrounds/pr.png'); }
+div.innerBubble.pr{background:url('../images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
 div div.stats div.partido.pr p {color:#008140;}
 /*uv*/
-div.innerBubble.uv{background:url('/images/backgrounds/uv.png'); }
+div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
 div div.stats div.partido.uv p {color:#EC7B37;}

@@ -105,13 +105,13 @@
         this.offsetHorizontal_ = -127;
         this.height_ = 289;
         this.width_ = 254;
-        $('div#infowindow').css({background:'url("/images/infowindow.png") no-repeat 0 0'});
+        $('div#infowindow').css({background:'url("images/infowindow.png") no-repeat 0 0'});
       } else {
         this.offsetVertical_ = -246;
         this.offsetHorizontal_ = -127;
         this.height_ = 269;
         this.width_ = 254;
-        $('div#infowindow').css({background:'url("/images/infowindow_error_bkg.png") no-repeat 0 0'});
+        $('div#infowindow').css({background:'url("images/infowindow_error_bkg.png") no-repeat 0 0'});
       }
       
       
