@@ -4,7 +4,7 @@
   var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036); // Maps center position
   var start_zoom = 6;
   var previous_zoom = 6;  // Hack for jump 10 zoom
-  
+
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
   var allowedBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
   var projection = new MercatorProjection();
@@ -16,7 +16,6 @@
   var chld = "ES";
   var chd = "";
   var political_parties;
-
 
 
   function initializeMap() {
@@ -55,7 +54,7 @@
     };
     var mapChartType = new google.maps.ImageMapType(mapChartOptions);
     peninsula.overlayMapTypes.insertAt(0, mapChartType);
-        
+
 
     //Political tiles
     political_parties = new google.maps.ImageMapType({
@@ -157,7 +156,7 @@
         }
       }
 		});
-  
+
   }
 
 
@@ -165,36 +164,37 @@
   function refreshTiles() {
     $('div#peninsula div').each(function(i,ele){
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
-        
+
         // duplicate tile and add to div below current tile
         var old_image = $(ele).children('img');
         var new_image = old_image.clone();
-        new_image.css('z-index', old_image.css('z-index') - 1);                
+        new_image.css('z-index', old_image.css('z-index') - 1);
         new_image.css('position','absolute');
         new_image.css('top',0);
         new_image.css('left',0);
-        $(ele).prepend(new_image);        
+        $(ele).prepend(new_image);
 
         // update new tile with new url
         var old_url = old_image.attr('src');
         var tm = old_url.split("/");
         var old_process = tm[tm.length-2];
         var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
-        new_image.attr('src',new_url);          
+        new_image.attr('src',new_url);
 
         // when it loads the new image, fade out the old one
-        $(this).children('img').one("load",function(){          
+        $(this).children('img').one("load",function(){
           old_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
               old_image.remove();
             }
           })
           .each(function(){
             if(this.complete) $(this).trigger("load");
-          });                              
+          });
         });
       }
     });
   }
+
 
 
   function checkZoom(){
@@ -222,8 +222,8 @@
       $("span.slider").slider({value: peninsula.getZoom()});
     }
     previous_zoom = peninsula.getZoom();
-    
-    
+
+
     //Show tiny Canarias map
     if (peninsula.getZoom()==6) {
       $('div.canary_island').css('z-index',2);
@@ -231,3 +231,4 @@
       $('div.canary_island').css('z-index',0);
     }
   }
+

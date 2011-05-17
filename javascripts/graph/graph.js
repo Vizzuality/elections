@@ -85,6 +85,7 @@ function initializeGraph() {
 
       graphBubbleTooltip.hide();
       graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
+      console.log($(this).parent().attr('id'));
     }
   });
 
@@ -595,13 +596,13 @@ function createBubbles(url){
 failCircle = (function() {
   var data_not_found;
 
-  $("#fail_circle a.why").live("click", function(ev) {
+  $("#graph_fail_circle a.why").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     explanationwindow.show();
   });
 
-  $("#fail_circle a.next").live("click", function(ev) {
+  $("#graph_fail_circle a.next").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     goToNextYear();
@@ -609,12 +610,12 @@ failCircle = (function() {
 
   function showError() {
     if (data_not_found != true) {
-      $('#fail_background, #fail_circle').fadeIn("slow", function() { data_not_found = true; });
+      $('#graph_fail_background, #graph_fail_circle').fadeIn("slow", function() { data_not_found = true; });
     }
   }
 
   function hideError() {
-    $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+    $('#graph_fail_background, #graph_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
   }
 
   function goToNextYear() {
