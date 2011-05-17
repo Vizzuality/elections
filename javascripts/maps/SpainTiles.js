@@ -58,6 +58,7 @@
       
       // Loading tiles spinner
       this.loading_tiles++;
+      showLoader();
       
       $.ajax({
         method: "GET",
@@ -65,9 +66,8 @@
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
           me.loading_tiles--;
-          
           if (me.loading_tiles == 0) {
-            alert('loaded');
+            hideLoader();
           }
           
           // Normalize latlng of the tile to transform it to point(x,y)
@@ -92,6 +92,9 @@
         },
         error: function(e) {
           me.loading_tiles--;
+          if (me.loading_tiles == 0) {
+            hideLoader();
+          }
           return div;
         }
       });
@@ -124,10 +127,9 @@
     var radius;
     if (point['data'][year]!=undefined) {
       var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
-      var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
-      var value = Math.abs(point['data'][year][normalization[compare]]);
+      var desv = Math.max(Math.round(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.round(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
+      var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
       
-      console.log(value);
       if ((desv*0)>=value && value<(desv*1)) {
         radius=14;
       } else if ((desv*1)>=value && value<(desv*2)) {
@@ -183,7 +185,7 @@
           data = '';
           className = "red";
         } else {
-          data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.ceil(ele['data'][year][normalization[compare]])):(Math.floor(ele['data'][year][normalization[compare]])));
+          data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
         $('div#'+ele.id+' p').text(data);
@@ -197,7 +199,7 @@
         if (ele['data'][year]!=undefined) {
           var less = Math.floor(ele['data'][year][normalization[compare]+'_min']);
           var desv = Math.max(Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_min'])))/5;
-          var value = Math.abs(ele['data'][year][normalization[compare]]);
+          var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
 
           if ((desv*0)>=value && value<(desv*1)) {
             radius=10;
@@ -224,5 +226,14 @@
 
       });
     });
+  }
+  
+  
+  function showLoader() {
+    $('div#map span.loader').fadeIn();
+  }
+  
+  function hideLoader() {
+    $('div#map span.loader').fadeOut();
   }
 
