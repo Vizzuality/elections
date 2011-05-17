@@ -231,7 +231,7 @@ div.compare_graph div.stats_slider div.up {background:url('/images/compare_graph
 div.compare_graph div.stats_slider div.down {background:url('/images/graph_compare_evolution_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:10px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:5px; left:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
-div.compare_graph div.stats_slider div.block h3 {position:absolute; top:10px; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
+div.compare_graph div.stats_slider div.block h3 {position:absolute; top:5px; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
 div.compare_graph div.stats_slider div.block span.bar {position:absolute; width:10px; height:6px; background-image:url('/images/compare_graph_bars.png');}
 div.compare_graph div.stats_slider div.block span.data {position:absolute; font:normal 13px "Officina Regular"; color:#666666;}
 div.compare_graph div.stats_slider div.block span.bar.positive {left:50%; background-position:right -6px;}
@@ -249,8 +249,6 @@ div.compare_graph div.stats_slider div.block span.error {position:absolute; left
 div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}
 div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; left:50%; margin:-51px 0 0 -140px; z-index:0;}
-
-
 /*end compare slider*/
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('/images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}
