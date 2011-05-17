@@ -4,7 +4,7 @@
 
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
-    this.json_tile_url = "/json/generated_data/tiles/";
+    this.json_tile_url = "/bubbles/tiles/";
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -57,7 +57,8 @@
       $.ajax({
         method: "GET",
         dataType: 'json',
-        url: me.json_tile_url+z+'_'+x+'_'+y+'.json',
+        url: global_url + me.json_tile_url+z+'_'+x+'_'+y+'.json',
+        jsonpCallback: 'func',
         success: function(points) {
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
@@ -90,8 +91,6 @@
   };
 
 
-
-
   CoordMapType.prototype.releaseTile = function(tile) {
     var id = tile.getAttribute('id');
     delete hash[id];
@@ -116,13 +115,13 @@
       var value = Math.abs(point['data'][year][normalization[compare]]);
       
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=7;
-      } else if ((desv*1)>=value && value<(desv*2)) {
         radius=10;
+      } else if ((desv*1)>=value && value<(desv*2)) {
+        radius=12;
       } else if ((desv*2)>=value && value<(desv*3)) {
-        radius=13;
+        radius=14;
       } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=16;
+        radius=17;
       } else {
         radius=19;
       }
@@ -135,7 +134,7 @@
       data = '';
       className = "red";
     } else {
-      data = ((point['data'][year][normalization[compare]]>0)?('+'+Math.ceil(point['data'][year][normalization[compare]])):(Math.floor(point['data'][year][normalization[compare]])));
+      data = ((point['data'][year][normalization[compare]]>0.5)?('+'+Math.round(point['data'][year][normalization[compare]])):(Math.round(point['data'][year][normalization[compare]])));
       className = (point['data'][year][normalization[compare]]>0)?'yellow':'grey';
     }
 
@@ -151,8 +150,6 @@
 
     return div;
   };
-
-
 
 
   function refreshBubbles() {
@@ -189,13 +186,13 @@
           var value = Math.abs(ele['data'][year][normalization[compare]]);
 
           if ((desv*0)>=value && value<(desv*1)) {
-            radius=7;
-          } else if ((desv*1)>=value && value<(desv*2)) {
             radius=10;
+          } else if ((desv*1)>=value && value<(desv*2)) {
+            radius=12;
           } else if ((desv*2)>=value && value<(desv*3)) {
-            radius=13;
+            radius=14;
           } else if ((desv*3)>=value && value<(desv*4)) {
-            radius=16;
+            radius=17;
           } else {
             radius=19;
           }

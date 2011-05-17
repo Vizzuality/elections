@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + "/common"
 cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
 base_path                                     = FileUtils.pwd
+json_folder                                   = next_folder('../json/generated_data/bubbles/')
 
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
 
@@ -107,6 +108,8 @@ def queries_by_zoom(x, y, z)
   queries[z]
 end
 
+# pp queries_by_zoom(1, 1, 7)
+
 zoom_levels = [6,7,11]
 
 start_x = {
@@ -136,59 +139,58 @@ end_y = {
 length = [6714, 841]
 
 counter = 0
-i = ARGV.first.to_i
-max_requests = ARGV[1].to_i if ARGV.count > 1
+zoom_levels = ARGV.map(&:to_i)
 
-progress = ProgressBar.new(max_requests || length[i])
+# progress = ProgressBar.new(max_requests || length[i])
 
-zoom_levels.each do |z|
-  y = start_y[z][i]
-  while y <= end_y[z][i] do
-    x = start_x[z][i]
-    while x <= end_x[z][i] do
+[0, 1].each do |i|
+  zoom_levels.each do |z|
+    y = start_y[z][i]
+    while y <= end_y[z][i] do
+      x = start_x[z][i]
+      while x <= end_x[z][i] do
 
-      exit(0) if max_requests && counter >= max_requests
+        json = {}
 
-      json = {}
+        query = queries_by_zoom(x, y, z)
 
-      query = queries_by_zoom(x, y, z)
+        json = nil
 
-      json = nil
+        municipalities = {}
 
-      municipalities = {}
-
-      cartodb.query(query).rows.each do |r|
-        if municipalities[r.id]
-          municipalities[r.delete(:id)] << r
-        else
-          municipalities[r.delete(:id)] = [r]
+        cartodb.query(query).rows.each do |r|
+          if municipalities[r.id]
+            municipalities[r.delete(:id)] << r
+          else
+            municipalities[r.delete(:id)] = [r]
+          end
         end
+
+        json = []
+
+        municipalities.each do |id, records|
+          data = {
+            :id => id,
+            :name => records.first.name,
+            :center_longitude => records.first.center_longitude,
+            :center_latitude => records.first.center_latitude,
+            :variables => variables_hash
+          }
+          data[:provincia] = records.first.provincia if records.first[:provincia]
+          data[:data] = create_years_hash(records, variables, max_year, min_year)
+          json << data
+        end
+
+        fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
+        fd.write("func(#{json.to_json});")
+        fd.close
+
+        # progress.increment!
+
+        x += 1
+        counter += 1
       end
-
-      json = []
-
-      municipalities.each do |id, records|
-        data = {
-          :id => id,
-          :name => records.first.name,
-          :center_longitude => records.first.center_longitude,
-          :center_latitude => records.first.center_latitude,
-          :variables => variables_hash
-        }
-        data[:provincia] = records.first.provincia if records.first[:provincia]
-        data[:data] = create_years_hash(records, variables, max_year, min_year)
-        json << data
-      end
-
-      fd = File.open("../json/generated_data/tiles/#{z}_#{x}_#{y}.json",'w+')
-      fd.write(json.to_json)
-      fd.close
-
-      progress.increment!
-
-      x += 1
-      counter += 1
+      y += 1
     end
-    y += 1
   end
 end

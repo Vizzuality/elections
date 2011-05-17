@@ -59,8 +59,7 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         return "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles/"+tile.x+"/"+tile.y+"/"+zoom+"/users/123/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1?1305624750511";
-         //return this.urlPattern+tile.x+"_"+tile.y+'_'+zoom+"_"+procesos_electorales[year]+".png";
+         return global_url + this.urlPattern + tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom + "_" + procesos_electorales[year]+".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.75,
@@ -166,11 +165,11 @@
   function refreshTiles() {
     $('div#peninsula div').each(function(i,ele){
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
-        
         $(ele).animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
           var old_url = $(this).children('img').attr('src');
+          var old_process = (old_url).substring(old_url.length-6,old_url.length-4);
           var new_url = (old_url).substring(0, old_url.length-6) + procesos_electorales[year] +".png";
-          "/tiles/255_189_9_70.png";
+          var new_url = new_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
 
           $(this).children('img').attr('src',new_url);          
           $(this).children('img').one("load",function(){
@@ -201,6 +200,12 @@
       $("span.slider").slider({value: 10});
     } else if (peninsula.getZoom()==11) {
       $("span.slider").slider({value: 9});
+    } else if (peninsula.getZoom()==9 && previous_zoom<peninsula.getZoom()) {
+        peninsula.setZoom(11);
+        $("span.slider").slider({value: 9});
+    } else if (peninsula.getZoom()==9 && previous_zoom>peninsula.getZoom()) {
+        peninsula.setZoom(8);
+        $("span.slider").slider({value: 8});
     } else {
       $("span.slider").slider({value: peninsula.getZoom()});
     }
