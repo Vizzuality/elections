@@ -45,8 +45,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v1"
-
+$graphs_next_version = "v3"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -96,9 +95,9 @@ def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
   var = row[variable].to_f
   if var > 0
-    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
+    return ("%.2f" % ((var * 200.0) / max.to_f)).to_f
   else
-    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
+    return ("%.2f" % ((var * -200.0) / min.to_f)).to_f
   end
 end
 
@@ -107,8 +106,8 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
   if known_parties.keys.include?(row[:primer_partido_id])
-    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
-    x_coordinate += 100.0
+    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    x_coordinate += 50.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
   else
@@ -178,7 +177,7 @@ end
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
   file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
-    json = JSON.parse(File.read(file_path)[5..-3])[autonomy_name]
+    json = JSON.parse(File.read(file_path))[autonomy_name]
     return {
       :partido_1 => json["partido_1"],
       :partido_2 => json["partido_2"],
@@ -210,40 +209,33 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
   end
 end
 
-def get_province_results(autonomy_name, year, raw_province_name, proceso_electoral_id)
-  file_path = "../graphs/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
+def get_province_results
+  file_path = "../graphs/municipios/#{$graphs_next_version}/get_province_results.json"
   if File.file?(file_path)
-    json = JSON.parse(File.read(file_path))[raw_province_name.normalize]
-    return {
-      :partido_1 => json["partido_1"],
-      :partido_2 => json["partido_2"],
-      :partido_3 => json["partido_3"],
-      :otros => ["Otros", json["resto_partidos_percent"]]
-    }
-  else
-    # votes per autonomy
-    query = <<-SQL
-    select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id,
-           primer_partido_id, primer_partido_percent, tercer_partido_id,
-           segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
-           censo_total, votantes_totales, resto_partido_percent
-    from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
-    where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id AND
-          vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{raw_province_name}'
-SQL
-    parties = get_parties
-    rows = $cartodb.query(query)[:rows]
-    if row = $cartodb.query(query)[:rows].first
-      return {
-        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-        :otros     => ["Otros",                           row[:resto_partido_percent]  ]
-      }
-    else
-      return {}
-    end
+    return JSON.parse(File.read(file_path))
   end
+  results = {}
+  query = <<-SQL
+  select #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, gadm2.name_2,
+         primer_partido_id, primer_partido_percent, tercer_partido_id,
+         segundo_partido_id, segundo_partido_percent, tercer_partido_percent, resto_partido_percent
+  from #{PROVINCES_VOTATIONS}, gadm2
+  where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = gadm2.cartodb_id
+SQL
+  parties = get_parties
+  $cartodb.query(query)[:rows].each do |row|
+    results[row[:name_2].normalize] ||= {}
+    results[row[:name_2].normalize][row[:proceso_electoral_id]] ||= {
+      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
+      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
+      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
+      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+    }
+  end
+  fd = File.open(file_path,'w+')
+  fd.write(results.to_json)
+  fd.close
+  results
 end
 
 def get_from_every_year(variables, values)
@@ -329,21 +321,63 @@ def get_municipalities_variables_evolution(province_id, custom_variable_name)
   from  vars_socioeco_x_municipio, ine_poly, gadm2
   where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province_id}
 SQL
-  values = $cartodb.query(query)[:rows] || []
-  result = {}
-  values.each do |v|
-    result[v[:name]] = []
-    1975.upto(2011) do |year|
-      temp_variable = "#{custom_variable_name}_#{year}"
-      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+  values = []
+  begin
+    values = $cartodb.query(query)[:rows] || []
+    result = {}
+    values.each do |v|
+      result[v[:name]] = []
+      1975.upto(2011) do |year|
+        temp_variable = "#{custom_variable_name}_#{year}"
+        result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+      end
     end
+    result
+  rescue
+    return {}
   end
-  result
-rescue
-  return {}
 end
 
-def create_years_hash(records, variables, max_year, min_year)
+def get_variables_evolution_in_municipalities
+  file_path = "../graphs/municipios/#{$graphs_next_version}/variables_evolution_in_municipalities.json"
+  if File.file?(file_path)
+    return JSON.parse(File.read(file_path))
+  end
+  result = {}
+  raw_variables = []
+  $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4")[:rows].each do |raw_variable_hash|
+    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
+      raw_variables << "#{raw_variable_hash[:codigo]}_#{year}"
+    end
+  end.flatten.compact
+  variables = raw_variables.map{ |v| v.gsub(/_\d+$/,'') }.compact.uniq
+
+  $cartodb.query("select id_2 from #{PROVINCES_TABLE}")[:rows].each do |row|
+    next if row[:id_2].blank?
+    query = <<-SQL
+    select #{raw_variables.join(',')}, ine_poly.nombre as name
+    from  vars_socioeco_x_municipio, ine_poly, gadm2
+    where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{row[:id_2]}
+SQL
+    $cartodb.query(query)[:rows].each do |m|
+      variables.each do |variable|
+        result[variable] ||= {}
+        result[variable][m[:name]] ||= []
+        1975.upto(2011) do |year|
+          temp_variable = "#{variable}_#{year}".to_sym
+          result[variable][m[:name]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
+        end
+      end
+    end
+    putc '.'
+  end
+  fd = File.open(file_path,'w+')
+  fd.write(result.to_json)
+  fd.close
+  result
+end
+
+def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   years = {}
 
@@ -352,13 +386,13 @@ def create_years_hash(records, variables, max_year, min_year)
 
     variables.each do |variable|
       data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
-      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
-      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
+      data["#{variable.codigo}_max".to_sym] = max_min_vars["#{variable.codigo}_#{year}_max".to_sym]
+      data["#{variable.codigo}_min".to_sym] = max_min_vars["#{variable.codigo}_#{year}_min".to_sym]
     end
 
     records.each do |row|
 
-      if row.proceso_electoral_year <= year
+      if row.proceso_electoral_year && row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
         data[:primer_partido_percent]  = row.primer_partido_percent
@@ -389,8 +423,9 @@ def variables_vars
   [variables, variables_hash, max_year, min_year]
 end
 
-def vars_sql_select(socioeco_table)
+def vars_sql_select(gadm_level)
   variables = *variables_vars.first
+
   tables = {
     1 => 'vars_socioeco_x_autonomia',
     2 => 'vars_socioeco_x_provincia',
@@ -399,30 +434,46 @@ def vars_sql_select(socioeco_table)
 
   select = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == socioeco_table
+
+    next if variable.min_gadm.to_i > gadm_level
+    next unless variable.max_gadm.to_i  >= gadm_level
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
-      select << "#{variable.codigo}_#{year}"
+      select << <<-SQL
+        #{variable.codigo}_#{year}
+      SQL
     end
-    select << "#{variable.codigo}_min_max.*"
 
   end
 
   select.join(', ')
 end
 
-def vars_sql_froms(socioeco_table)
-  variables = *variables_vars.first
+def max_min_vars_query(zoom_level)
+
+  gadm_levels_for_zoom_leves = {
+    6 => 1,
+    7 => 2,
+    11 => 4
+  }
+
   tables = {
     1 => 'vars_socioeco_x_autonomia',
     2 => 'vars_socioeco_x_provincia',
-    4 => 'vars_socioeco_x_municipio'
+    4 => 'vars_socioeco_x_municipio',
+    6 => 'vars_socioeco_x_autonomia',
+    7 => 'vars_socioeco_x_provincia',
+    11 => 'vars_socioeco_x_municipio'
   }
 
+  variables = *variables_vars.first
+
+  selects = []
   froms = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == socioeco_table
+    next if variable.min_gadm.to_i > gadm_levels_for_zoom_leves[zoom_level]
+    next unless variable.max_gadm.to_i  >= gadm_levels_for_zoom_leves[zoom_level]
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
@@ -432,14 +483,21 @@ def vars_sql_froms(socioeco_table)
       SQL
     end
 
+    selects << <<-SQL
+      #{variable.codigo}_min_max.*
+    SQL
+
     froms << <<-SQL
       (SELECT
         #{fields.join(', ')}
-      FROM #{socioeco_table}) AS #{variable.codigo}_min_max
+      FROM #{tables[zoom_level]}) AS #{variable.codigo}_min_max
     SQL
   end
 
-  "#{froms.join(', ')},"
+  <<-SQL
+    SELECT #{selects.join(', ')}
+    FROM #{froms.join(', ')}
+  SQL
 end
 
 def next_folder(path)
@@ -504,6 +562,8 @@ class String
     n.gsub!(/\s/i,         '_')
     n.gsub!(/"/i,         "'")
     n.gsub!(/\//i,         "")
+    n.gsub!(/\(/i,       "")
+    n.gsub!(/\)/i,       "")
     n = n.downcase
     n
   end

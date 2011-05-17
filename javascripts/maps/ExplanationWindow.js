@@ -28,7 +28,7 @@
         '<p>Para calcular la edad media hemos multiplicado el valor medio de cada quinquenio por el número de personas situadas en ese rango, para después, volver a dividir entre el total.</p>'+
       '</div>';
 
-    $('div#map').prepend(this.div);
+    $('body').append(this.div);
     $(this.div).children('a.close_info').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
 
     $(this.div).find('li').children('a').click(function(ev){
@@ -46,7 +46,7 @@
   }
 
   ExplanationWindow.prototype.show = function() {
-    $(this.div).css({margin:'-257px 0 0 -385px',top:'50%',left:'50%'});
+    $(this.div).css({margin:'-237px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
   }
 

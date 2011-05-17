@@ -28,16 +28,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_autonomia')}
-         FROM
-          #{vars_sql_froms('vars_socioeco_x_autonomia')}
-          gadm1 AS g
-         INNER JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_autonomia AS vsm ON vsm.gadm1_cartodb_id = v.gadm1_cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+          #{vars_sql_select(1)}
+         FROM gadm1 AS g
+         LEFT JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_autonomia AS vsm ON vsm.gadm1_cartodb_id = v.gadm1_cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       ),
@@ -58,16 +56,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_provincia')}
-         FROM
-          #{vars_sql_froms('vars_socioeco_x_provincia')}
-          gadm2 AS g
-         INNER JOIN votaciones_por_provincia AS v ON g.cartodb_id = v.gadm2_cartodb_id
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_provincia AS vsm ON vsm.gadm2_cartodb_id = v.gadm2_cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+          #{vars_sql_select(2)}
+         FROM gadm2 AS g
+         LEFT JOIN votaciones_por_provincia AS v ON g.cartodb_id = v.gadm2_cartodb_id
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_provincia AS vsm ON vsm.gadm2_cartodb_id = v.gadm2_cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       ),
@@ -89,17 +85,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_municipio')}
-
-         FROM
-          #{vars_sql_froms('vars_socioeco_x_municipio')}
-          ine_poly AS i
-         INNER JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+          #{vars_sql_select(4)}
+         FROM ine_poly AS i
+         LEFT JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       )
@@ -108,9 +101,8 @@ def queries_by_zoom(x, y, z)
   queries[z]
 end
 
-# pp queries_by_zoom(1, 1, 7)
-
-zoom_levels = [6,7,11]
+# p queries_by_zoom(1, 1, 7)
+# exit(0)
 
 start_x = {
   6 =>  [30,28],
@@ -136,15 +128,27 @@ end_y = {
   11 => [815,866]
 }
 
-length = [6714, 841]
+length = {
+  0 => {
+    6 => 9,
+    7 => 30,
+    11 => 6675
+  },
+  1 => {
+    6 => 4,
+    7 => 9,
+    11 => 828
+  }
+}
 
-counter = 0
 zoom_levels = ARGV.map(&:to_i)
-
-# progress = ProgressBar.new(max_requests || length[i])
 
 [0, 1].each do |i|
   zoom_levels.each do |z|
+    progress = ProgressBar.new(length[i][z])
+
+    max_min_vars = cartodb.query(max_min_vars_query(z)).rows.first
+
     y = start_y[z][i]
     while y <= end_y[z][i] do
       x = start_x[z][i]
@@ -177,18 +181,17 @@ zoom_levels = ARGV.map(&:to_i)
             :variables => variables_hash
           }
           data[:provincia] = records.first.provincia if records.first[:provincia]
-          data[:data] = create_years_hash(records, variables, max_year, min_year)
+          data[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
           json << data
         end
 
         fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
-        fd.write("func(#{json.to_json});")
+        fd.write(json.to_json)
         fd.close
 
-        # progress.increment!
+        progress.increment!
 
         x += 1
-        counter += 1
       end
       y += 1
     end

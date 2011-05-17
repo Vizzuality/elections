@@ -1,4 +1,5 @@
 
+  var createdBubbles = false;
   var procesos_electorales;
   var animate_interval;
   var previous_year;
@@ -34,8 +35,6 @@
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
-          // Refresh map to show last changes done in application
-          //refreshMap();
         } else {
           // Hide the legend if this is visible...
           graphLegend.hideFast();
@@ -96,18 +95,22 @@
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
         }
-          graphBubbleTooltip.hide();
+        graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
         if (state == "mapa") {
-          refreshMap();
+          if (graph_hack_year[previous_year] != graph_hack_year[ui.value]) {
+            refreshTiles();
+          }
+          refreshBubbles();
         }
 
         comparewindow.hide();
-        var url = global_url + "/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-        setValue(url);
+        var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
+         // Let's decide if we must update (setValue) or create the bubbles
+        (createdBubbles == true) ? setValue(url) : createBubbles(url);
         changeHash();
       }
     });
@@ -212,7 +215,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          setValue("/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         changeHash();
@@ -242,9 +245,12 @@
       $("div.year_slider").slider('value',new_value);
 
       if (state == 'mapa') {
-        refreshMap();
+        if (graph_hack_year[new_value-1] != graph_hack_year[new_value]) {
+          refreshTiles();
+        }
+        refreshBubbles();
       } else {
-        setValue("/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
 
       changeHash();

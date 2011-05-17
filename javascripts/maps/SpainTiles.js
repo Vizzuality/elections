@@ -4,7 +4,7 @@
 
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
-    this.json_tile_url = "/bubbles/tiles/";
+    this.json_tile_url = "/bubbles/";
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -13,7 +13,8 @@
     // Create the div tile
     var div = ownerDocument.createElement('div');
     div.setAttribute('class','tile');
-    //div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
+    // div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
+    // div.style.border = "1px solid yellow";
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
     div.style.height = this.tileSize.height + 'px';
@@ -52,13 +53,13 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
-
+    //if (x==61 && y==47 && z==7) {
+      //console.log(x,y,z);
       // Call service
       $.ajax({
         method: "GET",
         dataType: 'json',
-        url: global_url + me.json_tile_url+z+'_'+x+'_'+y+'.json',
-        jsonpCallback: 'func',
+        url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
@@ -84,6 +85,8 @@
           return div;
         }
       });
+    } else {
+      div.style.display = "none";
     }
 
 
@@ -114,16 +117,17 @@
       var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
       var value = Math.abs(point['data'][year][normalization[compare]]);
       
+      console.log(value);
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=10;
-      } else if ((desv*1)>=value && value<(desv*2)) {
-        radius=12;
-      } else if ((desv*2)>=value && value<(desv*3)) {
         radius=14;
-      } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=17;
-      } else {
+      } else if ((desv*1)>=value && value<(desv*2)) {
         radius=19;
+      } else if ((desv*2)>=value && value<(desv*3)) {
+        radius=23;
+      } else if ((desv*3)>=value && value<(desv*4)) {
+        radius=28;
+      } else {
+        radius=32;
       }
     } else {
       radius = 8;
