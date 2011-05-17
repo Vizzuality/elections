@@ -131,8 +131,33 @@
           }
         }
 
+        function drawPartyBar(data_id, party_id){
+          var id = party_id - 1;
+          var party_name            = valuesHash[data_id]["partido_"+party_id][0];
+          var normalized_party_name = normalizePartyName(party_name);
+
+          p = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
+
+          $.each(p, function(c){
+            if (p[c] != "partido"){
+              $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(p[c]);
+            }
+          })
+
+          if (_.indexOf(parties, normalized_party_name) !== -1) {
+            $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(normalized_party_name);
+          } else {
+            $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
+          }
+          bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
+          console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
+
+          $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
+          $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
+        }
+
         function changeData(left,top,data_id) {
-          if ($("#graph_infowindow").attr('alt')==data_id && isOpen()) {
+          if ($("#graph_infowindow").attr('alt') == data_id && isOpen()) {
             return false;
           }
 
@@ -155,70 +180,17 @@
           $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
           $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[data_id]["porcentaje_participacion"])) + "% de participación");
 
-          // First political party
-          var partido_1 = normalizePartyName(valuesHash[data_id].partido_1[0]);
-          c1 = $('div#graph_infowindow div.top div.stats div.partido:eq(0)').attr('class').split(" ");
-          $.each(c1, function(c){
-            if(c1[c] != "partido"){
-              $('div#graph_infowindow div.top div.stats div.partido:eq(0)').removeClass(c1[c]);
-            }
-          })
-
-          if (_.indexOf(parties, partido_1) !== -1) {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
-          } else {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
-          }
-          bar_width = normalizeBarWidth((valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100);
-          //console.log(key, bar_width);
-
-          $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
-
-          // Second political party
-          var partido_2 = normalizePartyName(valuesHash[data_id].partido_2[0]);
-          c2 = $('div#graph_infowindow div.top div.stats div.partido:eq(1)').attr('class').split(" ");
-          $.each(c2, function(c){
-            if(c2[c] != "partido"){
-              $('div#graph_infowindow div.top div.stats div.partido:eq(1)').removeClass(c2[c]);
-            }
-          })
-          if (_.indexOf(parties, partido_2) !== -1) {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass(partido_2);
-          } else {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(1)').addClass('par2');
-          }
-          bar_width = normalizeBarWidth((valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100);
-
-          $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
-
-          // Third political party
-          var partido_3 = normalizePartyName(valuesHash[data_id].partido_3[0]);
-          c3 = $('div#graph_infowindow div.top div.stats div.partido:eq(2)').attr('class').split(" ");
-          $.each(c3, function(c){
-            if(c3[c] != "partido"){
-              $('div#graph_infowindow div.top div.stats div.partido:eq(2)').removeClass(c3[c]);
-            }
-          })
-          if (_.indexOf(parties, partido_3) !== -1) {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass(partido_3);
-          } else {
-            $('div#graph_infowindow div.top div.stats div.partido:eq(2)').addClass('par3');
-          }
-          bar_width = normalizeBarWidth((valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100);
-
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) span').width((bar_width<2)?2:bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
+          drawPartyBar(data_id, 1);
+          drawPartyBar(data_id, 2);
+          drawPartyBar(data_id, 3);
 
           // Other political party
-          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100);
-           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
+          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-
+          console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
           var data = valuesHash[data_id].evolution.split(",");
-          console.log(data);
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
           var minYear = 1975; var maxYear = 2011;
 
@@ -491,7 +463,7 @@
             }
             bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(0) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
             // Second political party
@@ -503,7 +475,7 @@
             }
             bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(1) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
             // Third political party
@@ -516,13 +488,13 @@
 
             bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(2) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = normalizeBarWidth((results.otros[0]*bar_width_multiplier)/100);
+            bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
@@ -586,7 +558,6 @@
 
           valuesHash[key] = val;
 
-
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
           $('#'+key).css("left",(offsetScreenX).toString()+"px");
@@ -603,19 +574,19 @@
     var failCircle = (function() {
       var data_not_found;
 
-      $(".fail_circle a").live("click", function(ev) {
+      $("#fail_circle a").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
       });
 
       function showError() {
         if (data_not_found != true) {
-          $('.fail_circle').fadeIn("slow", function() { data_not_found = true; });
+          $('#fail_background, #fail_circle').fadeIn("slow", function() { data_not_found = true; });
         }
       }
 
       function hideError() {
-        $('.fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+        $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
       }
 
       return {
@@ -642,12 +613,12 @@
     }
 
     //Function for update the values of the bubbles that are being visualized
-    function updateBubble (bubble,x,y,val,colors,party){
-      var offset = Math.abs(parseInt($(bubble).find('.outerBubble').css('top')) + (parseInt($(bubble).find('.outerBubble').css('height')) - val) / 2)*-1;
+    function updateBubble (id,x,y,val,colors,party){
+      var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
       var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
       var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
-      $(bubble).animate({
+      $(id).animate({
         left: x.toString() + "px",
         top: y.toString() + "px",
         opacity: 1
@@ -655,7 +626,7 @@
         //console.log("ukelele");
       });
 
-      $(bubble).find('.outerBubble').animate({
+      $(id).find('.outerBubble').animate({
         height: val.toString() + "px",
         width: val.toString() + "px",
         top: offset.toString() + "px",
@@ -663,14 +634,14 @@
       }, 1000);
 
 
-      $(bubble).find('.innerBubble').animate({
+      $(id).find('.innerBubble').animate({
         height: (val-10).toString() + "px",
         width: (val-10).toString() + "px",
         top: (offset + 5).toString() + "px",
         left: (offset + 5).toString() + "px",
         backgroundColor: backgroundColor
       }, 1000);
-      $(bubble).find('.innerBubble').addClass(normalizePartyName(party));
+      $(id).find('.innerBubble').addClass(normalizePartyName(party));
     }
 
 
@@ -709,10 +680,8 @@
         if(nBubbles==0){
           createBubbles(url);
         }
-      }
-                        );
+      });
     }
-
 
     function addNewBubble(region) {
       region = region.replace(/ /g,'_');
