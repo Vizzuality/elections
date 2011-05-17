@@ -168,7 +168,6 @@ function initializeGraph() {
       $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
     }
     bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
-    //console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
 
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
@@ -206,7 +205,6 @@ function initializeGraph() {
     bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
     $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
     $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-    //console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
     var data = valuesHash[data_id].evolution.split(",");
     var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -275,7 +273,7 @@ function initializeGraph() {
       if (url == null) {
         return false;
       } else {
-        goDeeper(url);
+        goDeeper(global_url + "/" + url);
       }
     });
 
@@ -447,7 +445,6 @@ function initializeGraph() {
       $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
     }
     bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
-    console.log(partido,party_data["partido_" + party_id][1], bar_width);
 
     $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
     $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
@@ -471,7 +468,7 @@ function initializeGraph() {
       $('div.graph_legend p.autonomy a').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        goDeeper(parent_url[parent_url.length-1]);
+        goDeeper(global_url + "/" + parent_url[parent_url.length-1]);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
       });
@@ -492,7 +489,6 @@ function initializeGraph() {
 
       // Other
       bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-      console.log(results.otros[1], bar_width);
 
       $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
       $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
@@ -601,7 +597,6 @@ var failCircle = (function() {
 
   function goToNextYear() {
     var next_available_year = getNextAvailableYear();
-    console.log(next_available_year);
     year = next_available_year;
     $("div.year_slider").slider('value', year);
     changeHash();
@@ -615,7 +610,6 @@ var failCircle = (function() {
 })();
 
 function setValue(url){
-console.log(url);
   $.getJSON(url, function(data) {
     var one = true;
     _.each(data, function(v,key) {
@@ -666,13 +660,17 @@ function updateBubble (id,x,y,val,colors,party){
 
 
 function goDeeper(url){
-  url = global_url + "/" + url;
   graphLegend.hide();
   //Get new name and deep
   var url_split = url.split('/');
-  deep = url_split[2];
+
+  deep = url_split[5];
+  //console.log("deep", deep);
+
   var length = url_split[url_split.length-1].split(compare)[0].length;
+
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+  //console.log("name", name);
 
   graphLegend.hideError();
 
