@@ -183,4 +183,4 @@ end
 
 all_time_end = Time.now  
 secs = all_time_end - all_time_start
-puts "Overall time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tiles/secs)} tiles per second."
+puts "Overall time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tile_count/secs)} tiles per second."
