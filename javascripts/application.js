@@ -8,15 +8,16 @@
   var tiles_version   = 3;
   var bubbles_version = 7;
   var gmaps_version   = 2;
-  var graph_version   = "v2";
-
+  var graph_version   = "v3";
 
   $(document).ready(function(){
 
-    /* -- domain name -- */
+    /* -- domain name -- environment.js :D */
       var domain_name = window.location.hostname;
       if (domain_name == "localhost" || domain_name == "elections") {
         global_url = proxy_url+"?proxy_url="+global_url;
+      } else if (domain_name == "datos.rtve.es") {
+        global_url = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
       }
     /* -- end proxy domain name -- */
 
