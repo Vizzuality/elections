@@ -1,5 +1,7 @@
 These files deploy election project code and data on this sever to RTVE Akamai.
 
+app.js - pulls latest code from git and pushes it to akamai
+data.js - updates all data sources on akamai with newer versions if they exist
 
 NOTE: They do not run any data generation or analysis. 
 
