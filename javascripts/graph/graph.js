@@ -517,13 +517,14 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = "/json/generated_data/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+  var url = json_url + "/json/graphs/"+deep+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
   createBubbles(url);
 }
 
 
 function createBubbles(url){
-  $.getJSON(url, function(data) {
+
+  $.ajax({url:url, jsonpCallback:"func", success:function(data) {
     var one = true;
     possibleValues = data;
     count = 0;
@@ -550,7 +551,7 @@ function createBubbles(url){
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
     });
-  });
+  }});
 }
 
 var failCircle = (function() {
@@ -578,7 +579,8 @@ var failCircle = (function() {
 })();
 
 function setValue(url){
-  $.getJSON(url, function(data) {
+console.log("setValue");
+  $.ajax({url: url, jsonpCallback:"func", success: function(data) {
     var one = true;
     _.each(data, function(v,key) {
       //Check data for show legend or not
@@ -589,9 +591,9 @@ function setValue(url){
       valuesHash[key] = v;
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
     });
-  })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
+  }});
+  //.success(function(){ failCircle.hide(); })
+  //.error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
