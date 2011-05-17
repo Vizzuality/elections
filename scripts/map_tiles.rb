@@ -56,6 +56,14 @@ if election_id == nil
   end      
 end
 
+# version path
+base_path     = "/mnt/www/data/tiles"
+versions      = Dir["#{base_path}/*/"]
+v_dir         = versions.map{|x| x.split("/").last}
+v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
+version_path  = "#{base_path}/#{v_next}" 
+
+
 # render each one entered
 election_ids = election_id.split(",")
 
@@ -120,15 +128,7 @@ election_ids.each do |election_id|
     {:zoom => 12, :xmin => 1832, :ymin => 1688, :xmax => 1902, :ymax => 1732},  
   ] 
 
-  #base_path      = "#{Dir.pwd}/tiles"
-  base_path     = "/mnt/www/data/tiles"
-  versions       = Dir["#{base_path}/*/"]
-  v_dir          = versions.map{|x| x.split("/").last}
-  v_next         = v_dir.size == 0 ? 0 : v_dir.max+1
-  save_path      = "#{base_path}/#{v_next}/#{election_id}" 
-                                                        
-  # base_path   = "#{Dir.pwd}/tiles"
-  # save_path   = "#{base_path}/#{election_id}"
+  save_path      = "#{version_path}/#{election_id}" 
   tile_url    = "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles"
   hydra       = Typhoeus::Hydra.new(:max_concurrency => 200)
   time_start  = Time.now
@@ -143,28 +143,28 @@ election_ids.each do |election_id|
 
   puts "Saving tiles for map_tiles_data to #{save_path}..."
 
-  # tile_extents.each do |extent|
-  #   (extent[:xmin]..extent[:xmax]).to_a.each do |x|
-  #     (extent[:ymin]..extent[:ymax]).to_a.each do |y|
-  #       file_name = "#{x}_#{y}_#{extent[:zoom]}_#{election_id}.png"
-  #       if File.exists? "#{save_path}/#{file_name}"
-  #         total_tiles -= 1
-  #       else  
-  #         file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1"
-  #         tile_request = Typhoeus::Request.new(file_url)
-  #         tile_request.on_complete do |response|
-  #           start_tiles += 1          
-  #           File.open("#{save_path}/#{file_name}", "w+") do|f|
-  #             f.write response.body
-  #             #puts file_url
-  #             puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
-  #           end          
-  #         end
-  #         hydra.queue tile_request  
-  #       end  
-  #     end
-  #   end    
-  # end
+  tile_extents.each do |extent|
+    (extent[:xmin]..extent[:xmax]).to_a.each do |x|
+      (extent[:ymin]..extent[:ymax]).to_a.each do |y|
+        file_name = "#{x}_#{y}_#{extent[:zoom]}_#{election_id}.png"
+        if File.exists? "#{save_path}/#{file_name}"
+          total_tiles -= 1
+        else  
+          file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1"
+          tile_request = Typhoeus::Request.new(file_url)
+          tile_request.on_complete do |response|
+            start_tiles += 1          
+            File.open("#{save_path}/#{file_name}", "w+") do|f|
+              f.write response.body
+              #puts file_url
+              puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
+            end          
+          end
+          hydra.queue tile_request  
+        end  
+      end
+    end    
+  end
 
   hydra.run
   time_end = Time.now

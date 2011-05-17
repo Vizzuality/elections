@@ -4,4 +4,6 @@ json/generated_data/tiles
 json/generated_data/autonomias
 json/generated_data/municipios
 json/generated_data/provincias
+json/generated_data/bubbles/**/*
 tiles/
+xml/
