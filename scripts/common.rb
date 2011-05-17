@@ -343,7 +343,7 @@ rescue
   return {}
 end
 
-def create_years_hash(records, variables, max_year, min_year)
+def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   years = {}
 
@@ -352,8 +352,8 @@ def create_years_hash(records, variables, max_year, min_year)
 
     variables.each do |variable|
       data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym]
-      data["#{variable.codigo}_max".to_sym] = records.first["#{variable.codigo}_#{year}_max".to_sym]
-      data["#{variable.codigo}_min".to_sym] = records.first["#{variable.codigo}_#{year}_min".to_sym]
+      data["#{variable.codigo}_max".to_sym] = max_min_vars["#{variable.codigo}_#{year}_max".to_sym]
+      data["#{variable.codigo}_min".to_sym] = max_min_vars["#{variable.codigo}_#{year}_min".to_sym]
     end
 
     records.each do |row|
@@ -405,24 +405,29 @@ def vars_sql_select(socioeco_table)
     variable.min_year.upto(variable.max_year) do |year|
       select << "#{variable.codigo}_#{year}"
     end
-    select << "#{variable.codigo}_min_max.*"
 
   end
 
   select.join(', ')
 end
 
-def vars_sql_froms(socioeco_table)
-  variables = *variables_vars.first
+def max_min_vars_query(zoom_level)
+
   tables = {
     1 => 'vars_socioeco_x_autonomia',
     2 => 'vars_socioeco_x_provincia',
-    4 => 'vars_socioeco_x_municipio'
+    4 => 'vars_socioeco_x_municipio',
+    6 => 'vars_socioeco_x_autonomia',
+    7 => 'vars_socioeco_x_provincia',
+    11 => 'vars_socioeco_x_municipio'
   }
 
+  variables = *variables_vars.first
+
+  selects = []
   froms = []
   variables.each do |variable|
-    next unless tables[variable.max_gadm.to_i] == socioeco_table
+    next unless tables[variable.max_gadm.to_i] == tables[zoom_level]
 
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
@@ -432,14 +437,21 @@ def vars_sql_froms(socioeco_table)
       SQL
     end
 
+    selects << <<-SQL
+      #{variable.codigo}_min_max.*
+    SQL
+
     froms << <<-SQL
       (SELECT
         #{fields.join(', ')}
-      FROM #{socioeco_table}) AS #{variable.codigo}_min_max
+      FROM #{tables[zoom_level]}) AS #{variable.codigo}_min_max
     SQL
   end
 
-  "#{froms.join(', ')},"
+  <<-SQL
+    SELECT #{selects.join(', ')}
+    FROM #{froms.join(', ')}
+  SQL
 end
 
 def next_folder(path)
