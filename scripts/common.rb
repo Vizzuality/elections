@@ -361,7 +361,7 @@ def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
     records.each do |row|
 
-      if row.proceso_electoral_year <= year
+      if row.proceso_electoral_year && row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
         data[:primer_partido_percent]  = row.primer_partido_percent
