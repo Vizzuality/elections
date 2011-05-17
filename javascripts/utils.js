@@ -153,6 +153,12 @@ var textInfoWindow = {
   }
 };
 
+var explanationContent = {
+  "Edad Media" : {
+    htmlContent: "<h1>Edad Media de la Población</h1><p>La edad  media de la población española se ha calculado en base a los datos de población inlcuidos en el censo nacional y publicados en la página web del INE.</p><p>Para calcular la edad media hemos multiplicado el valor medio de cada quinquenio por el número de personas situadas en ese rango, para después, volver a dividir entre el total.</p>"
+  }
+};
+
 var table_zoom = {
   12:'gadm4',
   11:'gadm4',
