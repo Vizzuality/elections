@@ -44,7 +44,7 @@ function initializeGraph() {
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().attr('id');
+      var text = $(this).parent().find('span.name').html();
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -180,7 +180,9 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+    var name = $("div#" + selectedBubble + " span.name").html();
+
+    $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
 
@@ -244,9 +246,9 @@ function initializeGraph() {
 
     $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#graph_infowindow div.chart img').show();
+    $('div#graph_infowindow div.chart img').show();
 
-      showInfowindow(left,top);
+    showInfowindow(left,top);
   }
 
   function bindEvents() {
@@ -556,10 +558,11 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
+      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
@@ -708,7 +711,7 @@ function addNewBubble(region) {
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
 
-    if (selected !== undefined) {
+    if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
     }
     selectedBubble = region;
