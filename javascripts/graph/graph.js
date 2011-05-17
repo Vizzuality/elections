@@ -651,8 +651,8 @@ function setValue(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
     });
   })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
+  .success(function(){ graphFailCircle.hide(); })
+  .error(function(){ graphFailCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
