@@ -1,4 +1,3 @@
-
 // Graph global vars {#}
 var deep = "autonomias";
 var name = "España";
@@ -547,7 +546,6 @@ function restartGraph() {
 
 
 function createBubbles(url){
-
   $.getJSON(url, function(data) {
     var one = true;
     possibleValues = data;
@@ -577,8 +575,8 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
+  .success(function(){ createdBubbles = true; failCircle.hide(); })
+  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
 failCircle = (function() {
@@ -626,15 +624,16 @@ failCircle = (function() {
 })();
 
 function setValue(url){
+
   $.getJSON(url, function(data) {
     var one = true;
     _.each(data, function(v,key) {
-      //Check data for show legend or not
-      if (one) {
+      if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         one = false;
       }
       valuesHash[key] = v;
+      //console.log('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
     });
   })
