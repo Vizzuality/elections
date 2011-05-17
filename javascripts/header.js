@@ -1,4 +1,5 @@
 
+  var createdBubbles = false;
   var procesos_electorales;
   var animate_interval;
   var previous_year;
@@ -106,7 +107,10 @@
         }
 
         comparewindow.hide();
-        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+        var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+
+         // Let's decide if we must update (setValue) or create the bubbles
+        (createdBubbles == true) ? setValue(url) : createBubbles(url);
         changeHash();
       }
     });
