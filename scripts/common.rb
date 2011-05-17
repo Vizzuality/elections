@@ -3,7 +3,7 @@
 require "rubygems"
 require "bundler/setup"
 require "cartodb-rb-client"
-require "ruby-debug"
+# require "ruby-debug"
 require "net/https"
 require 'uri'
 require "progress_bar"
@@ -43,19 +43,9 @@ THIRD_PARTY_COLORS = {
   "PR" => ["#CE0E16", "#008140"],
   "UV" => ["#EC7B37", "#EABA4B"]
 }
-#####
 
-# Paths
-# =====
-# Autonomies:
-#  - json/generated_data/autonomies_<var_name>.json
-# Provinces:
-#  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
-#    example: json/generated_data/provinces/Andalucia_paro_1999.json
-# Municipalities:
-#  - json/generated_data/municipalities/<province_name>_<var_name>.json
-#    example: json/generated_data/provinces/Sevilla_paro_1999.json
-###
+# Versions
+$graphs_next_version = "v1"
 
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
@@ -106,9 +96,9 @@ def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
   var = row[variable].to_f
   if var > 0
-    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
+    return ("%.2f" % ((var * 200.0) / max.to_f)).to_f
   else
-    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
+    return ("%.2f" % ((var * -200.0) / min.to_f)).to_f
   end
 end
 
@@ -117,8 +107,8 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
   if known_parties.keys.include?(row[:primer_partido_id])
-    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
-    x_coordinate += 100.0
+    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    x_coordinate += 50.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
   else
@@ -174,67 +164,85 @@ def get_known_parties(parties)
 end
 
 def autonomies_path(variable)
-  "json/generated_data/autonomias/#{variable}.json"
+  "graphs/autonomias/#{$graphs_next_version}/#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
-  "json/generated_data/provincias/#{autonomy_name}_#{variable}.json"
+  "graphs/provincias/#{$graphs_next_version}/#{autonomy_name}_#{variable}.json"
 end
 
 def municipalities_path(province_name, variable)
-  "json/generated_data/municipios/#{province_name}_#{variable}.json"
+  "graphs/municipios/#{$graphs_next_version}/#{province_name}_#{variable}.json"
 end
 
-def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{file_name.normalize}.json"
-end
-
-def get_authonomy_results(autonomy_name, proceso_electoral_id)
-  # votes per autonomy
-  query = <<-SQL
-  select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id,
-         primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-         tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
-  from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
-  where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND
-        gadm1.name_1 = '#{autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
-        AND proceso_electoral_id = #{proceso_electoral_id}
-SQL
-  parties = get_parties
-  if row = $cartodb.query(query)[:rows].first
+def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
+  file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
+  if File.file?(file_path)
+    json = JSON.parse(File.read(file_path)[5..-3])[autonomy_name]
     return {
-      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+      :partido_1 => json["partido_1"],
+      :partido_2 => json["partido_2"],
+      :partido_3 => json["partido_3"],
+      :otros => ["Otros", json["resto_partidos_percent"]]
     }
   else
-    return {}
+    # votes per autonomy
+    query = <<-SQL
+    select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id,
+           primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
+           tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
+    from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
+    where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND
+          gadm1.name_1 = '#{raw_autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
+          AND proceso_electoral_id = #{proceso_electoral_id}
+  SQL
+    parties = get_parties
+    if row = $cartodb.query(query)[:rows].first
+      return {
+        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
+        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
+        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
+        :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+      }
+    else
+      return {}
+    end
   end
 end
 
-def get_province_results(province_name, proceso_electoral_id)
-  # votes per autonomy
-  query = <<-SQL
-  select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id,
-         primer_partido_id, primer_partido_percent, tercer_partido_id,
-         segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
-         censo_total, votantes_totales, resto_partido_percent
-  from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
-  where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id AND
-        vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{province_name}'
-SQL
-  parties = get_parties
-  rows = $cartodb.query(query)[:rows]
-  if row = $cartodb.query(query)[:rows].first
+def get_province_results(autonomy_name, year, raw_province_name, proceso_electoral_id)
+  file_path = "../graphs/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
+  if File.file?(file_path)
+    json = JSON.parse(File.read(file_path))[raw_province_name.normalize]
     return {
-      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+      :partido_1 => json["partido_1"],
+      :partido_2 => json["partido_2"],
+      :partido_3 => json["partido_3"],
+      :otros => ["Otros", json["resto_partidos_percent"]]
     }
   else
-    return {}
+    # votes per autonomy
+    query = <<-SQL
+    select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id,
+           primer_partido_id, primer_partido_percent, tercer_partido_id,
+           segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
+           censo_total, votantes_totales, resto_partido_percent
+    from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
+    where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id AND
+          vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{raw_province_name}'
+SQL
+    parties = get_parties
+    rows = $cartodb.query(query)[:rows]
+    if row = $cartodb.query(query)[:rows].first
+      return {
+        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
+        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
+        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
+        :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+      }
+    else
+      return {}
+    end
   end
 end
 
@@ -283,24 +291,6 @@ SQL
   result
 end
 
-def get_province_variable_evolution(custom_variable_name, province_name)
-  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
-  variables = []
-  raw_variables.each do |raw_variable_hash|
-    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
-      variables << "#{raw_variable_hash[:codigo]}_#{year}"
-    end
-  end.flatten.compact
-  query = <<-SQL
-  select #{variables.join(',')}
-  from vars_socioeco_x_provincia, gadm2
-  where vars_socioeco_x_provincia.gadm2_cartodb_id = gadm2.cartodb_id AND gadm2.name_2 = '#{province_name}'
-SQL
-  values = $cartodb.query(query)[:rows].first.try(:values) || []
-  return [] if values.empty?
-  return get_from_every_year(variables, values)
-end
-
 def get_provinces_variable_evolution(custom_variable_name)
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm > 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
@@ -326,24 +316,6 @@ SQL
   result
 end
 
-def get_municipalities_variable_evolution(custom_variable_name, municipality_name)
-  raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
-  variables = []
-  raw_variables.each do |raw_variable_hash|
-    raw_variable_hash[:min_year].to_i.upto(raw_variable_hash[:max_year].to_i) do |year|
-      variables << "#{raw_variable_hash[:codigo]}_#{year}"
-    end
-  end.flatten.compact
-  query = <<-SQL
-  select #{variables.join(',')}
-  from vars_socioeco_x_municipio, gadm4
-  where vars_socioeco_x_municipio.gadm4_cartodb_id = gadm4.cartodb_id AND gadm4.name_4 = '#{municipality_name.gsub(/\'/,"\\\'")}'
-SQL
-  values = $cartodb.query(query)[:rows].first.try(:values) || []
-  return [] if values.empty?
-  return get_from_every_year(variables, values)
-end
-
 def get_municipalities_variables_evolution(province_id, custom_variable_name)
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where max_gadm = 4 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
@@ -367,6 +339,8 @@ SQL
     end
   end
   result
+rescue
+  return {}
 end
 
 def create_years_hash(records, variables, max_year, min_year)
@@ -466,6 +440,14 @@ def vars_sql_froms(socioeco_table)
   end
 
   "#{froms.join(', ')},"
+end
+
+def next_folder(path)
+  last_dir = Dir.entries(path).map(&:to_i).sort.last
+  next_dir = last_dir + 1
+  next_dir = "#{path}#{next_dir}/"
+  FileUtils.mkdir_p(next_dir)
+  next_dir
 end
 
 class String

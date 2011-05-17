@@ -25,9 +25,8 @@ if ARGV[0] =~ /\d+/
 end
 
 base_path = FileUtils.pwd
-dir_path = "#{base_path}/../json/generated_data/municipios"
+dir_path = "#{base_path}/../graphs/municipios/#{$graphs_next_version}"
 FileUtils.mkdir_p(dir_path)
-
 ### MUNICIPALITIES
 ##################
 
@@ -45,16 +44,6 @@ autonomies.each do |autonomy_hash|
   selected_provinces.each do |province|
     province_name = province[:name_2].normalize
     province_id = province[:id_2]
-#     query = <<-SQL
-# select #{MUNICIPALITIES_TABLE}.cartodb_id, name_4, votantes_totales, censo_total, #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id, 
-#    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-#    ine_municipality_id, ine_province_id, tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
-#    #{variables.join(',')}
-# from   #{MUNICIPALITIES_TABLE}, #{MUNICIPALITIES_VOTATIONS}, vars_socioeco_x_municipio
-# where #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id = #{MUNICIPALITIES_TABLE}.cartodb_id AND 
-#   vars_socioeco_x_municipio.gadm4_cartodb_id = #{MUNICIPALITIES_VOTATIONS}.gadm4_cartodb_id AND
-#   #{MUNICIPALITIES_TABLE}.id_2 = #{province[:id_2]}
-# SQL
     query = <<-SQL
 select nombre, votantes_totales, censo_total,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
@@ -74,14 +63,15 @@ SQL
       evolution[custom_variable_name] ||= {} 
       all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-        year = variable.match(/\d+/)[0].to_i - 1
+        year = variable.match(/\d+/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
-          proceso_electoral_id = processes[year]
           year -= 1
+          proceso_electoral_id = processes[year]
         end
       end
       next if year == 1974
-      province_results = get_province_results(province_name, proceso_electoral_id)
+      year ||= variable.match(/\d+/)[0].to_i
+      province_results = get_province_results(autonomy_name, year, province[:name_2], proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
@@ -91,7 +81,7 @@ SQL
         municipality.symbolize_keys!
         putc '.'
         municipality_name = municipality[:nombre].normalize
-        evolution[custom_variable_name][municipality[:nombre]] ||= all_evolutions[municipality[:nombre]]
+        evolution[custom_variable_name][municipality[:nombre]] ||= (all_evolutions[municipality[:nombre]] rescue [])
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:name] = municipality[:nombre]
@@ -107,14 +97,13 @@ SQL
         json[municipality_name][:partido_3] = [parties[municipality[:tercer_partido_id]],  municipality[:tercer_partido_percent].to_f]
         json[municipality_name][:resto_partidos_percent] = municipality[:resto_partido_percent]
         json[municipality_name][:info] = ""
-        json[municipality_name][:info] = ""
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
         json[municipality_name][:parent_results] = province_results
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
-      fd.write(json.to_json)
+      fd.write("func("+json.to_json+");")
       fd.close        
     end
   end
