@@ -124,7 +124,7 @@ election_ids.each do |election_id|
   base_path     = "/mnt/www/data/tiles"
   versions       = Dir["#{base_path}/*/"]
   v_dir          = versions.map{|x| x.split("/").last}
-  v_next         = v_dir.size == 0 ? 0 : v_dir.max+1
+  v_next         = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
   save_path      = "#{base_path}/#{v_next}/#{election_id}" 
                                                         
   # base_path   = "#{Dir.pwd}/tiles"
