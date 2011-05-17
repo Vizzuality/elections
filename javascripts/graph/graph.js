@@ -37,7 +37,7 @@ function initializeGraph() {
 
   initAvailableData("autonomias");
   initAvailableData("provincias");
-  //initAvailableData("municipios");
+  initAvailableData("municipios");
 
   $(".innerBubble").live({
     mouseenter: function () {
@@ -85,12 +85,14 @@ function initializeGraph() {
 
       graphBubbleTooltip.hide();
       graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
+      console.log($(this).parent().attr('id'));
     }
   });
 
   // Bubble graph infowindow
   graphBubbleInfowindow = (function() {
     var open = false;
+    var selected_value;
 
     //Create infowindow and add it to DOM
     $('body').append(
@@ -127,7 +129,18 @@ function initializeGraph() {
     $('div#graph_infowindow').css({opacity:1,visibility:'visible'});
   }
 
+  function updateInfoText() {
+    var comparison_variable = normalization[compare];
+    console.log(comparison_variable);
+    var info_text = textInfoWindow[comparison_variable];
+    var sign     = (selected_value < 0) ? "negative" : "positive";
+    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong> " + info_text["after_" + sign];
+
+    $('div#graph_infowindow p.info').html(text);
+  }
+
   function showInfowindow(left, top) {
+
     if ( $.browser.msie ) {
       $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
       $('div#graph_infowindow').show();
@@ -136,6 +149,7 @@ function initializeGraph() {
       $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
       $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
     }
+    updateInfoText();
   }
 
   function hideInfowindow() {
@@ -237,6 +251,7 @@ function initializeGraph() {
           if (year - 1975 == i - 1 ) {
             find = true;
             find_year = count;
+            selected_value = parseFloat(data[i])
           }
         }
         if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
@@ -685,7 +700,7 @@ function goDeeper(url){
   var length = url_split[url_split.length-1].split(compare)[0].length;
 
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
-  //console.log("name", name);
+  console.log("name", name);
 
   graphLegend.hideError();
 
