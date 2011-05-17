@@ -5,6 +5,7 @@
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
     this.json_tile_url = "/bubbles/";
+    this.loading_tiles = 0;
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -53,14 +54,22 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
-    //if (x==61 && y==47 && z==7) {
-      //console.log(x,y,z);
       // Call service
+      
+      // Loading tiles spinner
+      this.loading_tiles++;
+      
       $.ajax({
         method: "GET",
         dataType: 'json',
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
+          me.loading_tiles--;
+          
+          if (me.loading_tiles == 0) {
+            alert('loaded');
+          }
+          
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
           var worldcoord = new google.maps.Point(pixelcoord.x/Math.pow(2,zoom),pixelcoord.y/Math.pow(2,zoom));
@@ -82,6 +91,7 @@
           return div;
         },
         error: function(e) {
+          me.loading_tiles--;
           return div;
         }
       });
@@ -203,11 +213,14 @@
           radius = 8;
         }
         
-        var old_radius = ($('div#'+ele.id).width()/2);
-        var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
-        var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
+        if ($('div#'+ele.id).length) {
+          var old_radius = ($('div#'+ele.id).width()/2);
+          var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
+          var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
 
-        $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+          $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+        }
+
       });
     });
   }
