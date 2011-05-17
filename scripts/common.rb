@@ -45,7 +45,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v1"
+$graphs_next_version = "v2"
 
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
