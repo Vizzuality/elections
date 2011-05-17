@@ -3,3 +3,5 @@ source "http://rubygems.org"
 gem "cartodb-rb-client", :git => "git@github.com:Vizzuality/cartodb-rb-client.git"
 gem "progress_bar"
 gem "libxml-ruby"
+# gem "ruby-debug19", :require => "ruby-debug", :platforms => :mri_19
+gem "yajl-ruby"
