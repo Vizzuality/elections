@@ -6,7 +6,7 @@
   var proxy_url      = "proxy.php";
   var tiles_version   = 3;
   var bubbles_version = 5;
-  var gmaps_version   = 3;
+  var gmaps_version   = 2;
   var graph_version   = "v1";
 
 
