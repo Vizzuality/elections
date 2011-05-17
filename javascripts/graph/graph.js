@@ -580,7 +580,7 @@ var failCircle = (function() {
 
 function setValue(url){
 console.log("setValue");
-  $.ajax({url: url, jsonpCallback:"func", success: function(data) {
+  $.ajax({url: url, dataType:"jsonp", jsonpCallback:"func", success: function(data) {
     var one = true;
     _.each(data, function(v,key) {
       //Check data for show legend or not
