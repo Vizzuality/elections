@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + "/common"
 cartodb                                       = get_cartodb_connection
 processes                                     = get_processes
 variables, variables_hash, max_year, min_year = *variables_vars
+json_folder                                   = next_folder('../json/generated_data/google_names_cache/')
 
 def municipalities_data_sql
   <<-SQL
@@ -37,10 +38,6 @@ def municipalities_data_sql
    INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
   SQL
 end
-
-base_path = FileUtils.pwd
-FileUtils.rm_rf("#{base_path}/../json/generated_data/google_names_cache")
-FileUtils.mkdir_p("#{base_path}/../json/generated_data/google_names_cache")
 
 ## MUNICIPALITIES GOOGLE NAMES CACHE GENERATOR
 ##############################################
@@ -83,7 +80,7 @@ municipalities_data.each do |google_maps_name, records|
   json[:provincia] = records.first.provincia
   json[:data] = create_years_hash(records, variables, max_year, min_year)
 
-  fd = File.open(google_cache_path(google_maps_name),'w+')
+  fd = File.open("#{json_folder+google_maps_name}.json",'w+')
   fd.write("func(#{json.to_json});")
   fd.close
 
