@@ -70,6 +70,39 @@
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
     });
+    
+    
+    // Next - before 
+    $('div.years_content a.left').click(function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      var new_value = year-1;
+      $("div.year_slider").slider('value',new_value);
+
+      if (state == 'mapa') {
+        if (graph_hack_year[new_value+1] != graph_hack_year[new_value]) {
+          refreshTiles();
+        }
+        refreshBubbles();
+      } else {
+        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+      }
+    });
+    $('div.years_content a.right').click(function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      var new_value = year+1;
+      $("div.year_slider").slider('value',new_value);
+      if (state == 'mapa') {
+        if (graph_hack_year[new_value-1] != graph_hack_year[new_value]) {
+          refreshTiles();
+        }
+        refreshBubbles();
+      } else {
+        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+      }
+    });
+    
 
 
 
@@ -103,18 +136,23 @@
           if (graph_hack_year[previous_year] != graph_hack_year[ui.value]) {
             refreshTiles();
           }
-          refreshBubbles();
+          if (ui.value!=previous_year) {
+            refreshBubbles();
+          }
         }
 
-        comparewindow.hide();
-        var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+        if (ui.value!=previous_year) {
+          comparewindow.hide();
+          var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
-        if (createdBubbles == true) {
-          setValue(url);
-        } else {
-          createBubbles(url);
+          // Let's decide if we must update (setValue) or create the bubbles
+          if (createdBubbles == true) {
+            setValue(url);
+          } else {
+            createBubbles(url);
+          }
+          changeHash();
         }
-        changeHash();
       }
     });
 

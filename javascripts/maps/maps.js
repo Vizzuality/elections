@@ -165,20 +165,37 @@
   function refreshTiles() {
     $('div#peninsula div').each(function(i,ele){
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
-        $(ele).animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
-          var old_url = $(this).children('img').attr('src');
-          var tm = old_url.split("/");
-          var old_process = tm[tm.length-2];
-          var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
+        
+        // duplicate tile and add to div below current tile
+        var old_image = $(ele).children('img');
+        var new_image = old_image.clone();
+        new_image.css('z-index', old_image.css('z-index') - 1);                
+        new_image.css('position','absolute');
+        new_image.css('top',0);
+        new_image.css('left',0);
+        new_image.css('display',"hidden");
 
-          $(this).children('img').attr('src',new_url);          
-          $(this).children('img').one("load",function(){
-            $(this).parent().animate({opacity:0.65},{duration:500,queue:true});
-          })
+        $(ele).prepend(new_image);        
+
+        // update new tile with new url
+        var old_url = old_image.attr('src');
+        var tm = old_url.split("/");
+        var old_process = tm[tm.length-2];
+        var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
+        new_image.attr('src',new_url);          
+
+        // when it loads the new image, fade out the old one
+        new_image.one("load",function(){
+
+          old_image.animate({opacity:0},{ duration: 400, queue: true ,complete: function() {
+              old_image.remove();
+            }
+          });
+          
+          new_image.animate({opacity:100},{ duration: 500, queue: false})          
           .each(function(){
             if(this.complete) $(this).trigger("load");
-          });          
-        }
+          });                              
         });
       }
     });

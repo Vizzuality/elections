@@ -6,6 +6,9 @@
     <title>RTVE - Mashup</title>
     <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" type="text/css" href="http://www.rtve.es/css/miniheadwhite.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="http://www.rtve.es/css/css_externos.css" media="screen">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/plugins/underscore.js" type="text/javascript" charset="utf-8"></script>
@@ -78,7 +81,99 @@
     -->
     <!-- End comScore Tag -->
 
-    <iframe src="http://www.rtve.es/comunes/cabecera/mod_minicabecera_white.inc" width="1000" height="100" frameborder="0"></iframe>
+    <!--INCLUDE-->
+    <!-- estadisticas sin overlay -->
+    <div class="hddn">
+      <!-- ESTADISTICAS -->
+      <!-- START Nielsen//NetRatings SiteCensus? V5.3 -->
+      <!-- COPYRIGHT 2007 Nielsen//NetRatings -->
+      <script type="text/javascript">
+      var _rsCI="es-rtve";
+      var _rsCG="0";
+      var _rsDN="//secure-uk.imrworldwide.com/";
+      </script>
+      <script type="text/javascript" src="http://www.rtve.es/js/Nielsen_v53.js"></script>
+      <noscript>
+        <div><img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=es-rtve&amp;cg=0&amp;cc=1" alt=""/></div>
+      </noscript>
+      <!-- END Nielsen//NetRatings SiteCensus? V5.3 -->
+      <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7007193-1']);
+      _gaq.push(['_setAllowAnchor', true]);
+      _gaq.push(['_setDomainName', '.rtve.es']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_setAllowHash', false]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+        })();
+        </script>
+      </div>
+      <div class="container"> 
+        <div class="corner4 T2" id="heads"> 
+          <div class="round"> 
+            <span class="corner ltop"></span><span class="corner rtop"></span> 
+            <div class="mark"> 
+              <span class="logo"><a title="RTVE.es" href="http://www.rtve.es/"><span class="hddn">RTVE.es</span></a></span> 
+              <ul class="maintabs"> 
+                <li> 
+                  <h3> 
+                    <a class="portada" title="Portada" href="http://www.rtve.es/"><span class="hddn">Portada</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="noticias" title="Noticias" href="http://www.rtve.es/noticias/"><span class="hddn">Noticias</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="television" title="Televisi&oacute;n" href="http://www.rtve.es/television/"><span class="hddn">Televisi&oacute;n</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="radio" title="Radio" href="http://www.rtve.es/radio/"><span class="hddn">Radio</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="deportes" title="Deportes" href="http://www.rtve.es/deportes/"><span class="hddn">Deportes</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="tiempo" title="Tiempo" href="http://www.rtve.es/eltiempo/"><span class="hddn">Tiempo</span></a> 
+                  </h3> 
+                </li> 
+                <li> 
+                  <h3> 
+                    <a class="infantil" title="Infantil" href="http://www.rtve.es/infantil/"><span class="hddn">Infantil</span></a> 
+                  </h3> 
+                </li> 
+              </ul> 
+              <div class="searchlog"> 
+                <span class="movile"><a href="http://movil.rtve.es/">M&oacute;viles</a></span> 
+                <div class="mainsearchtop">
+                  <form id=formSearch2 method="get" action="http://www.rtve.es/buscador/buscar" >
+                    <input type="hidden" value="3" name="modo" id="modoSearch2"/>
+                    <!--  <input type="hidden" value="" name="cadena" id="cadenaSearch2"/> -->
+                    <input type="hidden" value="1" name="pagina" id="paginaSearch2"/>
+                    <label class="hddn" for="searchHead">Buscar</label>
+                    <input type="search" value="" name="cadena" results="10" autosave="autosave.rtve" id="searchHead" class="searchbox"/>
+                    <input type="submit" value="Buscar" id="buscar" class="btnhead"/>
+                  </form>
+                </div> 
+              </div> 
+            </div> 
+          </div> 
+        </div> 
+      </div>
+    <!-- END INCLUDE-->
 
     <div id="header">
       <span class="end_left"></span>
@@ -169,7 +264,9 @@
 	        </div>
 	      </div>
       <div class="years_content">
-        <a class="action play" href="#play">Animation</a>
+        <a class="action play" href="#play">Animación</a>
+        <a class="left" href="#anterior_año">Anterior</a>
+        <a class="right" href="#siguiente_año">Siguiente</a>
         <div class="year_slider"></div>
         <div class="slider_bkg">
           <span class="slider_right"></span>
