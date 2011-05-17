@@ -186,11 +186,13 @@
 
         // when it loads the new image, fade out the old one
         new_image.one("load",function(){
-          new_image.animate({opacity:100},{ duration: 500, queue: false});          
-          old_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
+
+          old_image.animate({opacity:0},{ duration: 400, queue: true ,complete: function() {
               old_image.remove();
             }
-          })
+          });
+          
+          new_image.animate({opacity:100},{ duration: 500, queue: false})          
           .each(function(){
             if(this.complete) $(this).trigger("load");
           });                              
