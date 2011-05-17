@@ -84,7 +84,7 @@ municipalities_data.each do |google_maps_name, records|
   json[:data] = create_years_hash(records, variables, max_year, min_year)
 
   fd = File.open(google_cache_path(google_maps_name),'w+')
-  fd.write(json.to_json)
+  fd.write("func(#{json.to_json});")
   fd.close
 
 end
