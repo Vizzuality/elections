@@ -97,7 +97,7 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
-        json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_i]
+        json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_s]
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       putc '.'
