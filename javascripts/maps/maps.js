@@ -59,7 +59,7 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         return global_url + this.urlPattern + tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom + "_" + procesos_electorales[year]+".png";
+         return global_url + this.urlPattern + tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.75,
@@ -168,8 +168,7 @@
         $(ele).animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
           var old_url = $(this).children('img').attr('src');
           var old_process = (old_url).substring(old_url.length-6,old_url.length-4);
-          var new_url = (old_url).substring(0, old_url.length-6) + procesos_electorales[year] +".png";
-          var new_url = new_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
+          var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
 
           $(this).children('img').attr('src',new_url);          
           $(this).children('img').one("load",function(){
