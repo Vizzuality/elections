@@ -75,8 +75,7 @@ municipalities_data.each do |google_maps_name, records|
     :google_maps_name => google_maps_name,
     :name => records.first.name,
     :center_longitude => records.first.center_longitude,
-    :center_latitude => records.first.center_latitude,
-    :variables => variables_hash
+    :center_latitude => records.first.center_latitude
   }
   json[:provincia] = records.first.provincia
   json[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
