@@ -9,6 +9,7 @@ provinces      = get_provinces
 variables      = get_variables(4)
 parties        = get_parties
 parties_known  = get_known_parties(parties)
+province_results = get_province_results
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
 
@@ -73,7 +74,6 @@ SQL
       next if year == 1974
       year ||= variable.match(/\d+/)[0].to_i
       variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
-      province_results = get_province_results(autonomy_name, year, province[:name_2], proceso_electoral_id)
       json = {}
       votes_per_municipality = JSON.parse(response.body)["rows"].select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
@@ -101,7 +101,7 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
-        json[municipality_name][:parent_results] = province_results
+        json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_i]
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
