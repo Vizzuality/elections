@@ -33,8 +33,8 @@ var custom_map_style = [{featureType:"administrative.country",elementType:"all",
 var tooltipInfo = {
   "Envejecimiento" : {
     content: "Desviación respecto a la media del porcentaje de personas mayores de 65 años",
-    left: "mas mayores",
-    right: "mas jóvenes",
+    left: "más mayores",
+    right: "más jóvenes",
     legendTop: "Más % de mayores de 65 años",
     legendBottom:"Menos % de mayores de 65 años"
   },
@@ -62,7 +62,7 @@ var tooltipInfo = {
   "Inmigracion" : {
     content: "Desviación respecto a la media del % de inmigración",
     left: "menos inmigrantes",
-    right: "mas inmigrantes",
+    right: "más inmigrantes",
     legendTop: "Mayor % de inmigración",
     legendBottom:"Menor % de inmigración"
   },
@@ -75,81 +75,81 @@ var tooltipInfo = {
   },
   "Salario medio" : {
     content: "Desviación respecto a la media del salario medio por habitante",
-    left: "sueldos mas bajos",
-    right: "sueldos mas altos",
-    legendTop: "Sueldos mas altos",
-    legendBottom:"Sueldos mas bajos"
+    left: "sueldos más bajos",
+    right: "sueldos más altos",
+    legendTop: "Sueldos más altos",
+    legendBottom:"Sueldos más bajos"
   },
   "Estudios acabados" : {
     content: "Desviación respecto a la media del porcentaje de personas con estudios acabados",
     left: "menos habitantes",
-    right: "mas habitantes",
-    legendTop: "Mas habitantes",
+    right: "más habitantes",
+    legendTop: "más habitantes",
     legendBottom:"Menos habitantes"
   },
   "Penetración internet" : {
     content: "Desviación respecto a la media del porcentaje de personas acceso a internet",
     left: "menos habitantes",
-    right: "mas habitantes",
-    legendTop: "Mas habitantes",
+    right: "más habitantes",
+    legendTop: "más habitantes",
     legendBottom:"Menos habitantes"
   }
 };
 
 var textInfoWindow = {
-  "Envejecimiento" : {
-    before_positive: "Aquí hay un ",
+  envejecimiento_normalizado : {
+    before_negative: "Aquí hay un ",
     after_negative: " menos de personas mayores de 65 años, que en el resto de España",
     before_positive: "Aquí hay un ",
-    after_positive: " mas de personas mayores de 65 años, que en el resto de España"
+    after_positive: " más de personas mayores de 65 años, que en el resto de España"
   },
   paro_normalizado : {
-    before_positive: "La tasa de paro se encuentra a un ",
+    before_negative: "La tasa de paro se encuentra a un ",
     after_negative: " por debajo de la media",
     before_positive: "La tasa de paro se encuentra a un ",
     after_positive: " por encima de la media"
   },
-  "PIB per cápita" : {
+  pib_normalizado : {
+    before_negative: "El PIB per cápita aquí es un ",
+    after_negative: " más bajo que la media nacional",
     before_positive: "El PIB per cápita aquí es un ",
-    after_negative: " mas bajo que la media nacional",
-    before_positive: "El PIB per cápita aquí es un ",
-    after_positive: " mas alto que la media nacional"
+    after_positive: " más alto que la media nacional"
   },
-  "Edad media" : {
+  edad_media_normalizada : {
+    before_negative: "Su población es ",
+    after_negative: " años más jóven que la media nacional",
     before_positive: "Su población es ",
-    after_negative: " años mas jóven que la media nacional",
-    before_positive: "Su población es ",
-    after_positive: " años mas mayor que la media nacional"
+    after_positive: " años más mayor que la media nacional"
   },
-  "Inmigración" : {
-    before_positive: "El porcentaje de inmigración en este municipio está ",
+  inmigracion_normalizado : {
+    before_negative: "El porcentaje de inmigración en este municipio está ",
     after_negative: " por debajo de la media",
     before_positive: "El porcentaje de inmigración en este municipio está ",
     after_positive: " por encima de la media"
   },
-  "Saldo vegetativo": {
-    before_positive: "El crecimiento de la población está un ",
+  saldo_vegetativo_normalizado : {
+    before_negative: "El crecimiento de la población está un ",
     after_negative: " por debajo de la media",
     before_positive: "El crecimiento de la población está un ",
     after_positive: " por encima de la media"
   },
-  "Salario medio": {
-    before_positive: "El salario medio aquí está un ",
+  salario_medio_normalizado : {
+    before_negative: "El salario medio aquí está un ",
     after_negative: " por debajo de la media",
     before_positive: "El salario medio aquí está un ",
     after_positive: " por encima de la media"
   },
-  "Estudios acabados": {
-    before_positive: "Un ",
+  estudios_acabados: {
+    before_negative: "Un ",
     after_negative: " menos que la media nacional, tiene los estudios secundarios terminados",
     before_positive: "Un ",
-    after_positive: " mas que la media nacional, tiene los estudios secundarios terminados"
+    after_positive: " más que la media nacional, tiene los estudios secundarios terminados"
   },
-  "Penetracion internet": {
-    before_positive: "Un ",
+  penetracion_internet_normalizado: {
+    before_negative: "Un ",
     after_negative: " menos que la media, tiene acceso a internet aquí",
     before_positive: "Un ",
-    after_positive: " mas que la media, tiene acceso a internet aquí"
+    after_positive: " más que la media, tiene acceso a internet aquí"
   }
 };
 
