@@ -101,7 +101,7 @@
     	
     	console.log(info);
 
-    	if (info.name != undefined || info['data'][year]!=undefined || info['data'][year][normalization[compare]]!=null) {
+    	if (info.name != undefined || info['data'][year]!=undefined || info['data'][year][normalization[compare]]!=undefined) {
     	  //Set dimensions and bkg first
     	  this.offsetVertical_ = -276;
         this.offsetHorizontal_ = -127;
@@ -117,86 +117,86 @@
       }
       
       
-      // $('div#infowindow h2').text(info.name);
-      // $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
-      // $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
-      // 
-      // // Remove previous political style bars
-      // $('div#infowindow div.stats div.partido').each(function(i,ele){
-      //   $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-      // });
-      // var bar_width;
-      // 
-      // // First political party
-      // var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
-      // if (_.indexOf(parties, partido_1) !== -1) {
-      //   $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
-      // } else {
-      //   $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
-      // }
-      // bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
-      // $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-      // $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
-      // 
-      // // Second political party
-      // var partido_2 = normalizePartyName(info['data'][year]['segundo_partido_name']);
-      // if (_.indexOf(parties, partido_2) !== -1) {
-      //   $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
-      // } else {
-      //   $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
-      // }
-      // bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
-      // $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-      // $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
-      // 
-      // // Third political party
-      // var partido_3 = normalizePartyName(info['data'][year]['tercer_partido_name']);
-      // if (_.indexOf(parties, partido_3) !== -1) {
-      //   $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
-      // } else {
-      //   $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
-      // }
-      // 
-      // bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
-      // $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-      // $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
-      // 
-      // // Other
-      // bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*175)/100);
-      // $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-      // $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-      // 
-      // 
-      // var max = 0; var count = 0; var find = false; var find_year;
-      // var paro = "";
-      // 
-      // var minYear = 1987; // 1987
-      // var maxYear = 2012; // 2012
-      // 
-      // minGraphYear = 1987;
-      // var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-      // var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
-      // 
-      // for (var i = minYear; i < maxYear; i++) {
-      //   if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
-      //     if (!find) {
-      //       if (year == i) {
-      //         find = true;
-      //         find_year = count;
-      //       }
-      //     }
-      //     if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
-      //     paro += info['data'][i][normalization[compare]] + ',';
-      //   } else {
-      //     paro += '0,';
-      //   }
-      //   count++;
-      // }
-      // paro = paro.substring(0, paro.length-1);
-      // 
-      // $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-      // $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      // $('div#infowindow div.chart img').show();
+      $('div#infowindow h2').text(info.name);
+      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
+      $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+      
+      // Remove previous political style bars
+      $('div#infowindow div.stats div.partido').each(function(i,ele){
+        $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+      });
+      var bar_width;
+      
+      // First political party
+      var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
+      if (_.indexOf(parties, partido_1) !== -1) {
+        $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+      } else {
+        $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+      }
+      bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
+      $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
+      $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
+      
+      // Second political party
+      var partido_2 = normalizePartyName(info['data'][year]['segundo_partido_name']);
+      if (_.indexOf(parties, partido_2) !== -1) {
+        $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
+      } else {
+        $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+      }
+      bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
+      $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+      $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
+      
+      // Third political party
+      var partido_3 = normalizePartyName(info['data'][year]['tercer_partido_name']);
+      if (_.indexOf(parties, partido_3) !== -1) {
+        $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
+      } else {
+        $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
+      }
+      
+      bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
+      $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
+      $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
+      
+      // Other
+      bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*175)/100);
+      $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+      $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+      
+      
+      var max = 0; var count = 0; var find = false; var find_year;
+      var paro = "";
+      
+      var minYear = 1987; // 1987
+      var maxYear = 2012; // 2012
+      
+      minGraphYear = 1987;
+      var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+      var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
+      
+      for (var i = minYear; i < maxYear; i++) {
+        if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
+          if (!find) {
+            if (year == i) {
+              find = true;
+              find_year = count;
+            }
+          }
+          if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
+          paro += info['data'][i][normalization[compare]] + ',';
+        } else {
+          paro += '0,';
+        }
+        count++;
+      }
+      paro = paro.substring(0, paro.length-1);
+      
+      $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
+      $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+      $('div#infowindow div.chart img').show();
       
       
 
