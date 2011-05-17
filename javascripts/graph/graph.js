@@ -557,7 +557,13 @@ function createBubbles(url){
 var failCircle = (function() {
   var data_not_found;
 
-  $("#fail_circle a").live("click", function(ev) {
+  $("#fail_circle a.why").live("click", function(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    explanationwindow.show();
+  });
+
+  $("#fail_circle a.next").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
   });
