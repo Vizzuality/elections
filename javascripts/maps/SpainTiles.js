@@ -129,20 +129,21 @@
       var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
       var desv = Math.max(Math.round(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.round(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
       var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
+      var actual_zoom = peninsula.getZoom();
       
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=14;
+        radius=12;
       } else if ((desv*1)>=value && value<(desv*2)) {
-        radius=19;
+        radius=19 * (actual_zoom==12?1.5:1);
       } else if ((desv*2)>=value && value<(desv*3)) {
-        radius=23;
+        radius=23 * (actual_zoom==12?1.5:1);
       } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=28;
+        radius=28 * (actual_zoom==12?1.5:1);
       } else {
-        radius=32;
+        radius=32 * (actual_zoom==12?1.5:1);
       }
     } else {
-      radius = 8;
+      radius = 12;
     }
 
     var data,className;
@@ -160,8 +161,8 @@
                   '</div>';
     $(div).append(bubble);
 
-    if (radius < 11) {
-      $(bubble).find('p').css('display',"none");
+    if (radius < 14) {
+      $('div.bubble[id="'+point.id+'"]').find('p').css('display',"none");
     }
 
     return div;
@@ -188,7 +189,8 @@
           data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
-        $('div#'+ele.id+' p').text(data);
+        
+
         $('div#'+ele.id+' p').removeClass().addClass(className);
 
         //change color of the ball
@@ -200,20 +202,29 @@
           var less = Math.floor(ele['data'][year][normalization[compare]+'_min']);
           var desv = Math.max(Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_min'])))/5;
           var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
+          var actual_zoom = peninsula.getZoom();
+
 
           if ((desv*0)>=value && value<(desv*1)) {
-            radius=10;
-          } else if ((desv*1)>=value && value<(desv*2)) {
             radius=12;
+          } else if ((desv*1)>=value && value<(desv*2)) {
+            radius=19 * (actual_zoom==12?1.5:1);
           } else if ((desv*2)>=value && value<(desv*3)) {
-            radius=14;
+            radius=23 * (actual_zoom==12?1.5:1);
           } else if ((desv*3)>=value && value<(desv*4)) {
-            radius=17;
+            radius=28 * (actual_zoom==12?1.5:1);
           } else {
-            radius=19;
+            radius=32 * (actual_zoom==12?1.5:1);
           }
         } else {
-          radius = 8;
+          radius = 12;
+        }
+        
+        $('div#'+ele.id+' p').text(data);
+        if (radius<14) {
+          $('div#'+ele.id+' p').hide();
+        } else {
+          $('div#'+ele.id+' p').show();
         }
         
         if ($('div#'+ele.id).length) {
