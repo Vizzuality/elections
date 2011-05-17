@@ -25,9 +25,8 @@ if ARGV[0] =~ /\d+/
 end
 
 base_path = FileUtils.pwd
-dir_path = "#{base_path}/../json/generated_data/municipios"
+dir_path = "#{base_path}/../graphs/municipios/#{$graphs_next_version}"
 FileUtils.mkdir_p(dir_path)
-
 ### MUNICIPALITIES
 ##################
 
@@ -104,7 +103,7 @@ SQL
         json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
       end
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
-      fd.write(json.to_json)
+      fd.write("func("+json.to_json+");")
       fd.close        
     end
   end
