@@ -127,16 +127,17 @@
       var desv = Math.max(Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
       var value = Math.abs(point['data'][year][normalization[compare]]);
       
+      console.log(value);
       if ((desv*0)>=value && value<(desv*1)) {
-        radius=10;
-      } else if ((desv*1)>=value && value<(desv*2)) {
-        radius=12;
-      } else if ((desv*2)>=value && value<(desv*3)) {
         radius=14;
-      } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=17;
-      } else {
+      } else if ((desv*1)>=value && value<(desv*2)) {
         radius=19;
+      } else if ((desv*2)>=value && value<(desv*3)) {
+        radius=23;
+      } else if ((desv*3)>=value && value<(desv*4)) {
+        radius=28;
+      } else {
+        radius=32;
       }
     } else {
       radius = 8;

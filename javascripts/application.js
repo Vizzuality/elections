@@ -8,7 +8,7 @@
   var tiles_version   = 3;
   var bubbles_version = 7;
   var gmaps_version   = 2;
-  var graph_version   = "v1";
+  var graph_version   = "v2";
 
 
   $(document).ready(function(){
@@ -38,6 +38,7 @@
         explanationwindow.hide();
         if (state == "grafico") {
           graphBubbleInfowindow.hide();
+
         } else {
           infowindow.hide();
         }

@@ -1,9 +1,9 @@
-
 // Graph global vars {#}
 var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
 var availableData = {};
+var failCircle;
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -41,10 +41,14 @@ function initializeGraph() {
 
   $(".innerBubble").live({
     mouseenter: function () {
+      if (failCircle.failed() == true) {
+        return;
+      }
+
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().attr('id');
+      var text = $(this).parent().find('span.name').html();
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -64,6 +68,9 @@ function initializeGraph() {
       graphBubbleTooltip.hide();
     },
     click: function() {
+      if (failCircle.failed() == true) {
+        return;
+      }
 
       var radius = $(this).height()/2;
       var top  = $(this).parent().offset().top - 274;
@@ -180,7 +187,9 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+    var name = $("div#" + selectedBubble + " span.name").html();
+
+    $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
 
@@ -244,9 +253,9 @@ function initializeGraph() {
 
     $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#graph_infowindow div.chart img').show();
+    $('div#graph_infowindow div.chart img').show();
 
-      showInfowindow(left,top);
+    showInfowindow(left,top);
   }
 
   function bindEvents() {
@@ -312,7 +321,7 @@ function initializeGraph() {
     }
 
     function showTooltip(left,top,text) {
-      $('p.graph_bubble_tooltip').text(text.replace(/_/g,' '));
+      $('p.graph_bubble_tooltip').text(text);
       var offset = $('p.graph_bubble_tooltip').width()/2;
       $('p.graph_bubble_tooltip').css('left',left-offset+10+'px');
       $('p.graph_bubble_tooltip').css('top',top+'px');
@@ -537,7 +546,6 @@ function restartGraph() {
 
 
 function createBubbles(url){
-
   $.getJSON(url, function(data) {
     var one = true;
     possibleValues = data;
@@ -556,21 +564,22 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
+      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
     });
   })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
+  .success(function(){ createdBubbles = true; failCircle.hide(); })
+  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
-var failCircle = (function() {
+failCircle = (function() {
   var data_not_found;
 
   $("#fail_circle a.why").live("click", function(ev) {
@@ -603,22 +612,28 @@ var failCircle = (function() {
     setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
   }
 
+  function hasFailed() {
+    return data_not_found;
+  }
+
   return {
     show: showError,
-    hide: hideError
+    hide: hideError,
+    failed: hasFailed
   }
 })();
 
 function setValue(url){
+
   $.getJSON(url, function(data) {
     var one = true;
     _.each(data, function(v,key) {
-      //Check data for show legend or not
-      if (one) {
+      if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         one = false;
       }
       valuesHash[key] = v;
+      //console.log('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
     });
   })
@@ -703,12 +718,12 @@ function destroyBubble(b, url){
 }
 
 function addNewBubble(region) {
-  region = region.replace(/ /g,'_');
+  region = region.toLowerCase().replace(/ñ/,'n').replace(/ /g,'_');
 
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
 
-    if (selected !== undefined) {
+    if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
     }
     selectedBubble = region;
@@ -720,7 +735,7 @@ function addNewBubble(region) {
     _.each(possibleValues,function(val,key){
       if (key.toLowerCase() == region.toLowerCase()) {
 
-        if (selected !== undefined) {
+        if (selectedBubble !== undefined) {
           $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
         }
         selectedBubble = key;
