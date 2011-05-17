@@ -196,7 +196,7 @@
             }
           }
         }
-        
+
         paro = paro.substring(0, paro.length-1);
         $('div#infowindow div.chart').show();
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
