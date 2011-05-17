@@ -219,10 +219,3 @@
       $('div.canary_island').css('z-index',0);
     }
   }
-
-
-  function refreshMap() {
-    refreshTiles();
-    refreshBubbles();
-  }
-

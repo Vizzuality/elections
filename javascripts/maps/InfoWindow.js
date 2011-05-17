@@ -271,8 +271,8 @@
     		left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
     	}
 
-    	if ((pixPosition.y + this.offsetVertical_ - 30) < 0) {
-    		top = (pixPosition.y + this.offsetVertical_ - 30);
+    	if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
+    		top = (pixPosition.y + this.offsetVertical_ - 40);
     	}
 
     	this.map_.panBy(left,top);

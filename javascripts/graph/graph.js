@@ -3,6 +3,7 @@
 var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
+var availableData = {};
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -19,14 +20,31 @@ var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
 
+function getNextAvailableYear() {
+  var data = availableData[deep][normalization[compare]];
+  if (year > data[data.length - 1]) {
+    return data[data.length - 1];
+  } else {
+    return _.detect(data, function(num){ return year < num; }); // next election year to the firstYear
+  }
+}
+
+function initAvailableData(deep) {
+  $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
+}
+
 function initializeGraph() {
+
+  initAvailableData("autonomias");
+  initAvailableData("provincias");
+  //initAvailableData("municipios");
 
   $(".innerBubble").live({
     mouseenter: function () {
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().attr('id');
+      var text = $(this).parent().find('span.name').html();
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -150,7 +168,6 @@ function initializeGraph() {
       $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
     }
     bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
-    //console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
 
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
     $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
@@ -163,7 +180,9 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    $("#graph_infowindow").find(".top").find("h2").append(data_id.replace(/_/g,' '));
+    var name = $("div#" + selectedBubble + " span.name").html();
+
+    $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
 
@@ -188,7 +207,6 @@ function initializeGraph() {
     bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
     $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
     $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-    //console.log("otros", valuesHash[data_id].resto_partidos_percent, bar_width);
 
     var data = valuesHash[data_id].evolution.split(",");
     var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -228,9 +246,9 @@ function initializeGraph() {
 
     $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#graph_infowindow div.chart img').show();
+    $('div#graph_infowindow div.chart img').show();
 
-      showInfowindow(left,top);
+    showInfowindow(left,top);
   }
 
   function bindEvents() {
@@ -257,7 +275,7 @@ function initializeGraph() {
       if (url == null) {
         return false;
       } else {
-        goDeeper(url);
+        goDeeper(global_url + "/" + url);
       }
     });
 
@@ -429,7 +447,6 @@ function initializeGraph() {
       $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
     }
     bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
-    console.log(partido,party_data["partido_" + party_id][1], bar_width);
 
     $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
     $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
@@ -453,7 +470,7 @@ function initializeGraph() {
       $('div.graph_legend p.autonomy a').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        goDeeper(parent_url[parent_url.length-1]);
+        goDeeper(global_url + "/" + parent_url[parent_url.length-1]);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
       });
@@ -474,7 +491,6 @@ function initializeGraph() {
 
       // Other
       bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-      console.log(results.otros[1], bar_width);
 
       $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
       $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
@@ -542,16 +558,19 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
+      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
     });
-  });
+  })
+  .success(function(){ failCircle.hide(); })
+  .error(function(){ failCircle.show(); });
 }
 
 var failCircle = (function() {
@@ -566,6 +585,7 @@ var failCircle = (function() {
   $("#fail_circle a.next").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
+    goToNextYear();
   });
 
   function showError() {
@@ -578,6 +598,14 @@ var failCircle = (function() {
     $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
   }
 
+  function goToNextYear() {
+    var next_available_year = getNextAvailableYear();
+    year = next_available_year;
+    $("div.year_slider").slider('value', year);
+    changeHash();
+    setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+  }
+
   return {
     show: showError,
     hide: hideError
@@ -585,7 +613,6 @@ var failCircle = (function() {
 })();
 
 function setValue(url){
-console.log(url);
   $.getJSON(url, function(data) {
     var one = true;
     _.each(data, function(v,key) {
@@ -639,9 +666,14 @@ function goDeeper(url){
   graphLegend.hide();
   //Get new name and deep
   var url_split = url.split('/');
-  deep = url_split[2];
+
+  deep = url_split[5];
+  //console.log("deep", deep);
+
   var length = url_split[url_split.length-1].split(compare)[0].length;
+
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+  //console.log("name", name);
 
   graphLegend.hideError();
 
@@ -679,7 +711,7 @@ function addNewBubble(region) {
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
 
-    if (selected !== undefined) {
+    if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
     }
     selectedBubble = region;
