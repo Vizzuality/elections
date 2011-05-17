@@ -15,8 +15,10 @@ require 'fileutils'
 
 # sanity check arguments
 ENVR         = ARGV[0]
+ELECTION_ID  = ARGV[1]
+
 if ENVR != 'development' && ENVR != 'production'
-  puts "./rtve.rb [environment]"
+  puts "ruby map_tiles.rb [environment] [electoral process id (optional)]"
   puts "environments: [development, production]"
   Process.exit!(true)
 end
@@ -30,24 +32,29 @@ conn = PGconn.open(settings)
 pos = conn.exec "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
 
 # menu screen
-begin
-  puts "RTVE Tile Generator"
-  puts "===================\n"
-
-  printf("%-5s %5s %5s \n", "id", "anyo/year", "mes")
-  pos.each do |p|
-    printf("%-5s %5s %5s \n", pos.first["cartodb_id"], pos.first["anyo"], pos.first["mes"])
-  end
-  ids = pos.map { |x| x['cartodb_id'] }
-
-  print "Choose a procesos electorales id to render (#{ids.join(", ")}): "
-  ELECTION_ID = gets
+if ELECTION_ID == nil
+  begin
+    puts "\nRTVE Tile Generator"
+    puts "===================\n\n"
   
-  raise "invalid id" unless ids.include?(ELECTION_ID)
-rescue
-  puts "please enter a correct procesos electorales id"
-  retry
-end    
+    puts "Electoral Processes: \n\n"
+    printf("%-5s %5s %5s \n", "id", "anyo", "mes")
+    puts "-" * 19
+    pos.each do |p|
+      printf("%-5s %5s %5s \n", p["cartodb_id"], p["anyo"], p["mes"])
+    end
+    ids = pos.map { |x| x['cartodb_id'] }
+
+    print "\nChoose a electoral process to render (#{ids.sort.join(", ")}) [q=quit]: "
+    ELECTION_ID = STDIN.gets.chomp
+  
+    Process.exit if ELECTION_ID == 'q'
+    raise "invalid id" unless ids.include?(ELECTION_ID)
+  rescue
+    puts "\n** ERROR: please enter a correct procesos electorales id \n\n"
+    retry
+  end    
+end
 
 # Create denomalised version of GADM4 table with votes, and party names
 puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
