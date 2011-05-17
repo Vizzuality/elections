@@ -120,8 +120,8 @@ election_ids.each do |election_id|
     {:zoom => 12, :xmin => 1832, :ymin => 1688, :xmax => 1902, :ymax => 1732},  
   ] 
 
-  base_path      = "#{Dir.pwd}/tiles"
-  #base_path     = "/mnt/www/data/tiles"
+  #base_path      = "#{Dir.pwd}/tiles"
+  base_path     = "/mnt/www/data/tiles"
   versions       = Dir["#{base_path}/*/"]
   v_dir          = versions.map{|x| x.split("/").last}
   v_next         = v_dir.size == 0 ? 0 : v_dir.max+1
