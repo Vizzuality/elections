@@ -27,9 +27,7 @@ def municipalities_data_sql
     center_longitude,
     center_latitude,
     #{vars_sql_select('vars_socioeco_x_municipio')}
-   FROM
-    #{vars_sql_froms('vars_socioeco_x_municipio')}
-    ine_poly AS i
+   FROM ine_poly AS i
    INNER JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
    INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
    INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
@@ -52,6 +50,8 @@ reading = Thread.new do
     print '.'
   end
 end
+
+max_min_vars = cartodb.query(max_min_vars_query(11)).rows.first
 
 municipalities_data = {}
 
@@ -78,7 +78,7 @@ municipalities_data.each do |google_maps_name, records|
     :variables => variables_hash
   }
   json[:provincia] = records.first.provincia
-  json[:data] = create_years_hash(records, variables, max_year, min_year)
+  json[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   fd = File.open("#{json_folder+google_maps_name}.json",'w+')
   fd.write("func(#{json.to_json});")
