@@ -145,8 +145,8 @@ tile_extents.each do |extent|
           start_tiles += 1          
           File.open("#{save_path}/#{file_name}", "w+") do|f|
             f.write response.body
-            puts file_url
-            #puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
+            #puts file_url
+            puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
           end          
         end
         hydra.queue tile_request  
