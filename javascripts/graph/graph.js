@@ -85,7 +85,6 @@ function initializeGraph() {
 
       graphBubbleTooltip.hide();
       graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-      console.log($(this).parent().attr('id'));
     }
   });
 
@@ -131,7 +130,6 @@ function initializeGraph() {
 
   function updateInfoText() {
     var comparison_variable = normalization[compare];
-    console.log(comparison_variable);
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong> " + info_text["after_" + sign];
@@ -251,7 +249,7 @@ function initializeGraph() {
           if (year - 1975 == i - 1 ) {
             find = true;
             find_year = count;
-            selected_value = parseFloat(data[i])
+            selected_value = parseFloat(data[i - 1])
           }
         }
         if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
@@ -700,7 +698,7 @@ function goDeeper(url){
   var length = url_split[url_split.length-1].split(compare)[0].length;
 
   name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
-  console.log("name", name);
+  //console.log("name", name);
 
   graphLegend.hideError();
 
