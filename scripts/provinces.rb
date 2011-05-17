@@ -31,22 +31,24 @@ dir_path = "#{base_path}/../json/generated_data/provincias"
 evolution = {}
 FileUtils.mkdir_p(dir_path)
 variables.each do |variable|
+  year = nil
   puts
-  puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-    year = variable.match(/\d+/)[0].to_i - 1
+    year = variable.match(/\d+/)[0].to_i
     while proceso_electoral_id.nil? && year > 1974
-      proceso_electoral_id = processes[year]
       year -= 1
+      proceso_electoral_id = processes[year]
     end
   end
   next if year == 1974
+  year ||= variable.match(/\d+/)[0].to_i
+  puts "Variable: #{variable} - #{year}"
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].normalize
-    authonomy_results = get_authonomy_results(autonomy_hash[:name_1], proceso_electoral_id)
+    authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.max
     min_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.min
     max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
