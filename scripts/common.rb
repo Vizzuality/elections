@@ -175,10 +175,6 @@ def municipalities_path(province_name, variable)
   "graphs/municipios/#{$graphs_next_version}/#{province_name}_#{variable}.json"
 end
 
-def google_cache_path(file_name)
-  "../json/generated_data/google_names_cache/#{file_name.normalize}.json"
-end
-
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
   file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
@@ -448,7 +444,6 @@ end
 
 def next_folder(path)
   last_dir = Dir.entries(path).map(&:to_i).sort.last
-p last_dir
   next_dir = last_dir + 1
   next_dir = "#{path}#{next_dir}/"
   FileUtils.mkdir_p(next_dir)
