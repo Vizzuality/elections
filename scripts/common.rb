@@ -43,19 +43,9 @@ THIRD_PARTY_COLORS = {
   "PR" => ["#CE0E16", "#008140"],
   "UV" => ["#EC7B37", "#EABA4B"]
 }
-#####
 
-# Paths
-# =====
-# Autonomies:
-#  - json/generated_data/autonomies_<var_name>.json
-# Provinces:
-#  - json/generated_data/provinces/<autonomy_name>_<var_name>.json
-#    example: json/generated_data/provinces/Andalucia_paro_1999.json
-# Municipalities:
-#  - json/generated_data/municipalities/<province_name>_<var_name>.json
-#    example: json/generated_data/provinces/Sevilla_paro_1999.json
-###
+# Versions
+$graphs_next_version = "v1"
 
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
@@ -174,15 +164,15 @@ def get_known_parties(parties)
 end
 
 def autonomies_path(variable)
-  "json/generated_data/autonomias/#{variable}.json"
+  "graphs/autonomias/#{$graphs_next_version}/#{variable}.json"
 end
 
 def provinces_path(autonomy_name, variable)
-  "json/generated_data/provincias/#{autonomy_name}_#{variable}.json"
+  "graphs/provincias/#{$graphs_next_version}/#{autonomy_name}_#{variable}.json"
 end
 
 def municipalities_path(province_name, variable)
-  "json/generated_data/municipios/#{province_name}_#{variable}.json"
+  "graphs/municipios/#{$graphs_next_version}/#{province_name}_#{variable}.json"
 end
 
 def google_cache_path(file_name)
@@ -190,9 +180,9 @@ def google_cache_path(file_name)
 end
 
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
-  file_path = "../json/generated_data/autonomias/paro_normalizado_#{year}.json"
+  file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
-    json = JSON.parse(File.read(file_path))[autonomy_name]
+    json = JSON.parse(File.read(file_path)[5..-3])[autonomy_name]
     return {
       :partido_1 => json["partido_1"],
       :partido_2 => json["partido_2"],
@@ -225,7 +215,7 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
 end
 
 def get_province_results(autonomy_name, year, raw_province_name, proceso_electoral_id)
-  file_path = "../json/generated_data/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
+  file_path = "../graphs/provincias/#{autonomy_name}_paro_normalizado_#{year}.json"
   if File.file?(file_path)
     json = JSON.parse(File.read(file_path))[raw_province_name.normalize]
     return {

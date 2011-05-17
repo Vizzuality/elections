@@ -23,7 +23,7 @@ SQL
 votes_per_autonomy = cartodb.query(query)[:rows]
 
 base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../json/generated_data/autonomias")
+FileUtils.mkdir_p("#{base_path}/../graphs/autonomias/#{$graphs_next_version}")
 
 ## AUTONOMIES
 #############
@@ -47,7 +47,6 @@ variables.each do |variable|
   max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
   json = {}
   autonomies.each do |autonomy_hash|
-    dir_path = "#{base_path}/../json/generated_data"
     unless row = votes_per_autonomy.select{|h| h[:gadm1_cartodb_id] == autonomy_hash[:cartodb_id] && h[:proceso_electoral_id] == proceso_electoral_id }.first
       putc 'x'
       next
@@ -76,7 +75,7 @@ variables.each do |variable|
     json[autonomy_name][:evolution] = evolution[custom_variable_name][autonomy_hash[:name_1]].join(',')
    end
   fd = File.open('../' + autonomies_path(variable),'w+')
-  fd.write(json.to_json)
+  fd.write("func("+json.to_json+");")
   fd.close
 end
 
