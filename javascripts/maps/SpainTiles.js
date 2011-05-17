@@ -13,7 +13,8 @@
     // Create the div tile
     var div = ownerDocument.createElement('div');
     div.setAttribute('class','tile');
-    //div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
+    // div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
+    // div.style.border = "1px solid yellow";
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
     div.style.height = this.tileSize.height + 'px';
@@ -53,7 +54,7 @@
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
     //if (x==61 && y==47 && z==7) {
-
+      //console.log(x,y,z);
       // Call service
       $.ajax({
         method: "GET",
