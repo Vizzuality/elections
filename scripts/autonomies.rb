@@ -31,7 +31,6 @@ evolution = {}
 puts
 variables.each do |variable|
   puts
-  puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_autonomies_variable_evolution(variable)
@@ -42,6 +41,7 @@ variables.each do |variable|
       year -= 1
     end
   end
+  puts "Variable: #{variable} - #{year} - #{proceso_electoral_id}"
   max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.max
   min_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.min
   max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
