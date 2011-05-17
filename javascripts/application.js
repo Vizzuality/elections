@@ -7,18 +7,18 @@
   var tiles_version   = 2;
   var bubbles_version = 4;
   var gmaps_version   = 1;
-  var graph_version   = 0;
-  
+  var graph_version   = "v1";
+
 
   $(document).ready(function(){
-    
+
     /* -- domain name -- */
       var domain_name = window.location.hostname;
-      if (domain_name == "localhost") {
+      if (domain_name == "localhost" || domain_name == "elections") {
         global_url = proxy_url+"?proxy_url="+global_url;
       }
     /* -- end proxy domain name -- */
-    
+
     //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
