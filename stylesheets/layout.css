@@ -123,7 +123,7 @@ div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('/images/graph_bkg.png'); z-index:0;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:560px; margin:0 0 0 -512px; background:url('/images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 div.tabs div#graph div#fail_background {display:none; position:relative; width:100%; height:100%; background:url('/images/fail_background.png'); z-index:-100;}
 div.tabs div#graph div#fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('/images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
@@ -199,7 +199,7 @@ div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a {color:#333333;}
 div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('/images/tiny_graph_bkg.png') no-repeat 0 -1px;}
-div.infowindow div.bottom img.sparklines {display:inline-block; width:205px; height:22px;}
+div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('/images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
@@ -214,7 +214,7 @@ div#comparewindow div h2 {margin:0 0 0 40px; font:normal 17px "Officina Bold"; c
 div#comparewindow div h2 a.remove_compare {display:inline-block; vertical-align:top; width:52px; height:13px; margin:4px 0 0 3px; background:url('/images/delete_bkg.png') no-repeat 0 0; text-decoration:none;  overflow: hidden; text-indent:-9999%; font-size:0; line-height:0;}
 div#comparewindow div h2 a.remove_compare:hover {background-position:0 -13px;}
 div#comparewindow div p.province {margin:0 0 0 40px; font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div#comparewindow div div.stats {display:inline-block; width:276px; height:75px; margin:13px 0 0 40px;}
+div#comparewindow div div.stats {display:inline-block; width:276px; height:75px; margin:8px 0 0 40px;}
 div#comparewindow div div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333;}
 div#comparewindow div div.stats div {width:100%; height:10px; margin:3px 0 0 0;}
 div#comparewindow div div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
@@ -224,13 +224,13 @@ div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; bac
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 /*compare stats slider*/
 div.compare_graph {position:relative; width:356px; height:110px; margin:13px 0 0;}
-div.compare_graph a.left {position:absolute; top:43px; left:10px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.left {position:absolute; top:44px; left:10px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.left:hover {background-position:0 -24px;}
-div.compare_graph a.right {position:absolute; top:43px; right:9px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div.compare_graph a.right {position:absolute; top:44px; right:9px; width:24px; height:24px; background:url('/images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.right:hover {background-position:right -24px;}
 div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden;}
-div.compare_graph div.stats_slider {width:298px;; height:220px;} /* each block 299px x 110px */
-div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; }
+div.compare_graph div.stats_slider {width:298px; height:220px;} /* each block 299px x 110px */
+div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; overflow:hidden;}
 div.compare_graph div.stats_slider div.up {background:url('/images/compare_graph_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.down {background:url('/images/graph_compare_evolution_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:10px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
@@ -252,7 +252,7 @@ div.compare_graph div.stats_slider div.block span.name.second {bottom:10px; back
 div.compare_graph div.stats_slider div.block span.error {position:absolute; left:118px; font:normal 12px "Officina Regular"; color:#999999;}
 div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}
-div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; left:50%; margin:-51px 0 0 -140px; z-index:0;}
+div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:5px; margin:-40px 0 0 -140px; z-index:0;}
 /*end compare slider*/
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('/images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}

@@ -4,7 +4,7 @@
 
   function CoordMapType(tileSize) {
     this.tileSize = tileSize;
-    this.json_tile_url = "/bubbles/tiles/";
+    this.json_tile_url = "/bubbles/";
   }
 
   CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
@@ -52,13 +52,13 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
+    //if (x==61 && y==47 && z==7) {
 
       // Call service
       $.ajax({
         method: "GET",
         dataType: 'json',
-        url: global_url + me.json_tile_url+z+'_'+x+'_'+y+'.json',
-        jsonpCallback: 'func',
+        url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
           // Normalize latlng of the tile to transform it to point(x,y)
           var pixelcoord = {x:coord.x*256,y:coord.y*256,z:zoom} ;
