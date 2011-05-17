@@ -133,7 +133,8 @@
 
         function drawPartyBar(data_id, party_id){
           var id = party_id - 1;
-          var partido = normalizePartyName(valuesHash[data_id]["partido_"+party_id][0]);
+          var party_name            = valuesHash[data_id]["partido_"+party_id][0];
+          var normalized_party_name = normalizePartyName(party_name);
 
           p = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
 
@@ -143,15 +144,16 @@
             }
           })
 
-          if (_.indexOf(parties, partido) !== -1) {
-            $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(partido);
+          if (_.indexOf(parties, normalized_party_name) !== -1) {
+            $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(normalized_party_name);
           } else {
             $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
           }
           bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
+          console.log(data_id, valuesHash[data_id]["partido_" + party_id][1], bar_width);
 
           $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
-          $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(valuesHash[data_id]["partido_"+party_id][0]+' ('+(valuesHash[data_id]["partido_"+party_id][1]*bar_width_multiplier)/100+'%)');
+          $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
         }
 
         function changeData(left,top,data_id) {
