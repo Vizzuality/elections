@@ -11,13 +11,15 @@ require 'rubygems'
 require 'pg'
 require 'typhoeus'
 require 'json'
+require 'fileutils'
 
 # sanity check arguments
 ENVR         = ARGV[0]
-ELECTION_ID = ARGV[1]
-if (ENVR != 'development' && ENVR != 'production') || (ELECTION_ID == nil)
-  puts "./rtve.rb [environment] [election_id]"
-  puts "environments: [development, production], election_id: [see procesos_electorales table]"
+ELECTION_ID  = ARGV[1]
+
+if ENVR != 'development' && ENVR != 'production'
+  puts "ruby map_tiles.rb [environment] [electoral process id (optional)]"
+  puts "environments: [development, production]"
   Process.exit!(true)
 end
 
@@ -26,8 +28,36 @@ user       = 123
 setup      = {:development => {:host => 'localhost', :user => 'publicuser', :dbname => "cartodb_dev_user_#{user}_db"},
               :production  => {:host => '10.211.14.63', :user => 'postgres', :dbname => "cartodb_user_#{user}_db"}}           
 settings   = setup[ENVR.to_sym]           
+conn = PGconn.open(settings)  
+pos = conn.exec "SELECT * from procesos_electorales ORDER BY anyo, mes ASC";
+
+# menu screen
+if ELECTION_ID == nil
+  begin
+    puts "\nRTVE Tile Generator"
+    puts "===================\n\n"
+  
+    puts "Electoral Processes: \n\n"
+    printf("%-5s %5s %5s \n", "id", "anyo", "mes")
+    puts "-" * 19
+    pos.each do |p|
+      printf("%-5s %5s %5s \n", p["cartodb_id"], p["anyo"], p["mes"])
+    end
+    ids = pos.map { |x| x['cartodb_id'] }
+
+    print "\nChoose a electoral process to render (#{ids.sort.join(", ")}) [q=quit]: "
+    ELECTION_ID = STDIN.gets.chomp
+  
+    Process.exit if ELECTION_ID == 'q'
+    raise "invalid id" unless ids.include?(ELECTION_ID)
+  rescue
+    puts "\n** ERROR: please enter a correct procesos electorales id \n\n"
+    retry
+  end    
+end
 
 # Create denomalised version of GADM4 table with votes, and party names
+puts "Generating map_tiles_data table for election id: #{ELECTION_ID}..."
 sql = <<-EOS  
 DROP TABLE IF EXISTS map_tiles_data; 
 
@@ -57,17 +87,15 @@ WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BN
 ELSE 'unknown' 
 END as color  
 FROM ine_poly AS g 
-LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni 
+LEFT OUTER JOIN (SELECT * FROM votaciones_por_municipio WHERE proceso_electoral_id=#{ELECTION_ID}) AS v ON g.ine_muni_int=v.codinemuni AND g.ine_prov_int = v.codineprov 
 LEFT OUTER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id  
 LEFT OUTER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id   
 LEFT OUTER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id);
 
-
+ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
 CREATE INDEX map_tiles_data_the_geom_webmercator_idx ON map_tiles_data USING gist(the_geom_webmercator); 
 CREATE INDEX map_tiles_data_the_geom_idx ON map_tiles_data USING gist(the_geom);
 EOS
-#ALTER TABLE map_tiles_data ADD PRIMARY KEY (gid); 
-conn = PGconn.open(settings)  
 conn.exec sql
 
 # there are 2 bounding boxes at each zoom level. one for spain, one for canaries 
@@ -88,6 +116,8 @@ tile_extents = [
   {:zoom => 12, :xmin => 1832, :ymin => 1688, :xmax => 1902, :ymax => 1732},  
 ] 
 
+base_path   = "#{Dir.pwd}/tiles"
+save_path   = "#{base_path}/#{ELECTION_ID}"
 tile_url    = "http://ec2-50-16-103-51.compute-1.amazonaws.com/tiles"
 hydra       = Typhoeus::Hydra.new(:max_concurrency => 200)
 time_start  = Time.now
@@ -97,21 +127,27 @@ total_tiles = tile_extents.inject(0) do |sum, extent|
   sum
 end  
 
+puts "creating tile path: #{save_path}"
+FileUtils.mkdir_p save_path
+
+puts "Saving tiles for map_tiles_data to #{save_path}..."
+
 tile_extents.each do |extent|
   (extent[:xmin]..extent[:xmax]).to_a.each do |x|
     (extent[:ymin]..extent[:ymax]).to_a.each do |y|
       file_name = "#{x}_#{y}_#{extent[:zoom]}_#{ELECTION_ID}.png"
-      if File.exists? "images/#{file_name}"
+      if File.exists? "#{save_path}/#{file_name}"
         total_tiles -= 1
       else  
-        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cgadm4_processed%7Cgadm4%7Cgadm3%7Cgadm2%7Cgadm1"
+        file_url  = "#{tile_url}/#{x}/#{y}/#{extent[:zoom]}/users/#{user}/layers/gadm1%7Cmap_tiles_data%7Cine_poly%7Cgadm2%7Cgadm1"
         tile_request = Typhoeus::Request.new(file_url)
         tile_request.on_complete do |response|
-          start_tiles += 1
-          puts "#{start_tiles}/#{total_tiles}: downloaded #{file_name}"
-          File.open("images/#{file_name}", "w+") do|f|
+          start_tiles += 1          
+          File.open("#{save_path}/#{file_name}", "w+") do|f|
             f.write response.body
-          end
+            #puts file_url
+            puts "#{start_tiles}/#{total_tiles}: #{save_path}/#{file_name}"
+          end          
         end
         hydra.queue tile_request  
       end  
