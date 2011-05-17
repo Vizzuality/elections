@@ -34,6 +34,7 @@
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
+        explanationwindow.hide();
         if (state == "grafico") {
           graphBubbleInfowindow.hide();
         } else {
