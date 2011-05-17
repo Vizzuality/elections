@@ -103,7 +103,7 @@ var textInfoWindow = {
     before_positive: "Aquí hay un ",
     after_positive: " mas de personas mayores de 65 años, que en el resto de España"
   },
-  "Tasa de Paro" : {
+  paro_normalizado : {
     before_positive: "La tasa de paro se encuentra a un ",
     after_negative: " por debajo de la media",
     before_positive: "La tasa de paro se encuentra a un ",
