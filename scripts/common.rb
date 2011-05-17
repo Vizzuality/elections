@@ -456,6 +456,15 @@ def vars_sql_froms(socioeco_table)
   "#{froms.join(', ')},"
 end
 
+def next_folder(path)
+  last_dir = Dir.entries(path).map(&:to_i).sort.last
+p last_dir
+  next_dir = last_dir + 1
+  next_dir = "#{path}#{next_dir}/"
+  FileUtils.mkdir_p(next_dir)
+  next_dir
+end
+
 class String
   def normalize
     str = self.downcase
