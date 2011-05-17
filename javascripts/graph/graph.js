@@ -3,6 +3,7 @@
 var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
+var availableData = {};
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -19,7 +20,24 @@ var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
 
+function getNextAvailableYear() {
+  var data = availableData[deep][normalization[compare]];
+  if (year > data[data.length - 1]) {
+    return data[data.length - 1];
+  } else {
+    return _.detect(data, function(num){ return year < num; }); // next election year to the firstYear
+  }
+}
+
+function initAvailableData(deep) {
+  $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
+}
+
 function initializeGraph() {
+
+  initAvailableData("autonomias");
+  initAvailableData("provincias");
+  //initAvailableData("municipios");
 
   $(".innerBubble").live({
     mouseenter: function () {
@@ -551,7 +569,9 @@ function createBubbles(url){
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
     });
-  });
+  })
+  .success(function(){ failCircle.hide(); })
+  .error(function(){ failCircle.show(); });
 }
 
 var failCircle = (function() {
@@ -566,6 +586,7 @@ var failCircle = (function() {
   $("#fail_circle a.next").live("click", function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
+    goToNextYear();
   });
 
   function showError() {
@@ -576,6 +597,15 @@ var failCircle = (function() {
 
   function hideError() {
     $('#fail_background, #fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+  }
+
+  function goToNextYear() {
+    var next_available_year = getNextAvailableYear();
+    console.log(next_available_year);
+    year = next_available_year;
+    $("div.year_slider").slider('value', year);
+    changeHash();
+    setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
   }
 
   return {
@@ -636,6 +666,7 @@ function updateBubble (id,x,y,val,colors,party){
 
 
 function goDeeper(url){
+  url = global_url + "/" + url;
   graphLegend.hide();
   //Get new name and deep
   var url_split = url.split('/');
