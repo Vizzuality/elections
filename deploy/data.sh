@@ -1,1 +1,1 @@
-lftp -e 'mirror -R -p --parallel=100 --no-symlinks /mnt/www/data data' -u elecciones2011,Elecc10nes rtve-004e.servidoresdns.net
+lftp -c 'mirror -R -p --parallel=100 --no-symlinks /mnt/www/data data' -u elecciones2011,Elecc10nes rtve-004e.servidoresdns.net
