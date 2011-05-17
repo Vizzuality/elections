@@ -4,6 +4,7 @@ var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
 var availableData = {};
+var failCircle;
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -41,6 +42,10 @@ function initializeGraph() {
 
   $(".innerBubble").live({
     mouseenter: function () {
+      if (failCircle.failed() == true) {
+        return;
+      }
+
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
@@ -64,6 +69,9 @@ function initializeGraph() {
       graphBubbleTooltip.hide();
     },
     click: function() {
+      if (failCircle.failed() == true) {
+        return;
+      }
 
       var radius = $(this).height()/2;
       var top  = $(this).parent().offset().top - 274;
@@ -314,7 +322,7 @@ function initializeGraph() {
     }
 
     function showTooltip(left,top,text) {
-      $('p.graph_bubble_tooltip').text(text.replace(/_/g,' '));
+      $('p.graph_bubble_tooltip').text(text);
       var offset = $('p.graph_bubble_tooltip').width()/2;
       $('p.graph_bubble_tooltip').css('left',left-offset+10+'px');
       $('p.graph_bubble_tooltip').css('top',top+'px');
@@ -573,7 +581,7 @@ function createBubbles(url){
   .error(function(){ failCircle.show(); });
 }
 
-var failCircle = (function() {
+failCircle = (function() {
   var data_not_found;
 
   $("#fail_circle a.why").live("click", function(ev) {
@@ -606,9 +614,14 @@ var failCircle = (function() {
     setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
   }
 
+  function hasFailed() {
+    return data_not_found;
+  }
+
   return {
     show: showError,
-    hide: hideError
+    hide: hideError,
+    failed: hasFailed
   }
 })();
 
@@ -706,7 +719,7 @@ function destroyBubble(b, url){
 }
 
 function addNewBubble(region) {
-  region = region.replace(/ /g,'_');
+  region = region.toLowerCase().replace(/ñ/,'n').replace(/ /g,'_');
 
   //Check the ball is in the graph
   if ($('div.bubbleContainer[id="'+region+'"]').length) {
@@ -723,7 +736,7 @@ function addNewBubble(region) {
     _.each(possibleValues,function(val,key){
       if (key.toLowerCase() == region.toLowerCase()) {
 
-        if (selected !== undefined) {
+        if (selectedBubble !== undefined) {
           $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
         }
         selectedBubble = key;
