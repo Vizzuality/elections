@@ -4,6 +4,7 @@ require "rubygems"
 require "bundler/setup"
 require "cartodb-rb-client"
 # require "ruby-debug"
+require "yajl"
 require "net/https"
 require 'uri'
 require "progress_bar"
@@ -45,7 +46,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v3"
+$graphs_next_version = "v4"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -177,7 +178,7 @@ end
 def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electoral_id)
   file_path = "../graphs/autonomias/#{$graphs_next_version}/paro_normalizado_#{year}.json"
   if File.file?(file_path)
-    json = JSON.parse(File.read(file_path))[autonomy_name]
+    json = Yajl::Parser.new.parse(File.read(file_path))[autonomy_name]
     return {
       :partido_1 => json["partido_1"],
       :partido_2 => json["partido_2"],
@@ -212,7 +213,7 @@ end
 def get_province_results
   file_path = "../graphs/municipios/#{$graphs_next_version}/get_province_results.json"
   if File.file?(file_path)
-    return JSON.parse(File.read(file_path))
+    return Yajl::Parser.new.parse(File.read(file_path))
   end
   results = {}
   query = <<-SQL
@@ -233,7 +234,7 @@ SQL
     }
   end
   fd = File.open(file_path,'w+')
-  fd.write(results.to_json)
+  fd.write(Yajl::Encoder.encode(results))
   fd.close
   results
 end
@@ -341,7 +342,7 @@ end
 def get_variables_evolution_in_municipalities
   file_path = "../graphs/municipios/#{$graphs_next_version}/variables_evolution_in_municipalities.json"
   if File.file?(file_path)
-    return JSON.parse(File.read(file_path))
+    return Yajl::Parser.new.parse(File.read(file_path))
   end
   result = {}
   raw_variables = []
@@ -372,7 +373,7 @@ SQL
     putc '.'
   end
   fd = File.open(file_path,'w+')
-  fd.write(result.to_json)
+  fd.write(Yajl::Encoder.encode(result))
   fd.close
   result
 end
