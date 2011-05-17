@@ -275,6 +275,7 @@
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
+        drawNoDataBars();
         changeHash();
 
         $('div.select span.inner_select a').each(function(i,ele){$(this).text($(this).attr('title'));});
@@ -330,6 +331,9 @@
   
   
   function drawNoDataBars() {
+    $('span.slider_no_data_left').hide();
+    $('span.slider_no_data_right').hide();
+    
     var deep;
     var zoom = peninsula.getZoom();
     if (zoom==6) {
@@ -352,28 +356,25 @@
       }
     }
     
-    var left_no = years_nodata[deep][normalization[compare]][0] - 1987; 
-    var lenght_array = years_nodata[deep][normalization[compare]].length;
-    var right_no = 2011 - years_nodata[deep][normalization[compare]][lenght_array-1];
-    
-    // console.log(left_no);
-    // console.log(right_no);
-    
-    if (left_no!=0) {
-      $('span.slider_no_data_left').css({width:(left_no*4.16)+"%"});
-      $('span.slider_no_data_left').show();
-    } else {
-      $('span.slider_no_data_left').hide();
-    }
-    
-    if (right_no!=0) {
-      $('span.slider_no_data_right').css({width:(right_no*4.16)+"%"});
-      $('span.slider_no_data_right').show();
-    } else {
-      $('span.slider_no_data_right').hide();
-    }
-    
+    if (years_nodata[deep][normalization[compare]]!=undefined) {
+      var left_no = years_nodata[deep][normalization[compare]][0] - 1987; 
+      var lenght_array = years_nodata[deep][normalization[compare]].length;
+      var right_no = 2011 - years_nodata[deep][normalization[compare]][lenght_array-1];
 
+      if (left_no!=0) {
+        $('span.slider_no_data_left').css({width:(left_no*4.16)+"%"});
+        $('span.slider_no_data_left').show();
+      } else {
+        $('span.slider_no_data_left').hide();
+      }
+
+      if (right_no!=0) {
+        $('span.slider_no_data_right').css({width:(right_no*4.16)+"%"});
+        $('span.slider_no_data_right').show();
+      } else {
+        $('span.slider_no_data_right').hide();
+      }
+    }
   }
   
   
