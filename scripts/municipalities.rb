@@ -71,7 +71,7 @@ SQL
       year ||= variable.match(/\d+/)[0].to_i
       variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
       json = {}
-      votes_per_municipality = JSON.parse(response.body)["rows"]
+      votes_per_municipality = Yajl::Parser.new.parse(response.body)["rows"]
       next if votes_per_municipality.nil?
       votes_per_municipality = votes_per_municipality.select{ |h| h["proceso_electoral_id"] == proceso_electoral_id }
       max_y = votes_per_municipality.map{ |h| h[variable].to_f }.compact.max
@@ -102,7 +102,7 @@ SQL
       end
       putc '.'
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
-      fd.write(json.to_json)
+      fd.write(Yajl::Encoder.encode(json))
       fd.close        
     end
   end
@@ -112,5 +112,5 @@ variables_json.each do |k,v|
   variables_json[k] = v.compact.uniq.sort
 end
 fd = File.open('../graphs/meta/municipios.json','w+')
-fd.write(variables_json.to_json)
+fd.write(Yajl::Encoder.encode(variables_json))
 fd.close
