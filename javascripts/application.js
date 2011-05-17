@@ -9,6 +9,7 @@
   var bubbles_version = 8;
   var gmaps_version   = 3;
   var graph_version   = "v3";
+  var failCircle;
 
   $(document).ready(function(){
 
@@ -39,7 +40,6 @@
         explanationwindow.hide();
         if (state == "grafico") {
           graphBubbleInfowindow.hide();
-
         } else {
           infowindow.hide();
         }
@@ -47,6 +47,50 @@
     });
   }
 
+
+  failCircle = (function() {
+    var data_not_found = false;
+
+    $("#map_fail_circle a.why").live("click", function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      explanationwindow.show();
+    });
+
+    $("#map_fail_circle a.next").live("click", function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      goToNextYear();
+    });
+
+    function showError() {
+      if (data_not_found != true) {
+        $('#map_fail_background, #map_fail_circle').fadeIn("slow", function() { data_not_found = true; });
+      }
+    }
+
+    function hideError() {
+      $('#map_fail_background, #map_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+    }
+
+    function goToNextYear() {
+      var next_available_year = getNextAvailableYear();
+      year = next_available_year;
+      $("div.year_slider").slider('value', year);
+      changeHash();
+      setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+    }
+
+    function hasFailed() {
+      return data_not_found;
+    }
+
+    return {
+      show: showError,
+      hide: hideError,
+      failed: hasFailed
+    }
+  })();
 
   function goToHash(route) {
     //Check variable application state
