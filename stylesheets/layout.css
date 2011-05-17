@@ -80,6 +80,8 @@ div#header div.right div.selects div.select div.option_list div.bottom ul li.sel
 div#header div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
 div#header div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 1px;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#bbbbbb!important;}
+div#header div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#bbbbbb!important; cursor:default;}
 div#header div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -32px;}
 div#header div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px -64px;}
 div#header div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('/images/grey_select_icons.png') no-repeat 6px 0px;}

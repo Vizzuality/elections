@@ -1,4 +1,5 @@
 
+
   var canary_island,peninsula;  // Maps
   var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036); // Maps center position
   var start_zoom = 6;
@@ -59,12 +60,11 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         return global_url + this.urlPattern + tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
+         return tiles_pngs_url +  tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.75,
        isPng: true,
-       urlPattern:'/tiles/',
        minZoom: 6,
        maxZoom: 12,
        name: "Political parties tiles",
