@@ -18,6 +18,7 @@
   var political_parties;
 
 
+
   function initializeMap() {
 
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,scrollwheel: false, minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
@@ -168,25 +169,33 @@
         // duplicate tile and add to div below current tile
         var old_image = $(ele).children('img');
         var new_image = old_image.clone();
-        new_image.css('z-index', old_image.css('z-index') - 1);
         new_image.css('position','absolute');
+        new_image.css('z-index',old_image.css('z-index') + 1);
         new_image.css('top',0);
         new_image.css('left',0);
+
+        // new_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+        // old_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+
         $(ele).prepend(new_image);
+        //old_image.hide();
 
         // update new tile with new url
         var old_url = old_image.attr('src');
         var tm = old_url.split("/");
         var old_process = tm[tm.length-2];
         var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
-        new_image.attr('src',new_url);
+        old_image.attr('src',new_url);
 
         // when it loads the new image, fade out the old one
-        $(this).children('img').one("load",function(){
-          old_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
-              old_image.remove();
+        old_image.one("load",function(){
+
+          new_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
+              new_image.remove();
             }
-          })
+          });
+
+          old_image.animate({opacity:100},{ duration: 500, queue: false})
           .each(function(){
             if(this.complete) $(this).trigger("load");
           });
@@ -194,7 +203,6 @@
       }
     });
   }
-
 
 
   function checkZoom(){
