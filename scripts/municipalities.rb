@@ -37,12 +37,7 @@ evolution = {}
 variables_json = {}
 autonomies.each do |autonomy_hash|
   autonomy_name = autonomy_hash[:name_1].normalize
-  selected_provinces = provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }
-  if selected_provinces.empty?
-    puts "Empty provinces for #{autonomy_hash.inspect}"
-    next
-  end
-  selected_provinces.each do |province|
+  provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
     province_name = province[:name_2].normalize
     province_id = province[:id_2]
     query = <<-SQL
@@ -63,7 +58,11 @@ SQL
       custom_variable_name = variable.gsub(/_\d+/,'')
       variables_json[custom_variable_name] ||= []
       evolution[custom_variable_name] ||= {} 
-      all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
+      all_evolutions = {}
+      begin
+        all_evolutions = get_municipalities_variables_evolution(province_id, custom_variable_name)
+      rescue
+      end
       unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
         year = variable.match(/\d+/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975

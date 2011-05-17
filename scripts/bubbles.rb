@@ -28,14 +28,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_autonomia')}
+          #{vars_sql_select(1)}
          FROM gadm1 AS g
-         INNER JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_autonomia AS vsm ON vsm.gadm1_cartodb_id = v.gadm1_cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+         LEFT JOIN votaciones_por_autonomia AS v ON g.cartodb_id = v.gadm1_cartodb_id
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_autonomia AS vsm ON vsm.gadm1_cartodb_id = v.gadm1_cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       ),
@@ -56,14 +56,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_provincia')}
+          #{vars_sql_select(2)}
          FROM gadm2 AS g
-         INNER JOIN votaciones_por_provincia AS v ON g.cartodb_id = v.gadm2_cartodb_id
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_provincia AS vsm ON vsm.gadm2_cartodb_id = v.gadm2_cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+         LEFT JOIN votaciones_por_provincia AS v ON g.cartodb_id = v.gadm2_cartodb_id
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_provincia AS vsm ON vsm.gadm2_cartodb_id = v.gadm2_cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       ),
@@ -85,14 +85,14 @@ def queries_by_zoom(x, y, z)
           resto_partido_percent AS otros_partido_percent,
           center_longitude,
           center_latitude,
-          #{vars_sql_select('vars_socioeco_x_municipio')}
+          #{vars_sql_select(4)}
          FROM ine_poly AS i
-         INNER JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
-         INNER JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
-         INNER JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
-         INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
-         INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
-         INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
+         LEFT JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
+         LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
+         LEFT JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
+         LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
+         LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
+         LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
          WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
         SQL
       )
