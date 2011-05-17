@@ -96,9 +96,9 @@ def get_y_coordinate(row, variable, max, min)
   return nil if max.to_f == 0
   var = row[variable].to_f
   if var > 0
-    return ("%.2f" % ((var * 240.0) / max.to_f)).to_f
+    return ("%.2f" % ((var * 200.0) / max.to_f)).to_f
   else
-    return ("%.2f" % ((var * -240.0) / min.to_f)).to_f
+    return ("%.2f" % ((var * -200.0) / min.to_f)).to_f
   end
 end
 
@@ -107,8 +107,8 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
   if known_parties.keys.include?(row[:primer_partido_id])
-    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 200.0) / max
-    x_coordinate += 100.0
+    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    x_coordinate += 50.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
   else
