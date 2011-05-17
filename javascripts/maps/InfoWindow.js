@@ -43,7 +43,7 @@
             '</div>'+
           '</div>'+
           '<div class="bottom">'+
-            '<p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
+            '<p class="info">La region tiene <strong></strong> de la media en España.</p>'+
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
             '</div>'+
@@ -99,9 +99,7 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
     	
-    	console.log(info);
-
-    	if (info.name != undefined || info['data'][year]!=undefined || info['data'][year][normalization[compare]]!=undefined) {
+    	if (info['data'][year][normalization[compare]]!=null) {
     	  //Set dimensions and bkg first
     	  this.offsetVertical_ = -276;
         this.offsetHorizontal_ = -127;
@@ -109,7 +107,7 @@
         this.width_ = 254;
         $('div#infowindow').css({background:'url("/images/infowindow.png") no-repeat 0 0'});
       } else {
-        this.offsetVertical_ = -256;
+        this.offsetVertical_ = -246;
         this.offsetHorizontal_ = -127;
         this.height_ = 269;
         this.width_ = 254;
@@ -167,39 +165,42 @@
       $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       
       
-      var max = 0; var count = 0; var find = false; var find_year;
-      var paro = "";
-      
-      var minYear = 1987; // 1987
-      var maxYear = 2012; // 2012
-      
-      minGraphYear = 1987;
-      var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-      var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
-      
-      for (var i = minYear; i < maxYear; i++) {
-        if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
-          if (!find) {
-            if (year == i) {
-              find = true;
-              find_year = count;
-            }
-          }
-          if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
-          paro += info['data'][i][normalization[compare]] + ',';
-        } else {
-          paro += '0,';
-        }
-        count++;
-      }
-      paro = paro.substring(0, paro.length-1);
-      
-      $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-      $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-      $('div#infowindow div.chart img').show();
-      
-      
+      if (info['data'][year][normalization[compare]]!=null) {
+    	  var max = 0; var count = 0; var find = false; var find_year;
+        var paro = "";
 
+        var minYear = 1987; // 1987
+        var maxYear = 2012; // 2012
+
+        minGraphYear = 1987;
+        var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+        var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
+
+        for (var i = minYear; i < maxYear; i++) {
+          if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
+            if (!find) {
+              if (year == i) {
+                find = true;
+                find_year = count;
+              }
+            }
+            if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
+            paro += info['data'][i][normalization[compare]] + ',';
+          } else {
+            paro += '0,';
+          }
+          count++;
+        }
+        paro = paro.substring(0, paro.length-1);
+        $('div#infowindow div.chart').show();
+        $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
+        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,5,5,5');
+        $('div#infowindow div.chart img').show();
+        $('div#infowindow p.info').html('<strong>'+parseFloat(info['data'][year][normalization[compare]]).toFixed(2)+'</strong>');
+      } else {
+        $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
+        $('div#infowindow div.chart').hide();
+      }
 
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);

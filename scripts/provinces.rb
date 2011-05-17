@@ -21,32 +21,33 @@ where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_
 SQL
 votes_per_province = cartodb.query(query)[:rows]
 
-base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../json/generated_data")
 
 ### PROVINCES
 #############
 puts
-dir_path = "#{base_path}/../json/generated_data/provincias"
-evolution = {}
+base_path = FileUtils.pwd
+dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
 FileUtils.mkdir_p(dir_path)
+evolution = {}
 variables.each do |variable|
+  year = nil
   puts
-  puts "Variable: #{variable}"
   custom_variable_name = variable.gsub(/_\d+/,'')
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-    year = variable.match(/\d+/)[0].to_i - 1
+    year = variable.match(/\d+/)[0].to_i
     while proceso_electoral_id.nil? && year > 1974
-      proceso_electoral_id = processes[year]
       year -= 1
+      proceso_electoral_id = processes[year]
     end
   end
   next if year == 1974
+  year ||= variable.match(/\d+/)[0].to_i
+  puts "Variable: #{variable} - #{year}"
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].normalize
-    authonomy_results = get_authonomy_results(autonomy_hash[:name_1], proceso_electoral_id)
+    authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.max
     min_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.min
     max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
@@ -81,7 +82,7 @@ variables.each do |variable|
       json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open('../' + provinces_path(autonomy_name,variable),'w+')
-    fd.write(json.to_json)
+    fd.write("func("+json.to_json+");")
     fd.close        
   end
 end

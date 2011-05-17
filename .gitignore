@@ -1,4 +1,11 @@
 .DS_Store
 json/generated_data/google_names_cache
 json/generated_data/tiles
+json/generated_data/autonomias
+json/generated_data/municipios
+json/generated_data/provincias
+json/generated_data/bubbles/**/*
 tiles/
+xml/
+graphs/
+graphs
