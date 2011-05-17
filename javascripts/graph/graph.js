@@ -170,9 +170,8 @@
             $('div#graph_infowindow div.top div.stats div.partido:eq(0)').addClass('par1');
           }
           bar_width = normalizeBarWidth((valuesHash[data_id].partido_1[1]*bar_width_multiplier)/100);
-          //console.log(key, bar_width);
 
-          $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width((bar_width<2)?2:bar_width);
+          $('div#graph_infowindow div.top div.stats div.partido:eq(0) span').width(bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(0) p').text(valuesHash[data_id]["partido_1"][0]+' ('+(valuesHash[data_id]["partido_1"][1]*bar_width_multiplier)/100+'%)');
 
           // Second political party
@@ -190,7 +189,7 @@
           }
           bar_width = normalizeBarWidth((valuesHash[data_id].partido_2[1]*bar_width_multiplier)/100);
 
-          $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width((bar_width<2)?2:bar_width);
+          $('div#graph_infowindow div.top div.stats div.partido:eq(1) span').width(bar_width);
           $('div#graph_infowindow div.top div.stats div.partido:eq(1) p').text(valuesHash[data_id]["partido_2"][0]+' ('+(valuesHash[data_id]["partido_2"][1]*bar_width_multiplier)/100+'%)');
 
           // Third political party
@@ -212,13 +211,11 @@
           $('div#graph_infowindow div.top div.stats div.partido:eq(2) p').text(valuesHash[data_id].partido_3[0]+' ('+(valuesHash[data_id].partido_3[1]*bar_width_multiplier)/100+'%)');
 
           // Other political party
-          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier)/100);
-           $('div#graph_infowindow div.stats div.partido:eq(3) span').width((bar_width<2)?2:bar_width);
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent));
+          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
-
           var data = valuesHash[data_id].evolution.split(",");
-          console.log(data);
           var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
           var minYear = 1975; var maxYear = 2011;
 
@@ -491,7 +488,7 @@
             }
             bar_width = normalizeBarWidth((results.partido_1[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(0) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(0) p').text(results.partido_1[0]+' ('+results.partido_1[1]+'%)');
 
             // Second political party
@@ -503,7 +500,7 @@
             }
             bar_width = normalizeBarWidth((results.partido_2[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(1) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(1) p').text(results.partido_2[0]+' ('+results.partido_2[1]+'%)');
 
             // Third political party
@@ -516,13 +513,13 @@
 
             bar_width = normalizeBarWidth((results.partido_3[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(2) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(2) p').text(results.partido_3[0]+' ('+results.partido_3[1]+'%)');
 
             // Other
-            bar_width = normalizeBarWidth((results.otros[0]*bar_width_multiplier)/100);
+            bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
 
-            $('div.graph_legend div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+            $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
             $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]*bar_width_multiplier+'%)');
             showLegend();
           } else {
@@ -585,7 +582,6 @@
           }
 
           valuesHash[key] = val;
-
 
           nBubbles = nBubbles+1;
           $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div></div>');
@@ -709,10 +705,8 @@
         if(nBubbles==0){
           createBubbles(url);
         }
-      }
-                        );
+      });
     }
-
 
     function addNewBubble(region) {
       region = region.replace(/ /g,'_');
