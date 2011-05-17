@@ -329,18 +329,21 @@ def get_municipalities_variables_evolution(province_id, custom_variable_name)
   from  vars_socioeco_x_municipio, ine_poly, gadm2
   where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{province_id}
 SQL
-  values = $cartodb.query(query)[:rows] || []
-  result = {}
-  values.each do |v|
-    result[v[:name]] = []
-    1975.upto(2011) do |year|
-      temp_variable = "#{custom_variable_name}_#{year}"
-      result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+  values = []
+  begin
+    values = $cartodb.query(query)[:rows] || []
+    result = {}
+    values.each do |v|
+      result[v[:name]] = []
+      1975.upto(2011) do |year|
+        temp_variable = "#{custom_variable_name}_#{year}"
+        result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
+      end
     end
+    result
+  rescue
+    return {}
   end
-  result
-rescue
-  return {}
 end
 
 def create_years_hash(records, variables, max_year, min_year, max_min_vars)
