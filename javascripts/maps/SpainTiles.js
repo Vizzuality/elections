@@ -155,7 +155,7 @@
     }
 
     var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
-                    '<img src="/images/'+className+'_marker.png"/>'+
+                    '<img src="images/'+className+'_marker.png"/>'+
                     '<p class="'+className+'">'+data+'</p>'+
                   '</div>';
     $(div).append(bubble);
@@ -192,7 +192,7 @@
         $('div#'+ele.id+' p').removeClass().addClass(className);
 
         //change color of the ball
-        $('div#'+ele.id+' img').attr('src','/images/'+className+'_marker.png');
+        $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
 
         //change heigth-width of the ball
         var radius;
