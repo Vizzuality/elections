@@ -7,8 +7,7 @@
   var tiles_version   = 3;
   var bubbles_version = 7;
   var gmaps_version   = 2;
-  var graph_version   = "v2";
-
+  var graph_version   = "v3";
 
   $(document).ready(function(){
 
