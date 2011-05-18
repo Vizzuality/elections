@@ -109,6 +109,7 @@ function initializeGraph() {
         '    <a class="more">Ver más</a>'+
         '    <a class="compare">Comparar</a>'+
         '  </div>'+
+        '  <div class="footer"></div>'+
     '</div>');
 
   bindEvents();
@@ -137,6 +138,7 @@ function initializeGraph() {
       $('div#graph_infowindow').show();
       open = true;
     } else {
+
       $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
       $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
     }
