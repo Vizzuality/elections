@@ -141,8 +141,8 @@ div.tabs div#graph div#bottom_legend {top: 530px;}
 
 /* Fail circle */
 div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/fail_background.png'); z-index:100;}
-div.tabs div.fail div.content {display:_none; position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
-div.tabs div.fail p {position:absolute; margin-top: 130px; margin-left: 35px; text-align:center; font:normal 21px "Officina Regular"; line-height: 28px;}
+div.tabs div.fail div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.fail p {position:absolute; width:300px; margin-top: 130px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
 div.tabs div.fail a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
 div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
 
@@ -200,6 +200,7 @@ div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div.infowindow div.top h2 span.year {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
 div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
