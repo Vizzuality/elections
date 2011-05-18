@@ -8,7 +8,7 @@
 
   var years_nodata = {};
 
-  function updateDeepnessFromZoomLevel(zoom_level) {
+  function getDeepLevelFromZoomLevel(zoom_level) {
     if (zoom_level == 6) {
       return "autonomias";
     } else if (zoom_level > 6 && zoom_level < 11) {
@@ -19,7 +19,7 @@
   }
 
   function initializeHeader() {
-    deep = updateDeepnessFromZoomLevel(start_zoom);
+    deep = getDeepLevelFromZoomLevel(start_zoom);
 
     /* Receive all the vars without data */
     getUnavailableData(deep);
@@ -302,7 +302,7 @@
       }
 
       function goToNextYear() {
-        var deep_level = updateDeepnessFromZoomLevel(peninsula.getZoom());
+        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
         updateNewSliderValue(getNextAvailableYear(deep_level));
 
         if (state == "mapa") {
@@ -403,26 +403,16 @@
     }
   }
 
-
   function checkFailYear(year) {
-    var deep;
-    var zoom = peninsula.getZoom();
-    if (zoom==6) {
-      deep = "autonomias";
-    } else if (zoom>6 && zoom<11) {
-      deep = "provincias";
-    } else {
-      deep = "municipios";
-    }
-    if (years_nodata[deep][normalization[compare]]!=undefined) {
+    var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
+
+    if (years_nodata[deep][normalization[compare]] != undefined) {
       var length_array = years_nodata[deep][normalization[compare]].length;
       return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
     } else {
       return false;
     }
-
   }
-
 
   function updateNewSliderValue(new_year) {
     $("div.year_slider").slider('value', new_year);
