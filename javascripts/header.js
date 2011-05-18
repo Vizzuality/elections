@@ -48,12 +48,12 @@
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
-        
+
           setTimeout(function(){
             refreshBubbles();
             refreshTiles();
           },500);
-        
+
         } else {
           $("#graph").show();
           // Hide the legend if this is visible...
@@ -136,6 +136,7 @@
         if (ui.value!=previous_year) {
           updateNewSliderValue(ui.value,previous_year);
         }
+        
       }
     });
 
@@ -276,16 +277,42 @@
         goToNextYear();
       });
 
-      function showError() {
+      function updateContent() {
         if (state == "mapa") {
           var $state = $("#map");
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          var isDataAvailableInDeep = true;
         } else {
           var $state = $("#graph");
           var deep_level = deep;
+
+          if (availableData[deep_level][normalization[compare]] == undefined) {
+            var isDataAvailableInDeep = false;
+          } else {
+            var isDataAvailableInDeep = true;
+          }
+        }
+
+        if (isDataAvailableInDeep == true) {
+          text = "No hay datos para este año";
+          next_link_text = "ver siguiente año con datos";
+        } else {
+          text = "No hay datos a este nivel de zoom";
+          next_link_text = "ver siguiente nivel con datos";
+        }
+
+        $state.find('div.content span.message').html(text);
+      }
+
+      function showError() {
+        if (state == "mapa") {
+          var $state = $("#map");
+        } else {
+          var $state = $("#graph");
         }
 
         if (data_not_found != true) {
+          updateContent();
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
@@ -435,6 +462,9 @@
         failCircle.hide();
       }
       refreshBubbles();
+      if(infowindow.isOpen()){
+        infowindow.updateValues();
+      }
     } else {
 
       var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
@@ -446,7 +476,7 @@
         createBubbles(url);
       }
     }
-    
+
     $("div.year_slider").slider('value', new_year);
     changeHash();
   }

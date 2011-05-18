@@ -161,7 +161,7 @@
       className = (point['data'][year][normalization[compare]]>0)?'yellow':'grey';
     }
     
-    var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
+    var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px;overflow: visible !important;">'+
                     '<p class="region_name">'+point.name+'</p>'+
                     '<img src="images/'+className+'_marker.png"/>'+
                     '<p class="stat '+className+'">'+data+'</p>'+
@@ -195,7 +195,6 @@
           data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
-
 
         //change color of the ball
         $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
@@ -243,15 +242,9 @@
           var old_radius = ($('div#'+ele.id).width()/2);
           var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
           var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
-          
-          // $('div#'+ele.id+' p.region_name').css({display:'block'});
-          // $('div#'+ele.id).width(radius*2);
-          // $('div#'+ele.id).height(radius*2);
-          // $('div#'+ele.id).css({top:top-radius+'px',left:left-radius+'px'});
-           
+
           $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
         }
-
       });
     });
   }

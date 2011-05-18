@@ -193,7 +193,7 @@ function initializeGraph() {
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
     var name = $("div#" + selectedBubble + " span.name").html();
-    $("#graph_infowindow").find(".top").find("h2").append(name);
+    $("#graph_infowindow").find(".top").find("h2").append(name + " <span class='year'>"+year+"</span>");
 
     $("#graph_infowindow a.more").show();
 
