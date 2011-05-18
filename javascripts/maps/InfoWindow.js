@@ -222,7 +222,7 @@
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
-      }
+      }        
 
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
@@ -313,6 +313,16 @@
         bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');        
+        
+        //MOVE THE BALL
+        
+        var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
+        var comparison_variable = normalization[compare];
+        var info_text = textInfoWindow[comparison_variable];
+        var sign = (selected_value < 0) ? "negative" : "positive";        
+        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
+        $('div#infowindow p.info').html(text);
         
     	}
     }    
