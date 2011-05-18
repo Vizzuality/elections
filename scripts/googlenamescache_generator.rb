@@ -2,6 +2,8 @@
 
 require File.dirname(__FILE__) + "/common"
 
+crono = Time.now
+
 cartodb                                       = get_cartodb_connection
 processes                                     = get_processes
 variables, variables_hash, max_year, min_year = *variables_vars
@@ -51,8 +53,6 @@ reading = Thread.new do
   end
 end
 
-max_min_vars = cartodb.query(max_min_vars_query(11)).rows.first
-
 municipalities_data = {}
 
 cartodb.query(municipalities_data_sql).rows.each do |row|
@@ -77,7 +77,7 @@ municipalities_data.each do |google_maps_name, records|
     :center_latitude => records.first.center_latitude
   }
   json[:provincia] = records.first.provincia
-  json[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
+  json[:data] = create_years_hash(records, variables, max_year, min_year)
 
   fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
   fd.write(Yajl::Encoder.encode(json))
@@ -87,3 +87,5 @@ end
 
 puts '... caching finished!'
 puts
+
+puts "Elapsed time: #{(Time.now - crono)} seconds"
