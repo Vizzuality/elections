@@ -156,15 +156,16 @@
       data = ((point['data'][year][normalization[compare]]>0.5)?('+'+Math.round(point['data'][year][normalization[compare]])):(Math.round(point['data'][year][normalization[compare]])));
       className = (point['data'][year][normalization[compare]]>0)?'yellow':'grey';
     }
-
+    
     var bubble =  '<div class="bubble" id="'+point.id+'" style="width:'+(radius*2)+'px; height:'+(radius*2)+'px; left:'+(left-radius)+'px; top:'+(top-radius)+'px; ">'+
+                    '<p class="region_name">'+point.name+'</p>'+
                     '<img src="images/'+className+'_marker.png"/>'+
-                    '<p class="'+className+'">'+data+'</p>'+
+                    '<p class="stat '+className+'">'+data+'</p>'+
                   '</div>';
     $(div).append(bubble);
 
     if (radius < 14) {
-      $('div.bubble[id="'+point.id+'"]').find('p').css('display',"none");
+      $('div.bubble[id="'+point.id+'"]').find('p.stat').css('display',"none");
     }
 
     return div;
@@ -192,8 +193,6 @@
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
         
-
-        $('div#'+ele.id+' p').removeClass().addClass(className);
 
         //change color of the ball
         $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
@@ -224,7 +223,9 @@
           radius = 12;
         }
         
-        $('div#'+ele.id+' p').text(data);
+        $('div#'+ele.id+' p.stat').removeClass().addClass(className);
+        $('div#'+ele.id+' p.stat').text(data);
+        
         if (radius<14) {
           $('div#'+ele.id+' p').hide();
         } else {

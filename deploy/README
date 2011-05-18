@@ -1,7 +1,9 @@
 These files deploy election project code and data on this sever to RTVE Akamai.
 
-app.js - pulls latest code from git and pushes it to akamai
-data.js - updates all data sources on akamai with newer versions if they exist
+app.sh 				 - pulls latest code from git and pushes it to akamai - TAKES 20 SECONDS
+vector_data.sh - updates all data sources on akamai with newer versions if they exist. TAKES 5-10 MINUTES.
+tile_data.sh   - updates all map image tiles on akamai with newer versions if they exist. TAKES 1 HOUR, MINIMUM.
+
 
 NOTE: They do not run any data generation or analysis. 
 

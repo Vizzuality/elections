@@ -1,5 +1,5 @@
 html {height:auto;}
-body {height:auto; background:white; min-width:1000px;}
+body {height:auto; background:#ccc; min-width:1000px;}
 
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
@@ -130,8 +130,9 @@ div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; l
 div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
-div.tabs div#graph {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:560px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
+
+div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 
 div.tabs div#map div#map_fail_background {display:none; position:relative; width:100%; height:100%; background:url('../images/fail_background.png'); opacity:.5; z-index:100;}
@@ -190,7 +191,8 @@ div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 /*BUBBLE MARKER*/
 div.bubble {position:absolute; padding:0; margin:0;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
-div.bubble p {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
+div.bubble p.stat {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
+div.bubble p.region_name {position:absolute; top:-10px; max-width:140px; text-shadow:rgba(0,0,0,1) 1px 1px 3px,rgba(0,0,0,1) -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
