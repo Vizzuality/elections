@@ -25,7 +25,7 @@ function getNextAvailableYear() {
   if (year > data[data.length - 1]) {
     return data[data.length - 1];
   } else {
-    return _.detect(data, function(num){ return year < num; }); // next election year to the firstYear
+    return _.detect(data, function(num){ return year < num; }); // next election year to the current year
   }
 }
 
@@ -656,34 +656,21 @@ function setValue(url){
 }
 
 //Function for update the values of the bubbles that are being visualized
-function updateBubble (id,x,y,val,colors,party){
+function updateBubble (id, x, y, val, colors, party) {
   var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
   var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
-  $(id).animate({
-    left: x.toString() + "px",
-    top: y.toString() + "px",
-    opacity: 1
-  }, 1000, function(){
-    //console.log("ukelele");
-  });
 
-  $(id).find('.outerBubble').animate({
-    height: val.toString() + "px",
-    width: val.toString() + "px",
-    top: offset.toString() + "px",
-    left: offset.toString() + "px"
-  }, 1000);
+  // if the party we're paiting is not on the main parties list, let's paint it purple
+  if (_.indexOf(parties, normalizePartyName(party)) == -1)  {
+    backgroundColor = "purple";
+  }
 
-
-  $(id).find('.innerBubble').animate({
-    height: (val-10).toString() + "px",
-    width: (val-10).toString() + "px",
-    top: (offset + 5).toString() + "px",
-    left: (offset + 5).toString() + "px",
-    backgroundColor: backgroundColor
-  }, 1000);
+  // Bubbles animations
+  $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
+  $(id).find('.outerBubble').animate({ height: val.toString() + "px", width: val.toString() + "px", top: offset.toString() + "px", left: offset.toString() + "px" }, 1000);
+  $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
 
@@ -691,7 +678,9 @@ function updateBubble (id,x,y,val,colors,party){
 function goDeeper(url){
   graphLegend.hide();
   //Get new name and deep
+
   var url_split = url.split('/');
+  //console.log("url_split", url_split);
 
   deep = url_split[5];
   //console.log("deep", deep);
