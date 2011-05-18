@@ -186,10 +186,10 @@ div#tab_menu a.selected {background-position: -1px -31px;}
 div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 
 /*BUBBLE MARKER*/
-div.bubble {position:absolute; padding:0; margin:0;}
+div.bubble {position:absolute; padding:0; margin:0; overflow:visible;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
 div.bubble p.stat {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
-div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:rgba(0,0,0,1) 1px 1px 3px,rgba(0,0,0,1) -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
+div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}

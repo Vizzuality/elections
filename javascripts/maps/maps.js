@@ -4,9 +4,7 @@
   var start_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036); // Maps center position
   var start_zoom = 6;
   var previous_zoom = 6;  // Hack for jump 10 zoom
-  
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
-  var allowedBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
   var projection = new MercatorProjection();
   var infowindow,comparewindow;
   var dragging = false;
