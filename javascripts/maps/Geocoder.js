@@ -37,6 +37,7 @@
         if (status == google.maps.GeocoderStatus.OK) {
           $('div.search_error').fadeOut();
           peninsula.fitBounds(results[0].geometry.bounds);
+          searchAndShow(results[0].formatted_address);
           $('a.map').trigger('click');
         } else {
           $('div#header div.left div.search_error').fadeIn();
@@ -70,3 +71,20 @@
         }
       });
     }
+    
+    
+    function searchAndShow(formatted_address) {
+      $.ajax({
+        method: "GET",
+        dataType: 'json',
+        url: global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json',
+        success: function(info) {
+          setTimeout(function(){$('div#'+info.id).trigger('click')},1000);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+    
+    
