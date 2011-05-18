@@ -109,6 +109,7 @@ function initializeGraph() {
         '    <a class="more">Ver más</a>'+
         '    <a class="compare">Comparar</a>'+
         '  </div>'+
+        '  <div class="footer"></div>'+
     '</div>');
 
   bindEvents();
@@ -127,7 +128,7 @@ function initializeGraph() {
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
-    $('div#graph_infowindow p.info').html(text);
+    $('div#graph_infowindow p.info').html("fjsadñlk sañflkdjfñsdakljfñlsakjfñaslkfj wsñlkfjasñlfkjsafñ ljafñlsdkjfasf asñlfkj af fasñlkfjasñlkfjasdñlkfjs" + text);
   }
 
   function showInfowindow(left, top) {
@@ -137,6 +138,7 @@ function initializeGraph() {
       $('div#graph_infowindow').show();
       open = true;
     } else {
+
       $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
       $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
     }

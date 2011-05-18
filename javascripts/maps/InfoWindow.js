@@ -51,7 +51,10 @@
               '<img title="" alt="Chart de región" />'+
             '</div>'+
             '<a class="compare">Comparar</a>'+
+          '</div>'+
+          '<div class="footer">'+
           '</div>';
+
         div.innerHTML = inner_infowindow;
 
 
@@ -80,6 +83,7 @@
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
     	  div.style.height = me.height_ + 'px';
     	  div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
+    	  console.log(div.style.top);
       }
     };
 
@@ -108,7 +112,8 @@
         this.offsetHorizontal_ = -127;
         this.height_ = 289;
         this.width_ = 254;
-        $('div#infowindow').css({background:'url("images/infowindow.png") no-repeat 0 0'});
+        $('div#infowindow').css({background:'none'});
+        $('div#infowindow div.top').css({background:'url("images/infowindow_top.png") no-repeat 0 0'});
       } else {
         this.offsetVertical_ = -236;
         this.offsetHorizontal_ = -127;
@@ -211,7 +216,7 @@
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
-        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        var text = "fasñlfkjasdñflk jañslkfjñasldkfjasñdlf jsañdlkfjas ñlkfjasñkfj añskffasdf sdañlfjasdñlfkjasdñlkfjadsñklfjasñdlk fjasdñklfjasñlkdfjasdñlkfjñslkf asfasdfsajfals jasfljsdfjas"  + info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
         $('div#infowindow div.chart').show();
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
