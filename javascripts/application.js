@@ -9,7 +9,6 @@
   var bubbles_version = 8;
   var gmaps_version   = 4;
   var graph_version   = "v7";
-  var failCircle;
 
   $(document).ready(function(){
 
