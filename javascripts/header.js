@@ -130,7 +130,6 @@
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
         }
-        graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
