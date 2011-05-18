@@ -2,6 +2,9 @@
 
 require File.dirname(__FILE__) + "/common"
 
+base_path = FileUtils.pwd
+FileUtils.mkdir_p("#{base_path}/../graphs/autonomias/#{$graphs_next_version}")
+
 cartodb        = get_cartodb_connection
 processes      = get_processes
 autonomies     = get_autonomies
@@ -21,9 +24,6 @@ where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1
 SQL
 
 votes_per_autonomy = cartodb.query(query)[:rows]
-
-base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../graphs/autonomias/#{$graphs_next_version}")
 
 ## AUTONOMIES
 #############
