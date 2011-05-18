@@ -1,9 +1,8 @@
 // Graph global vars {#}
-var deep = "autonomias";
+//var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
 var availableData = {};
-var graphFailCircle;
 
 //Vars determining the center of the graph
 var offsetScreenX = 510;
@@ -20,21 +19,11 @@ var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
 
-function getNextAvailableYear() {
-  var data = availableData[deep][normalization[compare]];
-  if (year > data[data.length - 1]) {
-    return data[data.length - 1];
-  } else {
-    return _.detect(data, function(num){ return year < num; }); // next election year to the current year
-  }
-}
-
 function initAvailableData(deep) {
   $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
 }
 
 function initializeGraph() {
-
   if (state == "grafico") {
     $("#graph").show();
   }
@@ -45,7 +34,7 @@ function initializeGraph() {
 
   $(".innerBubble").live({
     mouseenter: function () {
-      if (graphFailCircle.failed() == true) {
+      if (failCircle.failed() === true) {
         return;
       }
 
@@ -72,7 +61,7 @@ function initializeGraph() {
       graphBubbleTooltip.hide();
     },
     click: function() {
-      if (graphFailCircle.failed() == true) {
+      if (failCircle.failed() === true) {
         return;
       }
 
@@ -183,7 +172,7 @@ function initializeGraph() {
       if (p[c] != "partido"){
         $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(p[c]);
       }
-    })
+    });
 
     if (_.indexOf(parties, normalized_party_name) !== -1) {
       $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(normalized_party_name);
@@ -216,10 +205,12 @@ function initializeGraph() {
       $("#graph_infowindow a.more").hide();
     }
 
+    var porcentaje_participacion = Math.floor(parseInt(valuesHash[data_id].porcentaje_participacion));
+
     $("#graph_infowindow").find(".top").find(".province").empty();
-    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id]["censo_total"] + " habitantes");
+    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes");
     $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
-    $("#graph_infowindow").find(".top").find(".stats").find("h4").append(Math.floor(parseInt(valuesHash[data_id]["porcentaje_participacion"])) + "% de participación");
+    $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
     drawPartyBar(data_id, 1);
     drawPartyBar(data_id, 2);
@@ -236,7 +227,7 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-    var firstYearData = _.detect(data, function(num){ return num != 0; }); // index of the first year with information
+    var firstYearData = _.detect(data, function(num) { return num != 0; }); // index of the first year with information
     var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
     var firstYear = 1975 + firstYearIndex; // first year with information
 
@@ -255,14 +246,18 @@ function initializeGraph() {
             selected_value = parseFloat(data[i - 1])
           }
         }
-        if (Math.abs(parseFloat(data[i]))>max) max = Math.ceil(Math.abs(parseFloat(data[i])));
+
+        if (Math.abs(parseFloat(data[i]))>max) {
+          max = Math.ceil(Math.abs(parseFloat(data[i])));
+        }
+
         chartDataString += data[i]+ ',';
       } else {
         chartDataString += '0,';
       }
       count++;
     }
-    if (find_year == undefined && year == 2011) {
+    if (find_year === undefined && year == 2011) {
       find_year = count;
     }
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
@@ -295,7 +290,7 @@ function initializeGraph() {
 
       var $selectedBubble = $("div#" + selectedBubble);
       var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
-      if (url == null) {
+      if (url === null) {
         return false;
       } else {
         goDeeper(global_url + "/" + url);
@@ -324,7 +319,7 @@ function initializeGraph() {
     refresh: refreshInfowindow,
     change: changeData,
     isOpen: isOpen
-  }
+  };
   }());
 
   // Tooltip when mouseover some bubble
@@ -355,7 +350,7 @@ function initializeGraph() {
   axisLegend = (function() {
     function updateLegend(info) {
 
-      if (info != undefined) {
+      if (info !== undefined) {
         $("#top_legend").fadeOut("fast", function() {
           $("#top_legend").text(info.legendTop);
           $("#top_legend").fadeIn("slow", function() {
@@ -377,8 +372,7 @@ function initializeGraph() {
 
   graphLegend = (function() {
     // Create the element - add it to DOM
-    $('div#graph_container').append(
-      '<div class="graph_legend">\
+    $('div#graph_container').append('<div class="graph_legend">\
         <h2>Tasa de Paro en España<sup>(2010)</sup></h2>\
         <p class="autonomy"><a href="#">Castilla y León</a></p>\
         <div class="stats">\
@@ -591,53 +585,9 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){ createdBubbles = true; graphFailCircle.hide(); })
-  .error(function(){ createdBubbles = false; graphFailCircle.show(); });
+  .success(function(){ createdBubbles = true; failCircle.hide(); })
+  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
-
-graphFailCircle = (function() {
-  var data_not_found;
-
-  $("#graph_fail_circle a.why").live("click", function(ev) {
-    ev.stopPropagation();
-    ev.preventDefault();
-    explanationwindow.show();
-  });
-
-  $("#graph_fail_circle a.next").live("click", function(ev) {
-    ev.stopPropagation();
-    ev.preventDefault();
-    goToNextYear();
-  });
-
-  function showError() {
-    if (data_not_found != true) {
-      $('#graph_fail_background, #graph_fail_circle').fadeIn("slow", function() { data_not_found = true; });
-    }
-  }
-
-  function hideError() {
-    $('#graph_fail_background, #graph_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
-  }
-
-  function goToNextYear() {
-    var next_available_year = getNextAvailableYear();
-    year = next_available_year;
-    $("div.year_slider").slider('value', year);
-    changeHash();
-    setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-  }
-
-  function hasFailed() {
-    return data_not_found;
-  }
-
-  return {
-    show: showError,
-    hide: hideError,
-    failed: hasFailed
-  }
-})();
 
 function setValue(url){
 
@@ -652,8 +602,8 @@ function setValue(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
-  .success(function(){ graphFailCircle.hide(); })
-  .error(function(){ graphFailCircle.show(); });
+  .success(function(){ failCircle.hide(); })
+  .error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized

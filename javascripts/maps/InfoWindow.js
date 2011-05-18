@@ -5,7 +5,7 @@
     	this.information = {};
     	this.spain_id = 0;
     	this.map_ = map;
-      this.offsetVertical_ = -276;
+      this.offsetVertical_ = -266;
       this.offsetHorizontal_ = -127;
       this.height_ = 289;
       this.width_ = 254;
@@ -104,13 +104,13 @@
 
     	if (info['data'][year][normalization[compare]]!=null) {
     	  //Set dimensions and bkg first
-    	  this.offsetVertical_ = -276;
+    	  this.offsetVertical_ = -266;
         this.offsetHorizontal_ = -127;
         this.height_ = 289;
         this.width_ = 254;
         $('div#infowindow').css({background:'url("images/infowindow.png") no-repeat 0 0'});
       } else {
-        this.offsetVertical_ = -246;
+        this.offsetVertical_ = -236;
         this.offsetHorizontal_ = -127;
         this.height_ = 269;
         this.width_ = 254;
