@@ -268,7 +268,7 @@
 
     //TODO: ANIMAR EL CAMBIO EN LAS BARRAS
     InfoWindow.prototype.updateValues = function() {
-      console.log(this.information);
+      
       if (this.div_) {
         var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
         $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');

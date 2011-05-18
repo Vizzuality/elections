@@ -118,6 +118,7 @@
     CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
     	var me = this;
     	var div = this.div;
+    	this.firstData = info;
     	this.firstZoom = zoom;
     	// Reset graphs containers
       $('div.stats_slider').empty();
@@ -263,7 +264,58 @@
         $('div#comparewindow div.bottom').removeClass('search').addClass('region');
       }
     }
+    
+    CompareWindow.prototype.updateValues = function(){
 
+        //TODO: AÜN NO FUNCIONA
+
+        if (this.div) {
+          var partido_1 = normalizePartyName(this.firstData['data'][year]['primer_partido_name']);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
+          if (_.indexOf(parties, partido_1) !== -1) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass(partido_1);
+          } else if(this.oldPar1 != partido_1) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass('par1');
+          }
+          bar_width = normalizeBarWidth((this.firstData['data'][year]['primer_partido_percent']*175)/100);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) span.c').animate({
+            width: bar_width.toString() +"px"
+          }, 500, 'easeOutCubic');
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) p').text(this.firstData['data'][year]['primer_partido_name']+' ('+this.firstData['data'][year]['primer_partido_percent']+'%)');
+
+
+          var partido_2 = normalizePartyName(this.firstData['data'][year]['segundo_partido_name']);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
+          if (_.indexOf(parties, partido_2) !== -1) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass(partido_2);
+          } else if(this.oldPar2 != partido_2) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass('par2');
+          }
+          bar_width = normalizeBarWidth((this.firstData['data'][year]['segundo_partido_percent']*175)/100);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) span.c').animate({
+            width: bar_width.toString() +"px"
+          }, 500, 'easeOutCubic');
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) p').text(this.firstData['data'][year]['segundo_partido_name']+' ('+this.firstData['data'][year]['segundo_partido_percent']+'%)');
+
+          var partido_3 = normalizePartyName(this.firstData['data'][year]['tercer_partido_name']);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
+          if (_.indexOf(parties, partido_3) !== -1) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass(partido_3);
+          } else if(this.oldPar3 != partido_3) {
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass('par3');
+          }
+          bar_width = normalizeBarWidth((this.firstData['data'][year]['tercer_partido_percent']*175)/100);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) span.c').animate({
+            width: bar_width.toString() +"px"
+          }, 500, 'easeOutCubic');
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) p').text(this.firstData['data'][year]['tercer_partido_name']+' ('+this.firstData['data'][year]['tercer_partido_percent']+'%)');
+
+          bar_width = normalizeBarWidth((this.firstData['data'][year]['otros_partido_percent']*175)/100);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+this.firstData['data'][year]['otros_partido_percent']+'%)');
+          
+      	}
+      }
 
     CompareWindow.prototype.resetSearch = function() {
       $('div#comparewindow div.bottom input.text').val('Busca una localidad...');
