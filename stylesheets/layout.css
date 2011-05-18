@@ -3,6 +3,8 @@ body {height:auto; background:#ccc; min-width:1000px;}
 
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
+.container {height:100px; width:100%!important; background:#fff;}
+
 /*HEADER*/
 div#header {position:absolute; left:0; right:0; top:80px; height:164px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
@@ -135,9 +137,9 @@ div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bot
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 
-div.tabs div#map div#map_fail_background {display:none; position:relative; width:100%; height:100%; background:url('../images/fail_background.png'); opacity:.5; z-index:100;}
-div.tabs div#map div#map_fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
-div.tabs div#map div#map_fail_circle p {font:normal 21px "Officina Regular"; line-height: 28px;}
+div.tabs div#map div#map_fail_background {display:none; position:absolute; width:100%; height:100%; background:url('../images/fail_background.png'); opacity:.5; z-index:100;}
+div.tabs div#map div#map_fail_circle {display:none; position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div#map div#map_fail_circle p {position:absolute; margin-top: 130px; margin-left: 35px; text-align:center; font:normal 21px "Officina Regular"; line-height: 28px;}
 div.tabs div#map div#map_fail_circle a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
 div.tabs div#map div#map_fail_circle a.why {position:relative; display:block; top: 85px;}
 

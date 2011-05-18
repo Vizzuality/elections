@@ -101,7 +101,7 @@
 
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
-    	
+
     	if (info['data'][year][normalization[compare]]!=null) {
     	  //Set dimensions and bkg first
     	  this.offsetVertical_ = -276;
@@ -116,18 +116,18 @@
         this.width_ = 254;
         $('div#infowindow').css({background:'url("images/infowindow_error_bkg.png") no-repeat 0 0'});
       }
-      
-      
+
+
       $('div#infowindow h2').text(info.name);
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
       $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
-      
+
       // Remove previous political style bars
       $('div#infowindow div.stats div.partido').each(function(i,ele){
         $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
       });
       var bar_width;
-      
+
       // First political party
       var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
       if (_.indexOf(parties, partido_1) !== -1) {
@@ -140,7 +140,7 @@
       bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
       $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
-      
+
       // Second political party
       var partido_2 = normalizePartyName(info['data'][year]['segundo_partido_name']);
       if (_.indexOf(parties, partido_2) !== -1) {
@@ -153,7 +153,7 @@
       bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
       $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
-      
+
       // Third political party
       var partido_3 = normalizePartyName(info['data'][year]['tercer_partido_name']);
       if (_.indexOf(parties, partido_3) !== -1) {
@@ -163,17 +163,17 @@
         $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
         this.oldPar3 = "par3";
       }
-      
+
       bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
       $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
-      
+
       // Other
       bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
       $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-      
-      
+
+
       if (info['data'][year][normalization[compare]]!=null) {
     	  var max = 0; var count = 0; var find = false; var find_year; var new_no_data = 0; var start = false;
         var paro = "";
@@ -207,12 +207,18 @@
         }
 
         paro = paro.substring(0, paro.length-1);
+        var selected_value  = Math.abs(parseFloat(info['data'][year][normalization[compare]]).toFixed(2));
+        var comparison_variable = normalization[compare];
+        var info_text = textInfoWindow[comparison_variable];
+        var sign = (selected_value < 0) ? "negative" : "positive";
+        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
         $('div#infowindow div.chart').show();
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
         $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((count*8)+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,0,5,0');
         $('div#infowindow div.chart img').css({margin:'0 '+(new_no_data*7)+'px 0 0'});
         $('div#infowindow div.chart img').show();
-        $('div#infowindow p.info').html('Su población es <strong>'+Math.abs(parseFloat(info['data'][year][normalization[compare]]).toFixed(2))+'%</strong> '+((parseFloat(info['data'][year][normalization[compare]]).toFixed(2)>0)?'mayor':'menor')+' que la media nacional');
+        $('div#infowindow p.info').html(text);
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
