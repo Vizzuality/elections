@@ -45,7 +45,7 @@ var tooltipInfo = {
     legendTop: "Más % paro",
     legendBottom:"Menos % paro"
   },
-  "PIB per capita" : {
+  "PIB per cápita" : {
     content: "Desviación respecto a la media del producto interior bruto per cápita",
     left: "más pobres",
     right: "más ricos",
