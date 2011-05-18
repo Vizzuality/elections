@@ -226,7 +226,7 @@ SQL
   parties = get_parties
   $cartodb.query(query)[:rows].each do |row|
     results[row[:name_2].normalize] ||= {}
-    results[row[:name_2].normalize][row[:proceso_electoral_id]] ||= {
+    results[row[:name_2].normalize][row[:proceso_electoral_id].to_s] ||= {
       :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
       :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
       :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
