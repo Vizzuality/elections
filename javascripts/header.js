@@ -46,19 +46,23 @@
       ev.preventDefault();
       var className = ($(this).hasClass('map'))?'map':'graph';
       if (!$(this).hasClass('selected')) {
-
         infoTooltip.hide();
-
         $('div#tab_menu a').removeClass('selected');
         if (className == 'map') {
-        $("#graph").hide();
+          $("#graph").hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
+
+          setTimeout(function(){
+            refreshBubbles();
+            refreshTiles();
+          },500);
+
         } else {
-        $("#graph").show();
+          $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           state = "grafico";
@@ -100,12 +104,12 @@
       ev.stopPropagation();
       ev.preventDefault();
       graphBubbleInfowindow.hide();
-      updateNewSliderValue(year-1);
+      updateNewSliderValue(year-1,year);
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-      updateNewSliderValue(year+1);
+      updateNewSliderValue(year+1,year);
     });
 
 
@@ -137,7 +141,7 @@
       },
       stop: function( event, ui ) {
         if (ui.value!=previous_year) {
-          updateNewSliderValue(ui.value);
+          updateNewSliderValue(ui.value,previous_year);
         }
       }
     });
@@ -242,7 +246,6 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          console.log(deep);
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
@@ -280,9 +283,42 @@
         goToNextYear();
       });
 
+      function updateContent() {
+        if (state == "mapa") {
+          var $state = $("#map");
+          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          var isDataAvailableInDeep = true;
+        } else {
+          var $state = $("#graph");
+          var deep_level = deep;
+
+          if (availableData[deep_level][normalization[compare]] == undefined) {
+            var isDataAvailableInDeep = false;
+          } else {
+            var isDataAvailableInDeep = true;
+          }
+        }
+
+        if (isDataAvailableInDeep == true) {
+          text = "No hay datos para este año";
+          next_link_text = "ver siguiente año con datos";
+        } else {
+          text = "No hay datos a este nivel de zoom";
+          next_link_text = "ver siguiente nivel con datos";
+        }
+
+        $state.find('div.content span.message').html(text);
+      }
+
       function showError() {
-        var $state = (state == "mapa") ? $("#map") : $("#graph");
+        if (state == "mapa") {
+          var $state = $("#map");
+        } else {
+          var $state = $("#graph");
+        }
+
         if (data_not_found != true) {
+          updateContent();
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
@@ -302,12 +338,13 @@
       }
 
       function goToNextYear() {
-        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-        updateNewSliderValue(getNextAvailableYear(deep_level));
 
         if (state == "mapa") {
+          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          updateNewSliderValue(getNextAvailableYear(deep_level));
           failCircle.hide();
         } else {
+          updateNewSliderValue(getNextAvailableYear(deep));
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
@@ -354,8 +391,9 @@
     $('span.slider_no_data_left').hide();
     $('span.slider_no_data_right').hide();
 
-    var deep;
     var zoom = peninsula.getZoom();
+    var deep;
+    
     if (zoom==6) {
       deep = "autonomias";
       if (years_nodata["autonomias"]==undefined) {
@@ -404,21 +442,24 @@
   }
 
   function checkFailYear(year) {
-    var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
-
-    if (years_nodata[deep][normalization[compare]] != undefined) {
-      var length_array = years_nodata[deep][normalization[compare]].length;
-      return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
+    var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+    if ( years_nodata[region_type][normalization[compare]]!=undefined) {
+      var length_array = years_nodata[region_type][normalization[compare]].length;
+      return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
     } else {
       return false;
     }
   }
 
-  function updateNewSliderValue(new_year) {
-    $("div.year_slider").slider('value', new_year);
 
+
+  function updateNewSliderValue(new_year,previous_year) {
     if (state == 'mapa') {
-      if (graph_hack_year[year] != graph_hack_year[new_year]) {
+      if (previous_year!=undefined) {
+        if (graph_hack_year[previous_year] != graph_hack_year[new_year]) {
+          refreshTiles();
+        }
+      } else {
         refreshTiles();
       }
       if (!checkFailYear(new_year)) {
@@ -439,7 +480,7 @@
       }
     }
 
-    year = new_year;
+    $("div.year_slider").slider('value', new_year);
     changeHash();
   }
 
