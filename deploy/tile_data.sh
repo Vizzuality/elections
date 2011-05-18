@@ -1,1 +1,1 @@
-time lftp -c 'open -u elecciones2011,Elecc10nes rtve-004e.servidoresdns.net && mirror -RL -p --parallel=100 --no-symlinks --only-missing /mnt/www/data/tiles data/tiles' 
+time lftp -c 'open -u elecciones2011,Elecc10nes rtve-004e.servidoresdns.net && mirror -RL -p --parallel=100 --ignore-size --ignore-size /mnt/www/data/tiles/current data/tiles/current' 
