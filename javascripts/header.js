@@ -302,10 +302,14 @@
       }
 
       function goToNextYear() {
-        var next_available_year = getNextAvailableYear(deep);
-        year = getNextAvailableYear();
-        updateNewSliderValue(year);
-        failCircle.hide();
+        var deep_level = updateDeepnessFromZoomLevel(peninsula.getZoom());
+        updateNewSliderValue(getNextAvailableYear(deep_level));
+
+        if (state == "mapa") {
+          failCircle.hide();
+        } else {
+          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+        }
       }
 
       function hasFailed() {
