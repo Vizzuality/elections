@@ -80,7 +80,7 @@ municipalities_data.each do |google_maps_name, records|
   json[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
   fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
-  fd.write(json.to_json)
+  fd.write(Yajl::Encoder.encode(json))
   fd.close
 
 end
