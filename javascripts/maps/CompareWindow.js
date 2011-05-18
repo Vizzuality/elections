@@ -194,7 +194,6 @@
           method: "GET",
           dataType: 'json',
           url: global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json',
-          data: {},
           success: function(info) {
             fillData(info);
           },
