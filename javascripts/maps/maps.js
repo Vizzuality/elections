@@ -224,7 +224,7 @@
       $("span.slider").slider({value: peninsula.getZoom()});
     }
     previous_zoom = peninsula.getZoom();
-    
+    drawNoDataBars();
     
     //Show tiny Canarias map
     if (peninsula.getZoom()==6) {
