@@ -137,7 +137,7 @@
       },
       stop: function( event, ui ) {
         if (ui.value!=previous_year) {
-          updateNewSliderValue(new_value);
+          updateNewSliderValue(ui.value);
         }
       }
     });
@@ -268,13 +268,13 @@
     failCircle = (function() {
       var data_not_found = false;
 
-      $("#map_fail_circle a.why").live("click", function(ev) {
+      $("#map div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         explanationwindow.show();
       });
 
-      $("#map_fail_circle a.next").live("click", function(ev) {
+      $("#map div.fail a.next").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         goToNextYear();
@@ -282,12 +282,12 @@
 
       function showError() {
         if (data_not_found != true) {
-          $('#map_fail_background, #map_fail_circle').fadeIn("slow", function() { data_not_found = true; });
+          $('#map div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
 
       function hideError() {
-        $('#map_fail_background, #map_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+        $('#map div.fail').fadeOut("slow", function() { data_not_found = undefined; })
       }
 
       function goToNextYear() {
