@@ -103,6 +103,7 @@
       } else {
         setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
+      changeHash();
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
@@ -117,6 +118,7 @@
       } else {
         setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
       }
+      changeHash();
     });
     
 
