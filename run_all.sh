@@ -1,7 +1,10 @@
 #!/bin/bash
 
-./scripts/run_graphs.sh
-ruby ./scripts/bubbles.rb 6 7 11
-ruby ./scripts/googlenamescache_generator.rb
-./scripts/run_maps.sh
-./deploy/all.sh 
+cd scripts
+./run_graphs.sh
+ruby bubbles.rb 6 7 11
+ruby googlenamescache_generator.rb
+./run_maps.sh
+
+cd ../deploy
+./all.sh 
