@@ -6,7 +6,7 @@ require 'pp'
 cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
 base_path                                     = FileUtils.pwd
-json_folder                                   = next_folder('../json/generated_data/bubbles/')
+json_folder                                   = next_folder('/mnt/www/data/bubbles/')
 
 FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
 

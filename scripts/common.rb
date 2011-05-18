@@ -507,8 +507,7 @@ def next_folder(path)
   FileUtils.mkdir_p(version_path)
   
   # current symlink path
-  current_path = "#{path}current/"
-  FileUtils.mkdir_p(current_path)
+  current_path = "#{path}current"
   
   # symlink up
   FileUtils.ln_s version_path, current_path, :force => true
