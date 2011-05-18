@@ -1,6 +1,7 @@
 # coding: UTF-8
 
 require File.dirname(__FILE__) + "/common"
+require 'pp'
 
 cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
@@ -147,8 +148,6 @@ zoom_levels.each do |z|
   [0, 1].each do |i|
     progress = ProgressBar.new(length[i][z])
 
-    max_min_vars = cartodb.query(max_min_vars_query(z)).rows.first
-
     y = start_y[z][i]
     while y <= end_y[z][i] do
       x = start_x[z][i]
@@ -180,7 +179,7 @@ zoom_levels.each do |z|
             :center_latitude => records.first.center_latitude
           }
           data[:provincia] = records.first.provincia if records.first[:provincia]
-          data[:data] = create_years_hash(records, variables, max_year, min_year, max_min_vars)
+          data[:data] = create_years_hash(records, variables, max_year, min_year)
           json << data
         end
 
