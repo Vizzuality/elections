@@ -152,7 +152,7 @@
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
         }
-        graphBubbleTooltip.hide();
+        //graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
@@ -167,9 +167,11 @@
               failCircle.hide();
             }
             refreshBubbles();
+            if (graphBubbleInfowindow.isOpen()){
+              graphBubbleInfowindow.updateValues()
+            }
           }
         }
-
 
         if (ui.value!=previous_year) {
           comparewindow.hide();
