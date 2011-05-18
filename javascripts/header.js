@@ -55,12 +55,12 @@
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
-        
+
           setTimeout(function(){
             refreshBubbles();
             refreshTiles();
           },500);
-        
+
         } else {
           $("#graph").show();
           // Hide the legend if this is visible...
@@ -453,7 +453,7 @@
         createBubbles(url);
       }
     }
-    
+
     $("div.year_slider").slider('value', new_year);
     changeHash();
   }
