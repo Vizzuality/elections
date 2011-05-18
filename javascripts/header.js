@@ -416,10 +416,15 @@
   }
 
   function checkFailYear(year) {
-    if (years_nodata[deep]!=undefined && years_nodata[deep][normalization[compare]]!=undefined) {
     var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
-      var length_array = years_nodata[deep][normalization[compare]].length;
-      return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
+    if (years_nodata[deep]!=undefined) {
+      if ( years_nodata[deep][normalization[compare]]!=undefined) {
+        var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        var length_array = years_nodata[deep][normalization[compare]].length;
+        return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
