@@ -378,7 +378,7 @@ SQL
   result
 end
 
-def create_years_hash(records, variables, max_year, min_year, max_min_vars)
+def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
 
@@ -387,8 +387,6 @@ def create_years_hash(records, variables, max_year, min_year, max_min_vars)
 
     variables.each do |variable|
       data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{year}".to_sym]
-      data["#{variable.codigo}_max".to_sym] = max_min_vars["#{variable.codigo}_#{year}_max".to_sym].to_f.round(2) if max_min_vars["#{variable.codigo}_#{year}_max".to_sym]
-      data["#{variable.codigo}_min".to_sym] = max_min_vars["#{variable.codigo}_#{year}_min".to_sym].to_f.round(2) if max_min_vars["#{variable.codigo}_#{year}_min".to_sym]
     end
 
     records.each do |row|
