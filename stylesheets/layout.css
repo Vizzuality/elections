@@ -200,6 +200,7 @@ div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div.infowindow div.top h2 span.year {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
 div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
