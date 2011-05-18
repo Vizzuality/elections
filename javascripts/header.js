@@ -44,14 +44,15 @@
         infoTooltip.hide();
 
         $('div#tab_menu a').removeClass('selected');
-
         if (className == 'map') {
+        $("#graph").hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
+        $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           state = "grafico";
