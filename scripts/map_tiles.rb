@@ -54,6 +54,10 @@ if election_id == nil
     puts "\n** ERROR: please enter a correct procesos electorales id \n\n"
     retry
   end      
+else
+  if election_id == 'all'
+    election_id = pos.map { |x| x['cartodb_id'] }.join(",") 
+  end
 end
 
 # version path
