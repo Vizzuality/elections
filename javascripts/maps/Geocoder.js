@@ -81,9 +81,7 @@
         success: function(info) {
           setTimeout(function(){$('div#'+info.id).trigger('click')},1000);
         },
-        error: function(error) {
-          console.log(error);
-        }
+        error: function(error) {}
       });
     }
     
