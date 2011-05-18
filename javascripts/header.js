@@ -134,7 +134,7 @@
       },
       stop: function( event, ui ) {
         if (ui.value!=previous_year) {
-          updateNewSliderValue(new_value);
+          updateNewSliderValue(ui.value);
         }
       }
     });
