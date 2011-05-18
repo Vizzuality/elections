@@ -62,6 +62,7 @@ versions      = Dir["#{base_path}/*/"]
 v_dir         = versions.map{|x| x.split("/").last}
 v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
 version_path  = "#{base_path}/#{v_next}" 
+current_path  = "#{base_path}/current" 
 all_time_start  = Time.now
 total_tile_count = 0
 
@@ -180,6 +181,9 @@ election_ids.each do |election_id|
   secs = time_end - time_start
   puts "\nTotal time: #{sprintf("%.2f", secs)} seconds (#{sprintf("%.2f", secs/60.0)} mins). #{sprintf("%.2f", total_tiles/secs)} tiles per second."
 end
+
+# symboliclink
+FileUtils.ln_s version_path, current_path, :force => true
 
 all_time_end = Time.now  
 secs = all_time_end - all_time_start
