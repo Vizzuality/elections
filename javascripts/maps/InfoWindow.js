@@ -222,7 +222,7 @@
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
-      }
+      }        
 
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
