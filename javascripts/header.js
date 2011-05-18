@@ -8,8 +8,7 @@
 
   var years_nodata = {};
 
-  function updateDeepnessFromZoomLevel() {
-    var zoom_level = peninsula.getZoom();
+  function updateDeepnessFromZoomLevel(zoom_level) {
     if (zoom_level == 6) {
       return "autonomias";
     } else if (zoom_level > 6 && zoom_level < 11) {
@@ -20,7 +19,7 @@
   }
 
   function initializeHeader() {
-    deep = updateDeepnessFromZoomLevel();
+    deep = updateDeepnessFromZoomLevel(start_zoom);
 
     /* Receive all the vars without data */
     getUnavailableData(deep);
