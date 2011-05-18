@@ -34,7 +34,6 @@ def municipalities_data_sql
    INNER JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
    INNER JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
    INNER JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
-   LIMIT 60
   SQL
 end
 

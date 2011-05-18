@@ -1,9 +1,8 @@
 #!/bin/bash
 
 echo "Autonomies...."
-ruby autonomies.rb
+time ruby autonomies.rb
 echo "Provinces...."
-ruby provinces.rb
+time ruby provinces.rb
 echo "Municipalities...."
-ruby municipalities.rb 2 0 &
-ruby municipalities.rb 2 1 &
+time ruby municipalities.rb
