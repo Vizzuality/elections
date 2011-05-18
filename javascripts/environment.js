@@ -3,7 +3,7 @@
   var tiles_pngs_url  = "http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
   var proxy_url       = "proxy.php";
   var tiles_version   = 3;
-  var bubbles_version = 8;
+  var bubbles_version = 10;
   var gmaps_version   = 4;
   var graph_version   = "v7";
   

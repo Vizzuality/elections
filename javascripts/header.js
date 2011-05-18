@@ -33,13 +33,6 @@
       $('div#graph').css('zIndex',10);
     }
 
-    // Initialize select
-    $('div.option_list ul li a.'+compare).closest('li').addClass('selected');
-    $('div.option_list ul li a.'+compare).closest('div.select').addClass('selected');
-    var value = $('div.option_list ul li a.'+compare).text();
-    $('div.option_list ul li a.'+compare).closest('div.select').find('span.inner_select a').text(value);
-
-
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
       ev.stopPropagation();
@@ -417,11 +410,11 @@
 
   function checkFailYear(year) {
     var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-    if ( years_nodata[region_type][normalization[compare]]!=undefined) {
+    if (years_nodata[region_type][normalization[compare]]!=undefined) {
       var length_array = years_nodata[region_type][normalization[compare]].length;
       return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
     } else {
-      return false;
+      return true;
     }
   }
 
