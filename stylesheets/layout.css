@@ -195,10 +195,11 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:252px; height:294px; background:url('../images/infowindow.png') 0 0 no-repeat; cursor:default; opacity:0;}
+div.infowindow {position:absolute; width:252px; height:294px; cursor:default; opacity:0;}
 div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
-div.infowindow div.top {display:inline-block; width:205px; height:115px; margin:19px 0 0 24px;}
+div.infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
+
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
 div.infowindow div.top h2 span.year {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
@@ -212,14 +213,16 @@ div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; bac
 div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 
 div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
-div.infowindow div.bottom {display:inline-block; width:205px; height:68px; margin:24px 0 0 24px;}
-div.infowindow div.bottom p.info {font:normal 12px "Arial"; color:#666666;}
+div.infowindow div.bottom {display:inline-block; width:252px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
+div.infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
+
+div.infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666;}
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a {color:#333333;}
 div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
 div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 -1px;}
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 0 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
