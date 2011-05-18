@@ -2,25 +2,9 @@
   var year            = 2003;
   var compare         = 'paro';
   var state           = "mapa";
-  var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
-  var tiles_pngs_url  = "http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
-  var proxy_url       = "proxy.php";
-  var tiles_version   = 3;
-  var bubbles_version = 8;
-  var gmaps_version   = 4;
-  var graph_version   = "v7";
+
 
   $(document).ready(function(){
-
-    /* -- domain name -- environment.js :D */
-      var domain_name = window.location.hostname;
-      if (domain_name == "localhost" || domain_name == "elections") {
-        global_url = proxy_url+"?proxy_url="+global_url;
-      } else if (domain_name == "datos.rtve.es") {
-        global_url = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
-      }
-    /* -- end proxy domain name -- */
-
     //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
@@ -34,7 +18,6 @@
     initializeKeyBindings();  // initialize key bindings
   }
 
-
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
@@ -47,7 +30,6 @@
       }
     });
   }
-
 
   function goToHash(route) {
     //Check variable application state
