@@ -246,7 +246,6 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          console.log(deep);
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
@@ -392,8 +391,9 @@
     $('span.slider_no_data_left').hide();
     $('span.slider_no_data_right').hide();
 
-    var deep;
     var zoom = peninsula.getZoom();
+    var deep;
+    
     if (zoom==6) {
       deep = "autonomias";
       if (years_nodata["autonomias"]==undefined) {
@@ -442,15 +442,10 @@
   }
 
   function checkFailYear(year) {
-    var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
-    if (years_nodata[deep]!=undefined) {
-      if ( years_nodata[deep][normalization[compare]]!=undefined) {
-        var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
-        var length_array = years_nodata[deep][normalization[compare]].length;
-        return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
-      } else {
-        return false;
-      }
+    var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+    if ( years_nodata[region_type][normalization[compare]]!=undefined) {
+      var length_array = years_nodata[region_type][normalization[compare]].length;
+      return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
     } else {
       return false;
     }
