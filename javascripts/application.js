@@ -7,8 +7,13 @@
   var proxy_url       = "proxy.php";
   var tiles_version   = 3;
   var bubbles_version = 8;
+<<<<<<< HEAD
   var gmaps_version   = 3;
   var graph_version   = "v5";
+=======
+  var gmaps_version   = 4;
+  var graph_version   = "v3";
+>>>>>>> f6ee520ed0e5539b0f34df2d3c2d4a844c2ad5ce
   var failCircle;
 
   $(document).ready(function(){
