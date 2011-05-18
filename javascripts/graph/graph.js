@@ -85,7 +85,6 @@ function initializeGraph() {
 
       graphBubbleTooltip.hide();
       graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-      console.log($(this).parent().attr('id'));
     }
   });
 
@@ -201,7 +200,6 @@ function initializeGraph() {
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
     var name = $("div#" + selectedBubble + " span.name").html();
-
     $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
@@ -310,7 +308,7 @@ function initializeGraph() {
         var radius = $b.height()/2;
         var top    = $b.parent().css('top').replace('px','') - radius - 21;
         var left   = $b.parent().css('left').replace('px','');
-        var text   = $b.parent().attr('id');
+        var text   = $b.parent().find('span.name').html();
         graphBubbleTooltip.show(left,top,text);
       }
     });
