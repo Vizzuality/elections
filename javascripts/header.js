@@ -268,30 +268,41 @@
     failCircle = (function() {
       var data_not_found = false;
 
-      $("#map div.fail a.why").live("click", function(ev) {
+      $("div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         explanationwindow.show();
       });
 
-      $("#map div.fail a.next").live("click", function(ev) {
+      $("div.fail a.next").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         goToNextYear();
       });
 
       function showError() {
+        var $state = (state == "mapa") ? $("#map") : $("#graph");
         if (data_not_found != true) {
-          $('#map div.fail').fadeIn("slow", function() { data_not_found = true; });
+          $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
 
       function hideError() {
-        $('#map div.fail').fadeOut("slow", function() { data_not_found = undefined; })
+        var $state = (state == "mapa") ? $("#map") : $("#graph");
+        $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      function getNextAvailableYear(deep_level) {
+        var data = availableData[deep_level][normalization[compare]];
+        if (year > data[data.length - 1]) {
+          return data[data.length - 1];
+        } else {
+          return _.detect(data, function(num){ return year < num; }); // next election year to the current year
+        }
       }
 
       function goToNextYear() {
-        var next_available_year = getNextAvailableYear();
+        var next_available_year = getNextAvailableYear(deep);
         year = getNextAvailableYear();
         updateNewSliderValue(year);
         failCircle.hide();
@@ -423,6 +434,7 @@
       }
       refreshBubbles();
     } else {
+
       var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
       // Let's decide if we must update (setValue) or create the bubbles
