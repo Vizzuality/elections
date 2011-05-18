@@ -7,8 +7,8 @@
   var proxy_url       = "proxy.php";
   var tiles_version   = 3;
   var bubbles_version = 8;
-  var gmaps_version   = 3;
-  var graph_version   = "v3";
+  var gmaps_version   = 4;
+  var graph_version   = "v5";
   var failCircle;
 
   $(document).ready(function(){
@@ -154,5 +154,6 @@
   function changeHash() {
     var latlng = peninsula.getCenter();
     var zoom = peninsula.getZoom();
-    window.location.hash = "#"+ state + "/" + latlng.lat().toFixed(3)+"/"+latlng.lng().toFixed(3)+"/"+zoom+"/"+year+"/"+compare.replace(/ /g,'_')+"/"+deep+"/"+name;
+    var hash = "#"+ state + "/" + latlng.lat().toFixed(3)+"/"+latlng.lng().toFixed(3)+"/"+zoom+"/"+year+"/"+compare.replace(/ /g,'_')+"/"+deep+"/"+name;
+    window.location.hash = hash;
   }

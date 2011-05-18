@@ -3,7 +3,7 @@
   var procesos_electorales;
   var animate_interval;
   var previous_year;
-  
+
   var years_nodata = {};
 
 
@@ -19,8 +19,8 @@
     }
     getUnavailableData(deep);
 
-    
-    
+
+
     // Graph - Map
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
@@ -86,12 +86,14 @@
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
     });
-    
-    
-    // Next - before 
+
+
+    // Next - before
     $('div.years_content a.left').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
+      graphBubbleInfowindow.hide();
+
       var new_value = year-1;
       $("div.year_slider").slider('value',new_value);
 
@@ -108,6 +110,9 @@
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
+
+      graphBubbleInfowindow.hide();
+
       var new_value = year+1;
       $("div.year_slider").slider('value',new_value);
       if (state == 'mapa') {
@@ -120,7 +125,7 @@
       }
       changeHash();
     });
-    
+
 
 
 
@@ -163,7 +168,7 @@
             refreshBubbles();
           }
         }
-        
+
 
         if (ui.value!=previous_year) {
           comparewindow.hide();
@@ -322,9 +327,9 @@
       changeHash();
     }
   }
-  
 
- 
+
+
 
   function getUnavailableData(deep) {
     $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) {
@@ -336,12 +341,12 @@
       drawNoDataBars();
     });
   }
-  
-  
+
+
   function drawNoDataBars() {
     $('span.slider_no_data_left').hide();
     $('span.slider_no_data_right').hide();
-    
+
     var deep;
     var zoom = peninsula.getZoom();
     if (zoom==6) {
@@ -363,9 +368,9 @@
         return false;
       }
     }
-    
+
     if (years_nodata[deep][normalization[compare]]!=undefined) {
-      var left_no = years_nodata[deep][normalization[compare]][0] - 1987; 
+      var left_no = years_nodata[deep][normalization[compare]][0] - 1987;
       var lenght_array = years_nodata[deep][normalization[compare]].length;
       var right_no = 2011 - years_nodata[deep][normalization[compare]][lenght_array-1];
 
@@ -383,15 +388,15 @@
         $('span.slider_no_data_right').hide();
       }
     }
-    
+
     if (!checkFailYear(year)) {
       failCircle.show();
     } else {
       failCircle.hide();
     }
   }
-  
-  
+
+
   function checkFailYear(year) {
     var deep;
     var zoom = peninsula.getZoom();
@@ -408,12 +413,12 @@
     } else {
       return false;
     }
-    
+
   }
-  
-  
-  
-  
 
 
-  
+
+
+
+
+
