@@ -312,7 +312,6 @@
 
         bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-<<<<<<< HEAD
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');        
         
         //MOVE THE BALL
@@ -325,10 +324,7 @@
 
         $('div#infowindow p.info').html(text);
         
-=======
-        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
 
->>>>>>> 94c44b391ebbfcae406618ef4ef640228a01a828
     	}
     }
 
