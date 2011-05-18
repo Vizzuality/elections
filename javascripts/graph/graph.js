@@ -35,6 +35,10 @@ function initAvailableData(deep) {
 
 function initializeGraph() {
 
+  if (state == "grafico") {
+    $("#graph").show();
+  }
+
   initAvailableData("autonomias");
   initAvailableData("provincias");
   initAvailableData("municipios");
