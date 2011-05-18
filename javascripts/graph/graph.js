@@ -585,59 +585,9 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){
-    createdBubbles = true;
-    failCircle.hide();
-  })
-  .error(function(){
-    createdBubbles = false;
-    failCircle.show();
-    });
+  .success(function(){ createdBubbles = true; failCircle.hide(); })
+  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
-
-//graphFailCircle = (function() {
-//  var data_not_found;
-//
-//  $("#graph div.fail a.why").live("click", function(ev) {
-//    ev.stopPropagation();
-//    ev.preventDefault();
-//    explanationwindow.show();
-//  });
-//
-//  $("#graph div.fail a.next").live("click", function(ev) {
-//    ev.stopPropagation();
-//    ev.preventDefault();
-//    goToNextYear();
-//  });
-//
-//  function showError() {
-//    if (data_not_found != true) {
-//      $('#graph div.fail').fadeIn("slow", function() { data_not_found = true; });
-//    }
-//  }
-//
-//  function hideError() {
-//    $('#graph div.fail').fadeOut("slow", function() { data_not_found = undefined; })
-//  }
-//
-//  function goToNextYear() {
-//    var next_available_year = getNextAvailableYear();
-//    year = next_available_year;
-//    $("div.year_slider").slider('value', year);
-//    changeHash();
-//    setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-//  }
-//
-//  function hasFailed() {
-//    return data_not_found;
-//  }
-//
-//  return {
-//    show: showError,
-//    hide: hideError,
-//    failed: hasFailed
-//  }
-//})();
 
 function setValue(url){
 
@@ -652,10 +602,8 @@ function setValue(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
-  .success(function(){ failCircle.hide();
-  })
-  .error(function(){ failCircle.show();
-  });
+  .success(function(){ failCircle.hide(); })
+  .error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
