@@ -128,7 +128,7 @@ function initializeGraph() {
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
-    $('div#graph_infowindow p.info').html("fjsadñlk sañflkdjfñsdakljfñlsakjfñaslkfj wsñlkfjasñlfkjsafñ ljafñlsdkjfasf asñlfkj af fasñlkfjasñlkfjasdñlkfjs" + text);
+    $('div#graph_infowindow p.info').html(text);
   }
 
   function showInfowindow(left, top) {
