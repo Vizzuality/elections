@@ -3,6 +3,7 @@
   var procesos_electorales;
   var animate_interval;
   var previous_year;
+  var failCircle;
 
   var years_nodata = {};
 
@@ -20,7 +21,6 @@
     getUnavailableData(deep);
 
 
-
     // Graph - Map
     if (state == "grafico") {
       $('div#tab_menu a.map').removeClass('selected');
@@ -33,6 +33,9 @@
     // Initialize select
     $('div.option_list ul li a.'+compare).closest('li').addClass('selected');
     $('div.option_list ul li a.'+compare).closest('div.select').addClass('selected');
+    var value = $('div.option_list ul li a.'+compare).text();
+    $('div.option_list ul li a.'+compare).closest('div.select').find('span.inner_select a').text(value);
+    
 
     //Control tab menu - map or graph
     $('div#tab_menu a').click(function(ev){
@@ -44,14 +47,15 @@
         infoTooltip.hide();
 
         $('div#tab_menu a').removeClass('selected');
-
         if (className == 'map') {
+        $("#graph").hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
         } else {
+        $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           state = "grafico";
@@ -93,37 +97,12 @@
       ev.stopPropagation();
       ev.preventDefault();
       graphBubbleInfowindow.hide();
-
-      var new_value = year-1;
-      $("div.year_slider").slider('value',new_value);
-
-      if (state == 'mapa') {
-        if (graph_hack_year[new_value+1] != graph_hack_year[new_value]) {
-          refreshTiles();
-        }
-        refreshBubbles();
-      } else {
-        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-      }
-      changeHash();
+      updateNewSliderValue(year-1);
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-
-      graphBubbleInfowindow.hide();
-
-      var new_value = year+1;
-      $("div.year_slider").slider('value',new_value);
-      if (state == 'mapa') {
-        if (graph_hack_year[new_value-1] != graph_hack_year[new_value]) {
-          refreshTiles();
-        }
-        refreshBubbles();
-      } else {
-        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-      }
-      changeHash();
+      updateNewSliderValue(year+1);
     });
 
 
@@ -151,36 +130,11 @@
         if (state === "grafico" && graphBubbleInfowindow.isOpen()) {
           graphBubbleInfowindow.hide();
         }
-        graphBubbleTooltip.hide();
         previous_year = ui.value;
       },
       stop: function( event, ui ) {
-        if (state == "mapa") {
-          if (graph_hack_year[previous_year] != graph_hack_year[ui.value]) {
-            refreshTiles();
-          }
-          if (ui.value!=previous_year) {
-            if (!checkFailYear(ui.value)) {
-              failCircle.show();
-            } else {
-              failCircle.hide();
-            }
-            refreshBubbles();
-          }
-        }
-
-
         if (ui.value!=previous_year) {
-          comparewindow.hide();
-          var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-
-          // Let's decide if we must update (setValue) or create the bubbles
-          if (createdBubbles == true) {
-            setValue(url);
-          } else {
-            createBubbles(url);
-          }
-          changeHash();
+          updateNewSliderValue(new_value);
         }
       }
     });
@@ -303,6 +257,53 @@
         $('body').unbind('click');
       }
     });
+    
+    
+    
+    /*failCircle*/
+    failCircle = (function() {
+      var data_not_found = false;
+
+      $("#map_fail_circle a.why").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        explanationwindow.show();
+      });
+
+      $("#map_fail_circle a.next").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        goToNextYear();
+      });
+
+      function showError() {
+        if (data_not_found != true) {
+          $('#map_fail_background, #map_fail_circle').fadeIn("slow", function() { data_not_found = true; });
+        }
+      }
+
+      function hideError() {
+        $('#map_fail_background, #map_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      function goToNextYear() {
+        var next_available_year = getNextAvailableYear();
+        year = getNextAvailableYear();
+        updateNewSliderValue(year);
+        failCircle.hide();
+      }
+
+      function hasFailed() {
+        return data_not_found;
+      }
+
+      return {
+        show: showError,
+        hide: hideError,
+        failed: hasFailed
+      }
+    })();
+    
   }
 
   function animateSlider() {
@@ -313,22 +314,9 @@
       clearInterval(animate_interval);
       return false;
     } else {
-      $("div.year_slider").slider('value',new_value);
-
-      if (state == 'mapa') {
-        if (graph_hack_year[new_value-1] != graph_hack_year[new_value]) {
-          refreshTiles();
-        }
-        refreshBubbles();
-      } else {
-        setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-      }
-
-      changeHash();
+      updateNewSliderValue(new_value);
     }
   }
-
-
 
 
   function getUnavailableData(deep) {
@@ -415,6 +403,36 @@
     }
 
   }
+  
+  
+  function updateNewSliderValue(new_year) {
+    $("div.year_slider").slider('value', new_year);
+    
+    if (state == 'mapa') {
+      if (graph_hack_year[year] != graph_hack_year[new_year]) {
+        refreshTiles();
+      }
+      if (!checkFailYear(new_year)) {
+        failCircle.show();
+      } else {
+        failCircle.hide();
+      }
+      refreshBubbles();
+    } else {
+      var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
+
+      // Let's decide if we must update (setValue) or create the bubbles
+      if (createdBubbles == true) {
+        setValue(url);
+      } else {
+        createBubbles(url);
+      }
+    }
+
+    year = new_year;
+    changeHash();
+  }
+  
 
 
 
