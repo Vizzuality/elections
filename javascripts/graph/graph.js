@@ -647,8 +647,7 @@ function setValue(url){
         one = false;
       }
       valuesHash[key] = v;
-      //console.log('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
-      updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
+      updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
   .success(function(){ graphFailCircle.hide(); })
@@ -661,7 +660,10 @@ function updateBubble (id, x, y, val, colors, party) {
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
   var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
-
+  // if the party we're paiting is not on the main parties list, let's paint it purple
+  if (party != undefined && _.indexOf(parties, normalizePartyName(party)) == -1)  {
+    backgroundColor = "purple";
+  }
 
   // Bubbles animations
   $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
@@ -747,7 +749,7 @@ function addNewBubble(region) {
         $('#'+key).css("zIndex",graph_bubble_index);
         $('#'+key).css("opacity","0");
         $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-        updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+        updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       }
     });
     if (count == 0) {
