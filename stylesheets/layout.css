@@ -101,11 +101,11 @@ div#header div.years_content div.slider_bkg {position:absolute; right:100px; lef
 div#header div.years_content div.slider_bkg span.slider_right {float:left; width:100%; height:9px; background:url('../images/big_slider_right.png') no-repeat right 0;}
 div#header div.years_content div.slider_bkg span.slider_no_data_left {position:absolute; top:1px; left:1px; width:0; height:6px; z-index:1; background:url('../images/slider_no_data_bkg.png') repeat 0 0;}
 div#header div.years_content div.slider_bkg span.slider_no_data_right {position:absolute; top:1px; right:1px; width:0; height:6px; z-index:1; background:url('../images/slider_no_data_bkg.png') repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:17%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_2 {position:absolute; top:-3px; left:33%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_3 {position:absolute; top:-3px; left:49%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_4 {position:absolute; top:-3px; left:66%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
-div#header div.years_content div.slider_bkg span.tick_5 {position:absolute; top:-3px; left:82%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_1 {position:absolute; top:-3px; left:16.64%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_2 {position:absolute; top:-3px; left:33.28%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_3 {position:absolute; top:-3px; left:49.92%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_4 {position:absolute; top:-3px; left:66.56%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
+div#header div.years_content div.slider_bkg span.tick_5 {position:absolute; top:-3px; left:83.2%; width:2px; height:14px; background:url('../images/tick.png') no-repeat 0 0;}
 div#header div.years_content div.year_slider {position:absolute; right:110px; left:80px; top:8px; bottom:0; height:9px; z-index:10;}
 div#header div.years_content .ui-slider { position: relative; text-align: left;}
 div#header div.years_content .ui-slider .ui-slider-handle { position: absolute; z-index: 20; width:1.2em!important; height:1.2em!important; cursor: default;}
@@ -192,7 +192,7 @@ div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 div.bubble {position:absolute; padding:0; margin:0;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
 div.bubble p.stat {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
-div.bubble p.region_name {position:absolute; top:-10px; max-width:140px; text-shadow:rgba(0,0,0,1) 1px 1px 3px,rgba(0,0,0,1) -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
+div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:rgba(0,0,0,1) 1px 1px 3px,rgba(0,0,0,1) -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
