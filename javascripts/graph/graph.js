@@ -662,10 +662,6 @@ function updateBubble (id, x, y, val, colors, party) {
   var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
 
-  // if the party we're paiting is not on the main parties list, let's paint it purple
-  if (_.indexOf(parties, normalizePartyName(party)) == -1)  {
-    backgroundColor = "purple";
-  }
 
   // Bubbles animations
   $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
