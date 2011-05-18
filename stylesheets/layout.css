@@ -136,21 +136,16 @@ div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; b
 div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
-
-div.tabs div#map div#map_fail_background {display:none; position:absolute; width:100%; height:100%; background:url('../images/fail_background.png'); opacity:.5; z-index:100;}
-div.tabs div#map div#map_fail_circle {display:none; position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
-div.tabs div#map div#map_fail_circle p {position:absolute; margin-top: 130px; margin-left: 35px; text-align:center; font:normal 21px "Officina Regular"; line-height: 28px;}
-div.tabs div#map div#map_fail_circle a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
-div.tabs div#map div#map_fail_circle a.why {position:relative; display:block; top: 85px;}
-
-div.tabs div#graph div#graph_fail_background {display:none; position:relative; width:100%; height:100%; background:url('../images/fail_background.png'); z-index:-100;}
-div.tabs div#graph div#graph_fail_circle {display:none; position: absolute; margin:auto; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; padding-top: 130px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000 }
-div.tabs div#graph div#graph_fail_circle p {font:normal 21px "Officina Regular"; line-height: 28px;}
-div.tabs div#graph div#graph_fail_circle a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
-div.tabs div#graph div#graph_fail_circle a.why {position:relative; display:block; top: 85px;}
-
 div.tabs div#graph div#top_legend { top: 87px;}
 div.tabs div#graph div#bottom_legend {top: 530px;}
+
+/* Fail circle */
+div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/fail_background.png'); z-index:100;}
+div.tabs div.fail div.content {display:_none; position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.fail p {position:absolute; margin-top: 130px; margin-left: 35px; text-align:center; font:normal 21px "Officina Regular"; line-height: 28px;}
+div.tabs div.fail a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
+div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
+
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
@@ -275,7 +270,7 @@ div.compare_graph div.stats_slider div.block span.name.second {bottom:10px; back
 div.compare_graph div.stats_slider div.block span.error {position:absolute; left:118px; font:normal 12px "Officina Regular"; color:#999999;}
 div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}
-div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:5px; margin:-40px 0 0 -140px; z-index:0;}
+div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:10px; margin:-40px 0 0 -140px; z-index:0;}
 /*end compare slider*/
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('../images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}

@@ -14,7 +14,7 @@
     // Create the div tile
     var div = ownerDocument.createElement('div');
     div.setAttribute('class','tile');
-    // div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
+    //div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
     // div.style.border = "1px solid yellow";
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
@@ -191,8 +191,7 @@
           data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
-        $('div#'+ele.id+' p.stat').removeClass().addClass(className).addClass('stat');
-        $('div#'+ele.id+' p.stat').text(data);
+
 
         //change color of the ball
         $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
@@ -224,6 +223,8 @@
         }
         
 
+        $('div#'+ele.id+' p.stat').removeClass('yellow red').addClass(className);
+        $('div#'+ele.id+' p.stat').text(data);
         
         if (radius<14) {
           $('div#'+ele.id+' p.stat').hide();

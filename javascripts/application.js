@@ -2,30 +2,14 @@
   var year            = 2003;
   var compare         = 'paro';
   var state           = "mapa";
-  var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
-  var tiles_pngs_url  = "http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
-  var proxy_url       = "proxy.php";
-  var tiles_version   = 3;
-  var bubbles_version = 8;
-  var gmaps_version   = 4;
-  var graph_version   = "v5";
-  var failCircle;
+
 
   $(document).ready(function(){
-
-    /* -- domain name -- environment.js :D */
-      var domain_name = window.location.hostname;
-      if (domain_name == "localhost" || domain_name == "elections") {
-        global_url = proxy_url+"?proxy_url="+global_url;
-      } else if (domain_name == "datos.rtve.es") {
-        global_url = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
-      }
-    /* -- end proxy domain name -- */
-
     //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
   });
+
 
   function initializeApp() {
     initializeGraph();        // initialize graph
@@ -46,51 +30,6 @@
       }
     });
   }
-
-
-  failCircle = (function() {
-    var data_not_found = false;
-
-    $("#map_fail_circle a.why").live("click", function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      explanationwindow.show();
-    });
-
-    $("#map_fail_circle a.next").live("click", function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      goToNextYear();
-    });
-
-    function showError() {
-      if (data_not_found != true) {
-        $('#map_fail_background, #map_fail_circle').fadeIn("slow", function() { data_not_found = true; });
-      }
-    }
-
-    function hideError() {
-      $('#map_fail_background, #map_fail_circle').fadeOut("slow", function() { data_not_found = undefined; })
-    }
-
-    function goToNextYear() {
-      // var next_available_year = getNextAvailableYear();
-      // year = next_available_year;
-      // $("div.year_slider").slider('value', year);
-      // changeHash();
-      // setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
-    }
-
-    function hasFailed() {
-      return data_not_found;
-    }
-
-    return {
-      show: showError,
-      hide: hideError,
-      failed: hasFailed
-    }
-  })();
 
   function goToHash(route) {
     //Check variable application state
