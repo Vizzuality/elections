@@ -167,6 +167,9 @@
     if (radius < 14) {
       $('div.bubble[id="'+point.id+'"]').find('p.stat').css('display',"none");
     }
+    
+    var height_stat = $('div.bubble[id="'+point.id+'"] p.region_name').height();
+    $('div.bubble[id="'+point.id+'"] p.region_name').css({top:'-'+(height_stat+2)+'px'});
 
     return div;
   };
@@ -179,10 +182,6 @@
     _.each(flat,function(occ,key){
       _.each(occ,function(ele,i){
 
-        //close infowindow - comparewindow
-        infowindow.hide();
-        comparewindow.hide();
-
         //change data of the ball
         var data,className;
         if (ele['data'][year]==undefined || ele['data'][year][normalization[compare]]==undefined) {
@@ -192,7 +191,8 @@
           data = ((ele['data'][year][normalization[compare]]>0)?('+'+Math.round(ele['data'][year][normalization[compare]])):(Math.round(ele['data'][year][normalization[compare]])));
           className = (ele['data'][year][normalization[compare]]>0)?'yellow':'grey';
         }
-        
+        $('div#'+ele.id+' p.stat').removeClass().addClass(className).addClass('stat');
+        $('div#'+ele.id+' p.stat').text(data);
 
         //change color of the ball
         $('div#'+ele.id+' img').attr('src','images/'+className+'_marker.png');
@@ -223,20 +223,19 @@
           radius = 12;
         }
         
-        $('div#'+ele.id+' p.stat').removeClass().addClass(className);
-        $('div#'+ele.id+' p.stat').text(data);
+
         
         if (radius<14) {
-          $('div#'+ele.id+' p').hide();
+          $('div#'+ele.id+' p.stat').hide();
         } else {
-          $('div#'+ele.id+' p').show();
+          $('div#'+ele.id+' p.stat').show();
         }
         
         if ($('div#'+ele.id).length) {
           var old_radius = ($('div#'+ele.id).width()/2);
           var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
           var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
-
+          
           $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
         }
 
