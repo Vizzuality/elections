@@ -126,8 +126,12 @@
 
     var radius;
     if (point['data'][year]!=undefined) {
-      var less = Math.floor(point['data'][year][normalization[compare]+'_min']);
-      var desv = Math.max(Math.round(Math.abs(point['data'][year][normalization[compare]+'_max'])),Math.round(Math.abs(point['data'][year][normalization[compare]+'_min'])))/5;
+      
+      var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+      var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
+      var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
+      
+      var desv = Math.max(Math.round(Math.abs(min)),Math.round(Math.abs(max)))/5;
       var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
       var actual_zoom = peninsula.getZoom();
       
@@ -199,8 +203,11 @@
         //change heigth-width of the ball
         var radius;
         if (ele['data'][year]!=undefined) {
-          var less = Math.floor(ele['data'][year][normalization[compare]+'_min']);
-          var desv = Math.max(Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_max'])),Math.ceil(Math.abs(ele['data'][year][normalization[compare]+'_min'])))/5;
+          var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
+          var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
+
+          var desv = Math.max(Math.round(Math.abs(min)),Math.round(Math.abs(max)))/5;
           var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
           var actual_zoom = peninsula.getZoom();
 
@@ -237,13 +244,12 @@
           var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
           var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
           
-          $('div#'+ele.id+' p.region_name').css({display:'block'});
-          $('div#'+ele.id).width(radius*2);
-          $('div#'+ele.id).height(radius*2);
-          $('div#'+ele.id).css({top:top-radius+'px',left:left-radius+'px'});
-          
+          // $('div#'+ele.id+' p.region_name').css({display:'block'});
+          // $('div#'+ele.id).width(radius*2);
+          // $('div#'+ele.id).height(radius*2);
+          // $('div#'+ele.id).css({top:top-radius+'px',left:left-radius+'px'});
            
-          //$('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+          $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
         }
 
       });
