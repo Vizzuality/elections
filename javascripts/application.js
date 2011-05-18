@@ -2,7 +2,6 @@
   var year            = 2003;
   var compare         = 'paro';
   var state           = "mapa";
-  
 
 
   $(document).ready(function(){
