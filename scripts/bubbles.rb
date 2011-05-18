@@ -143,8 +143,8 @@ length = {
 
 zoom_levels = ARGV.map(&:to_i)
 
-[0, 1].each do |i|
-  zoom_levels.each do |z|
+zoom_levels.each do |z|
+  [0, 1].each do |i|
     progress = ProgressBar.new(length[i][z])
 
     max_min_vars = cartodb.query(max_min_vars_query(z)).rows.first
@@ -185,7 +185,7 @@ zoom_levels = ARGV.map(&:to_i)
         end
 
         fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
-        fd.write(json.to_json)
+        fd.write(Yajl::Encoder.encode(json))
         fd.close
 
         progress.increment!
