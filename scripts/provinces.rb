@@ -3,8 +3,11 @@
 require File.dirname(__FILE__) + "/common"
 
 base_path = FileUtils.pwd
-dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
-FileUtils.mkdir_p(dir_path)
+version_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
+current_path = "#{base_path}/../graphs/provincias/current"
+FileUtils.mkdir_p(version_path)
+FileUtils.ln_s version_path, current_path, :force => true
+
 
 cartodb        = get_cartodb_connection
 processes      = get_processes
