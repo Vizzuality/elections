@@ -227,7 +227,7 @@
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
-      }
+      }        
 
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
@@ -273,7 +273,7 @@
 
     //TODO: ANIMAR EL CAMBIO EN LAS BARRAS
     InfoWindow.prototype.updateValues = function() {
-      console.log(this.information);
+      
       if (this.div_) {
         var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
         $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
@@ -318,6 +318,16 @@
         bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+         
+        var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
+        var comparison_variable = normalization[compare];
+        var info_text = textInfoWindow[comparison_variable];
+        var sign = (selected_value < 0) ? "negative" : "positive";
+        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
+        //TODO: FALTA CAMBIAR LA BOLITA DE POSICIÓN
+        
+        $('div#infowindow p.info').html(text);
 
     	}
     }
