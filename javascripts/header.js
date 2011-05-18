@@ -285,7 +285,14 @@
       });
 
       function showError() {
-        var $state = (state == "mapa") ? $("#map") : $("#graph");
+        if (state == "mapa") {
+          var $state = $("#map");
+          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        } else {
+          var $state = $("#graph");
+          var deep_level = deep;
+        }
+
         if (data_not_found != true) {
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
@@ -306,12 +313,13 @@
       }
 
       function goToNextYear() {
-        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-        updateNewSliderValue(getNextAvailableYear(deep_level));
 
         if (state == "mapa") {
+          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          updateNewSliderValue(getNextAvailableYear(deep_level));
           failCircle.hide();
         } else {
+          updateNewSliderValue(getNextAvailableYear(deep));
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
