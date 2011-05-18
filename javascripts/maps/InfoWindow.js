@@ -10,6 +10,9 @@
       this.height_ = 289;
       this.width_ = 254;
       this.setMap(map);
+      this.oldPar1 = "";
+      this.oldPar2 = "";
+      this.oldPar3 = "";            
     }
 
 
@@ -129,8 +132,10 @@
       var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
       if (_.indexOf(parties, partido_1) !== -1) {
         $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+        this.oldPar1 = partido_1;
       } else {
         $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+        this.oldPar1 = "par1";
       }
       bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
@@ -140,8 +145,10 @@
       var partido_2 = normalizePartyName(info['data'][year]['segundo_partido_name']);
       if (_.indexOf(parties, partido_2) !== -1) {
         $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
+        this.oldPar2 = partido_2;        
       } else {
         $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+        this.oldPar2 = "par2";        
       }
       bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
       $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
@@ -151,8 +158,10 @@
       var partido_3 = normalizePartyName(info['data'][year]['tercer_partido_name']);
       if (_.indexOf(parties, partido_3) !== -1) {
         $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
+        this.oldPar3 = partido_3;
       } else {
         $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
+        this.oldPar3 = "par3";
       }
       
       bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
@@ -245,6 +254,46 @@
         }, 250, 'swing');
     	}
     }
+    
+    
+    //TODO: ANIMAR EL CAMBIO EN LAS BARRAS
+    InfoWindow.prototype.updateValues = function() {
+      if (this.div_) {
+        
+        var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
+        if (_.indexOf(parties, partido_1) !== -1) {
+          $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+        } else {
+          $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+        }
+        
+        bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*175)/100);
+        $('div#infowindow div.stats div.partido:eq(1) span.c').stop().animate({
+          width: bar_width.toString() +"px"
+        }, 500, 'easeOutCubic');
+        $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
+
+        bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*175)/100);
+        $('div#infowindow div.stats div.partido:eq(1) span.c').stop().animate({
+          width: bar_width.toString() +"px"
+        }, 500, 'easeOutCubic');
+        $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
+        
+        bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*175)/100);
+        $('div#infowindow div.stats div.partido:eq(1) span.c').stop().animate({
+          width: bar_width.toString() +"px"
+        }, 500, 'easeOutCubic');
+        $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');        
+        
+        bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*175)/100);
+        $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');        
+        
+    	}
+    }    
 
 
     InfoWindow.prototype.openCompare = function() {
