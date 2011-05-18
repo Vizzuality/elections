@@ -25,7 +25,7 @@ function getNextAvailableYear() {
   if (year > data[data.length - 1]) {
     return data[data.length - 1];
   } else {
-    return _.detect(data, function(num){ return year < num; }); // next election year to the firstYear
+    return _.detect(data, function(num){ return year < num; }); // next election year to the current year
   }
 }
 
@@ -85,7 +85,6 @@ function initializeGraph() {
 
       graphBubbleTooltip.hide();
       graphBubbleInfowindow.change(left,top,$(this).parent().attr('id'));
-      console.log($(this).parent().attr('id'));
     }
   });
 
@@ -201,7 +200,6 @@ function initializeGraph() {
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
     var name = $("div#" + selectedBubble + " span.name").html();
-
     $("#graph_infowindow").find(".top").find("h2").append(name);
 
     $("#graph_infowindow a.more").show();
@@ -310,7 +308,7 @@ function initializeGraph() {
         var radius = $b.height()/2;
         var top    = $b.parent().css('top').replace('px','') - radius - 21;
         var left   = $b.parent().css('left').replace('px','');
-        var text   = $b.parent().attr('id');
+        var text   = $b.parent().find('span.name').html();
         graphBubbleTooltip.show(left,top,text);
       }
     });
@@ -647,8 +645,7 @@ function setValue(url){
         one = false;
       }
       valuesHash[key] = v;
-      //console.log('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
-      updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"]);
+      updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
   .success(function(){ graphFailCircle.hide(); })
@@ -656,34 +653,20 @@ function setValue(url){
 }
 
 //Function for update the values of the bubbles that are being visualized
-function updateBubble (id,x,y,val,colors,party){
+function updateBubble (id, x, y, val, colors, party) {
   var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
   var backgroundColor = ((colors != null) ? dominantColor : "purple");
 
-  $(id).animate({
-    left: x.toString() + "px",
-    top: y.toString() + "px",
-    opacity: 1
-  }, 1000, function(){
-    //console.log("ukelele");
-  });
+  // if the party we're paiting is not on the main parties list, let's paint it purple
+  if (party != undefined && _.indexOf(parties, normalizePartyName(party)) == -1)  {
+    backgroundColor = "purple";
+  }
 
-  $(id).find('.outerBubble').animate({
-    height: val.toString() + "px",
-    width: val.toString() + "px",
-    top: offset.toString() + "px",
-    left: offset.toString() + "px"
-  }, 1000);
-
-
-  $(id).find('.innerBubble').animate({
-    height: (val-10).toString() + "px",
-    width: (val-10).toString() + "px",
-    top: (offset + 5).toString() + "px",
-    left: (offset + 5).toString() + "px",
-    backgroundColor: backgroundColor
-  }, 1000);
+  // Bubbles animations
+  $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
+  $(id).find('.outerBubble').animate({ height: val.toString() + "px", width: val.toString() + "px", top: offset.toString() + "px", left: offset.toString() + "px" }, 1000);
+  $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
 
@@ -691,7 +674,9 @@ function updateBubble (id,x,y,val,colors,party){
 function goDeeper(url){
   graphLegend.hide();
   //Get new name and deep
+
   var url_split = url.split('/');
+  //console.log("url_split", url_split);
 
   deep = url_split[5];
   //console.log("deep", deep);
@@ -762,7 +747,7 @@ function addNewBubble(region) {
         $('#'+key).css("zIndex",graph_bubble_index);
         $('#'+key).css("opacity","0");
         $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-        updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"]);
+        updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       }
     });
     if (count == 0) {
