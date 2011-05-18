@@ -290,7 +290,6 @@
         }
 
         if (data_not_found != true) {
-          $state.find("div.content").html(deep_level);
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
