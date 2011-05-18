@@ -174,8 +174,8 @@
         new_image.css('top',0);
         new_image.css('left',0);
 
-        // new_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
-        // old_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+        new_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
+        old_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
 
         $(ele).prepend(new_image);
         //old_image.hide();
