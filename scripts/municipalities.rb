@@ -2,6 +2,10 @@
 
 require File.dirname(__FILE__) + "/common"
 
+base_path = FileUtils.pwd
+dir_path = "#{base_path}/../graphs/municipios/#{$graphs_next_version}"
+FileUtils.mkdir_p(dir_path)
+
 cartodb        = get_cartodb_connection
 processes      = get_processes
 autonomies     = get_autonomies
@@ -28,9 +32,6 @@ if ARGV[0] =~ /\d+/
   end
 end
 
-base_path = FileUtils.pwd
-dir_path = "#{base_path}/../graphs/municipios/#{$graphs_next_version}"
-FileUtils.mkdir_p(dir_path)
 ### MUNICIPALITIES
 ##################
 

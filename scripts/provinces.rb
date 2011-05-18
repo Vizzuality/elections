@@ -2,6 +2,10 @@
 
 require File.dirname(__FILE__) + "/common"
 
+base_path = FileUtils.pwd
+dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
+FileUtils.mkdir_p(dir_path)
+
 cartodb        = get_cartodb_connection
 processes      = get_processes
 autonomies     = get_autonomies
@@ -25,9 +29,6 @@ votes_per_province = cartodb.query(query)[:rows]
 ### PROVINCES
 #############
 puts
-base_path = FileUtils.pwd
-dir_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
-FileUtils.mkdir_p(dir_path)
 evolution = {}
 variables_json = {}
 variables.each do |variable|
