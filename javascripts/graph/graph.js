@@ -136,7 +136,7 @@ function initializeGraph() {
     var comparison_variable = normalization[compare];
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
-    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong> " + info_text["after_" + sign];
+    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
     $('div#graph_infowindow p.info').html(text);
   }
