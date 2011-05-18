@@ -46,19 +46,23 @@
       ev.preventDefault();
       var className = ($(this).hasClass('map'))?'map':'graph';
       if (!$(this).hasClass('selected')) {
-
         infoTooltip.hide();
-
         $('div#tab_menu a').removeClass('selected');
         if (className == 'map') {
-        $("#graph").hide();
+          $("#graph").hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
           $('div#graph').css('zIndex',0);
+        
+          setTimeout(function(){
+            refreshBubbles();
+            refreshTiles();
+          },500);
+        
         } else {
-        $("#graph").show();
+          $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           state = "grafico";
@@ -100,12 +104,12 @@
       ev.stopPropagation();
       ev.preventDefault();
       graphBubbleInfowindow.hide();
-      updateNewSliderValue(year-1);
+      updateNewSliderValue(year-1,year);
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-      updateNewSliderValue(year+1);
+      updateNewSliderValue(year+1,year);
     });
 
 
@@ -137,7 +141,7 @@
       },
       stop: function( event, ui ) {
         if (ui.value!=previous_year) {
-          updateNewSliderValue(ui.value);
+          updateNewSliderValue(ui.value,previous_year);
         }
       }
     });
@@ -397,21 +401,23 @@
     } else {
       deep = "municipios";
     }
-    if (years_nodata[deep][normalization[compare]]!=undefined) {
+    
+    if (years_nodata[deep]!=undefined && years_nodata[deep][normalization[compare]]!=undefined) {
       var length_array = years_nodata[deep][normalization[compare]].length;
       return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
     } else {
       return false;
     }
-
   }
 
 
-  function updateNewSliderValue(new_year) {
-    $("div.year_slider").slider('value', new_year);
-
+  function updateNewSliderValue(new_year,previous_year) {
     if (state == 'mapa') {
-      if (graph_hack_year[year] != graph_hack_year[new_year]) {
+      if (previous_year!=undefined) {
+        if (graph_hack_year[previous_year] != graph_hack_year[new_year]) {
+          refreshTiles();
+        }
+      } else {
         refreshTiles();
       }
       if (!checkFailYear(new_year)) {
@@ -430,8 +436,8 @@
         createBubbles(url);
       }
     }
-
-    year = new_year;
+    
+    $("div.year_slider").slider('value', new_year);
     changeHash();
   }
 

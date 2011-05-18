@@ -237,7 +237,13 @@
           var top = old_radius + parseFloat(($('div#'+ele.id).css('top')).replace('px',''));
           var left = old_radius + parseFloat(($('div#'+ele.id).css('left')).replace('px',''));
           
-          $('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
+          $('div#'+ele.id+' p.region_name').css({display:'block'});
+          $('div#'+ele.id).width(radius*2);
+          $('div#'+ele.id).height(radius*2);
+          $('div#'+ele.id).css({top:top-radius+'px',left:left-radius+'px'});
+          
+           
+          //$('div#'+ele.id).animate({width:radius*2+'px',height:radius*2+'px',top:top-radius+'px',left:left-radius+'px'},{duration:500,queue:true});
         }
 
       });
