@@ -1,4 +1,5 @@
 
+  var deep = "autonomias";
   var createdBubbles = false;
   var procesos_electorales;
   var animate_interval;
@@ -6,20 +7,21 @@
 
   var years_nodata = {};
 
+  function updateDeepnessFromZoomLevel(zoom_level) {
+    if (zoom_level == 6) {
+      return "autonomias";
+    } else if (zoom_level > 6 && zoom_level < 11) {
+      return "provincias";
+    } else {
+      return "municipios";
+    }
+  }
 
   function initializeHeader() {
+    deep = updateDeepnessFromZoomLevel(start_zoom);
+
     /* Receive all the vars without data */
-    var deep;
-    if (start_zoom==6) {
-      deep = "autonomias";
-    } else if (start_zoom>6 && start_zoom<11) {
-      deep = "provincias";
-    } else {
-      deep = "municipios";
-    }
     getUnavailableData(deep);
-
-
 
     // Graph - Map
     if (state == "grafico") {
@@ -286,6 +288,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
+          console.log(deep);
           setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
