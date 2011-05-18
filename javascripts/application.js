@@ -10,7 +10,6 @@
   var gmaps_version   = 4;
   var graph_version   = "v7";
 
-
   $(document).ready(function(){
 
     /* -- domain name -- environment.js :D */
