@@ -284,16 +284,42 @@
         goToNextYear();
       });
 
-      function showError() {
+      function updateContent() {
         if (state == "mapa") {
           var $state = $("#map");
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          var isDataAvailableInDeep = true;
         } else {
           var $state = $("#graph");
           var deep_level = deep;
+
+          if (availableData[deep_level][normalization[compare]] == undefined) {
+            var isDataAvailableInDeep = false;
+          } else {
+            var isDataAvailableInDeep = true;
+          }
+        }
+
+        if (isDataAvailableInDeep == true) {
+          text = "No hay datos para este año";
+          next_link_text = "ver siguiente año con datos";
+        } else {
+          text = "No hay datos a este nivel de zoom";
+          next_link_text = "ver siguiente nivel con datos";
+        }
+
+        $state.find('div.content span.message').html(text);
+      }
+
+      function showError() {
+        if (state == "mapa") {
+          var $state = $("#map");
+        } else {
+          var $state = $("#graph");
         }
 
         if (data_not_found != true) {
+          updateContent();
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
