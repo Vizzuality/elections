@@ -11,6 +11,6 @@
   
   if (window.location.hostname == "localhost" || window.location.hostname == "elections") {
     global_url = proxy_url+"?proxy_url="+global_url;
-  } else if (domain_name == "datos.rtve.es") {
+  } else if (window.location.hostname == "datos.rtve.es") {
     global_url = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
   }
