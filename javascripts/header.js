@@ -8,7 +8,7 @@
 
   var years_nodata = {};
 
-  function updateDeepnessFromZoomLevel(zoom_level) {
+  function getDeepLevelFromZoomLevel(zoom_level) {
     if (zoom_level == 6) {
       return "autonomias";
     } else if (zoom_level > 6 && zoom_level < 11) {
@@ -19,7 +19,7 @@
   }
 
   function initializeHeader() {
-    deep = updateDeepnessFromZoomLevel(start_zoom);
+    deep = getDeepLevelFromZoomLevel(start_zoom);
 
     /* Receive all the vars without data */
     getUnavailableData(deep);
@@ -272,31 +272,48 @@
     failCircle = (function() {
       var data_not_found = false;
 
-      $("#map div.fail a.why").live("click", function(ev) {
+      $("div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         explanationwindow.show();
       });
 
-      $("#map div.fail a.next").live("click", function(ev) {
+      $("div.fail a.next").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         goToNextYear();
       });
 
       function showError() {
+        var $state = (state == "mapa") ? $("#map") : $("#graph");
         if (data_not_found != true) {
-          $('#map div.fail').fadeIn("slow", function() { data_not_found = true; });
+          $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
 
       function hideError() {
-        $('#map div.fail').fadeOut("slow", function() { data_not_found = undefined; })
+        var $state = (state == "mapa") ? $("#map") : $("#graph");
+        $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      function getNextAvailableYear(deep_level) {
+        var data = availableData[deep_level][normalization[compare]];
+        if (year > data[data.length - 1]) {
+          return data[data.length - 1];
+        } else {
+          return _.detect(data, function(num){ return year < num; }); // next election year to the current year
+        }
       }
 
       function goToNextYear() {
-        updateNewSliderValue(getNextAvailableYear());
-        failCircle.hide();
+        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        updateNewSliderValue(getNextAvailableYear(deep_level));
+
+        if (state == "mapa") {
+          failCircle.hide();
+        } else {
+          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+        }
       }
 
       function hasFailed() {
@@ -390,25 +407,16 @@
     }
   }
 
-
   function checkFailYear(year) {
-    var deep;
-    var zoom = peninsula.getZoom();
-    if (zoom==6) {
-      deep = "autonomias";
-    } else if (zoom>6 && zoom<11) {
-      deep = "provincias";
-    } else {
-      deep = "municipios";
-    }
-    
     if (years_nodata[deep]!=undefined && years_nodata[deep][normalization[compare]]!=undefined) {
+    var deep = getDeepLevelFromZoomLevel(peninsula.getZoom());
       var length_array = years_nodata[deep][normalization[compare]].length;
       return (year>=years_nodata[deep][normalization[compare]][0]) && (year<=years_nodata[deep][normalization[compare]][length_array-1]);
     } else {
       return false;
     }
   }
+
 
 
   function updateNewSliderValue(new_year,previous_year) {
@@ -427,6 +435,7 @@
       }
       refreshBubbles();
     } else {
+
       var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
       // Let's decide if we must update (setValue) or create the bubbles
