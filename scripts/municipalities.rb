@@ -47,7 +47,7 @@ autonomies.each do |autonomy_hash|
     query = <<-SQL
 select nombre, votantes_totales, censo_total,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-   tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent,
+   tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent, ine_poly.google_maps_name,
    #{variables.join(',')}
 from  vars_socioeco_x_municipio, votaciones_por_municipio, ine_poly, gadm2
 where ine_poly.ine_prov_int = votaciones_por_municipio.codineprov::integer and ine_poly.ine_muni_int = votaciones_por_municipio.codinemuni::integer and
@@ -84,6 +84,7 @@ SQL
         json[municipality_name] ||= {}
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:name] = municipality[:nombre]
+        json[municipality_name][:google_maps_name] = municipality[:google_maps_name]
         json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
         json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, variable.to_sym, max_y, min_y)
         json[municipality_name][:radius]       = get_radius(municipality)
