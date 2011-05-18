@@ -173,13 +173,8 @@
         new_image.css('z-index',old_image.css('z-index') + 1);
         new_image.css('top',0);
         new_image.css('left',0);
-
-        new_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
-        old_image.css('-webkit-transform',"rotateY(0deg)"); // enable 3d HW accell
-
         $(ele).prepend(new_image);
-        //old_image.hide();
-
+        
         // update new tile with new url
         var old_url = old_image.attr('src');
         var tm = old_url.split("/");
@@ -189,12 +184,12 @@
 
         // when it loads the new image, fade out the old one
         old_image.one("load",function(){
-          new_image.animate({opacity:0},{ duration: 500, queue: true ,complete: function() {
+          new_image.animate({opacity:0},{ duration: 800, queue: false ,complete: function() {
               new_image.remove();
             }
           });
           
-          old_image.animate({opacity:100},{ duration: 500, queue: false})
+          old_image.animate({opacity:100},{ duration: 0, queue: false})
           .each(function(){
             if(this.complete) $(this).trigger("load");
           });
