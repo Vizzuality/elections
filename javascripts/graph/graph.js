@@ -163,6 +163,12 @@ function initializeGraph() {
 
   function showInfowindow(left, top) {
 
+    if (deep == "autonomias") {
+      $('div#graph_infowindow a.compare').hide();
+    } else {
+      $('div#graph_infowindow a.compare').show();
+    }
+
     if ( $.browser.msie ) {
       $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
       $('div#graph_infowindow').show();
@@ -311,14 +317,27 @@ function initializeGraph() {
   function bindEvents() {
 
     $('div#graph_infowindow a.compare').click(function(ev){
-      try{
-        ev.stopPropagation();
-      }
-      catch(e){
-        event.cancelBubble=true;
-      };
+      try{ ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
+
       hideInfowindow();
-      comparewindow.show();
+
+      var $selectedBubble = $("div#" + selectedBubble);
+      var text   = $selectedBubble.find('span.name').html();
+      var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(text + ", España")+'.json';
+
+      $.ajax({
+        method: "GET",
+        dataType: 'json',
+        url: url,
+        success: function(info) {
+          comparewindow.compareFirstRegion(info);
+          comparewindow.show();
+        },
+        error: function(error) {
+          $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+          $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
+        }
+      });
     });
 
     $('div#graph_infowindow a.more').click(function(ev){

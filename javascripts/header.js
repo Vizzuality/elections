@@ -43,6 +43,7 @@
         $('div#tab_menu a').removeClass('selected');
         if (className == 'map') {
           $("#graph").hide();
+          comparewindow.hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
@@ -56,6 +57,7 @@
 
         } else {
           state = "grafico";
+          comparewindow.hide();
           $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
@@ -362,7 +364,7 @@
       var new_url = 'http://twitter.com/?status=' + encodeURIComponent('El microscopio del voto, cómo vota España - ' + window.location.href);
       window.open(new_url,'_newtab');
     });
-    
+
   }
 
   function animateSlider() {
