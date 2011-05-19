@@ -127,8 +127,9 @@ function initializeGraph() {
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+    var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
 
-    text = _.template(text)({media : '42'}); // TODO: change with the real media
+    text = _.template(text)({media : media});
 
     $('div#graph_infowindow p.info').html(text);
   }
