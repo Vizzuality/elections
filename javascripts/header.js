@@ -136,7 +136,7 @@
         if (ui.value!=previous_year) {
           updateNewSliderValue(ui.value,previous_year);
         }
-        
+
       }
     });
 
@@ -240,7 +240,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          updateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         drawNoDataBars();
@@ -339,7 +339,7 @@
           failCircle.hide();
         } else {
           updateNewSliderValue(getNextAvailableYear(deep));
-          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          updateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
 
@@ -387,7 +387,7 @@
 
     var zoom = peninsula.getZoom();
     var deep;
-    
+
     if (zoom==6) {
       deep = "autonomias";
       if (years_nodata["autonomias"]==undefined) {
@@ -472,9 +472,9 @@
 
       var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
 
-      // Let's decide if we must update (setValue) or create the bubbles
+      // Let's decide if we must update or create the bubbles
       if (createdBubbles == true) {
-        setValue(url);
+        updateBubbles(url);
       } else {
         createBubbles(url);
       }
