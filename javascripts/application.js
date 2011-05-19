@@ -2,7 +2,7 @@
   var year            = 2003;
   var compare         = 'ninguna';
   var state           = "mapa";
-  
+
 
   $(document).ready(function(){
     
@@ -23,6 +23,7 @@
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
         explanationwindow.hide();
+        comparewindow.hide();
         if (state == "grafico") {
           graphBubbleInfowindow.hide();
         } else {

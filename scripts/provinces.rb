@@ -6,6 +6,7 @@ base_path = FileUtils.pwd
 version_path = "#{base_path}/../graphs/provincias/#{$graphs_next_version}"
 current_path = "#{base_path}/../graphs/provincias/current"
 FileUtils.mkdir_p(version_path)
+FileUtils.rm(current_path)
 FileUtils.ln_s version_path, current_path, :force => true
 
 
