@@ -30,20 +30,20 @@
       });
       
       //Add the autocomplete functionality to inputs
-      //addAutocompleteFunctionsToInputs();
+      addAutocompleteFunctionsToInputs();
       
     }
     
     function addAutocompleteFunctionsToInputs() {
-        var input = document.getElementById('headerSearchInput');
-        var defaultBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(27.391278222579277, -18.45703125),
-          new google.maps.LatLng(42.601619944327965, 4.0869140625));
-          var options = {
-            bounds: defaultBounds
-          };
-          map_autocomplete = new google.maps.places.Autocomplete(input, options);
-          map_autocomplete.setTypes(['geocode']);
+      var input = document.getElementById('headerSearchInput');
+      var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(27.391278222579277, -18.45703125),
+        new google.maps.LatLng(42.601619944327965, 4.0869140625));
+      var options = {
+        bounds: defaultBounds
+      };
+      map_autocomplete = new google.maps.places.Autocomplete(input, options);
+      map_autocomplete.setTypes(['geocode']);
     }
     
     
@@ -52,7 +52,9 @@
       geocoder.geocode( { 'address': location}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           $('div.search_error').fadeOut();
-          peninsula.fitBounds(results[0].geometry.bounds);
+          var bounds = results[0].geometry.bounds;
+          peninsula.setCenter(bounds.getCenter());
+          peninsula.setZoom(11);
           searchAndShow(results[0].formatted_address);
           $('a.map').trigger('click');
         } else {
