@@ -19,10 +19,10 @@
   }
 
   function initializeHeader() {
-    deep = getDeepLevelFromZoomLevel(start_zoom);
+    var deep_level = getDeepLevelFromZoomLevel(start_zoom);
 
     /* Receive all the vars without data */
-    getUnavailableData(deep);
+    getUnavailableData(deep_level);
 
     // Graph - Map
     if (state == "grafico") {
