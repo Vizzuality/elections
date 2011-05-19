@@ -1,68 +1,36 @@
     
     var geocoder = new google.maps.Geocoder();
+    var autocomplete;
 
     // Search map module with dom bind events
     function initializeSearch() { 
-      $('form.search input.text').focusin(function(){
-        var value = $(this).val();
-        if (value=="Busca un lugar en el mapa...") {
-          $(this).val('');
-        }
-      });
-      
-      $('form.search input.text').focusout(function(){
-        var value = $(this).val();
-        if (value=="") {
-          $(this).val('Busca un lugar en el mapa...');
-        }
-      });
-      
-      $('form.search').submit(function(ev){
-        ev.stopPropagation();
-        ev.preventDefault();
-        searchLocation($(this).find('input.text').val());
-      });
-      
-      $('div.search_error a.close').click(function(ev){
-        ev.stopPropagation();
-        ev.preventDefault();
-        $(this).parent().fadeOut();
-      });
-      
       //Add the autocomplete functionality to inputs
       addAutocompleteFunctionsToInputs();
-      
     }
     
     function addAutocompleteFunctionsToInputs() {
       var input = document.getElementById('headerSearchInput');
-      var defaultBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(27.391278222579277, -18.45703125),
-        new google.maps.LatLng(42.601619944327965, 4.0869140625));
-      var options = {
-        bounds: defaultBounds
-      };
-      map_autocomplete = new google.maps.places.Autocomplete(input, options);
-      map_autocomplete.setTypes(['geocode']);
-    }
-    
-    
-    function searchLocation(location) {
-      location += ', España';
-      geocoder.geocode( { 'address': location}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          $('div.search_error').fadeOut();
-          var bounds = results[0].geometry.bounds;
-          peninsula.setCenter(bounds.getCenter());
+      // var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(27.391278222579277, -18.45703125),new google.maps.LatLng(42.601619944327965, 4.0869140625));
+      var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.0410955451705,-2.420436523437502),new google.maps.LatLng(39.786437168780616,-4.892360351562502));
+      var options = {bounds: defaultBounds};
+      autocomplete = new google.maps.places.Autocomplete(input, options);
+      
+      
+      google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (place.geometry.viewport) {
+          peninsula.setCenter((place.geometry.viewport).getCenter());
           peninsula.setZoom(11);
-          searchAndShow(results[0].formatted_address);
-          $('a.map').trigger('click');
         } else {
-          $('div#header div.left div.search_error').fadeIn();
+          peninsula.setCenter(place.geometry.location);
+          peninsula.setZoom(11);
         }
+        searchAndShow(place.formatted_address);
+        $('a.map').trigger('click');
       });
     }
     
+
     
     function searchCompareLocation(location) {
       location += ', España';

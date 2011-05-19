@@ -2,7 +2,7 @@
   var year            = 2003;
   var compare         = 'ninguna';
   var state           = "mapa";
-
+  
 
   $(document).ready(function(){
     //Deep linking management
