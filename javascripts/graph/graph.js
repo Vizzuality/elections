@@ -318,6 +318,7 @@ function initializeGraph() {
         event.cancelBubble=true;
       };
       hideInfowindow();
+      comparewindow.show();
     });
 
     $('div#graph_infowindow a.more').click(function(ev){
