@@ -174,6 +174,12 @@ p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 
+/*WADUS TEXT*/
+div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; text-shadow: #000000 0px 0px 7px;}
+div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px;}
+div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
+div.wadusText a{font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px;}
+
 /*MAP CONTROLS*/
 div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#map span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
