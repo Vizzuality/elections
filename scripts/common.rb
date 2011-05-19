@@ -64,11 +64,15 @@ def get_processes
 end
 
 def get_autonomies
-  $cartodb.query("select cartodb_id, id_1, name_1 from #{AUTONOMIAS_TABLE}")[:rows].compact
+  $cartodb.query("select cartodb_id, id_1, name_1, cc_1 from #{AUTONOMIAS_TABLE}")[:rows].compact
 end
 
 def get_provinces
-  $cartodb.query("select cartodb_id, id_1, id_2, name_2 from #{PROVINCES_TABLE}")[:rows].compact
+  $cartodb.query("select cartodb_id, id_1, id_2, cc_2, name_2 from #{PROVINCES_TABLE}")[:rows].compact
+end
+
+def get_municipalities(province)
+  $cartodb.query("select ine_poly.cartodb_id, nombre as name from ine_poly, gadm2 where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}'")[:rows].compact
 end
 
 def get_variables(gadm_level)
