@@ -591,7 +591,7 @@ function createBubbles(url){
   .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
-function setValue(url){
+function updateBubbles(url){
 
   $.getJSON(url, function(data) {
     var one = true;
