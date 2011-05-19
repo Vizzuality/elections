@@ -5,7 +5,9 @@
     <meta charset=utf-8 />
     <title>El microscopio del voto, cómo vota España - RTVE.es</title>
     <meta name="description" content="Descubre en RTVE.es cómo vota España: busca las relaciones entre los resultados electorales y la demografía, la economía y los aspectos sociales, municipio a municipio." />
-      
+    <meta property="og:title" content="El microscopio del voto, cómo vota España"/>
+    <meta property="og:type" content="Statistics"/>
+    <meta property="og:image" content="http://ec2-50-16-13-57.compute-1.amazonaws.com/images/example.jpg"/>
     <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -150,93 +152,90 @@
       </div>
     <!-- END INCLUDE-->
 
+
     <div id="header">
       <span class="end_left"></span>
       <span class="end_right"></span>
-      <div class="left">
-        <h1>Mapa de las Elecciones 2011</h1>
-        <form class="search">
-          <input id="headerSearchInput" type="text" value="Busca un lugar en el mapa..." class="text" />
-          <input type="submit" value="" class="submit" />
-        </form>
-        <div class="search_error">
-          <h5>Ops! No hemos podido encontrar lo que buscas</h5>
-            <p>Comprueba que has escrito bien el nombre que buscabas</p>
-          <a class="close" href="#cerrar">Cerrar</a>
+      <h1>El microscopio del voto</h1>
+      <div class="share">
+        <div class="outer_share">
+          <p>Compartir</p>
+          <a href="javascript:var%20d=document,f='http://www.new.facebook.com/share',l=d.location,e=encodeURIComponent,p='.php?src=bm&v=4&i=1219930092&u='+e( window.location.href)+'&t='+e(d.title);1;try{if%20(!/^(.*\.)?facebook\.[^.]*$/.test(l.host))throw(0);share_internal_bookmarklet(p)}catch(z)%20{a=function()%20{if%20(!window.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=1,width=626,height=436'))l.href=f+p};if%20(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}}void(0)" title="Masdfas" class="facebook">Facebook</a>
+          <a href="http://twitter.com/?status=Mapa%20de%20las%20elecciones%202011" target="_blank" class="twitter">Twitter</a>
         </div>
       </div>
-      <div class="right">
-        <div class="share">
-          <div class="outer_share">
-            <p>Compartir</p>
-            <a href="http://www.facebook.com/sharer.php?u=http://datos.rtve.es/elecciones/municipales-autonomicas/&t=Mapa%20de%20Elecciones%202011" target="_blank" class="facebook">Facebook</a>
-            <a href="http://twitter.com/home?status=Mapa de las Elecciones 2011 - Rtve.es http://datos.rtve.es/elecciones/municipales-autonomicas/" title="" target="_blank" class="twitter">Twitter</a>
-          </div>
+      <div class="secondContainer">
+        <div class="left">
+          <form class="search">
+            <input id="headerSearchInput" type="text" value="Introduce una ubicación" class="text" />
+          </form>
         </div>
-       	 <div class="selects">
-	          <div class="info_tooltip">
-	            <div class="top"></div>
-	            <div class="content">
-	            <h5>PIB per cápita</h5>
-	            <p>Desviación respecto a la media de edad de cada municipio</p>
-	            <ul>
-	              <li class="left"><span>+25</span>más mayores</li>
-	              <li class="right"><span>-25</span>más jóvenes</li>
-	            </ul>
-	            <a href="#" class="more">Más info.</a> <a class="close" href="#cerrar">Cerrar</a>
-	          </div>
-	          </div>
-	          <div class="select">
-	            <div class="outer_select chat">
-	              <span class="icon"></span>
-	              <span class="inner_select"><a href="#Datos_sociologicos" title="Datos sociológicos">Datos sociológicos</a></span>
-	            </div>
-	            <div class="option_list chat">
-	              <div class="top"></div>
-	              <div class="bottom">
-	                <ul>
-	                  <li class="disabled"><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
-	                  <li class="disabled"><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
-	                  <li class="disabled"><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
-	                  <li class="disabled"><a class="lineas_adsl" href="#penetracion_internet">Penetración internet</a></li>
-	                </ul>
-	              </div>
-	            </div>
-	          </div>
-	          <div class="select">
-	            <div class="outer_select money">
-	              <span class="icon"></span>
-	              <span class="inner_select"><a href="#Datos_economicos" title="Datos económicos">Datos económicos</a></span>
-	            </div>
-	            <div class="option_list money">
-	              <div class="top"></div>
-	              <div class="bottom">
-	                <ul>
-	                  <li><a class="paro" href="#Tasa_de_paro">Tasa de paro</a></li>
-	                  <li><a class="pib" href="#PIB_per_capita">PIB per cápita</a></li>
-	                  <li><a class="salario" href="#Salario_medio">Salario medio</a></li>
-	                </ul>
-	              </div>
-	            </div>
-	          </div>
-	          <div class="select">
-	            <div class="outer_select people">
-	              <span class="icon"></span>
-	              <span class="inner_select"><a href="#Datos_demograficos" title="Datos demográficos">Datos demográficos</a></span>
-	            </div>
-	            <div class="option_list people">
-	              <div class="top"></div>
-	              <div class="bottom">
-	                <ul>
-	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
-	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
-	                  <li class="disabled"><a class="inmigracion" href="#inmigracion">% Inmigración</a></li>
-	                  <li><a class="saldo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
-	                </ul>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
+        <div class="right">
+         	 <div class="selects">
+  	          <div class="info_tooltip">
+  	            <div class="top"></div>
+  	            <div class="content">
+  	            <h5>PIB per cápita</h5>
+  	            <p>Desviación respecto a la media de edad de cada municipio</p>
+  	            <ul>
+  	              <li class="left"><span>+25</span>más mayores</li>
+  	              <li class="right"><span>-25</span>más jóvenes</li>
+  	            </ul>
+  	            <a href="#" class="more">Más info.</a> <a class="close" href="#cerrar">Cerrar</a>
+  	          </div>
+  	          </div>
+  	          <div class="select">
+  	            <div class="outer_select chat">
+  	              <span class="icon"></span>
+  	              <span class="inner_select"><a href="#Datos_sociologicos" title="Datos sociológicos">Datos sociológicos</a></span>
+  	            </div>
+  	            <div class="option_list chat">
+  	              <div class="top"></div>
+  	              <div class="bottom">
+  	                <ul>
+  	                  <li class="disabled"><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
+  	                  <li class="disabled"><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
+  	                  <li class="disabled"><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
+  	                  <li class="disabled"><a class="lineas_adsl" href="#penetracion_internet">Penetración internet</a></li>
+  	                </ul>
+  	              </div>
+  	            </div>
+  	          </div>
+  	          <div class="select">
+  	            <div class="outer_select money">
+  	              <span class="icon"></span>
+  	              <span class="inner_select"><a href="#Datos_economicos" title="Datos económicos">Datos económicos</a></span>
+  	            </div>
+  	            <div class="option_list money">
+  	              <div class="top"></div>
+  	              <div class="bottom">
+  	                <ul>
+  	                  <li><a class="paro" href="#Tasa_de_paro">Tasa de paro</a></li>
+  	                  <li><a class="pib" href="#PIB_per_capita">PIB per cápita</a></li>
+  	                  <li><a class="salario" href="#Salario_medio">Salario medio</a></li>
+  	                </ul>
+  	              </div>
+  	            </div>
+  	          </div>
+  	          <div class="select">
+  	            <div class="outer_select people">
+  	              <span class="icon"></span>
+  	              <span class="inner_select"><a href="#Datos_demograficos" title="Datos demográficos">Datos demográficos</a></span>
+  	            </div>
+  	            <div class="option_list people">
+  	              <div class="top"></div>
+  	              <div class="bottom">
+  	                <ul>
+  	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
+  	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
+  	                  <li class="disabled"><a class="inmigracion" href="#inmigracion">% Inmigración</a></li>
+  	                  <li><a class="saldo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
+  	                </ul>
+  	              </div>
+  	            </div>
+  	          </div>
+  	        </div>
+  	      </div>
 	      </div>
       <div class="years_content">
         <a class="action play" href="#play">Animación</a>
@@ -270,7 +269,7 @@
           <span class="slider"></span>
           <a href="#zoom_menos" class="zoom_out">Zoom menos</a>
         </div>
-        <!-- <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a> -->
+        <a class="vizzuality" href="http://www.cartodb.com" target="_blank">CartoDB</a>
         <div id="peninsula"></div>
         <div class="canary_island">
           <a href="#islas_canarias" class="islas_canarias">Ir a las Islas Canarias</a>
@@ -278,7 +277,7 @@
         </div>
         <div class="fail">
           <div class="content">
-            <p><span class="message">No hay datos para este año</span><br /><a class="next" href="#">ver siguiente año con datos</a><a href="#" class="why">¿Por qué?</a></p>
+            <p><span class="message">No hay datos para este año</span><br/><a class="next" href="#ver_siguiente">ver siguiente año con datos</a> <small>o</small> <a class="continue" href="#continuar_explorarndo">sigue explorando</a><a href="#" class="why">¿Por qué?</a></p>
           </div>
         </div>
       </div>
@@ -286,7 +285,12 @@
         <div id="top_legend" class="legend">Más % de paro</div>
         <div id="bottom_legend" class="legend">Menos % de paro</div>
         <div id="graph_container"></div>
-        <!-- <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a> -->
+        <a class="vizzuality" href="http://www.cartodb.com" target="_blank">CartoDB</a>
+        <div class="message">
+          <div class="content">
+            <p><span class="message">Selecciona una variable</span><br /><small>Empieza por la <a href="#">tasa de paro</a> o selecciona otra variable en la parte superior</small></p>
+          </div>
+        </div>
         <div class="fail">
           <div class="content">
             <p><span class="message">No hay datos para este año</span><br /><a class="next" href="#">ver siguiente año con datos</a><a href="#" class="why">¿Por qué?</a></p>

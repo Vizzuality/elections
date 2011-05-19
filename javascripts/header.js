@@ -19,10 +19,10 @@
   }
 
   function initializeHeader() {
-    deep = getDeepLevelFromZoomLevel(start_zoom);
+    var deep_level = getDeepLevelFromZoomLevel(start_zoom);
 
     /* Receive all the vars without data */
-    getUnavailableData(deep);
+    getUnavailableData(deep_level);
 
     // Graph - Map
     if (state == "grafico") {
@@ -55,10 +55,10 @@
           },500);
 
         } else {
+          state = "grafico";
           $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          state = "grafico";
           restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
@@ -105,9 +105,6 @@
       updateNewSliderValue(year+1,year);
     });
 
-
-
-
     // Year Slider
     $("div.year_slider").slider({
       range: "min",
@@ -136,7 +133,7 @@
         if (ui.value!=previous_year) {
           updateNewSliderValue(ui.value,previous_year);
         }
-        
+
       }
     });
 
@@ -240,7 +237,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         drawNoDataBars();
@@ -259,8 +256,6 @@
       }
     });
 
-
-
     /*failCircle*/
     failCircle = (function() {
       var data_not_found = false;
@@ -275,6 +270,12 @@
         ev.stopPropagation();
         ev.preventDefault();
         goToNextYear();
+      });
+
+      $("div.fail a.continue").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideError();
       });
 
       function updateContent() {
@@ -312,7 +313,6 @@
         }
 
         if (data_not_found != true) {
-          updateContent();
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
@@ -339,7 +339,7 @@
           failCircle.hide();
         } else {
           updateNewSliderValue(getNextAvailableYear(deep));
-          setValue(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
 
@@ -354,6 +354,15 @@
       }
     })();
 
+
+    // Twitter link
+    $('a.twitter').click(function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      var new_url = 'http://twitter.com/?status=' + encodeURIComponent('El microscopio del voto, cómo vota España - ' + window.location.href);
+      window.open(new_url,'_newtab');
+    });
+    
   }
 
   function animateSlider() {
@@ -367,7 +376,6 @@
       updateNewSliderValue(new_value);
     }
   }
-
 
   function getUnavailableData(deep) {
     $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) {
@@ -387,7 +395,7 @@
 
     var zoom = peninsula.getZoom();
     var deep;
-    
+
     if (zoom==6) {
       deep = "autonomias";
       if (years_nodata["autonomias"]==undefined) {
@@ -445,8 +453,6 @@
     }
   }
 
-
-
   function updateNewSliderValue(new_year,previous_year) {
     if (state == 'mapa') {
       if (previous_year!=undefined) {
@@ -469,25 +475,10 @@
         comparewindow.updateValues();
       }
     } else {
-
-      var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-
-      // Let's decide if we must update (setValue) or create the bubbles
-      if (createdBubbles == true) {
-        setValue(url);
-      } else {
-        createBubbles(url);
-      }
+      createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
     $("div.year_slider").slider('value', new_year);
+    year = new_year;
     changeHash();
   }
-
-
-
-
-
-
-
-
