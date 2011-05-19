@@ -479,7 +479,8 @@ def max_min_vars_query(zoom_level)
     variable.min_year.upto(variable.max_year) do |year|
       fields << <<-SQL
         max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max,
-        min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min
+        min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min,
+        avg(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_avg
       SQL
     end
 
