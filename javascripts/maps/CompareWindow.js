@@ -58,7 +58,7 @@
           '</div>'+
         '</div>';
 
-      $('body').append(this.div);
+      $('div.tabs').append(this.div);
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
 
