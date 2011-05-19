@@ -19,7 +19,7 @@ var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", 
 var normalization = {
   'paro': 'paro_epa_normalizado',
   'envejecimiento': 'envejecimiento_normalizado',
-  'edad media': 'edad_media_normalizada',
+  'edad media': 'edad_media_normalizado',
   'inmigracion': 'inmigracion_normalizado',
   'saldo vegetativo': 'saldo_vegetativo_normalizado',
   'pib': 'pib_normalizado',
