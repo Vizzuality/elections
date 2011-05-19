@@ -143,12 +143,20 @@ div.tabs div#graph div#top_legend { top: 87px;}
 div.tabs div#graph div#bottom_legend {top: 530px;}
 
 /* Fail circle */
-div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/fail_background.png'); z-index:100;}
-div.tabs div.fail div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/fail_circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
+div.tabs div.fail div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
 div.tabs div.fail p {position:absolute; width:300px; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
+div.tabs div#graph div.fail p {margin-top: 130px;}
 div.tabs div.fail p small {font-size:14px!important;}
 div.tabs div.fail a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
 div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
+
+/* Message circle */
+div.tabs div.message {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
+div.tabs div.message div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
+div.tabs div.message p small {color: #666666; font-size:15px!important;}
+div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
