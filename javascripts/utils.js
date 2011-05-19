@@ -12,7 +12,9 @@ function normalizeBarWidth(bar_width) {
   return (bar_width < bar_min_size) ? bar_min_size : bar_width;
 }
 
+
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
+
 
 var normalization = {
   'paro': 'paro_normalizado',
@@ -27,6 +29,17 @@ var normalization = {
   // 'consumo prensa': 'prensa_diaria',
   // 'penetracion internet': 'penetracion_internet_normalizado'
 };
+
+
+var resolucion = {
+  'paro': 6,
+  'envejecimiento': 6,
+  'edad media': 6,
+  'saldo vegetativo': 6,
+  'pib': 6,
+  'salario': 6
+};
+
 
 var custom_map_style = [{featureType:"administrative.country",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"administrative.locality",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"all",stylers:[{lightness:7},{saturation:-91}]},{featureType:"all",elementType:"all",stylers:[]}];
 

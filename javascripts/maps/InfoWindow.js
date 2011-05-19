@@ -173,12 +173,13 @@
         $('div#infowindow div.chart img').css({margin:'0 '+(statImage.new_no_data*7)+'px 0 0'});
         $('div#infowindow div.chart img').show();
 
-        var selected_value  = Math.abs(parseFloat(info['data'][year][normalization[compare]]).toFixed(2));
+        var selected_value  = parseFloat(info['data'][year][normalization[compare]]).toFixed(2);
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        console.log(info_text["after_" + sign]);
         var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
         $('div#infowindow div.chart').show();
@@ -284,7 +285,7 @@
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
 
         if (this.information['data'][year][normalization[compare]]!=null) {
-          var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
+          var selected_value  = parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2);
           var comparison_variable = normalization[compare];
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
