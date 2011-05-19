@@ -491,7 +491,9 @@ function initializeGraph() {
       $('div.graph_legend p.autonomy a').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        goDeeper(global_url + "/" + parent_url[parent_url.length-1]);
+        var url = global_url + "/" + parent_url[parent_url.length-1];
+        console.log("up", url);
+        goDeeper(url);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
       });
@@ -567,9 +569,22 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-  console.log("Create bubbles", url);
+
+  if (normalization[compare] === undefined) {
+    return;
+  }
+  //console.log("Create bubbles", url);
 
   $.getJSON(url, function(data) {
+    if (data == null) {
+      createdBubbles = false;
+      failCircle.show();
+      return;
+    }
+
+    createdBubbles = true;
+    failCircle.hide();
+
     var one = true;
     possibleValues = data;
     count = 0;
@@ -598,14 +613,20 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){ createdBubbles = true; failCircle.hide(); })
-  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
 function updateBubbles(url){
-  console.log("Update bubbles", url);
+  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
+
+  if (data == null) {
+    failCircle.show();
+    return;
+  }
+
+  failCircle.hide();
+
     var one = true;
     _.each(data, function(v,key) {
       if (one) { //Check data for show legend or not
@@ -616,8 +637,6 @@ function updateBubbles(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
@@ -643,15 +662,15 @@ function goDeeper(url){
   //Get new name and deep
 
   var url_split = url.split('/');
-  //console.log("url_split", url_split);
+  console.log("url_split", url_split);
 
   deep = url_split[5];
-  //console.log("deep", deep);
+  console.log("deep", deep);
 
   var length = url_split[url_split.length-1].split(compare)[0].length;
 
-  name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
-  //console.log("name", name);
+  name = url_split[url_split.length].split(compare)[0].substring(0, length);
+  console.log("name", name);
 
   graphLegend.hideError();
 
