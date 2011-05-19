@@ -102,8 +102,8 @@ def queries_by_zoom(x, y, z)
   queries[z]
 end
 
-# p queries_by_zoom(1, 1, 7)
-# exit(0)
+p queries_by_zoom(1, 1, 7)
+exit(0)
 
 start_x = {
   6 =>  [30,28],

@@ -5,7 +5,6 @@ require File.dirname(__FILE__) + "/common"
 crono = Time.now
 
 cartodb                                       = get_cartodb_connection
-processes                                     = get_processes
 variables, variables_hash, max_year, min_year = *variables_vars
 json_folder                                   = next_folder('/mnt/www/data/google_names_cache/')
 
