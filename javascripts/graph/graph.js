@@ -27,11 +27,11 @@ function initAvailableData(deep) {
         ev.stopPropagation();
         ev.preventDefault();
         hideError();
-        var text = $("div.select div.option_list ul li a.paro").text();
+        var text = $("div.select div.option_list ul li a.paro_epa").text();
         $("div.select div.outer_select.money").parent().addClass("selected");
         $("div.select div.outer_select.money span.inner_select a").text(text);
         $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-        compare = "paro";
+        compare = "paro_epa";
         changeHash();
         restartGraph();
       });
@@ -68,7 +68,7 @@ function initializeGraph() {
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().find('span.name').html();
+      var text = valuesHash[$(this).parent().attr("id")].name;
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -230,7 +230,7 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    var title = $("div#" + selectedBubble + " span.name").html() ;
+    var title = valuesHash[data_id].name;
 
     if (title.length > 24) {
        title = title.substr(0,21) + "... <sup>("+year+")</sup>";
@@ -319,10 +319,7 @@ function initializeGraph() {
       try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
 
       hideInfowindow();
-
       var $selectedBubble = $("div#" + selectedBubble);
-
-      var text  = $selectedBubble.find('span.name').html();
       var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
       var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
@@ -372,7 +369,7 @@ function initializeGraph() {
         var radius = $b.height()/2;
         var top    = $b.parent().css('top').replace('px','') - radius - 21;
         var left   = $b.parent().css('left').replace('px','');
-        var text   = $b.parent().find('span.name').html();
+        var text   = valuesHash[selectedBubble].name;
         graphBubbleTooltip.show(left,top,text);
       }
     });
@@ -671,7 +668,6 @@ console.log(url);
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
-      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);

@@ -246,7 +246,7 @@ end
 def get_from_every_year(variables, values)
   result = []
   pos = 0
-  variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
+  variables_years = variables.map{ |v| v.match(/\d+$/)[0].to_i }
   1975.upto(2011) do |year|
     if variables_years.include?(year)
       result << (values[pos].nil? ? 0 : ("%.2f" % values[pos]).to_f)
@@ -259,7 +259,7 @@ def get_from_every_year(variables, values)
 end
 
 def get_autonomies_variable_evolution(variable)
-  custom_variable_name = variable.gsub(/_\d+/,'')
+  custom_variable_name = variable.gsub(/_\d+$/,'')
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
   raw_variables.map do |raw_variable_hash|
@@ -276,12 +276,11 @@ def get_autonomies_variable_evolution(variable)
 SQL
   values = $cartodb.query(query)[:rows] || []
   result = {}
-  variable_year = variable.match(/\d+/)[0].to_i
-  variable_name = variable.match(/[^\d]+/)[0][0..-2]
+  variable_year = variable.match(/\d+$/)[0].to_i
   values.each do |v|
     result[v[:name]] = []
     1975.upto(2011) do |year|
-      temp_variable = "#{variable_name}_#{year}"
+      temp_variable = "#{custom_variable_name}_#{year}"
       result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
     end
   end
