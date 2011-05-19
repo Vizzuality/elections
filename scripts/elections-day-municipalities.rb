@@ -3,6 +3,8 @@
 require File.dirname(__FILE__) + "/common"
 require "libxml"
 require 'uri'
+require 'logger'
+require 'open-uri'
 
 include LibXML
 
@@ -21,7 +23,6 @@ class MunicipalityParticipation
   end
   
   def on_start_element(element, attributes)
-    puts element
     case element
       when 'NULOS_ABSOLUTO'
         @in_element = element
@@ -138,7 +139,7 @@ class MunicipalityVotes
     # Insert all non existing parties
     array.each do |p|
       if $rparties[p[0]].nil?
-        $cartodb.query("INSERT INTO partidos_politicos (name) VALUES ('#{p[0]}')")
+        $cartodb.query("INSERT INTO partidos_politicos (name) VALUES ('#{p[0].gsub(/\'/,"\\\'")}')").rows
         puts "Insertando #{p[0]} en partidos_politicos" 
         $parties = get_parties
       end
@@ -262,18 +263,36 @@ provinces_ine = {
 #   end
 # end
 
+file = File.open('output.log', 'w+')
+logger = Logger.new(file)
+logger.info "****\n"
+logger.info "Starting process at #{Time.now}"
 
 # Constant
 proceso_electoral_id = 74
- 
-parser = XML::SaxParser.string(File.read("xmls/2011-M-RESULTADOS-madrid-madrid-madrid-DATOS-ES.xml"))
-parser.callbacks = MunicipalityVotes.new(1,2,3)
-parser.parse
 
-temporal_result = parser.callbacks.result
+url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-madrid-madrid-madrid-DATOS-ES.xml"
+begin
+  parser = XML::SaxParser.io(open(url))
+  parser.callbacks = MunicipalityVotes.new(1,2,3)
+  parser.parse
 
-parser = XML::SaxParser.string(File.read("xmls/2011-M-PARTICIPACION-madrid-madrid-madrid-DATOS-ES.xml"))
-parser.callbacks = MunicipalityParticipation.new
-parser.parse
+  temporal_result = parser.callbacks.result
+rescue OpenURI::HTTPError
+  logger.info "[ERROR] #{$!} - #{url}"
+  temporal_result = {}
+end
 
-puts temporal_result.merge(parser.callbacks.result).inspect
+url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-madrid-madrid-madrid-DATOS-ES.xml"
+begin
+  parser = XML::SaxParser.io(open(url))
+  parser.callbacks = MunicipalityParticipation.new
+  parser.parse
+
+  puts temporal_result.merge(parser.callbacks.result).inspect
+rescue OpenURI::HTTPError
+  logger.info "[ERROR] #{$!}"
+  puts "Nothing"
+end
+
+logger.info "Finishing process at #{Time.now}"
