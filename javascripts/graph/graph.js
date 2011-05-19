@@ -12,9 +12,8 @@ var graph_bubble_index = 100;
 var valuesHash = {};
 var possibleValues = {};
 var nBubbles = 0;
-
 var selectedBubble;
-
+var chooseMessage;
 var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
@@ -22,6 +21,34 @@ jQuery.easing.def = "easeInOutCubic";
 function initAvailableData(deep) {
   $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
 }
+    chooseMessage = (function() {
+
+      $("div#graph div.message a").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideError();
+        var text = $("div.select div.option_list ul li a.paro").text();
+        $("div.select div.outer_select.money").parent().addClass("selected");
+        $("div.select div.outer_select.money span.inner_select a").text(text);
+        $("div.select div.option_list ul li a.paro").parent().addClass("selected");
+        compare = "paro";
+        changeHash();
+        restartGraph();
+      });
+
+      function showError() {
+        $('div#graph div.message').fadeIn("slow");
+      }
+
+      function hideError() {
+        $('div#graph div.message').fadeOut("slow");
+      }
+
+      return {
+        show: showError,
+        hide: hideError
+      }
+    })();
 
 function initializeGraph() {
   if (state == "grafico") {
@@ -197,8 +224,15 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    var name = $("div#" + selectedBubble + " span.name").html();
-    $("#graph_infowindow").find(".top").find("h2").append(name + " <sup>("+year+")</sup>");
+    var title = $("div#" + selectedBubble + " span.name").html() ;
+
+    if (title.length > 24) {
+       title = title.substr(0,21) + "... <sup>("+year+")</sup>";
+    } else {
+       title = title + " <sup>("+year+")</sup>";
+    }
+
+    $("#graph_infowindow").find(".top").find("h2").append(title);
 
     $("#graph_infowindow a.more").show();
 
@@ -570,11 +604,15 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
+console.log(url);
 
   if (normalization[compare] === undefined) {
+    console.log(normalization[compare]);
+    chooseMessage.show();
     return;
+  } else {
+    chooseMessage.hide();
   }
-  //console.log("Create bubbles", url);
 
   $.getJSON(url, function(data) {
     if (data == null) {
@@ -617,7 +655,7 @@ function createBubbles(url){
 }
 
 function updateBubbles(url){
-  //console.log("Update bubbles", url);
+  console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
