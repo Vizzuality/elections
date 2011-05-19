@@ -221,7 +221,7 @@ div.infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a {color:#333333;}
 div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
-div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 -1px;}
+div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 0px;}
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
