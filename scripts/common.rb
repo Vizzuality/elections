@@ -502,10 +502,17 @@ end
 
 def next_folder(path)
   last_dir = Dir.entries(path).map(&:to_i).sort.last
-  next_dir = last_dir + 1
-  next_dir = "#{path}#{next_dir}/"
-  FileUtils.mkdir_p(next_dir)
-  next_dir
+  version_path = last_dir + 1
+  version_path = "#{path}#{version_path}/"
+  FileUtils.mkdir_p(version_path)
+  
+  # current symlink path
+  current_path = "#{path}current"
+  
+  # symlink up
+  FileUtils.ln_s version_path, current_path, :force => true
+  
+  version_path
 end
 
 class String

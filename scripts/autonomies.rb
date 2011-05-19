@@ -2,8 +2,13 @@
 
 require File.dirname(__FILE__) + "/common"
 
-base_path = FileUtils.pwd
-FileUtils.mkdir_p("#{base_path}/../graphs/autonomias/#{$graphs_next_version}")
+base_path    = FileUtils.pwd
+version_path = "#{base_path}/../graphs/autonomias/#{$graphs_next_version}"
+current_path = "#{base_path}/../graphs/autonomias/current"
+FileUtils.mkdir_p(version_path)
+FileUtils.ln_s version_path, current_path, :force => true
+
+
 
 cartodb        = get_cartodb_connection
 processes      = get_processes
