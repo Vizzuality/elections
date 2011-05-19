@@ -58,7 +58,7 @@
           '</div>'+
         '</div>';
 
-      $('body').append(this.div);
+      $('div.tabs').append(this.div);
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
 
@@ -189,12 +189,14 @@
     CompareWindow.prototype.compareSecondRegion = function(info,formatted_address) {
       var me = this;
       this.cleanSecondRegion();
+      var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json';
+      console.log("comparing", url);
 
       if (info==null) {
         $.ajax({
           method: "GET",
           dataType: 'json',
-          url: global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json',
+          url: url,
           success: function(info) {
             fillData(info);
           },

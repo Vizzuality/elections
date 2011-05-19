@@ -13,7 +13,7 @@ div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bol
 div#header h2 {float: left; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
 div#header div.secondContainer div.left {float:left; width:320px; margin: 5px 0 0 0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px;}
-div#header div.secondContainer div.left form input {float:right; width:225px; height:15px; margin:0; padding:9px 30px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
+div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 /*div#header div.secondContainer div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('../images/lens.png') no-repeat 0 0;}
 div#header div.secondContainer div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}*/
@@ -161,7 +161,7 @@ div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
 /* Message circle */
 div.tabs div.message {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
 div.tabs div.message div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
-div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
+div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 24px;}
 div.tabs div.message p small {color: #666666; font-size:15px!important;}
 div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 
@@ -243,7 +243,7 @@ div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('.
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:12px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
