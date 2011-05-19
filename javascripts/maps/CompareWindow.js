@@ -3,6 +3,7 @@
     function CompareWindow() {
       this.create();
       this.firstZoom = 12;
+      this.position = "top";
       this.firstData = {};
       this.secondData = {};
       this.bar_width_multiplier = 140;
@@ -105,12 +106,14 @@
       $('a.resumen').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "up";
         $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
       });
 
       $('a.evolucion').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "down";
         $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
       });
     }
@@ -129,6 +132,7 @@
     	$('div.outer_stats_slider').scrollTo({top:'0',left:'0'}, 1);
     	//Create charts
     	this.createChart(info);
+    	this.setUpChartView();
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -357,6 +361,8 @@
 
 
     CompareWindow.prototype.createChart = function(info) {
+
+      $('div.stats_slider').empty();
       $('div.stats_slider').width(_.size(normalization)*298);
       var width = 130;
 
@@ -446,11 +452,13 @@
         }
       });
 
+    }
+
+    CompareWindow.prototype.setUpChartView = function() {
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
         setTimeout(function(){$('div.outer_stats_slider').scrollTo($('div.stats_slider div[alt="'+compare+'"].up'),1);},20);
       }
     }
-
 
     CompareWindow.prototype.isVisible = function() {
       return $('div#comparewindow').is(':visible');
