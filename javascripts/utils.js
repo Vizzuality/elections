@@ -215,7 +215,64 @@ var textInfoWindow = {
     after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí",
     before_positive: "Un ",
     after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí"
+  },
+  envejecimiento_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  secundaria_acabada_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  audiencia_diaria_tv_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  prensa_diaria_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  matriculaciones_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  detenidos_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  jovenes_parados_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
+  },
+  parados_larga_duracion_normalizado:
+  {
+    before_negative: "Un ",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>",
+    before_positive: "Un ",
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>"
   }
+
 };
 
 var explanationContent = {
