@@ -204,7 +204,7 @@ var textInfoWindow = {
     before_positive: "El salario medio aquí está un ",
     after_positive: "% por encima de la media <strong>(<%= media %>)</strong>."
   },
-  estudios_acabados: {
+  secundaria_acabada_normalizado: {
     before_negative: "Un ",
     after_negative: "% menos que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados",
     before_positive: "Un ",
@@ -215,8 +215,45 @@ var textInfoWindow = {
     after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí",
     before_positive: "Un ",
     after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí"
+  },
+  audiencia_diaria_tv_normalizado : {
+    before_negative: "Su población consume un ",
+    after_negative: "% menos de televisión que la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "Su población consume un ",
+    after_positive: "  más de televisión que la media nacional <strong>(<%= media %>)</strong>."
+  },
+  prensa_diaria_normalizado : {
+    before_negative: "Su población consume un ",
+    after_negative: "% menos de radio que la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "El porcentaje de inmigración en este municipio está ",
+    after_positive: "% más de radio que la media nacional <strong>(<%= media %>)</strong>."
+  },
+  matriculaciones_normalizado : {
+    before_negative: " ",
+    after_negative: "% <strong>(<%= media %>)</strong>.",
+    before_positive: " ",
+    after_positive: "% <strong>(<%= media %>)</strong>."
+  },
+  detenidos_normalizado : {
+    before_negative: " ",
+    after_negative: "% <strong>(<%= media %>)</strong>.",
+    before_positive: " ",
+    after_positive: "% <strong>(<%= media %>)</strong>."
+  },
+  jovenes_parados_normalizado: {
+    before_negative: " ",
+    after_negative: "% <strong>(<%= media %>)</strong>",
+    before_positive: " ",
+    after_positive: "% <strong>(<%= media %>)</strong>"
+  },
+  parados_larga_duracion_normalizado: {
+    before_negative: " ",
+    after_negative: "% <strong>(<%= media %>)</strong>",
+    before_positive: " ",
+    after_positive: "% <strong>(<%= media %>)</strong>"
   }
 };
+
 
 var explanationContent = {
   "Edad Media" : {

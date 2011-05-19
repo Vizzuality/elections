@@ -131,7 +131,8 @@
       var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
       var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
       
-      var desv = Math.max(Math.round(Math.abs(min)),Math.round(Math.abs(max)))/5;
+      var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
+      
       var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
       var actual_zoom = peninsula.getZoom();
       
@@ -143,10 +144,8 @@
         radius=23 * (actual_zoom==12?1.5:1);
       } else if ((desv*3)>=value && value<(desv*4)) {
         radius=28 * (actual_zoom==12?1.5:1);
-      } else if ((desv*4)>=value && value<(desv*5)) {
-        radius=32 * (actual_zoom==12?1.5:1);
       } else {
-        radius = 13;
+        radius=32 * (actual_zoom==12?1.5:1);
       }
     } else {
       radius = 12;
@@ -206,7 +205,7 @@
           var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
           var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
 
-          var desv = Math.max(Math.round(Math.abs(min)),Math.round(Math.abs(max)))/5;
+          var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
           var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
           var actual_zoom = peninsula.getZoom();
 
@@ -219,10 +218,8 @@
             radius=23 * (actual_zoom==12?1.5:1);
           } else if ((desv*3)>=value && value<(desv*4)) {
             radius=28 * (actual_zoom==12?1.5:1);
-          } else if ((desv*4)>=value && value<(desv*5)) {
-            radius=32 * (actual_zoom==12?1.5:1);
           } else {
-            radius = 13;
+            radius=32 * (actual_zoom==12?1.5:1);
           }
         } else {
           radius = 12;
