@@ -319,10 +319,7 @@ function initializeGraph() {
       try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
 
       hideInfowindow();
-
       var $selectedBubble = $("div#" + selectedBubble);
-
-      var text  = $selectedBubble.find('span.name').html();
       var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
       var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
@@ -372,7 +369,7 @@ function initializeGraph() {
         var radius = $b.height()/2;
         var top    = $b.parent().css('top').replace('px','') - radius - 21;
         var left   = $b.parent().css('left').replace('px','');
-        var text   = $b.parent().find('span.name').html();
+        var text   = valuesHash[selectedBubble].name;
         graphBubbleTooltip.show(left,top,text);
       }
     });
