@@ -79,7 +79,7 @@
       //Remove play class and add pause class
       $(this).removeClass('play').addClass('stop');
       $(this).attr('href','#stop');
-      animate_interval = setInterval(function(){animateSlider();},2000);
+      animate_interval = setInterval(function(){animateSlider();},2500);
     });
 
     // Stop animation process
@@ -97,12 +97,14 @@
       ev.stopPropagation();
       ev.preventDefault();
       graphBubbleInfowindow.hide();
-      updateNewSliderValue(year-1,year);
+      if (year>1987) 
+        updateNewSliderValue(year-1,year);
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-      updateNewSliderValue(year+1,year);
+      if (year<2011) 
+        updateNewSliderValue(year+1,year);
     });
 
     // Year Slider
@@ -366,7 +368,7 @@
   }
 
   function animateSlider() {
-    var new_value = $("div.year_slider").slider('value') + 1;
+    var new_value = year + 1;
     if (new_value>2011) {
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');
@@ -462,12 +464,15 @@
       } else {
         refreshTiles();
       }
+      
       if (!checkFailYear(new_year)) {
         failCircle.show();
       } else {
         failCircle.hide();
       }
+      
       refreshBubbles();
+      
       if(infowindow.isOpen()){
         infowindow.updateValues();
       }
@@ -479,6 +484,5 @@
     }
 
     $("div.year_slider").slider('value', new_year);
-    year = new_year;
     changeHash();
   }
