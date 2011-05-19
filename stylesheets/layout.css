@@ -317,7 +317,14 @@ div#comparewindow div.bottom.region div.search {display:none;}
 div#comparewindow div.bottom.region div.region {display:block;}
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div.bottom form {position:relative; width:276px; height:28px; margin:5px 0 0 40px;}
-div#comparewindow div.bottom form input.text {width:276px; height:13px; padding:8px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form input#google_compare_autocomplete {width:244px; height:13px; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form div.pac-container {left:0px!important; top:25px!important; width:276px!important; padding:5px 0 5px; background:url('../images/search_compare_google.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
+div#comparewindow div.bottom form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
+div#comparewindow div.bottom form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
+div#comparewindow div.bottom form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}
+
+
+
 div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('../images/tiny_search_len.png') no-repeat 0 0;}
 div#comparewindow div.bottom form input.submit:hover {background-position:0 -13px; cursor:pointer;}
 div#comparewindow div.bottom p.refer {display:none; width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:right; font:normal 13px "Officina Regular"; color:#666666;}
