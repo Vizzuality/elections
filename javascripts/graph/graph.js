@@ -27,11 +27,11 @@ function initAvailableData(deep) {
         ev.stopPropagation();
         ev.preventDefault();
         hideError();
-        var text = $("div.select div.option_list ul li a.paro_epa").text();
+        var text = $("div.select div.option_list ul li a.paro").text();
         $("div.select div.outer_select.money").parent().addClass("selected");
         $("div.select div.outer_select.money span.inner_select a").text(text);
         $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-        compare = "paro_epa";
+        compare = "paro";
         changeHash();
         restartGraph();
       });
@@ -550,7 +550,6 @@ function initializeGraph() {
         ev.stopPropagation();
         ev.preventDefault();
         var url = global_url + "/" + parent_url[parent_url.length-1];
-        console.log("up", url);
         goDeeper(url);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
@@ -608,12 +607,15 @@ function initializeGraph() {
 
 /*GRAPH FUNCTIONS!*/
 
-function restartGraph() {
+function restartGraph(force_create) {
   graphLegend.hide();
   graph_bubble_index = 100;
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
+  if (force_create == true) {
+    createdBubbles = false;
+  }
   createOrUpdateBubbles(global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
 }
 
@@ -627,7 +629,7 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-console.log(url);
+console.log("Create bubbles", url);
 
   if (normalization[compare] === undefined) {
     console.log(normalization[compare]);
@@ -759,7 +761,9 @@ function destroyBubble(b, url){
     $("#"+b).remove();
     nBubbles=nBubbles-1;
     if(nBubbles==0){
-      createBubbles(url);
+      console.log("recreating");
+      createdBubbles = false;
+      createOrUpdateBubbles(url);
     }
   });
 }
