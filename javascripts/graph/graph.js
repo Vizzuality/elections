@@ -153,6 +153,8 @@ function initializeGraph() {
     var comparison_variable = normalization[compare];
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
+    console.log(textInfoWindow, comparison_variable, normalization);
+
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
     var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
 
@@ -272,23 +274,14 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-    var firstYearData = _.detect(data, function(num) { return num != 0; }); // index of the first year with information
-    var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
-    var firstYear = 1975 + firstYearIndex; // first year with information
 
-    var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
-    var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
-    var startYearIndex = nextElectionYearIndex - 1;
+    selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    var chartBackgroundTopPadding = 33 * startYearIndex;
-
-    for (var i = firstYearIndex; i <= data.length; i++) {
-      if (data[i]!=undefined) {
+    for (var i = 1987 - minYear; i < data.length; i++) {
         if (!find) {
-          if (year - 1975 == i - 1 ) {
+          if (year - minYear == i  ) {
             find = true;
             find_year = count;
-            selected_value = parseFloat(data[i - 1])
           }
         }
 
@@ -297,17 +290,16 @@ function initializeGraph() {
         }
 
         chartDataString += data[i]+ ',';
-      } else {
-        chartDataString += '0,';
-      }
+
       count++;
     }
-    if (find_year === undefined && year == 2011) {
+
+    if (find_year === undefined && year == maxYear) {
       find_year = count;
     }
+
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-    $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
     $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
     $('div#graph_infowindow div.chart img').show();
 
