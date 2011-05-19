@@ -5,6 +5,7 @@
 
 
   $(document).ready(function(){
+    
     //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);
@@ -41,6 +42,7 @@
 
     // //Check variable of compare
     if (!$('div.option_list ul li a.'+route[5]).length) {
+      //alert('jamon');
       initializeApp();
       return false;
     }
@@ -96,4 +98,5 @@
     var zoom = peninsula.getZoom();
     var hash = "#"+ state + "/" + latlng.lat().toFixed(3)+"/"+latlng.lng().toFixed(3)+"/"+zoom+"/"+year+"/"+compare.replace(/ /g,'_')+"/"+deep+"/"+name;
     window.location.hash = hash;
+    updateWadusText();
   }
