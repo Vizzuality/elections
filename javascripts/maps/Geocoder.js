@@ -1,6 +1,8 @@
     
     var geocoder = new google.maps.Geocoder();
     var autocomplete;
+    var searchInterval;
+    var searchCount;
 
     // Search map module with dom bind events
     function initializeSearch() { 
@@ -51,7 +53,6 @@
           });
           $('div#comparewindow p.refer').stop(true).show();
         } else {
-          //$('div.search_error').fadeIn();
           $('div#comparewindow p.refer').html('No hemos encontrado nada con ese criterio...');
           $('div#comparewindow p.refer').show().delay(4000).fadeOut();
         }
@@ -65,7 +66,21 @@
         dataType: 'json',
         url: global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json',
         success: function(info) {
-          setTimeout(function(){$('div#'+info.id).trigger('click')},1000);
+          if (searchInterval!=null) {
+            clearInterval(searchInterval);
+          }
+          searchCount = 0;
+          searchInterval = setInterval(function(){
+            if ($('div#'+info.id).length==0) {
+              searchCount++;
+              if (searchCount>5) {
+                clearInterval(searchInterval);
+              }
+            } else {
+              $('div#'+info.id).trigger('click');
+              clearInterval(searchInterval);
+            }
+          },500);
         },
         error: function(error) {}
       });
