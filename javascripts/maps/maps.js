@@ -59,7 +59,7 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         var rn=Math.round(Math.random()*4);  
+         var rn=Math.ceil(Math.random()*4);
          return tiles_pngs_url.replace("{n}",rn)
           +  tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
        },
