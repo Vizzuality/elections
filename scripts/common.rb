@@ -385,6 +385,8 @@ def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
 
+  records.sort!{|x, y| x.proceso_electoral_year <=> y.proceso_electoral_year}
+
   min_year.upto(max_year) do |year|
     data = years[year] || {}
 
@@ -417,7 +419,7 @@ def create_years_hash(records, variables, max_year, min_year)
 end
 
 def variables_vars
-  supported_variables = %w('audiencia_diaria_tv_normalizado' 'detenidos_normalizado' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'jovenes_parados_normalizado' 'matriculaciones_normalizado' 'parados_larga_duracion_normalizado' 'paro_epa_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado')
+  supported_variables = %w('edad_media_normalizado' 'audiencia_diaria_tv_normalizado' 'detenidos_normalizado' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'jovenes_parados_normalizado' 'matriculaciones_normalizado' 'parados_larga_duracion_normalizado' 'paro_epa_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado')
   variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
   variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
   max_year = variables.map(&:max_year).sort.last
