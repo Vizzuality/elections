@@ -5,7 +5,9 @@
     <meta charset=utf-8 />
     <title>El microscopio del voto, cómo vota España - RTVE.es</title>
     <meta name="description" content="Descubre en RTVE.es cómo vota España: busca las relaciones entre los resultados electorales y la demografía, la economía y los aspectos sociales, municipio a municipio." />
-
+    <meta property="og:title" content="El microscopio del voto, cómo vota España"/>
+    <meta property="og:type" content="Statistics"/>
+    <meta property="og:image" content="http://ec2-50-16-13-57.compute-1.amazonaws.com/images/example.jpg"/>
     <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -150,6 +152,7 @@
       </div>
     <!-- END INCLUDE-->
 
+
     <div id="header">
       <span class="end_left"></span>
       <span class="end_right"></span>
@@ -157,21 +160,15 @@
       <div class="share">
         <div class="outer_share">
           <p>Compartir</p>
-          <a href="http://www.facebook.com/sharer.php?u=http://datos.rtve.es/elecciones/municipales-autonomicas/&t=Mapa%20de%20Elecciones%202011" target="_blank" class="facebook">Facebook</a>
-          <a href="http://twitter.com/home?status=Mapa de las Elecciones 2011 - Rtve.es http://datos.rtve.es/elecciones/municipales-autonomicas/" title="" target="_blank" class="twitter">Twitter</a>
+          <a href="javascript:var%20d=document,f='http://www.new.facebook.com/share',l=d.location,e=encodeURIComponent,p='.php?src=bm&v=4&i=1219930092&u='+e( window.location.href)+'&t='+e(d.title);1;try{if%20(!/^(.*\.)?facebook\.[^.]*$/.test(l.host))throw(0);share_internal_bookmarklet(p)}catch(z)%20{a=function()%20{if%20(!window.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=1,width=626,height=436'))l.href=f+p};if%20(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}}void(0)" title="Masdfas" class="facebook">Facebook</a>
+          <a href="http://twitter.com/?status=Mapa%20de%20las%20elecciones%202011" target="_blank" class="twitter">Twitter</a>
         </div>
       </div>
       <div class="secondContainer">
         <div class="left">
           <form class="search">
-            <input id="headerSearchInput" type="text" value="Busca un lugar en el mapa..." class="text" />
-            <input type="submit" value="" class="submit" />
+            <input id="headerSearchInput" type="text" value="Introduce una ubicación" class="text" />
           </form>
-          <div class="search_error">
-            <h5>Ops! No hemos podido encontrar lo que buscas</h5>
-              <p>Comprueba que has escrito bien el nombre que buscabas</p>
-            <a class="close" href="#cerrar">Cerrar</a>
-          </div>
         </div>
         <div class="right">
          	 <div class="selects">
@@ -272,7 +269,7 @@
           <span class="slider"></span>
           <a href="#zoom_menos" class="zoom_out">Zoom menos</a>
         </div>
-        <!-- <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a> -->
+        <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a>
         <div id="peninsula"></div>
         <div class="canary_island">
           <a href="#islas_canarias" class="islas_canarias">Ir a las Islas Canarias</a>
@@ -288,7 +285,7 @@
         <div id="top_legend" class="legend">Más % de paro</div>
         <div id="bottom_legend" class="legend">Menos % de paro</div>
         <div id="graph_container"></div>
-        <!-- <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a> -->
+        <a class="vizzuality" href="http://www.vizzuality.com" target="_blank">Vizzuality</a>
         <div class="message">
           <div class="content">
             <p><span class="message">Selecciona una variable</span><br /><small>Empieza por la <a href="#">tasa de paro</a> o selecciona otra variable en la parte superior</small></p>

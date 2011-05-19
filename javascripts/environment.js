@@ -1,6 +1,6 @@
 
   var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
-  var tiles_pngs_url  = "../data/tiles/";
+  var tiles_pngs_url  = "http://rtvedata{n}.ipq.co/data/tiles/";
   var proxy_url       = "proxy.php";
   var tiles_version   = 3; //"current"; //3;
   var bubbles_version = "current"; //10;
@@ -11,7 +11,7 @@
   
   if (window.location.hostname == "localhost" || window.location.hostname == "elections") {
     global_url = proxy_url+"?proxy_url="+global_url;
-    tiles_pngs_url = global_url + '/tiles/';
+    //tiles_pngs_url = "http://rtvedata{n}.ipq.co/data/tiles/";
   } else if (window.location.hostname == "datos.rtve.es") {
     global_url = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
   }
