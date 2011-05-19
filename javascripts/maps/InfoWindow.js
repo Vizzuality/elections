@@ -180,7 +180,7 @@
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
-
+        $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>');
@@ -290,14 +290,15 @@
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
           var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
           text = _.template(text)({media : media});
+          // Change image url
+          var statImage = this.generateStatImage();
+          $('div#infowindow img').attr('src',statImage.url);
+          $('div#infowindow div.chart').show();
         } else {
           var text = 'No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>';
           $('div#infowindow div.chart').hide();
         }
 
-        // Change image url
-        var statImage = this.generateStatImage();
-        $('div#infowindow img').attr('src',statImage.url);
         $('div#infowindow p.info').html(text);
         
         var div = this.div_;
