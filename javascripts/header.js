@@ -44,6 +44,7 @@
         if (className == 'map') {
           $("#graph").hide();
           comparewindow.hide();
+          graphBubbleTooltip.hide();
           state = "mapa";
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
@@ -58,10 +59,11 @@
         } else {
           state = "grafico";
           comparewindow.hide();
+          graphBubbleTooltip.hide();
           $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          restartGraph();
+          restartGraph(true);
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
         }
@@ -99,13 +101,13 @@
       ev.stopPropagation();
       ev.preventDefault();
       graphBubbleInfowindow.hide();
-      if (year>1987) 
+      if (year>1987)
         updateNewSliderValue(year-1,year);
     });
     $('div.years_content a.right').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-      if (year<2011) 
+      if (year<2011)
         updateNewSliderValue(year+1,year);
     });
 
@@ -466,22 +468,24 @@
       } else {
         refreshTiles();
       }
-      
+
       if (!checkFailYear(new_year)) {
         failCircle.show();
       } else {
         failCircle.hide();
       }
-      
+
       refreshBubbles();
-      
+
       if(infowindow.isOpen()){
         infowindow.updateValues();
       }
       if(comparewindow.isVisible()){
         comparewindow.updateValues();
+        comparewindow.createChart(infowindow.information);
       }
     } else {
+      graphBubbleTooltip.hide();
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
