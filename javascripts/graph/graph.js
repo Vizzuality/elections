@@ -163,7 +163,7 @@ function initializeGraph() {
 
   function showInfowindow(left, top) {
 
-    if (deep == "autonomias") {
+    if (deep == "provincias" || deep == "autonomias") {
       $('div#graph_infowindow a.compare').hide();
     } else {
       $('div#graph_infowindow a.compare').show();
@@ -315,18 +315,16 @@ function initializeGraph() {
   }
 
   function bindEvents() {
-
     $('div#graph_infowindow a.compare').click(function(ev){
-      try{ ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
+      try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
 
       hideInfowindow();
 
       var $selectedBubble = $("div#" + selectedBubble);
-      var text   = $selectedBubble.find('span.name').html();
-      var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
-      var url = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
-      console.log("url", url);
+      var text  = $selectedBubble.find('span.name').html();
+      var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
+      var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
       if (comparewindow.isVisible()) {
         comparewindow.compareSecondRegion(null, place);
@@ -336,8 +334,6 @@ function initializeGraph() {
           dataType: 'json',
           url: url,
           success: function(info) {
-            console.log(info);
-
             comparewindow.compareFirstRegion(info);
             comparewindow.show();
           },
