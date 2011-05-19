@@ -58,22 +58,22 @@
           '</div>'+
         '</div>';
 
-      $('div#map').prepend(this.div);
+      $('body').append(this.div);
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
-      
+
       $('div.compare_graph a.right').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo({top:'+=0',left:'+=299'}, 500);
       });
-      
+
       $('div.compare_graph a.left').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo( {top:'+=0',left:'-=299'}, 500);
       });
-      
+
       $('form.search_compare input.text').focusin(function(){
         var value = $(this).val();
         if (value=="Busca una localidad...") {
@@ -93,20 +93,20 @@
         ev.preventDefault();
         searchCompareLocation($(this).find('input.text').val());
       });
-      
+
       $('a.remove_compare').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         me.removeRegion($(this).closest('div').attr('class'));
       });
-     
-     
+
+
       $('a.resumen').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
       });
-      
+
       $('a.evolucion').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
@@ -128,7 +128,7 @@
     	$('div.outer_stats_slider').scrollTo({top:'0',left:'0'}, 1);
     	//Create charts
     	this.createChart(info);
-      
+
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
@@ -179,9 +179,9 @@
         bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
         $('div#comparewindow div.top div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-      
+
       }
-      
+
       this.show();
     }
 
@@ -189,7 +189,7 @@
     CompareWindow.prototype.compareSecondRegion = function(info,formatted_address) {
       var me = this;
       this.cleanSecondRegion();
-      
+
       if (info==null) {
         $.ajax({
           method: "GET",
@@ -206,8 +206,8 @@
       } else {
         fillData(info);
       }
-      
-      
+
+
       function fillData(info) {
         me.secondData = info;
         me.createChart(info);
@@ -264,7 +264,7 @@
         $('div#comparewindow div.bottom').removeClass('search').addClass('region');
       }
     }
-    
+
     CompareWindow.prototype.updateValues = function(){
 
         //TODO: AÜN NO FUNCIONA
@@ -313,7 +313,7 @@
           bar_width = normalizeBarWidth((this.firstData['data'][year]['otros_partido_percent']*175)/100);
           $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
           $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+this.firstData['data'][year]['otros_partido_percent']+'%)');
-          
+
       	}
       }
 
@@ -336,23 +336,23 @@
 
 
     CompareWindow.prototype.removeRegion = function(from) {
-      
+
       // Si solo hay una region -> Cerrar movideta
       if ($('div#comparewindow div.bottom').hasClass('search')) {
         this.hide();
         return false;
       }
-      
+
       // Si hay los dos y cierras el de abajo -> Muestras buscador abajo
       if (from=="region") {
         // Clean graph second
         this.cleanSecondRegion();
-        
+
         this.resetSearch();
         $('div#comparewindow div.bottom').addClass('search').removeClass('region');
         return false;
       }
-      
+
       // Si estan los dos y cierras del de arriba -> Cambias las regions y pones buscador abajo
       if (from=="top" && $('div#comparewindow div.bottom').hasClass('region')) {
         this.firstData = this.secondData;
@@ -363,25 +363,25 @@
         return false;
       }
     }
-    
-    
+
+
     CompareWindow.prototype.createChart = function(info) {
       $('div.stats_slider').width(_.size(normalization)*298);
       var width = 130;
 
-      
+
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info['data'][year][ele]!=undefined) {
-          
+
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min[region_type][ele+'_'+year+'_max'];
           var min_ = max_min[region_type][ele+'_'+year+'_min'];
-          
+
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
-          
+
           if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
             $('div.stats_slider div[alt="'+i+'"].up').append(
               '<span style="width:'+bar_width+'px" class="bar '+((info['data'][year][ele]>0)?'positive':'negative')+' second"></span>'+
@@ -413,13 +413,13 @@
           }
         }
       });
-      
+
       // Add bottom blocks
       _.each(normalization,function(ele,i){
         if (info['data'][year][ele]!=undefined) {
           if ($('div.stats_slider div[alt="'+i+'"].down').length>0) {
             var src = createImage(info,ele,true);
-            
+
             $('div.stats_slider div[alt="'+i+'"].down').append(
               '<img class="second" src="'+src+'" title="" alt="Evolución '+year+' '+i+'"/>'+
               '<span class="name second">'+info.name+'</span>'
@@ -454,25 +454,25 @@
           }
         }
       });
-      
+
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
         setTimeout(function(){$('div.outer_stats_slider').scrollTo($('div.stats_slider div[alt="'+compare+'"].up'),1);},20);
       }
     }
-    
-    
+
+
     CompareWindow.prototype.isVisible = function() {
       return $('div#comparewindow').is(':visible');
     }
-    
-    
+
+
     CompareWindow.prototype.cleanSecondRegion = function() {
       $('div.stats_slider div.block').each(function(i,ele){
         $(ele).find('.second').remove();
       });
     }
-    
-    
+
+
     /*Auxiliar function to get evolution image */
     function createImage(info,ele,second) {
       /* create graph */
@@ -480,7 +480,7 @@
       var param = "";
       var minYear = 1987; // 1987
       var maxYear = 2012; // 2012
-      minGraphYear = 1987; 
+      minGraphYear = 1987;
       var electionYears = [1987,1991,1995,1999,2003,2007,2011];
       var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
       for (var i = minYear; i < maxYear; i++) {
@@ -504,12 +504,12 @@
         }
       }
       param = param.substring(0, param.length-1);
-      
+
       if (second) {
         return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       } else {
         return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       }
     }
-    
-    
+
+
