@@ -5,6 +5,7 @@
   var animate_interval;
   var previous_year;
   var failCircle;
+  var facebook_title = 'El microscopio del voto, cómo vota España - ';
 
   var years_nodata = {};
 
@@ -363,6 +364,7 @@
       var new_url = 'http://twitter.com/?status=' + encodeURIComponent('El microscopio del voto, cómo vota España - ' + window.location.href);
       window.open(new_url,'_newtab');
     });
+    
   }
 
   function animateSlider() {
