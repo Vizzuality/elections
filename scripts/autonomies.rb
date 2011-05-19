@@ -37,20 +37,19 @@ evolution = {}
 puts
 variables_json = {}
 variables.each do |variable|
-  puts
-  custom_variable_name = variable.gsub(/_\d+/,'')
+  custom_variable_name = variable.gsub(/_\d+$/,'')
   variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_autonomies_variable_evolution(variable)
-  unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-    year = variable.match(/\d+/)[0].to_i - 1
+  unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
+    year = variable.match(/\d+$/)[0].to_i - 1
     while proceso_electoral_id.nil? && year > 1975
       proceso_electoral_id = processes[year]
       year -= 1
     end
   end
   puts "Variable: #{variable} - #{year} - #{proceso_electoral_id}"
-  variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
+  variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
   max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.max
   min_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.min
   max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
