@@ -669,7 +669,7 @@ function goDeeper(url){
 
   var length = url_split[url_split.length-1].split(compare)[0].length;
 
-  name = url_split[url_split.length].split(compare)[0].substring(0, length);
+  name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
   console.log("name", name);
 
   graphLegend.hideError();
