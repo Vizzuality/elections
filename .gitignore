@@ -10,3 +10,4 @@ xml/
 graphs/
 graphs
 nginx.conf
+scripts/output.log

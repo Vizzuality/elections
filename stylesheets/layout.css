@@ -161,7 +161,7 @@ div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
 /* Message circle */
 div.tabs div.message {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
 div.tabs div.message div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
-div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
+div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 24px;}
 div.tabs div.message p small {color: #666666; font-size:15px!important;}
 div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 
@@ -173,6 +173,12 @@ div.innerBubble{position:absolute;background:#000000;border:none;height:30px;wid
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
+
+/*WADUS TEXT*/
+div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; text-shadow: #000000 0px 0px 7px;}
+div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px;}
+div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
+div.wadusText a{font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px;}
 
 /*MAP CONTROLS*/
 div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
@@ -243,7 +249,7 @@ div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('.
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:12px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
