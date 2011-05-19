@@ -8,7 +8,10 @@
     function initializeSearch() { 
       //Add the autocomplete functionality to inputs
       
-      
+      $('div.secondContainer form.search').submit(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
       addAutocompleteFunctionsToInputs();
     }
     

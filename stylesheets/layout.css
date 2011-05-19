@@ -3,7 +3,18 @@ body {height:auto; background:#ccc; min-width:1000px;}
 
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
-div.rtve {height:51px; width:100%!important; background:#fff;}
+/* RTVE header */
+div.rtve {height:51px; width:100%!important; background:white;}
+div.rtve div.left {float:left;}
+div.rtve a.logo {float:left; width:96px; height:37px; margin:5px 0 0 15px; background:url('../images/rtve.jpg') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
+div.rtve div.left ul {display:inline-block; margin:15px 0 0 10px;}
+div.rtve div.left ul li {display:inline-block; width:96px; height:28px;}
+div.rtve div.left ul li a {display:inline-block; width:96px; height:16px; padding:6px 0; background:url('../images/header_linkgs_bkg.jpg') no-repeat 0 0; text-align:center; font:normal 16px "Officina Regular"; color:white; line-height:16px; text-decoration:none;}
+div.rtve div.left ul li a:hover {background-position:0 -28px;} 
+div.rtve div.right {float:right; width:182px; padding:0!important; margin:13px 10px 0 0;}
+div.rtve div.right input#textRTVE {float:left; width:118px; height:30px; padding:0; background:url('../images/search_rtve_bkg.jpg') no-repeat 0 0; border:none; text-align:left;}
+div.rtve div.right input#submitRTVE {float:left; width:64px; height:30px; padding:0; background:url('../images/submit_rtve_bkg.jpg') no-repeat right 0; border:none; text-align:center; color:white; font:normal 16px "Officina Regular";}
+div.rtve div.right input#submitRTVE:hover {background-position:0 -30px; cursor:pointer;}
 
 /*HEADER*/
 div#header {position:absolute; left:0; right:0; top:51px; height:179px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
@@ -15,8 +26,6 @@ div#header div.secondContainer div.left {float:left; width:320px; margin: 5px 0 
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
-/*div#header div.secondContainer div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('../images/lens.png') no-repeat 0 0;}
-div#header div.secondContainer div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}*/
 div#header div.secondContainer div.left form input:focus {outline:none; color:#333333;}
 
 div#header div.secondContainer div.left form div.pac-container {left:0px!important; top:29px!important; width:262px!important; padding:5px 0 5px; background:url('../images/autocomplete_bkg.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
