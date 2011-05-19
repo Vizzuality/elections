@@ -64,11 +64,15 @@ def get_processes
 end
 
 def get_autonomies
-  $cartodb.query("select cartodb_id, id_1, name_1 from #{AUTONOMIAS_TABLE}")[:rows].compact
+  $cartodb.query("select cartodb_id, id_1, name_1, cc_1 from #{AUTONOMIAS_TABLE}")[:rows].compact
 end
 
 def get_provinces
-  $cartodb.query("select cartodb_id, id_1, id_2, name_2 from #{PROVINCES_TABLE}")[:rows].compact
+  $cartodb.query("select cartodb_id, id_1, id_2, cc_2, name_2 from #{PROVINCES_TABLE}")[:rows].compact
+end
+
+def get_municipalities(province)
+  $cartodb.query("select ine_poly.cartodb_id, nombre as name from ine_poly, gadm2 where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}'")[:rows].compact
 end
 
 def get_variables(gadm_level)
@@ -414,7 +418,7 @@ def create_years_hash(records, variables, max_year, min_year)
 end
 
 def variables_vars
-  supported_variables = %w('actividad_economica_normalizado' 'audiencia_diaria_tv_normalizado' 'comercial_normalizado' 'edad_media_normalizada' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'lineas_adsl' 'paro_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'restauracion_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado' 'uso_regular_internet')
+  supported_variables = %w('audiencia_diaria_tv_normalizado' 'detenidos_normalizado' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'jovenes_parados_normalizado' 'matriculaciones_normalizado' 'parados_larga_duracion_normalizado' 'paro_epa_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado')
   variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
   variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
   max_year = variables.map(&:max_year).sort.last
@@ -480,7 +484,7 @@ def max_min_vars_query(zoom_level)
       fields << <<-SQL
         max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max,
         min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min,
-        avg(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_avg
+        avg(#{variable.codigo.gsub(/_normalizad./, '')}_#{year}) as #{variable.codigo}_#{year}_avg
       SQL
     end
 
@@ -506,13 +510,13 @@ def next_folder(path)
   version_path = last_dir + 1
   version_path = "#{path}#{version_path}/"
   FileUtils.mkdir_p(version_path)
-  
+
   # current symlink path
   current_path = "#{path}current"
-  
+
   # symlink up
   FileUtils.ln_s version_path, current_path, :force => true
-  
+
   version_path
 end
 
