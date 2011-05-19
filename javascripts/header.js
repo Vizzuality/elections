@@ -23,6 +23,8 @@
 
     /* Receive all the vars without data */
     getUnavailableData(deep_level);
+    
+    updateWadusText();
 
     // Graph - Map
     if (state == "grafico") {
@@ -170,8 +172,8 @@
           if (info !== undefined) {
             $("div.info_tooltip h5").text(title);
             $("div.info_tooltip p").text(info.content);
-            $("div.info_tooltip ul li.left").html("<span>+25</span>" + info.left);
-            $("div.info_tooltip ul li.right").html("<span>-25</span>" + info.right);
+            $("div.info_tooltip ul li.left").html("<span>-25</span>" + info.left);
+            $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);
 
             $("div.info_tooltip").css("left", position-7);
             $("div.info_tooltip").fadeIn("slow", function() {
@@ -207,6 +209,7 @@
 
       if (!$(this).closest('div.select').hasClass('opened')) {
         infoTooltip.hide();
+        failCircle.reset();
         if ($(this).parent().find('li.selected').length) {
           var index = $(this).parent().find('li.selected').index();
           $(this).parent().find('div.option_list').css('top',-(index*24)+'px');
@@ -233,7 +236,7 @@
 
       var value = $(this).text();
 
-      if (!$(this).parent().hasClass('selected') && !$(this).parent().hasClass('disabled')) {
+      if (!$(this).parent().hasClass('selected') ) {
         compare = $(this).attr('class').replace(/_/g,' ');
         axisLegend.update(tooltipInfo[value]);
         graphBubbleInfowindow.hide();
@@ -257,11 +260,15 @@
         $(this).closest('div.select').addClass('selected').removeClass('opened');
         $(this).closest('div.select').find('span.inner_select a').text(value);
         $('body').unbind('click');
+      } else {
+        $(this).closest('div.select').addClass('selected').removeClass('opened');
       }
     });
 
     /*failCircle*/
     failCircle = (function() {
+      var showed = false;
+      
       var data_not_found = false;
 
       $("div.fail a.why").live("click", function(ev) {
@@ -310,15 +317,22 @@
       }
 
       function showError() {
-        if (state == "mapa") {
-          var $state = $("#map");
-        } else {
-          var $state = $("#graph");
-        }
+        if (!showed) {
+          showed = true;
+          if (state == "mapa") {
+            var $state = $("#map");
+          } else {
+            var $state = $("#graph");
+          }
 
-        if (data_not_found != true) {
-          $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
+          if (data_not_found != true) {
+            $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
+          }
         }
+      }
+      
+      function resetShowed() {
+        showed = false;
       }
 
       function hideError() {
@@ -354,7 +368,8 @@
       return {
         show: showError,
         hide: hideError,
-        failed: hasFailed
+        failed: hasFailed,
+        reset: resetShowed
       }
     })();
 
@@ -367,6 +382,13 @@
       window.open(new_url,'_newtab');
     });
 
+
+    //Unselect all variables
+    $('a.deselection').click(function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      unSelectAllVariables();
+    });
   }
 
   function animateSlider() {
@@ -487,4 +509,23 @@
 
     $("div.year_slider").slider('value', new_year);
     changeHash();
+  }
+  
+  
+  function unSelectAllVariables() {
+    compare = 'ninguna';
+    // Remove selected variable
+    $('div.option_list ul li.selected').each(function(i,ele){$(ele).removeClass('selected');});
+    $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
+    $('div.select span.inner_select a').each(function(i,ele){var text = $(ele).attr('title'); $(ele).text(text);});
+  }
+  
+  
+  function updateWadusText() {
+    if (compare=="ninguna") {
+      $('div.wadusText').hide();
+    } else {
+      $('div.wadusText p').html('Viendo '+$('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text()+' <sup>['+year+']</sup>');
+      $('div.wadusText').show();
+    }
   }
