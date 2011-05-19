@@ -5,7 +5,6 @@
   var animate_interval;
   var previous_year;
   var failCircle;
-  var facebook_title = 'El microscopio del voto, cómo vota España - ';
 
   var years_nodata = {};
 
