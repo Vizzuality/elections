@@ -128,6 +128,8 @@ function initializeGraph() {
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
+    text = _.template(text)({media : '42'}); // TODO: change with the real media
+
     $('div#graph_infowindow p.info').html(text);
   }
 
@@ -625,7 +627,6 @@ function updateBubble (id, x, y, val, colors, party) {
   $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
-
 
 function goDeeper(url){
   graphLegend.hide();

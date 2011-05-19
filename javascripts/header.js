@@ -105,9 +105,6 @@
       updateNewSliderValue(year+1,year);
     });
 
-
-
-
     // Year Slider
     $("div.year_slider").slider({
       range: "min",
@@ -259,8 +256,6 @@
       }
     });
 
-
-
     /*failCircle*/
     failCircle = (function() {
       var data_not_found = false;
@@ -368,7 +363,6 @@
     }
   }
 
-
   function getUnavailableData(deep) {
     $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) {
       years_nodata[deep] = new Object();
@@ -445,8 +439,6 @@
     }
   }
 
-
-
   function updateNewSliderValue(new_year,previous_year) {
     if (state == 'mapa') {
       if (previous_year!=undefined) {
@@ -483,11 +475,3 @@
     $("div.year_slider").slider('value', new_year);
     changeHash();
   }
-
-
-
-
-
-
-
-

@@ -218,8 +218,7 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
-        var text = _.template(text)({media : '42'}); // TODO: change with the real media
-
+        text = _.template(text)({media : '42'}); // TODO: change with the real media
 
         $('div#infowindow div.chart').show();
         $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
