@@ -5,6 +5,7 @@
   
 
   $(document).ready(function(){
+    
     //Deep linking management
     var route = window.location.hash.replace('#','').split('/');
     goToHash(route);

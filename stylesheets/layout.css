@@ -9,8 +9,8 @@ iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
 div#header {position:absolute; left:0; right:0; top:80px; height:179px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
 div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
-div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; width: 500px;}
-div#header h2 {float: left; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
+div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
+div#header h2 {float: left; width:90%; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
 div#header div.secondContainer div.left {float:left; width:320px; margin: 5px 0 0 0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
