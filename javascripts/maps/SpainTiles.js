@@ -126,26 +126,29 @@
 
     var radius;
     if (point['data'][year]!=undefined) {
-      
-      var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-      var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
-      var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
-      
-      var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
-      
-      var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
-      var actual_zoom = peninsula.getZoom();
-      
-      if ((desv*0)>=value && value<(desv*1)) {
-        radius=12;
-      } else if ((desv*1)>=value && value<(desv*2)) {
-        radius=19 * (actual_zoom==12?1.5:1);
-      } else if ((desv*2)>=value && value<(desv*3)) {
-        radius=23 * (actual_zoom==12?1.5:1);
-      } else if ((desv*3)>=value && value<(desv*4)) {
-        radius=28 * (actual_zoom==12?1.5:1);
+      if (normalization[compare]!=undefined) {
+        var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
+        var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
+
+        var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
+
+        var value = Math.round(Math.abs(point['data'][year][normalization[compare]]));
+        var actual_zoom = peninsula.getZoom();
+
+        if ((desv*0)>=value && value<(desv*1)) {
+          radius=12;
+        } else if ((desv*1)>=value && value<(desv*2)) {
+          radius=19 * (actual_zoom==12?1.5:1);
+        } else if ((desv*2)>=value && value<(desv*3)) {
+          radius=23 * (actual_zoom==12?1.5:1);
+        } else if ((desv*3)>=value && value<(desv*4)) {
+          radius=28 * (actual_zoom==12?1.5:1);
+        } else {
+          radius=32 * (actual_zoom==12?1.5:1);
+        }
       } else {
-        radius=32 * (actual_zoom==12?1.5:1);
+        radius = 13;
       }
     } else {
       radius = 12;
@@ -201,25 +204,29 @@
         //change heigth-width of the ball
         var radius;
         if (ele['data'][year]!=undefined) {
-          var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-          var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
-          var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
+          if (normalization[compare]!=undefined) {
+            var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+            var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
+            var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
 
-          var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
-          var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
-          var actual_zoom = peninsula.getZoom();
+            var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
+            var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
+            var actual_zoom = peninsula.getZoom();
 
 
-          if ((desv*0)>=value && value<(desv*1)) {
-            radius=12;
-          } else if ((desv*1)>=value && value<(desv*2)) {
-            radius=19 * (actual_zoom==12?1.5:1);
-          } else if ((desv*2)>=value && value<(desv*3)) {
-            radius=23 * (actual_zoom==12?1.5:1);
-          } else if ((desv*3)>=value && value<(desv*4)) {
-            radius=28 * (actual_zoom==12?1.5:1);
+            if ((desv*0)>=value && value<(desv*1)) {
+              radius=12;
+            } else if ((desv*1)>=value && value<(desv*2)) {
+              radius=19 * (actual_zoom==12?1.5:1);
+            } else if ((desv*2)>=value && value<(desv*3)) {
+              radius=23 * (actual_zoom==12?1.5:1);
+            } else if ((desv*3)>=value && value<(desv*4)) {
+              radius=28 * (actual_zoom==12?1.5:1);
+            } else {
+              radius=32 * (actual_zoom==12?1.5:1);
+            }
           } else {
-            radius=32 * (actual_zoom==12?1.5:1);
+            radius = 13;
           }
         } else {
           radius = 12;
