@@ -4,7 +4,7 @@
     	this.information = {};
     	this.spain_id = 0;
     	this.map_ = map;
-      this.offsetVertical_ = -266;
+      this.offsetVertical_ = -276;
       this.offsetHorizontal_ = -127;
       this.height_ = 289;
       this.width_ = 254;
@@ -14,7 +14,9 @@
       this.oldPar3 = "";
     }
 
+
     InfoWindow.prototype = new google.maps.OverlayView();
+
 
     InfoWindow.prototype.draw = function() {
 
@@ -61,7 +63,7 @@
 		    /*Infowindow events*/
 		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
 		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
-
+        $('div#infowindow p.info a.why_no_data').live('click',function(ev){alert('jamon'); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
           try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
@@ -102,8 +104,11 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
 
-
-      $('div#infowindow h2').html(info.name + " <sup>("+year+")</sup>");
+      if (info.name.length>24) {
+        $('div#infowindow h2').html(info.name.substr(0,21) + "... <sup>("+year+")</sup>");
+      } else {
+        $('div#infowindow h2').html(info.name + " <sup>("+year+")</sup>");
+      }
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
       $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
       
@@ -173,15 +178,17 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
         
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        text = _.template(text)({media : '42'}); // TODO: change with the real media
+        var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+        text = _.template(text)({media : media}); // TODO: change with the real media
 
         $('div#infowindow p.info').html(text);
       } else {
-        $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
+        $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
       }
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+      me.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
 
       if (pixPosition) {
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
@@ -190,6 +197,7 @@
       this.moveMaptoOpen();
     	this.show();
     }
+
 
     InfoWindow.prototype.hide = function() {
       if (this.div_) {
@@ -217,15 +225,17 @@
     	}
     }
 
+
     InfoWindow.prototype.isOpen = function() {
       return this.div_.style.visibility == "visible";
   	}
 
 
-    //TODO: ANIMAR EL CAMBIO EN LAS BARRAS
     InfoWindow.prototype.updateValues = function() {
 
       if (this.div_) {
+        $('div#infowindow h2 sup').text('('+year+')');
+        $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+this.information['data'][year]['censo_total']+' habitantes');
         $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
         
         var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
@@ -274,9 +284,13 @@
 
         var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
         var comparison_variable = normalization[compare];
-        var info_text = textInfoWindow[comparison_variable];
-        var sign = (selected_value < 0) ? "negative" : "positive";
-        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        if (textInfoWindow[comparison_variable]!=undefined) {
+          var info_text = textInfoWindow[comparison_variable];
+          var sign = (selected_value < 0) ? "negative" : "positive";
+          var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        } else {
+          var text = 'No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+        }
 
         // Change image url
         var statImage = this.generateStatImage();
