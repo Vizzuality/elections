@@ -271,6 +271,12 @@
         ev.preventDefault();
         goToNextYear();
       });
+      
+      $("div.fail a.continue").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideError();
+      });
 
       function updateContent() {
         if (state == "mapa") {

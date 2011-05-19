@@ -1,5 +1,4 @@
 
-
     function InfoWindow(latlng, map) {
       this.latlng_ = latlng;
     	this.information = {};
@@ -15,9 +14,7 @@
       this.oldPar3 = "";
     }
 
-
     InfoWindow.prototype = new google.maps.OverlayView();
-
 
     InfoWindow.prototype.draw = function() {
 
@@ -83,7 +80,6 @@
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
     	  div.style.height = me.height_ + 'px';
     	  div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
-    	  console.log(div.style.top);
       }
     };
 
@@ -123,7 +119,7 @@
       }
 
 
-      $('div#infowindow h2').html(info.name + " <span class='year'>"+year+"</span>");
+      $('div#infowindow h2').html(info.name + " <sup>("+year+")</sup>");
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
       $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
 
@@ -180,59 +176,28 @@
 
 
       if (info['data'][year][normalization[compare]]!=null) {
-    	  var max = 0; var count = 0; var find = false; var find_year; var new_no_data = 0; var start = false;
-        var paro = "";
-
-        var minYear = 1987; // 1987
-        var maxYear = 2012; // 2012
-
-        minGraphYear = 1987;
-        var electionYears = [1987,1991,1995,1999,2003,2007,2011];
-        var chartBackgroundTopPadding = 33 * _.indexOf(electionYears, minGraphYear);
-
-        for (var i = minYear; i < maxYear; i++) {
-          if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
-            if (!find) {
-              if (year == i) {
-                find = true;
-                find_year = count;
-              }
-            }
-            if (!start) {
-              start = true;
-            }
-            if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
-            paro += info['data'][i][normalization[compare]] + ',';
-            count++;
-          } else {
-            if (start) {
-              new_no_data ++;
-            }
-          }
-        }
-
-        paro = paro.substring(0, paro.length-1);
+        $('div#infowindow div.chart').show();
+        var statImage = this.generateStatImage();
+        $('div#infowindow div.chart img').attr('src',statImage.url);
+        $('div#infowindow div.chart img').css({margin:'0 '+(statImage.new_no_data*7)+'px 0 0'});
+        $('div#infowindow div.chart img').show();
+        
         var selected_value  = Math.abs(parseFloat(info['data'][year][normalization[compare]]).toFixed(2));
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
+        
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-
         text = _.template(text)({media : '42'}); // TODO: change with the real media
 
-        $('div#infowindow div.chart').show();
-        $('div#infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-        $('div#infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((count*8)+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,0,5,0');
-        $('div#infowindow div.chart img').css({margin:'0 '+(new_no_data*7)+'px 0 0'});
-        $('div#infowindow div.chart img').show();
         $('div#infowindow p.info').html(text);
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
       }
 
-
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+
       if (pixPosition) {
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
     	  div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
@@ -240,7 +205,6 @@
       this.moveMaptoOpen();
     	this.show();
     }
-
 
     InfoWindow.prototype.hide = function() {
       if (this.div_) {
@@ -327,10 +291,11 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
 
-        //TODO: FALTA CAMBIAR LA BOLITA DE POSICIÓN
+        // Change image url
+        var statImage = this.generateStatImage();
+        $('div#infowindow img').attr('src',statImage.url);
 
         $('div#infowindow p.info').html(text);
-
     	}
     }
 
@@ -364,4 +329,43 @@
     	}
 
     	this.map_.panBy(left,top);
+    }
+
+    
+    InfoWindow.prototype.generateStatImage = function() {
+      var info = this.information;
+      var max = 0; var count = 0; var find = false; var find_year; var new_no_data = 0; var start = false;
+      var paro = "";
+
+      var minYear = 1987; // 1987
+      var maxYear = 2012; // 2012
+
+      minGraphYear = 1987;
+      var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+
+      for (var i = minYear; i < maxYear; i++) {
+        if (info['data'][i]!=undefined && info['data'][i][normalization[compare]] != undefined) {
+          if (!find) {
+            if (year == i) {
+              find = true;
+              find_year = count;
+            }
+          }
+          if (!start) {
+            start = true;
+          }
+          if (Math.abs(parseFloat(info['data'][i][normalization[compare]]))>max) max = Math.ceil(Math.abs(parseFloat(info['data'][i][normalization[compare]])));
+          paro += info['data'][i][normalization[compare]] + ',';
+          count++;
+        } else {
+          if (start) {
+            new_no_data ++;
+          }
+        }
+      }
+
+      paro = paro.substring(0, paro.length-1);
+
+      return {'url':'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((count*8)+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:'+paro+'&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=5,0,5,0',
+              'new_no_data': new_no_data};
     }
