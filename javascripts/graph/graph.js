@@ -323,21 +323,31 @@ function initializeGraph() {
 
       var $selectedBubble = $("div#" + selectedBubble);
       var text   = $selectedBubble.find('span.name').html();
-      var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(text + ", España")+'.json';
+      var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
+      var url = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
-      $.ajax({
-        method: "GET",
-        dataType: 'json',
-        url: url,
-        success: function(info) {
-          comparewindow.compareFirstRegion(info);
-          comparewindow.show();
-        },
-        error: function(error) {
-          $('div#comparewindow div.bottom').addClass('search').removeClass('region')
-          $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
-        }
-      });
+      console.log("url", url);
+
+      if (comparewindow.isVisible()) {
+        comparewindow.compareSecondRegion(null, place);
+      } else {
+        $.ajax({
+          method: "GET",
+          dataType: 'json',
+          url: url,
+          success: function(info) {
+            console.log(info);
+
+            comparewindow.compareFirstRegion(info);
+            comparewindow.show();
+          },
+          error: function(error) {
+            $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+            $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
+          }
+        });
+
+      }
     });
 
     $('div#graph_infowindow a.more').click(function(ev){
