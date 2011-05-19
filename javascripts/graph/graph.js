@@ -274,22 +274,32 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
+    var firstYearData = _.detect(data, function(num) { return num != 0; }); // index of the first year with information
+    var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
+    var firstYear = 1975 + firstYearIndex; // first year with information
+
+    var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
+    var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
+    var startYearIndex = nextElectionYearIndex - 1;
 
     selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    for (var i = 1987 - minYear; i < data.length; i++) {
-        if (!find) {
-          if (year - minYear == i  ) {
-            find = true;
-            find_year = count;
-          }
-        }
+    //    console.log(firstYearIndex);
+    //    console.log(data, data[firstYearIndex]);
 
-        if (Math.abs(parseFloat(data[i]))>max) {
-          max = Math.ceil(Math.abs(parseFloat(data[i])));
+    for (var i = firstYearIndex; i < data.length; i++) {
+      if (!find) {
+        if (year - minYear == i  ) {
+          find = true;
+          find_year = count;
         }
+      }
 
-        chartDataString += data[i]+ ',';
+      if (Math.abs(parseFloat(data[i]))>max) {
+        max = Math.ceil(Math.abs(parseFloat(data[i])));
+      }
+
+      chartDataString += data[i]+ ',';
 
       count++;
     }
@@ -300,7 +310,8 @@ function initializeGraph() {
 
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((data.length - firstYearIndex - 1)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+        $('div#graph_infowindow div.chart img').css({margin:'0 0px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
     showInfowindow(left,top);
