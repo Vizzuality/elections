@@ -179,7 +179,7 @@
         
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
-        text = _.template(text)({media : media}); // TODO: change with the real media
+        text = _.template(text)({media : media});
 
         $('div#infowindow p.info').html(text);
       } else {
@@ -282,21 +282,33 @@
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
 
-        var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
-        var comparison_variable = normalization[compare];
-        if (textInfoWindow[comparison_variable]!=undefined) {
+        if (this.information['data'][year][normalization[compare]]!=null) {
+          var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
+          var comparison_variable = normalization[compare];
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+          var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+          text = _.template(text)({media : media});
         } else {
           var text = 'No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+          $('div#infowindow div.chart').hide();
         }
 
         // Change image url
         var statImage = this.generateStatImage();
         $('div#infowindow img').attr('src',statImage.url);
-
         $('div#infowindow p.info').html(text);
+        
+        var div = this.div_;
+        var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+        this.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
+
+        if (pixPosition) {
+      	  div.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
+      	  div.style.top = (pixPosition.y + this.offsetVertical_ - 15) + "px";
+        }
+        
     	}
     }
 

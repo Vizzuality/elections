@@ -471,5 +471,6 @@
     }
 
     $("div.year_slider").slider('value', new_year);
+    year = new_year;
     changeHash();
   }
