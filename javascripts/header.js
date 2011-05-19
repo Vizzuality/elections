@@ -55,10 +55,10 @@
           },500);
 
         } else {
+          state = "grafico";
           $("#graph").show();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          state = "grafico";
           restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
@@ -237,7 +237,7 @@
         if (state == 'mapa') {
           refreshBubbles();
         } else {
-          updateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
         drawNoDataBars();
@@ -334,7 +334,7 @@
           failCircle.hide();
         } else {
           updateNewSliderValue(getNextAvailableYear(deep));
-          updateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
 
@@ -461,15 +461,7 @@
         comparewindow.updateValues();
       }
     } else {
-
-      var url = global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-
-      // Let's decide if we must update or create the bubbles
-      if (createdBubbles == true) {
-        updateBubbles(url);
-      } else {
-        createBubbles(url);
-      }
+      createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
     }
 
     $("div.year_slider").slider('value', new_year);
