@@ -3,14 +3,14 @@ body {height:auto; background:#ccc; min-width:1000px;}
 
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
-.container {height:100px; width:100%!important; background:#fff;}
+div.rtve {height:51px; width:100%!important; background:#fff;}
 
 /*HEADER*/
-div#header {position:absolute; left:0; right:0; top:80px; height:179px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
+div#header {position:absolute; left:0; right:0; top:51px; height:179px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
 div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
-div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; width: 500px;}
-div#header h2 {float: left; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
+div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
+div#header h2 {float: left; width:90%; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
 div#header div.secondContainer div.left {float:left; width:320px; margin: 5px 0 0 0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
@@ -42,7 +42,7 @@ div#header div.share div.outer_share p.total {float:left; width:23px; margin:0; 
 
 div#header div.secondContainer div.right {float:right; width:650px;}
 
-div#header div.secondContainer div.right div.info_tooltip{position:absolute; display:none; top:102px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
+div#header div.secondContainer div.right div.info_tooltip{position:absolute; display:none; top:125px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('../images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
 div#header div.secondContainer div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
@@ -134,7 +134,7 @@ div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move
 
 
 /*APPLICATION TABS*/
-div.tabs {position:absolute; left:0; right:0; top:253px; bottom:0; width:100%;}
+div.tabs {position:absolute; left:0; right:0; top:223px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
 div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
@@ -144,10 +144,10 @@ div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 
 div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
-div.tabs div#graph div#graph_container {position:absolute; left:50%; top:40px; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
+div.tabs div#graph div#graph_container {position:absolute; left:50%; top:0; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {display:none; position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
-div.tabs div#graph div#top_legend { top: 87px;}
-div.tabs div#graph div#bottom_legend {top: 530px;}
+div.tabs div#graph div#top_legend { top: 25px;}
+div.tabs div#graph div#bottom_legend {top: 510px;}
 
 /* Fail circle */
 div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}

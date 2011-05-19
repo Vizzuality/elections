@@ -7,6 +7,8 @@
     // Search map module with dom bind events
     function initializeSearch() { 
       //Add the autocomplete functionality to inputs
+      
+      
       addAutocompleteFunctionsToInputs();
     }
     

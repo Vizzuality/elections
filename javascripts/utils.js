@@ -49,67 +49,109 @@ var custom_map_style = [{featureType:"administrative.country",elementType:"all",
 
 var tooltipInfo = {
   "Envejecimiento" : {
-    content: "Desviación respecto a la media del porcentaje de personas mayores de 65 años",
-    left: "más mayores",
-    right: "más jóvenes",
+    content: "Desviación respecto a la media del porcentaje de personas mayores de 65 años.",
+    right: "más mayores",
+    left: "más jóvenes",
     legendTop: "Más % de mayores de 65 años",
     legendBottom:"Menos % de mayores de 65 años"
   },
+  "% Inmigración" : {
+    content: "Desviación respecto a la media del número de inmigrantes por habitante.",
+    left: "menos inmigr.",
+    right: "más inmigr.",
+    legendTop: "Más % de inmigración",
+    legendBottom:"Menos % de inmigración"
+  },
   "Tasa de paro" : {
-    content: "Desviación respecto a la media de la tasa de paro registrado",
-    left: "más parados",
-    right: "menos parados",
+    content: "Desviación respecto a la media de la tasa de paro EPA.",
+    left: "menos parados",
+    right: "más parados",
     legendTop: "Más % paro",
     legendBottom:"Menos % paro"
   },
   "PIB per cápita" : {
-    content: "Desviación respecto a la media del producto interior bruto per cápita",
-    left: "más pobres",
-    right: "más ricos",
+    content: "Desviación respecto a la media del producto interior bruto por habitante.",
+    left: "menos PIB",
+    right: "más PIB",
     legendTop: "Más PIB per cápita",
     legendBottom:"Menos PIB per cápita"
   },
+  "Matriculaciones" : {
+    content: "Desviación respecto a la media del número de vehículos matriculados.",
+    left: "menos vehic.",
+    right: "más vehic.",
+    legendTop: "Más vehículos",
+    legendBottom:"Menos vehículos"
+  },
+  "Jóvenes parados" : {
+    content: "Desviación sobre la media del porcentaje de jóvenes parados de larga duración.",
+    left: "menos paro",
+    right: "más paro",
+    legendTop: "Más jóvenes parados",
+    legendBottom:"Menos jóvenes parados"
+  },
+  "Parados larga duración" : {
+    content: "Desviación sobre la media del porcentaje de parados de larga duración.",
+    left: "menos paro",
+    right: "más paro",
+    legendTop: "Más parados",
+    legendBottom:"Menos parados"
+  },
   "Edad media" : {
-    content: "Desviación respecto a la media de edad de cada municipio.",
-    left: "más mayores",
-    right: "más jóvenes",
+    content: "Desviación de la edad media respecto a la media de edad nacional.",
+    right: "más mayores",
+    left: "más jóvenes",
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
-  "Inmigracion" : {
-    content: "Desviación respecto a la media del % de inmigración",
-    left: "menos inmigrantes",
-    right: "más inmigrantes",
-    legendTop: "Mayor % de inmigración",
-    legendBottom:"Menor % de inmigración"
-  },
   "Saldo Vegetativo" : {
-    content: "Desviación respecto a la media del crecimiento de la población",
-    left: "menor crecimiento",
-    right: "mayor crecimiento",
+    content: "Desviación respecto a la media del crecimiento de la población.",
+    left: "crece poco",
+    right: "crece mucho",
     legendTop: "Mayor crecimiento",
     legendBottom:"Menor crecimiento"
   },
   "Salario medio" : {
-    content: "Desviación respecto a la media del salario medio por habitante",
-    left: "sueldos más bajos",
-    right: "sueldos más altos",
+    content: "Desviación respecto a la media del salario medio por habitante.",
+    left: "sueldos + bajos",
+    right: "sueldos + altos",
     legendTop: "Sueldos más altos",
     legendBottom:"Sueldos más bajos"
   },
   "Estudios acabados" : {
-    content: "Desviación respecto a la media del porcentaje de personas con estudios acabados",
-    left: "menos habitantes",
-    right: "más habitantes",
-    legendTop: "más habitantes",
+    content: "Desviación respecto a la media del porcentaje de personas con estudios secundarios acabados.",
+    left: "menos habit.",
+    right: "más habit.",
+    legendTop: "Más habitantes",
     legendBottom:"Menos habitantes"
   },
-  "Penetración internet" : {
+  "Consumo TV" : {
+    content: "Desviación respecto a la media del consumo de tv.",
+    left: "menos tv",
+    right: "más tv",
+    legendTop: "Más consumo tv",
+    legendBottom:"Menos consumo tv"
+  },
+  "Penetr. internet" : {
     content: "Desviación respecto a la media del porcentaje de personas acceso a internet",
-    left: "menos habitantes",
-    right: "más habitantes",
-    legendTop: "más habitantes",
-    legendBottom:"Menos habitantes"
+    left: "menor acceso",
+    right: "mayor acceso",
+    legendTop: "Más acceso a internet",
+    legendBottom:"Menos acceso a internet"
+  },
+  "Consumo prensa" : {
+    content: "Desviación respecto a la media del consumo de prensa.",
+    left: "menos prensa",
+    right: "más prensa",
+    legendTop: "Más consumo prensa",
+    legendBottom:"Menos consumo prensa"
+  },
+  "Detenidos" : {
+    content: "Desviación respecto a la media de detenidos por cada mil habitantes.",
+    left: "menos detenidos",
+    right: "más detenidos",
+    legendTop: "Más detenidos",
+    legendBottom:"Menos detenidos"
   }
 };
 

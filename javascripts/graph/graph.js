@@ -536,11 +536,11 @@ function initializeGraph() {
     if (names.length > 0) {
       if (names.length == 1) {
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
-        $('div.graph_legend p.autonomy a').text('España')
+        $('div.graph_legend p.autonomy a').text('Volver a España')
         $('div.graph_legend p.autonomy a').attr('href','#ver_España');
       } else {
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
-        $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
+        $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
         $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
       }
 

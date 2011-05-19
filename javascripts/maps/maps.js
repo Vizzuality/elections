@@ -226,6 +226,8 @@
     previous_zoom = peninsula.getZoom();
     drawNoDataBars();
     
+    failCircle.reset();
+    
     //Show tiny Canarias map
     if (peninsula.getZoom()==6) {
       $('div.canary_island').css('z-index',2);
