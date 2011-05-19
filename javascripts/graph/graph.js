@@ -12,9 +12,8 @@ var graph_bubble_index = 100;
 var valuesHash = {};
 var possibleValues = {};
 var nBubbles = 0;
-
 var selectedBubble;
-
+var chooseMessage;
 var axisLegend, graphLegend, graphBubbleInfowindow, graphBubbleTooltip;
 
 jQuery.easing.def = "easeInOutCubic";
@@ -22,6 +21,34 @@ jQuery.easing.def = "easeInOutCubic";
 function initAvailableData(deep) {
   $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
 }
+    chooseMessage = (function() {
+
+      $("div#graph div.message a").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideError();
+        var text = $("div.select div.option_list ul li a.paro").text();
+        $("div.select div.outer_select.money").parent().addClass("selected");
+        $("div.select div.outer_select.money span.inner_select a").text(text);
+        $("div.select div.option_list ul li a.paro").parent().addClass("selected");
+        compare = "paro";
+        changeHash();
+        restartGraph();
+      });
+
+      function showError() {
+        $('div#graph div.message').fadeIn("slow");
+      }
+
+      function hideError() {
+        $('div#graph div.message').fadeOut("slow");
+      }
+
+      return {
+        show: showError,
+        hide: hideError
+      }
+    })();
 
 function initializeGraph() {
   if (state == "grafico") {
@@ -127,6 +154,9 @@ function initializeGraph() {
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+    var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+
+    text = _.template(text)({media : media});
 
     $('div#graph_infowindow p.info').html(text);
   }
@@ -194,8 +224,15 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    var name = $("div#" + selectedBubble + " span.name").html();
-    $("#graph_infowindow").find(".top").find("h2").append(name + " <span class='year'>"+year+"</span>");
+    var title = $("div#" + selectedBubble + " span.name").html() ;
+
+    if (title.length > 24) {
+       title = title.substr(0,21) + "... <sup>("+year+")</sup>";
+    } else {
+       title = title + " <sup>("+year+")</sup>";
+    }
+
+    $("#graph_infowindow").find(".top").find("h2").append(title);
 
     $("#graph_infowindow a.more").show();
 
@@ -281,6 +318,7 @@ function initializeGraph() {
         event.cancelBubble=true;
       };
       hideInfowindow();
+      comparewindow.show();
     });
 
     $('div#graph_infowindow a.more').click(function(ev){
@@ -489,7 +527,9 @@ function initializeGraph() {
       $('div.graph_legend p.autonomy a').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        goDeeper(global_url + "/" + parent_url[parent_url.length-1]);
+        var url = global_url + "/" + parent_url[parent_url.length-1];
+        console.log("up", url);
+        goDeeper(url);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
       });
@@ -552,13 +592,39 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-  createBubbles(url);
+  createOrUpdateBubbles(global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
 }
 
 
+function createOrUpdateBubbles(url){
+  if (createdBubbles == true) {
+    updateBubbles(url);
+  } else {
+    createBubbles(url);
+  }
+}
+
 function createBubbles(url){
+console.log(url);
+
+  if (normalization[compare] === undefined) {
+    console.log(normalization[compare]);
+    chooseMessage.show();
+    return;
+  } else {
+    chooseMessage.hide();
+  }
+
   $.getJSON(url, function(data) {
+    if (data == null) {
+      createdBubbles = false;
+      failCircle.show();
+      return;
+    }
+
+    createdBubbles = true;
+    failCircle.hide();
+
     var one = true;
     possibleValues = data;
     count = 0;
@@ -587,13 +653,20 @@ function createBubbles(url){
       count ++;
     });
   })
-  .success(function(){ createdBubbles = true; failCircle.hide(); })
-  .error(function(){ createdBubbles = false; failCircle.show(); });
 }
 
-function setValue(url){
+function updateBubbles(url){
+  console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
+
+  if (data == null) {
+    failCircle.show();
+    return;
+  }
+
+  failCircle.hide();
+
     var one = true;
     _.each(data, function(v,key) {
       if (one) { //Check data for show legend or not
@@ -604,8 +677,6 @@ function setValue(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
     });
   })
-  .success(function(){ failCircle.hide(); })
-  .error(function(){ failCircle.show(); });
 }
 
 //Function for update the values of the bubbles that are being visualized
@@ -626,20 +697,20 @@ function updateBubble (id, x, y, val, colors, party) {
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
 
-
 function goDeeper(url){
   graphLegend.hide();
   //Get new name and deep
 
   var url_split = url.split('/');
-  //console.log("url_split", url_split);
+  console.log("url_split", url_split);
 
   deep = url_split[5];
-  //console.log("deep", deep);
+  console.log("deep", deep);
 
-  var length = url_split[url_split.length-1].split(compare)[0].length;
+  var length = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].length;
 
-  name = url_split[url_split.length-1].split(compare)[0].substring(0, length-1);
+  name = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].substring(0, length-1);
+  //console.log("compare", compare, compare.replace(/ /g,'_') );
   //console.log("name", name);
 
   graphLegend.hideError();

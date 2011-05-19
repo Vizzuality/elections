@@ -14,7 +14,6 @@
   var chld = "ES";
   var chd = "";
   var political_parties;
-  var map_autocomplete;
 
 
 
@@ -59,7 +58,9 @@
     //Political tiles
     political_parties = new google.maps.ImageMapType({
        getTileUrl: function(tile, zoom) {
-         return tiles_pngs_url +  tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
+         var rn=Math.ceil(Math.random()*4);
+         return tiles_pngs_url.replace("{n}",rn)
+          +  tiles_version +"/"+ procesos_electorales[year] +"/"+ + tile.x +"_"+ tile.y +'_'+ zoom +".png";
        },
        tileSize: new google.maps.Size(256, 256),
        opacity:0.75,
