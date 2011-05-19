@@ -297,18 +297,17 @@
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
 
-
-
         this.drawBar(1,"top", this.firstData);
         this.drawBar(2,"top", this.firstData);
         this.drawBar(3,"top", this.firstData);
         this.drawBar(4,"top", this.firstData);
 
-        this.drawBar(1,"bottom", this.secondData);
-        this.drawBar(2,"bottom", this.secondData);
-        this.drawBar(3,"bottom", this.secondData);
-        this.drawBar(4,"bottom", this.secondData);
-
+        if (this.secondData['data'] !== undefined) {
+          this.drawBar(1,"bottom", this.secondData);
+          this.drawBar(2,"bottom", this.secondData);
+          this.drawBar(3,"bottom", this.secondData);
+          this.drawBar(4,"bottom", this.secondData);
+        }
       }
     }
 
