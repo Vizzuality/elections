@@ -51,7 +51,10 @@
               '<img title="" alt="Chart de región" />'+
             '</div>'+
             '<a class="compare">Comparar</a>'+
+          '</div>'+
+          '<div class="footer">'+
           '</div>';
+
         div.innerHTML = inner_infowindow;
 
 
@@ -108,7 +111,8 @@
         this.offsetHorizontal_ = -127;
         this.height_ = 289;
         this.width_ = 254;
-        $('div#infowindow').css({background:'url("images/infowindow.png") no-repeat 0 0'});
+        $('div#infowindow').css({background:'none'});
+        $('div#infowindow div.top').css({background:'url("images/infowindow_top.png") no-repeat 0 0'});
       } else {
         this.offsetVertical_ = -236;
         this.offsetHorizontal_ = -127;
@@ -185,12 +189,15 @@
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
+        
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        text = _.template(text)({media : '42'}); // TODO: change with the real media
+
         $('div#infowindow p.info').html(text);
       } else {
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a href="#">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
-      }        
+      }
 
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
@@ -236,7 +243,7 @@
 
     //TODO: ANIMAR EL CAMBIO EN LAS BARRAS
     InfoWindow.prototype.updateValues = function() {
-      
+
       if (this.div_) {
         var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
         $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
@@ -281,19 +288,17 @@
         bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*175)/100);
         $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
-         
+
         var selected_value  = Math.abs(parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2));
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        
-        
+
         // Change image url
         var statImage = this.generateStatImage();
         $('div#infowindow img').attr('src',statImage.url);
-        
-        
+
         $('div#infowindow p.info').html(text);
     	}
     }
