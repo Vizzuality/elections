@@ -1,5 +1,4 @@
 
-
     function InfoWindow(latlng, map) {
       this.latlng_ = latlng;
     	this.information = {};
@@ -15,9 +14,7 @@
       this.oldPar3 = "";
     }
 
-
     InfoWindow.prototype = new google.maps.OverlayView();
-
 
     InfoWindow.prototype.draw = function() {
 
@@ -123,7 +120,7 @@
       }
 
 
-      $('div#infowindow h2').html(info.name + " <span class='year'>"+year+"</span>");
+      $('div#infowindow h2').html(info.name + " <sup>("+year+")</sup>");
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
       $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
 
@@ -231,8 +228,8 @@
         $('div#infowindow div.chart').hide();
       }
 
-
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+
       if (pixPosition) {
     	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
     	  div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
@@ -240,7 +237,6 @@
       this.moveMaptoOpen();
     	this.show();
     }
-
 
     InfoWindow.prototype.hide = function() {
       if (this.div_) {
