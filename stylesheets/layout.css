@@ -201,7 +201,7 @@ div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
 
 div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
-div.infowindow div.top h2 span.year {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div.infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
 div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
@@ -436,7 +436,7 @@ div div.stats div.partido.par1 div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.par1 div.bar span.c {background-position:right -36px!important;}
 div div.stats div.partido.par1 p {color:#990033;}
 /*par2*/
-div div.stats div.partido.par2 div.bar {background-position:0 -30px!important;}
+div div.stats div.partido.par2 div.bar {background-position:0 -34px!important;}
 div div.stats div.partido.par2 div.bar span.c {background-position:right -30px!important;}
 div div.stats div.partido.par2 p {color:orange;}
 /*par3*/
