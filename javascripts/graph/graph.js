@@ -153,6 +153,8 @@ function initializeGraph() {
     var comparison_variable = normalization[compare];
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
+    console.log(textInfoWindow, comparison_variable, normalization);
+
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
     var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
 
@@ -280,35 +282,36 @@ function initializeGraph() {
     var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
     var startYearIndex = nextElectionYearIndex - 1;
 
-    var chartBackgroundTopPadding = 33 * startYearIndex;
+    selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    for (var i = firstYearIndex; i <= data.length; i++) {
-      if (data[i]!=undefined) {
-        if (!find) {
-          if (year - 1975 == i - 1 ) {
-            find = true;
-            find_year = count;
-            selected_value = parseFloat(data[i - 1])
-          }
+    //    console.log(firstYearIndex);
+    //    console.log(data, data[firstYearIndex]);
+
+    for (var i = firstYearIndex; i < data.length; i++) {
+      if (!find) {
+        if (year - minYear == i  ) {
+          find = true;
+          find_year = count;
         }
-
-        if (Math.abs(parseFloat(data[i]))>max) {
-          max = Math.ceil(Math.abs(parseFloat(data[i])));
-        }
-
-        chartDataString += data[i]+ ',';
-      } else {
-        chartDataString += '0,';
       }
+
+      if (Math.abs(parseFloat(data[i]))>max) {
+        max = Math.ceil(Math.abs(parseFloat(data[i])));
+      }
+
+      chartDataString += data[i]+ ',';
+
       count++;
     }
-    if (find_year === undefined && year == 2011) {
+
+    if (find_year === undefined && year == maxYear) {
       find_year = count;
     }
+
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-    $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((data.length - firstYearIndex - 1)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+        $('div#graph_infowindow div.chart img').css({margin:'0 0px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
     showInfowindow(left,top);
