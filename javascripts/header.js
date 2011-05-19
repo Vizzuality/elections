@@ -522,6 +522,8 @@
     $('div.option_list ul li.selected').each(function(i,ele){$(ele).removeClass('selected');});
     $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
     $('div.select span.inner_select a').each(function(i,ele){var text = $(ele).attr('title'); $(ele).text(text);});
+    
+    changeHash();
   }
   
   

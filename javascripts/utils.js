@@ -19,7 +19,7 @@ var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", 
 var normalization = {
   'paro': 'paro_epa_normalizado',
   'envejecimiento': 'envejecimiento_normalizado',
-  'edad media': 'edad_media_normalizada',
+  'edad media': 'edad_media_normalizado',
   'inmigracion': 'inmigracion_normalizado',
   'saldo vegetativo': 'saldo_vegetativo_normalizado',
   'pib': 'pib_normalizado',
@@ -180,7 +180,7 @@ var textInfoWindow = {
     before_positive: "El PIB per cápita aquí es un ",
     after_positive: "% más alto que la media nacional <strong>(<%= media %>)</strong>."
   },
-  edad_media_normalizada : {
+  edad_media_normalizado : {
     before_negative: "Su población es ",
     after_negative: " años más jóven que la media nacional <strong>(<%= media %>)</strong>.",
     before_positive: "Su población es ",
