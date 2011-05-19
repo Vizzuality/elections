@@ -224,8 +224,15 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    var name = $("div#" + selectedBubble + " span.name").html();
-    $("#graph_infowindow").find(".top").find("h2").append(name + " <sup>("+year+")</sup>");
+    var title = $("div#" + selectedBubble + " span.name").html() ;
+
+    if (title.length > 24) {
+       title = title.substr(0,21) + "... <sup>("+year+")</sup>";
+    } else {
+       title = title + " <sup>("+year+")</sup>";
+    }
+
+    $("#graph_infowindow").find(".top").find("h2").append(title);
 
     $("#graph_infowindow a.more").show();
 
