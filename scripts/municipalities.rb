@@ -6,6 +6,7 @@ base_path = FileUtils.pwd
 version_path = "#{base_path}/../graphs/municipios/#{$graphs_next_version}"
 current_path = "#{base_path}/../graphs/municipios/current"
 FileUtils.mkdir_p(version_path)
+FileUtils.rm(current_path)
 FileUtils.ln_s version_path, current_path, :force => true
 
 
@@ -62,18 +63,18 @@ SQL
     request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query)}&#{oauth_token}")
     response = http.request(request)
     variables.each do |variable|
-      custom_variable_name = variable.gsub(/_\d+/,'')
+      custom_variable_name = variable.gsub(/_\d+$/,'')
       variables_json[custom_variable_name] ||= []
-      unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-        year = variable.match(/\d+/)[0].to_i
+      unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
+        year = variable.match(/\d+$/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
           year -= 1
           proceso_electoral_id = processes[year]
         end
       end
       next if year == 1974
-      year ||= variable.match(/\d+/)[0].to_i
-      variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
+      year ||= variable.match(/\d+$/)[0].to_i
+      variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
       json = {}
       votes_per_municipality = Yajl::Parser.new.parse(response.body)["rows"]
       next if votes_per_municipality.nil?
