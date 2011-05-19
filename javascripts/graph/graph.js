@@ -559,7 +559,16 @@ function restartGraph() {
 }
 
 
+function createOrUpdateBubbles(url){
+  if (createdBubbles == true) {
+    updateBubbles(url);
+  } else {
+    createBubbles(url);
+  }
+}
+
 function createBubbles(url){
+console.log("Create", url);
   $.getJSON(url, function(data) {
     var one = true;
     possibleValues = data;
@@ -594,6 +603,7 @@ function createBubbles(url){
 }
 
 function updateBubbles(url){
+  console.log("Update", url);
 
   $.getJSON(url, function(data) {
     var one = true;
