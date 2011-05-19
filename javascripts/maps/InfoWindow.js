@@ -105,26 +105,11 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
 
-    	if (info['data'][year][normalization[compare]]!=null) {
-    	  //Set dimensions and bkg first
-    	  this.offsetVertical_ = -266;
-        this.offsetHorizontal_ = -127;
-        this.height_ = 289;
-        this.width_ = 254;
-        $('div#infowindow').css({background:'none'});
-        $('div#infowindow div.top').css({background:'url("images/infowindow_top.png") no-repeat 0 0'});
-      } else {
-        this.offsetVertical_ = -236;
-        this.offsetHorizontal_ = -127;
-        this.height_ = 269;
-        this.width_ = 254;
-        $('div#infowindow').css({background:'url("images/infowindow_error_bkg.png") no-repeat 0 0'});
-      }
-
 
       $('div#infowindow h2').html(info.name + " <span class='year'>"+year+"</span>");
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
       $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+      
 
       // Remove previous political style bars
       $('div#infowindow div.stats div.partido').each(function(i,ele){
@@ -245,6 +230,8 @@
     InfoWindow.prototype.updateValues = function() {
 
       if (this.div_) {
+        $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+        
         var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
         $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
         if (_.indexOf(parties, partido_1) !== -1) {
