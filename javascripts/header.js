@@ -271,7 +271,7 @@
         ev.preventDefault();
         goToNextYear();
       });
-      
+
       $("div.fail a.continue").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
@@ -313,7 +313,6 @@
         }
 
         if (data_not_found != true) {
-          updateContent();
           $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
         }
       }
