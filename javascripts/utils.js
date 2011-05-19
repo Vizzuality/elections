@@ -216,7 +216,6 @@ var textInfoWindow = {
     before_positive: "Un ",
     after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí"
   },
-<<<<<<< HEAD
   audiencia_diaria_tv_normalizado : {
     before_negative: "Su población consume un ",
     after_negative: "% menos de televisión que la media nacional <strong>(<%= media %>)</strong>.",
