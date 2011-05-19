@@ -197,7 +197,7 @@ function initializeGraph() {
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
     var name = $("div#" + selectedBubble + " span.name").html();
-    $("#graph_infowindow").find(".top").find("h2").append(name + " <span class='year'>"+year+"</span>");
+    $("#graph_infowindow").find(".top").find("h2").append(name + " <sup>("+year+")</sup>");
 
     $("#graph_infowindow a.more").show();
 
@@ -554,8 +554,7 @@ function restartGraph() {
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
-  var url = global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json";
-  createBubbles(url);
+  createOrUpdateBubbles(global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
 }
 
 
@@ -568,7 +567,8 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-console.log("Create", url);
+  console.log("Create bubbles", url);
+
   $.getJSON(url, function(data) {
     var one = true;
     possibleValues = data;
@@ -603,7 +603,7 @@ console.log("Create", url);
 }
 
 function updateBubbles(url){
-  console.log("Update", url);
+  console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
     var one = true;
