@@ -268,34 +268,47 @@
       }
     }
 
-    CompareWindow.prototype.drawBar = function(party_id){
+    CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
 
-      var partido = normalizePartyName(this.firstData['data'][year][positions[id] + '_partido_name']);
-      $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+')').removeClass(parties.join(" ") + ' par1 par2 par3');
-      if (_.indexOf(parties, partido) !== -1) {
-        $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+')').addClass(partido);
-      } else if(this.oldPar1 != partido) {
-        $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+      if (party_id < 4) {
+        var partido = normalizePartyName(data['data'][year][positions[id] + '_partido_name']);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').removeClass(parties.join(" ") + ' par1 par2 par3');
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').addClass(partido);
+        } else if(this.oldPar1 != partido) {
+          $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+        }
+        bar_width = normalizeBarWidth((data['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') span.c').animate({
+          width: bar_width.toString() +"px"
+        }, 500, 'easeOutCubic');
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ' + bar_width + ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
+      } else {
+
+        bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p').text('OTROS ('+data['data'][year]['otros_partido_percent']+'%)');
+
       }
-      bar_width = normalizeBarWidth((this.firstData['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
-      $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').animate({
-        width: bar_width.toString() +"px"
-      }, 500, 'easeOutCubic');
-      $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(this.firstData['data'][year][positions[id] + '_partido_name']+ ' ' + bar_width + ' ('+this.firstData['data'][year][positions[id] + '_partido_percent']+'%)');
     }
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
 
-        this.drawBar(1);
-        this.drawBar(2);
-        this.drawBar(3);
 
-        bar_width = normalizeBarWidth((this.firstData['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#comparewindow div.top div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq(3) p').text('OTROS ('+this.firstData['data'][year]['otros_partido_percent']+'%)');
+
+        this.drawBar(1,"top", this.firstData);
+        this.drawBar(2,"top", this.firstData);
+        this.drawBar(3,"top", this.firstData);
+        this.drawBar(4,"top", this.firstData);
+
+        this.drawBar(1,"bottom", this.secondData);
+        this.drawBar(2,"bottom", this.secondData);
+        this.drawBar(3,"bottom", this.secondData);
+        this.drawBar(4,"bottom", this.secondData);
+
       }
     }
 
