@@ -180,7 +180,7 @@ var textInfoWindow = {
     before_positive: "El PIB per cápita aquí es un ",
     after_positive: "% más alto que la media nacional <strong>(<%= media %>)</strong>."
   },
-  edad_media_normalizada : {
+  edad_media_normalizado : {
     before_negative: "Su población es ",
     after_negative: " años más jóven que la media nacional <strong>(<%= media %>)</strong>.",
     before_positive: "Su población es ",
