@@ -73,7 +73,7 @@
 		    /*Infowindow events*/
 		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
 		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
-		    $('div#infowindow ').delegate( '.why_no_data', 'click', function(ev){ try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
+        $('div#infowindow p.info a.why_no_data').live('click',function(ev){alert('jamon'); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
           try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
@@ -127,10 +127,10 @@
       var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
 
       if (old_percent != percent) {
-        $('div#infowindow div.summary li.partido:eq('+id+')').fadeOut("slow", function() {
+        $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
           $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
           $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
-          $('div#infowindow div.summary li.partido:eq('+id+')').fadeIn("slow");
+          $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeIn("slow");
         });
         }
       } else {
