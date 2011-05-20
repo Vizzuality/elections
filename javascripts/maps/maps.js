@@ -169,10 +169,8 @@
         // duplicate tile and add to div below current tile
         var old_image = $(ele).children('img');
         var new_image = old_image.clone();
-        new_image.css('position','absolute');
-        new_image.css('z-index',old_image.css('z-index') + 1);
-        new_image.css('top',0);
-        new_image.css('left',0);
+        var zindex    = old_image.css('z-index') + 1
+        new_image.css({'position':'absolute', 'z-index':zindex, 'top':0, 'left':0});
         $(ele).prepend(new_image);
         
         // update new tile with new url
@@ -187,13 +185,22 @@
           new_image.animate({opacity:0},{ duration: 800, queue: false ,complete: function() {
               new_image.remove();
             }
-          });
-          
-          old_image.animate({opacity:100},{ duration: 0, queue: false})
-          .each(function(){
-            if(this.complete) $(this).trigger("load");
-          });
-        }); 
+          });          
+        });
+        if(old_image.complete) $(this).trigger("load");
+      }
+    });
+  }
+
+  function simpleRefreshTiles() {  
+    $('div#peninsula div').each(function(i,ele){
+      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
+        var old_image = $(ele).children('img');        
+        var old_url = old_image.attr('src');
+        var tm = old_url.split("/");
+        var old_process = tm[tm.length-2];
+        var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
+        old_image.attr('src',new_url);
       }
     });
   }

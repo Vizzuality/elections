@@ -473,7 +473,7 @@
         }
       });
       
-      if (refresh && this.secondData!=null) {
+      if (refresh && this.secondData) {
         this.createChart(this.secondData,false,false)
       }
 
@@ -493,6 +493,7 @@
 
 
     CompareWindow.prototype.cleanSecondRegion = function() {
+      this.secondData = {};
       $('div.stats_slider div.block').each(function(i,ele){
         $(ele).find('.second').remove();
       });
