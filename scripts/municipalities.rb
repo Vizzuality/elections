@@ -49,7 +49,7 @@ autonomies.each do |autonomy_hash|
     province_name = province[:name_2].normalize
     province_id = province[:id_2]
     query = <<-SQL
-select nombre, votantes_totales, censo_total,
+select nombre, votantes_totales, censo_total, ine_poly.cartodb_id,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
    tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent, ine_poly.google_maps_name,
    #{variables.join(',')}
@@ -63,18 +63,18 @@ SQL
     request = Net::HTTP::Get.new("/v1?sql=#{CGI.escape(query)}&#{oauth_token}")
     response = http.request(request)
     variables.each do |variable|
-      custom_variable_name = variable.gsub(/_\d+/,'')
+      custom_variable_name = variable.gsub(/_\d+$/,'')
       variables_json[custom_variable_name] ||= []
-      unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-        year = variable.match(/\d+/)[0].to_i
+      unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
+        year = variable.match(/\d+$/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
           year -= 1
           proceso_electoral_id = processes[year]
         end
       end
       next if year == 1974
-      year ||= variable.match(/\d+/)[0].to_i
-      variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
+      year ||= variable.match(/\d+$/)[0].to_i
+      variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
       json = {}
       votes_per_municipality = Yajl::Parser.new.parse(response.body)["rows"]
       next if votes_per_municipality.nil?
@@ -104,7 +104,11 @@ SQL
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
         json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_s]
-        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:nombre]].join(',')
+        json[municipality_name][:evolution] = if evolution[custom_variable_name][municipality[:cartodb_id].to_s]
+          evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
+        else
+          "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+        end
       end
       putc '.'
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')

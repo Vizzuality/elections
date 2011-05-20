@@ -46,7 +46,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v8"
+$graphs_next_version = "v9"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -246,7 +246,7 @@ end
 def get_from_every_year(variables, values)
   result = []
   pos = 0
-  variables_years = variables.map{ |v| v.match(/\d+/)[0].to_i }
+  variables_years = variables.map{ |v| v.match(/\d+$/)[0].to_i }
   1975.upto(2011) do |year|
     if variables_years.include?(year)
       result << (values[pos].nil? ? 0 : ("%.2f" % values[pos]).to_f)
@@ -259,7 +259,7 @@ def get_from_every_year(variables, values)
 end
 
 def get_autonomies_variable_evolution(variable)
-  custom_variable_name = variable.gsub(/_\d+/,'')
+  custom_variable_name = variable.gsub(/_\d+$/,'')
   raw_variables = $cartodb.query("select codigo, min_year, max_year from variables where min_gadm = 1 and codigo like '#{custom_variable_name}%'")[:rows]
   variables = []
   raw_variables.map do |raw_variable_hash|
@@ -276,12 +276,10 @@ def get_autonomies_variable_evolution(variable)
 SQL
   values = $cartodb.query(query)[:rows] || []
   result = {}
-  variable_year = variable.match(/\d+/)[0].to_i
-  variable_name = variable.match(/[^\d]+/)[0][0..-2]
   values.each do |v|
     result[v[:name]] = []
     1975.upto(2011) do |year|
-      temp_variable = "#{variable_name}_#{year}"
+      temp_variable = "#{custom_variable_name}_#{year}"
       result[v[:name]] << (variables.include?(temp_variable) ? ("%.2f" % (v[temp_variable.to_sym] || 0)).to_f : 0)
     end
   end
@@ -360,17 +358,17 @@ def get_variables_evolution_in_municipalities
   $cartodb.query("select id_2 from #{PROVINCES_TABLE}")[:rows].each do |row|
     next if row[:id_2].blank?
     query = <<-SQL
-    select #{raw_variables.join(',')}, ine_poly.nombre as name
+    select #{raw_variables.join(',')}, ine_poly.nombre as name, ine_poly.cartodb_id
     from  vars_socioeco_x_municipio, ine_poly, gadm2
     where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{row[:id_2]}
 SQL
     $cartodb.query(query)[:rows].each do |m|
       variables.each do |variable|
         result[variable] ||= {}
-        result[variable][m[:name]] ||= []
+        result[variable][m[:cartodb_id]] ||= []
         1975.upto(2011) do |year|
           temp_variable = "#{variable}_#{year}".to_sym
-          result[variable][m[:name]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
+          result[variable][m[:cartodb_id]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
         end
       end
     end
@@ -385,6 +383,8 @@ end
 def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
+
+  records.sort!{|x, y| x.proceso_electoral_year <=> y.proceso_electoral_year}
 
   min_year.upto(max_year) do |year|
     data = years[year] || {}
@@ -418,7 +418,7 @@ def create_years_hash(records, variables, max_year, min_year)
 end
 
 def variables_vars
-  supported_variables = %w('audiencia_diaria_tv_normalizado' 'detenidos_normalizado' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'jovenes_parados_normalizado' 'matriculaciones_normalizado' 'parados_larga_duracion_normalizado' 'paro_epa_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado')
+  supported_variables = %w('edad_media_normalizado' 'audiencia_diaria_tv_normalizado' 'detenidos_normalizado' 'envejecimiento_normalizado' 'inmigracion_normalizado' 'jovenes_parados_normalizado' 'matriculaciones_normalizado' 'parados_larga_duracion_normalizado' 'paro_epa_normalizado' 'penetracion_internet_normalizado' 'pib_normalizado' 'prensa_diaria_normalizado' 'salario_medio_normalizado' 'saldo_vegetativo_normalizado' 'secundaria_acabada_normalizado')
   variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables WHERE codigo IN (#{supported_variables.join(', ')})").rows
   variables_hash = Hash[variables.map{|v| [v.codigo, {:max_year => v.max_year, :min_year => v.min_year}]}]
   max_year = variables.map(&:max_year).sort.last

@@ -46,7 +46,6 @@
       if (!$(this).parent().hasClass('selected')) {
         $('div#appInfo ul li').each(function(i,ele){$(ele).removeClass('selected')});
         $(this).parent().addClass('selected');
-        console.log($(this).parent().text());
         $('div#appInfo div.explain').children().remove();
         $('div#appInfo div.explain').append(explanationContent[$(this).parent().text()].htmlContent)
         var offset = $(this).position().top;

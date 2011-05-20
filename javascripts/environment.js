@@ -9,7 +9,7 @@
   
   
   
-  if (window.location.hostname == "localhost" || window.location.hostname == "elections") {
+  if (window.location.hostname == "localhost" || window.location.hostname == "elections" || window.location.hostname == "192.168.1.147") {
     global_url = proxy_url+"?proxy_url="+global_url;
     //tiles_pngs_url = "http://rtvedata{n}.ipq.co/data/tiles/";
   } else if (window.location.hostname == "datos.rtve.es") {
