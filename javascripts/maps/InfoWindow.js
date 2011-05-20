@@ -175,11 +175,7 @@
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
 
-      if (info.name.length>24) {
-        $('div#infowindow h2').html(info.name.substr(0,21));
-      } else {
-        $('div#infowindow h2').html(info.name);
-      }
+      $('div#infowindow h2').html(info.name);
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
 
