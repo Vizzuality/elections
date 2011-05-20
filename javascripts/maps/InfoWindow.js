@@ -47,10 +47,10 @@
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
             '<ul>'+
-              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
-              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
-              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+              '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
             '</ul>'+
             '</div>'+
           '</div>'+
@@ -115,37 +115,41 @@
     };
 
     InfoWindow.prototype.drawTotalNumber = function(party_id, info, animated) {
-
+      var me        = this;
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_total'];
-      var partido = "otros";
+      var partido   = "otros";
+      var clase     = "otros";
+      var $p = $('div#infowindow div.summary li.partido:eq('+id+')');
 
       if (party_id < 4) {
         var partido = info.data[year][positions[id] +'_partido_name'];
         partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido_class) !== -1) {
-          $('div#infowindow div.summary li.partido:eq('+id+')').addClass(partido_class);
-        } else {
-          $('div#infowindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
-        }
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
       }
 
       if (animated == true) {
-        var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
+        var old_percent = $p.find('strong').text();
+        var old_party = $p.find('span').text();
 
-      if (old_percent != percent) {
-        $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
-          $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
-          console.log("Partido", partido);
-          $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
-          $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeIn("slow");
-        });
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber(id, percent, partido); $p.find('> *').fadeIn("slow"); });
         }
       } else {
-        $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
-        $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+        this.renderTotalNumber(id, percent, partido);
+      }
+    }
+
+    InfoWindow.prototype.renderTotalNumber = function(id, value, name) {
+      if (name != null) {
+        $('div#infowindow div.summary li.partido:eq('+id+')').show();
+        $('div#infowindow div.summary li.partido:eq('+id+') strong').text(value);
+        $('div#infowindow div.summary li.partido:eq('+id+') span').text(name.toUpperCase());
+      } else {
+        $('div#infowindow div.summary li.partido:eq('+id+')').hide();
       }
     }
 
