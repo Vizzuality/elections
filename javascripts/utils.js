@@ -285,7 +285,7 @@ var explanationContent = {
 		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en la <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>web del Instituto Nacional de Estadística</a></p>"
   },
   "PIB per cápita" : {
-    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto a precios de mercado. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
+    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto a precios de mercado por habitante. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
 		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>"
   },
   "Salario medio" : {
