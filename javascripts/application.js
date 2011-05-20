@@ -114,10 +114,7 @@
         if (year < 2005) { // because we don't have paro information prior 2005
           updateNewSliderValue(2005, year);
         }
-
         changeHash();
-        console.log(compare);
-
     });
 
     $("#welcomewindow a.explore").click(function(ev) {
