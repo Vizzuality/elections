@@ -23,6 +23,7 @@
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
+        $("#welcomewindow").fadeOut();
         explanationwindow.hide();
         comparewindow.hide();
         if (state == "grafico") {
