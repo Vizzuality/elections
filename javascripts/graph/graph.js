@@ -742,6 +742,7 @@ function goDeeper(url){
   //console.log("name", name);
 
   graphLegend.hideError();
+  drawNoDataBars();
 
   if (name == "") {
     name = 'España';
