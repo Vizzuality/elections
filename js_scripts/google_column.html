@@ -36,7 +36,7 @@
           method: "GET",
           dataType: 'jsonp',
           url: 'https://api.cartodb.com/v1',
-          data: {sql:'SELECT * FROM ine_poly WHERE center_latitude IS NULL OR ine_prov_int=38 LIMIT 100',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
+          data: {sql:'SELECT * FROM ine_poly WHERE center_latitude IS NULL  LIMIT 100',api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
           success: function(data) {
             if (data.rows.length>0) {
               places = data.rows;
@@ -85,8 +85,7 @@
         $.ajax({
           type: "GET",
           url: 'https://api.cartodb.com/v1',
-          data: {sql:"UPDATE ine_poly SET center_latitude="+location.lat()+","+
-          "center_longitude="+location.lng()+","+
+          data: {sql:"UPDATE ine_poly SET ",+
           "google_maps_name='"+google_name.replace(/\'/g,"\"")+
           "' WHERE cartodb_id="+place.cartodb_id,api_key:'8c587c9f93c36d146c9e66a29cc8a3499e869609'},
           dataType: 'jsonp',

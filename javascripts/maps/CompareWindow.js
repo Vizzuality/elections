@@ -4,6 +4,7 @@
       this.create();
       this.firstZoom = 12;
       this.position = "top";
+      this.deep_level;
       this.firstData = {};
       this.secondData = {};
       this.bar_width_multiplier = 140;
@@ -29,6 +30,15 @@
             '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
             '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
             '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
+          '</div>'+
+          '<div class="summary">'+
+          '<h4>Municipios en los que es el más votado...</h4>'+
+          '<ul>'+
+            '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
+            '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
+            '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
+            '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+          '</ul>'+
           '</div>'+
           '<div class="compare_graph">'+
             '<a href="#" class="left">left</a>'+
@@ -57,6 +67,15 @@
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
             '</div>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
           '</div>'+
         '</div>';
 
@@ -64,39 +83,39 @@
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
 
-      
+
       $('div.compare_graph a.right').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo({top:'+=0',left:'+=299'}, 500);
       });
 
-      
+
       $('div.compare_graph a.left').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo( {top:'+=0',left:'-=299'}, 500);
       });
-      
-      $('form.search_compare').submit(function(ev){
-        ev.stopPropagation();
-        ev.preventDefault();
-      });
-
 
       $('form.search_compare').submit(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
       });
 
-      
+
+      $('form.search_compare').submit(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
+
+
       $('a.remove_compare').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         me.removeRegion($(this).closest('div').attr('class'));
       });
 
-      
+
       $('a.resumen').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
@@ -104,26 +123,26 @@
         $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
       });
 
-      
+
       $('a.evolucion').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         this.position = "down";
         $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
       });
-      
+
       me.addGoogleAutocomplete();
     }
-    
-    
+
+
     CompareWindow.prototype.addGoogleAutocomplete = function() {
       var me = this;
       var input = document.getElementById('google_compare_autocomplete');
       var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(27.391278222579277, -18.45703125),new google.maps.LatLng(42.601619944327965, 4.0869140625));
       var options = {bounds: defaultBounds};
       google_autocomplete = new google.maps.places.Autocomplete(input, options);
-      
-      
+
+
       google.maps.event.addListener(google_autocomplete, 'place_changed', function() {
         var place = google_autocomplete.getPlace();
         comparewindow.compareSecondRegion(null,place.formatted_address);
@@ -131,12 +150,37 @@
     }
 
 
+    CompareWindow.prototype.drawTopBar = function(party_id, info) {
+
+      var id        = party_id - 1;
+      var positions = ["primer", "segundo", "tercer", "otros"];
+      var percent   = info.data[year][positions[id]+'_partido_percent'];
+
+      if (party_id < 4) {
+        // First political party
+        var partido = info['data'][year][positions[id] + '_partido_name'].toLowerCase().replace("-", "_");
+
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#comparewindow div.top div.stats div.partido:eq('+id+')').addClass(partido);
+        } else {
+          $('div#comparewindow div.top div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+        }
+        bar_width = (percent*this.bar_width_multiplier)/100;
+      } else {
+        partido = "OTRO";
+      }
+      $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+      $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(partido+' ('+percent+'%)');
+    }
 
     CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
     	var me = this;
     	var div = this.div;
     	this.firstData = info;
-    	this.firstZoom = zoom;
+
+    	if (zoom != null) {
+        this.firstZoom = zoom;
+    	}
     	// Reset graphs containers
       $('div.stats_slider').empty();
     	//Reset
@@ -146,63 +190,43 @@
     	//Create charts
     	this.createChart(info,true);
     	this.setUpChartView();
+      this.deep_level = getDeepLevelFromZoomLevel(this.firstZoom);
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
-        $('div#comparewindow div.top div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+
+        if (this.deep_level == "municipios") {
+          $('div#comparewindow div.top div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+        }
 
         // Remove previous political style bars
         $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
-        var bar_width;
 
-        // First political party
-        var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
+        $('div#comparewindow div#compare_region1 div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
 
-        if (_.indexOf(parties, partido_1) !== -1) {
-          $('div#comparewindow div.top div.stats div.partido:eq(0)').addClass(partido_1);
+        if (this.deep_level == "municipios") {
+          this.drawTopBar(1, info);
+          this.drawTopBar(2, info);
+          this.drawTopBar(3, info);
+          this.drawTopBar(4, info);
+          $('div#comparewindow div.stats').show();
+          $('div#comparewindow div#compare_region1 div.summary').hide();
         } else {
-          $('div#comparewindow div.top div.stats div.partido:eq(0)').addClass('par1');
+          this.drawTotalNumber(1, 1, info, false);
+          this.drawTotalNumber(2, 1, info, false);
+          this.drawTotalNumber(3, 1, info, false);
+          this.drawTotalNumber(4, 1, info, false);
+          $('div#comparewindow div#compare_region1 div.summary').show();
+          $('div#comparewindow div.stats').hide();
         }
-        bar_width = (info['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100;
-        $('div#comparewindow div.top div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
-
-        // Second political party
-        var partido_2 = info['data'][year]['segundo_partido_name'].toLowerCase().replace("-", "_");
-        if (_.indexOf(parties, partido_2) !== -1) {
-          $('div#comparewindow div.top div.stats div.partido:eq(1)').addClass(partido_2);
-        } else {
-          $('div#comparewindow div.top div.stats div.partido:eq(1)').addClass('par2');
-        }
-        bar_width = (info['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100;
-        $('div#comparewindow div.top div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
-
-        // Third political party
-        var partido_3 = info['data'][year]['tercer_partido_name'].toLowerCase().replace("-", "_");
-        if (_.indexOf(parties, partido_3) !== -1) {
-          $('div#comparewindow div.top div.stats div.partido:eq(2)').addClass(partido_3);
-        } else {
-          $('div#comparewindow div.top div.stats div.partido:eq(2)').addClass('par3');
-        }
-
-        bar_width = (info['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100;
-        $('div#comparewindow div.top div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
-
-        // Other
-        bar_width = (info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100;
-        $('div#comparewindow div.top div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-
       }
-
       this.show();
     }
-
 
     CompareWindow.prototype.compareSecondRegion = function(info,formatted_address) {
       var me = this;
@@ -215,11 +239,17 @@
           dataType: 'json',
           url: url,
           success: function(info) {
-            fillData(info);
+            if (info!=null) {
+              fillData(info);
+              $('div#comparewindow p.refer').hide();
+            } else {
+              $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+              $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
+            }
           },
           error: function(error) {
             $('div#comparewindow div.bottom').addClass('search').removeClass('region')
-            $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
+            $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
           }
         });
       } else {
@@ -235,11 +265,30 @@
         $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
         $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
 
+
         // Remove previous political style bars
         $('div#comparewindow div.bottom div.region div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
-        var bar_width;
+
+        $('div#comparewindow div#compare_region2 div.summary div.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+
+        if (deep_level != "municipios") {
+          me.drawTotalNumber(1, 2, me.secondData, false);
+          me.drawTotalNumber(2, 2, me.secondData, false);
+          me.drawTotalNumber(3, 2, me.secondData, false);
+          me.drawTotalNumber(4, 2, me.secondData, false);
+          $('div#comparewindow div#compare_region2 div.summary').show();
+          $('div#comparewindow div#compare_region2 div.stats').hide();
+        } else {
+
+          $('div#comparewindow div#compare_region2 div.summary').hide();
+
+          var bar_width;
 
         // First political party
         var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
@@ -279,11 +328,50 @@
         bar_width = (info['data'][year]['otros_partido_percent']*200)/100;
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#comparewindow div#compare_region2 div.stats').show();
 
+      }
         $('div#comparewindow div.bottom').removeClass('search').addClass('region');
       }
     }
 
+    CompareWindow.prototype.drawTotalNumber = function(party_id, region, info, animated) {
+
+      var id        = party_id - 1;
+      var positions = ["primer", "segundo", "tercer", "otros"];
+      var percent   = info.data[year][positions[id]+'_partido_total'];
+
+      if (party_id < 4) {
+
+        var partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass(partido_class);
+          this.oldPar = partido;
+        } else {
+          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass('par'+party_id);
+          this.oldPar = "par"+party_id;
+        }
+      } else {
+        partido = "otros";
+      }
+
+      if (animated == true) {
+        var old_percent = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text();
+
+        if (old_percent != percent) {
+          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
+            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
+            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeIn("slow");
+          });
+        }
+      } else {
+        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
+        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+      }
+    }
 
     CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
@@ -311,24 +399,41 @@
       }
     }
 
-
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
-
-        this.drawBar(1,"top", this.firstData);
-        this.drawBar(2,"top", this.firstData);
-        this.drawBar(3,"top", this.firstData);
-        this.drawBar(4,"top", this.firstData);
-
-        if (this.secondData['data'] !== undefined) {
-          this.drawBar(1,"bottom", this.secondData);
-          this.drawBar(2,"bottom", this.secondData);
-          this.drawBar(3,"bottom", this.secondData);
-          this.drawBar(4,"bottom", this.secondData);
-        }
+        this.updateTotalNumber();
+        this.updateBars();
       }
     }
 
+    CompareWindow.prototype.updateTotalNumber = function() {
+        $('div#comparewindow div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        for (var i = 1; i <= 4; i++) {
+          this.drawTotalNumber(i, 1, this.firstData, true);
+
+          if (this.secondData.data != undefined) {
+            this.drawTotalNumber(i, 2, this.secondData, true);
+          }
+        }
+    }
+
+    CompareWindow.prototype.updateBars = function() {
+
+        $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+      for (var i = 1; i <= 4; i++) {
+        this.drawBar(i,"top", this.firstData);
+
+        if (this.secondData.data != undefined) {
+          this.drawBar(i,"bottom", this.secondData);
+        }
+      }
+    }
 
     CompareWindow.prototype.resetSearch = function() {
       $('div#comparewindow div.bottom input.text').val('Introduce una ubicación');
@@ -383,7 +488,7 @@
       if (remove) {
         $('div#comparewindow div.stats_slider').empty();
       }
-      
+
       $('div.stats_slider').width(_.size(normalization)*298);
       var width = 130;
 
@@ -391,11 +496,10 @@
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info['data'][year][ele]!=undefined) {
-
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-          var max_ = max_min[region_type][ele+'_'+year+'_max'];
-          var min_ = max_min[region_type][ele+'_'+year+'_min'];
+          var max_ = max_min_avg[ele+'_'+year+'_max'];
+          var min_ = max_min_avg[ele+'_'+year+'_min'];
 
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
@@ -472,7 +576,7 @@
           }
         }
       });
-      
+
       if (refresh && this.secondData) {
         this.createChart(this.secondData,false,false)
       }
