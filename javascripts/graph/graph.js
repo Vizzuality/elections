@@ -273,12 +273,16 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-
     selected_value = parseFloat(data[36 - (maxYear - year)]);
 
     var availableYears = availableData[deep][normalization[compare]];
+
     var firstYear = availableYears[0];
-    var lastYear = availableYears[availableYears.length - 1];
+
+    if (firstYear < 1987) {
+      firstYear = 1987;
+    }
+    var lastYear  = availableYears[availableYears.length - 1];
 
     var firstYearIndex = 36 - (maxYear- firstYear);
     var lastYearIndex  = 36 - (maxYear- lastYear);
@@ -307,10 +311,10 @@ function initializeGraph() {
     if (find_year == null) {
       find_year = lastYearIndex;
     }
-    //console.log(find_year, data[find_year]);
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
+    var width = (lastYearIndex - firstYearIndex)*8+10;
 
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((lastYearIndex - firstYearIndex)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+width+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
         $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
