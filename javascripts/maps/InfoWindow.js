@@ -103,7 +103,7 @@
       }
     };
 
-    InfoWindow.prototype.drawTotalNumber = function(party_id, info) {
+    InfoWindow.prototype.drawTotalNumber = function(party_id, info, animated) {
 
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
@@ -123,8 +123,20 @@
         partido = "otros";
       }
 
-      $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
-      $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+      if (animated == true) {
+      var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
+
+      if (old_percent != percent) {
+        $('div#infowindow div.summary li.partido:eq('+id+')').fadeOut("slow", function() {
+          $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
+          $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+          $('div#infowindow div.summary li.partido:eq('+id+')').fadeIn("slow");
+        });
+        }
+      } else {
+        $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
+        $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+      }
     }
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
@@ -177,7 +189,7 @@
           $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
         }
 
-        // Remove previous political style bars
+        // Remove previous political styles
         $('div#infowindow div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
@@ -277,8 +289,20 @@
     InfoWindow.prototype.updateValues = function() {
 
       if (this.div_) {
-        $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
+        if (this.deep_level == "autonomias") {
+
+          $('div#infowindow div.summary li.partido').each(function(i,ele){
+            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+          });
+
+          this.drawTotalNumber(1, this.information, true);
+          this.drawTotalNumber(2, this.information, true);
+          this.drawTotalNumber(3, this.information, true);
+          this.drawTotalNumber(4, this.information, true);
+          return;
+        }
+        $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
         if (this.information['data'][year]['primer_partido_name']!=undefined) {
           $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
@@ -295,7 +319,6 @@
             width: bar_width.toString() +"px"
           }, 500, 'easeOutCubic');
           $('div#infowindow div.stats div.partido:eq(0) p').text(this.information['data'][year]['primer_partido_name']+' ('+this.information['data'][year]['primer_partido_percent']+'%)');
-
 
           var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
           $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
@@ -331,8 +354,6 @@
           $('div#infowindow div.stats').hide();
         }
 
-
-
         if (this.information['data'][year][normalization[compare]]!=null) {
           var selected_value  = parseFloat(this.information['data'][year][normalization[compare]]).toFixed(2);
           var comparison_variable = normalization[compare];
@@ -357,11 +378,10 @@
         this.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
 
         if (pixPosition) {
-      	  div.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
-      	  div.style.top = (pixPosition.y + this.offsetVertical_ - 15) + "px";
+          div.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
+          div.style.top = (pixPosition.y + this.offsetVertical_ - 15) + "px";
         }
-
-    	}
+      }
     }
 
 
