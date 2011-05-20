@@ -156,8 +156,7 @@ function initializeGraph() {
     //console.log(textInfoWindow, comparison_variable, normalization);
 
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-    var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
-
+    var media = parseFloat(max_min[deep][normalization[compare]+'_'+year+'_avg']).toFixed(2);
     text = _.template(text)({media : media});
 
     $('div#graph_infowindow p.info').html(text);
