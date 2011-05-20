@@ -198,8 +198,9 @@
     });
   }
 
-
+  var loaded = false;
   function checkZoom(){
+    
     //close infowindow
     infowindow.hide();
 
@@ -225,8 +226,12 @@
     }
     previous_zoom = peninsula.getZoom();
     drawNoDataBars();
-    
-    failCircle.reset();
+
+    if (loaded) {
+      failCircle.reset();
+    } else {
+      loaded = true;
+    }
     
     //Show tiny Canarias map
     if (peninsula.getZoom()==6) {

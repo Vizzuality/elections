@@ -126,7 +126,7 @@
 
     var radius;
     if (point['data'][year]!=undefined) {
-      if (normalization[compare]!=undefined) {
+      if (normalization[compare]!=undefined && point['data'][year][normalization[compare]]!=undefined) {
         var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
         var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
         var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
@@ -204,7 +204,7 @@
         //change heigth-width of the ball
         var radius;
         if (ele['data'][year]!=undefined) {
-          if (normalization[compare]!=undefined) {
+          if (normalization[compare]!=undefined && ele['data'][year][normalization[compare]]!=undefined) {
             var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
             var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
             var min = max_min[region_type][normalization[compare]+'_'+year+'_min'];
