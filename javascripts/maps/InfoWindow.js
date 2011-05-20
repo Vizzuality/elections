@@ -121,30 +121,36 @@
       var percent   = info.data[year][positions[id]+'_partido_total'];
 
       if (party_id < 4) {
-        var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+        var partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido) !== -1) {
-          $('div#infowindow div.summary li.partido:eq('+id+')').addClass(partido);
-          this.oldPar = partido;
+          $('div#infowindow div.summary li.partido:eq('+id+')').addClass(partido_class);
         } else {
           $('div#infowindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
-          this.oldPar = "par"+party_id;
         }
       } else {
         partido = "otros";
       }
 
       if (animated == true) {
-      var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
+        if (party_id < 4) {
+          var partido = info.data[year][positions[id] +'_partido_name'];
+        } else {
+          partido = "otros";
+        }
+        var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
 
       if (old_percent != percent) {
         $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
           $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
+          console.log("Partido", partido);
           $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
           $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeIn("slow");
         });
         }
       } else {
+        partido = "otros";
         $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
         $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
       }
@@ -156,9 +162,11 @@
       var bar_width;
 
       if (party_id < 4) {
-        var partido = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
+        var partido = info['data'][year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
+
         if (_.indexOf(parties, partido) !== -1) {
-          $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido);
+          $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido_class);
           this.oldPar = partido;
         } else {
           $('div#infowindow div.stats div.partido:eq('+id+')').addClass('par'+party_id);
@@ -309,7 +317,7 @@
 
 
     InfoWindow.prototype.updateValues = function() {
-
+      
       if (this.div_) {
 
         if (this.deep_level != "municipios") {
@@ -323,6 +331,7 @@
           this.drawTotalNumber(3, this.information, true);
           this.drawTotalNumber(4, this.information, true);
         }
+
         else {
           $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
