@@ -42,7 +42,6 @@
 
     // //Check variable of compare
     if (!$('div.option_list ul li a.'+route[5]).length) {
-      //alert('jamon');
       initializeApp();
       return false;
     }
