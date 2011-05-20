@@ -276,7 +276,6 @@ def get_autonomies_variable_evolution(variable)
 SQL
   values = $cartodb.query(query)[:rows] || []
   result = {}
-  variable_year = variable.match(/\d+$/)[0].to_i
   values.each do |v|
     result[v[:name]] = []
     1975.upto(2011) do |year|
@@ -359,17 +358,17 @@ def get_variables_evolution_in_municipalities
   $cartodb.query("select id_2 from #{PROVINCES_TABLE}")[:rows].each do |row|
     next if row[:id_2].blank?
     query = <<-SQL
-    select #{raw_variables.join(',')}, ine_poly.nombre as name
+    select #{raw_variables.join(',')}, ine_poly.nombre as name, ine_poly.cartodb_id
     from  vars_socioeco_x_municipio, ine_poly, gadm2
     where vars_socioeco_x_municipio.gadm4_cartodb_id = ine_poly.cartodb_id and gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.id_2 = #{row[:id_2]}
 SQL
     $cartodb.query(query)[:rows].each do |m|
       variables.each do |variable|
         result[variable] ||= {}
-        result[variable][m[:name]] ||= []
+        result[variable][m[:cartodb_id]] ||= []
         1975.upto(2011) do |year|
           temp_variable = "#{variable}_#{year}".to_sym
-          result[variable][m[:name]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
+          result[variable][m[:cartodb_id]] << (m[temp_variable].nil? ? 0 : ("%.2f" % (m[temp_variable].to_f)).to_f)
         end
       end
     end
