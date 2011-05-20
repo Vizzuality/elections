@@ -280,12 +280,16 @@
     InfoWindow.prototype.hide = function() {
       if (this.div_) {
         var div = this.div_;
-        $(div).stop().animate({
-          top: '+=' + 10 + 'px',
-          opacity: 0
-        }, 100, 'swing', function(ev){
-          div.style.visibility = "hidden";
-        });
+       if (ie_) {
+         $(div).css({"visibility": "hidden"});
+        } else {
+          $(div).stop().animate({
+            top: '+=' + 10 + 'px',
+            opacity: 0
+          }, 100, 'swing', function(ev){
+            div.style.visibility = "hidden";
+          });
+        }
       }
     }
 
@@ -293,13 +297,19 @@
     InfoWindow.prototype.show = function() {
       if (this.div_) {
         var div = this.div_;
-        $(div).css({opacity:0});
-        div.style.visibility = "visible";
+        if (ie_) {
+          $(div).css({"visibility": "visible"});
+        } else {
+          $(div).css({opacity:0});
+          div.style.visibility = "visible";
 
-        $(div).stop().animate({
-          top: '-=' + 10 + 'px',
-          opacity: 1
-        }, 250, 'swing');
+          $(div).stop().animate({
+            top: '-=' + 10 + 'px',
+            opacity: 1
+          }, 250, 'swing');
+        }
+        
+
       }
     }
 
