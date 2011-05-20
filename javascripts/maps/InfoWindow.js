@@ -124,8 +124,8 @@
       var $p = $('div#infowindow div.summary li.partido:eq('+id+')');
 
       if (party_id < 4) {
-        var partido = info.data[year][positions[id] +'_partido_name'];
-        partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+        partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
         $p.addClass(clase);
@@ -133,23 +133,23 @@
 
       if (animated == true) {
         var old_percent = $p.find('strong').text();
-        var old_party = $p.find('span').text();
+        var old_party   = $p.find('span').text();
 
         if (old_percent != percent || (partido != null && old_party != partido)) {
-          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber(id, percent, partido); $p.find('> *').fadeIn("slow"); });
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
         }
       } else {
-        this.renderTotalNumber(id, percent, partido);
+        this.renderTotalNumber($p, id, percent, partido);
       }
     }
 
-    InfoWindow.prototype.renderTotalNumber = function(id, value, name) {
+    InfoWindow.prototype.renderTotalNumber = function($div, id, value, name) {
       if (name != null) {
-        $('div#infowindow div.summary li.partido:eq('+id+')').show();
-        $('div#infowindow div.summary li.partido:eq('+id+') strong').text(value);
-        $('div#infowindow div.summary li.partido:eq('+id+') span').text(name.toUpperCase());
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
       } else {
-        $('div#infowindow div.summary li.partido:eq('+id+')').hide();
+        $div.hide();
       }
     }
 

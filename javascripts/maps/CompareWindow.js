@@ -344,38 +344,42 @@
 
     CompareWindow.prototype.drawTotalNumber = function(party_id, region, info, animated) {
 
+      var me = this;
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_total'];
+      var clase     = "otros";
+      var partido   = "otros";
 
-      var partido = "otros";
+      var $p = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')');
 
       if (party_id < 4) {
         partido = info.data[year][positions[id] +'_partido_name'];
         var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido_class) !== -1) {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass(partido_class);
-          this.oldPar = partido;
-        } else {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass('par'+party_id);
-          this.oldPar = "par"+party_id;
-        }
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
       }
 
       if (animated == true) {
-        var old_percent = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text();
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
 
-        if (old_percent != percent) {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeIn("slow");
-          });
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
         }
       } else {
-        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
-        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+        this.renderTotalNumber($p, id, percent, partido);
+      }
+    }
+
+    CompareWindow.prototype.renderTotalNumber = function($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
       }
     }
 
