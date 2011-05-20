@@ -334,7 +334,7 @@ function initializeGraph() {
       var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
       if (comparewindow.isVisible()) {
-        comparewindow.compareSecondRegion(null, place);
+        comparewindow.compareSecondRegion(null, place, deep);
       } else {
         $.ajax({
           method: "GET",
@@ -632,6 +632,7 @@ function restartGraph(force_create) {
 
 
 function createOrUpdateBubbles(url){
+    showGraphLoader();
   if (createdBubbles == true) {
     updateBubbles(url);
   } else {
@@ -644,9 +645,11 @@ function createBubbles(url){
 
   if (normalization[compare] === undefined) {
   //  console.log(normalization[compare]);
+    hideGraphLoader();
     chooseMessage.show();
     return;
   } else {
+    chooseMessage.show();
     chooseMessage.hide();
   }
 
@@ -655,6 +658,7 @@ function createBubbles(url){
       createdBubbles = false;
       failCircle.show();
       console.log("404", url);
+      hideGraphLoader();
       return;
     }
 
@@ -666,8 +670,13 @@ function createBubbles(url){
     count = 0;
     _.each(data, function(val, key) {
       //Check data for show legend or not
+      console.log(count, possibleValues, _.size(possibleValues));
+
       if (count>19) {
+        hideGraphLoader();
         return false;
+      } else if (count >= _.size(possibleValues) - 1) {
+        hideGraphLoader();
       }
 
       if (one) {
@@ -697,19 +706,28 @@ function updateBubbles(url){
 
   if (data == null) {
     failCircle.show();
+    hideGraphLoader();
     return;
   }
 
   failCircle.hide();
-
     var one = true;
+    var count = 0;
     _.each(data, function(v,key) {
       if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         one = false;
       }
+
+      console.log(data, data.length);
+
+      if (count >= _.size(possibleValues) - 1) {
+        hideGraphLoader();
+      }
+
       valuesHash[key] = v;
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
+      count ++;
     });
   })
 }
@@ -734,6 +752,7 @@ function updateBubble (id, x, y, val, colors, party) {
 
 function goDeeper(url){
   graphLegend.hide();
+  showGraphLoader();
 
   var url_split = url.split('/');
 
@@ -822,3 +841,12 @@ function addNewBubble(region) {
     }
   }
 }
+
+function showGraphLoader() {
+  $('div#graph span.loader').fadeIn();
+}
+
+function hideGraphLoader() {
+  $('div#graph span.loader').fadeOut();
+}
+
