@@ -734,19 +734,21 @@ function updateBubble (id, x, y, val, colors, party) {
 
 function goDeeper(url){
   graphLegend.hide();
-  //Get new name and deep
 
   var url_split = url.split('/');
-  //console.log("url_split", url_split);
 
   deep = url_split[5];
-  //console.log("deep", deep);
 
-  var length = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].length;
+  var url_split_length = url_split.length-1;
+  var compare_var      = compare.replace(/ /g,'_');
+  var length           = url_split[url_split_length].split(compare_var)[0].length;
 
-  name = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].substring(0, length-1);
-  //console.log("compare", compare, compare.replace(/ /g,'_') );
-  //console.log("name", name);
+  name = url_split[url_split_length].split(compare_var)[0].substring(0, length-1);
+
+ // console.log("url_split", url_split);
+ // console.log("deep", deep);
+ // console.log("name", name);
+ // console.log("compare", compare);
 
   graphLegend.hideError();
   drawNoDataBars();
