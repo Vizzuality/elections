@@ -6,7 +6,7 @@ crono = Time.now
 
 cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
-json_folder                                   = next_folder('/mnt/www/data/google_names_cache/')
+json_folder                                   = next_folder("#{root_data_path}/google_names_cache/")
 
 def municipalities_data_sql
   <<-SQL
@@ -78,10 +78,11 @@ municipalities_data.each do |google_maps_name, records|
   json[:provincia] = records.first.provincia
   json[:data] = create_years_hash(records, variables, max_year, min_year)
 
-  fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
-  fd.write(Yajl::Encoder.encode(json))
-  fd.close
-
+  unless json.nil? || json.empty?
+    fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
+    fd.write(Yajl::Encoder.encode(json))
+    fd.close
+  end
 end
 
 puts '... caching finished!'

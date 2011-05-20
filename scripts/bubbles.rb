@@ -6,9 +6,7 @@ require 'pp'
 cartodb                                       = get_cartodb_connection
 variables, variables_hash, max_year, min_year = *variables_vars
 base_path                                     = FileUtils.pwd
-json_folder                                   = next_folder('/mnt/www/data/bubbles/')
-
-FileUtils.mkdir_p("#{base_path}/../json/generated_data/tiles")
+json_folder                                   = next_folder("#{root_data_path}/bubbles/")
 
 def queries_by_zoom(x, y, z)
   queries = {
@@ -183,9 +181,11 @@ zoom_levels.each do |z|
           json << data
         end
 
-        fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
-        fd.write(Yajl::Encoder.encode(json))
-        fd.close
+        unless json.nil? || json.empty?
+          fd = File.open("#{json_folder}#{z}_#{x}_#{y}.json",'w+')
+          fd.write(Yajl::Encoder.encode(json))
+          fd.close
+        end
 
         progress.increment!
 

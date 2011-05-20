@@ -27,7 +27,7 @@ var normalization = {
   'secundaria acabada': 'secundaria_acabada_normalizado',
   'consumo tv': 'audiencia_diaria_tv_normalizado',
   'consumo prensa': 'prensa_diaria_normalizado',
-  'penetracion internet': 'penetracion_internet_normalizado',
+  'lineas adsl': 'penetracion_internet_normalizado',
   'matriculaciones': 'matriculaciones_normalizado',
   'detenidos': 'detenidos_normalizado',
   'jovenes parados': 'jovenes_parados_normalizado',
