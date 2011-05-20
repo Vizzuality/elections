@@ -24,15 +24,19 @@
         '<h4>Datos económicos</h4>'+
         '<ul>'+
           '<li><a href="#Inmigración">Tasa de paro</a></li>'+
+          '<li><a href="#Inmigración">Parados larga duración</a></li>'+
+          '<li><a href="#Inmigración">Jóvenes parados larga duración</a></li>'+
           '<li><a href="#Inmigración">PIB per cápita</a></li>'+
           '<li><a href="#Inmigración">Salario medio</a></li>'+
+          '<li><a href="#Inmigración">Matriculaciones</a></li>'+
         '</ul>'+
         '<h4>Datos sociológicos</h4>'+
         '<ul>'+
-          '<li><a href="#Inmigración">Estudios acabados</a></li>'+
+          '<li><a href="#Inmigración">Estudios superiores</a></li>'+
           '<li><a href="#Inmigración">Consumo de TV</a></li>'+
           '<li><a href="#Inmigración">Consumo de prensa</a></li>'+
           '<li><a href="#Inmigración">Penetración de internet</a></li>'+
+          '<li><a href="#Inmigración">Detenidos</a></li>'+
         '</ul>'+
 
       '</div>'+
