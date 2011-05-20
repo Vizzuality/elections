@@ -308,10 +308,11 @@
       var percent   = info.data[year][positions[id]+'_partido_percent'];
 
       if (party_id < 4) {
-        var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+        var partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido) !== -1) {
-          $('div#comparewindow div.summary li.partido:eq('+id+')').addClass(partido);
+          $('div#comparewindow div.summary li.partido:eq('+id+')').addClass(partido_class);
           this.oldPar = partido;
         } else {
           $('div#comparewindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
