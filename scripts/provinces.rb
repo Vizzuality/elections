@@ -17,7 +17,6 @@ provinces      = get_provinces
 variables      = get_variables(2)
 parties        = get_parties
 parties_known  = get_known_parties(parties)
-variables_json = get_all_variables
 
 query = <<-SQL
 select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
@@ -35,10 +34,12 @@ votes_per_province = cartodb.query(query)[:rows]
 #############
 puts
 evolution = {}
+variables_json = {}
 variables.each do |variable|
   year = nil
   puts
   custom_variable_name = variable.gsub(/_\d+$/,'')
+  variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
