@@ -110,7 +110,8 @@ SQL
             province_results[province_name][proceso_electoral_id.to_i]
           end
         else
-          raise "Province results not found for province_name #{province_name} in proceso_electoral_id #{proceso_electoral_id}"
+          # raise "Province results not found for province_name #{province_name} in proceso_electoral_id #{proceso_electoral_id}"
+		nil
         end
         json[municipality_name][:evolution] = if evolution[custom_variable_name][municipality[:cartodb_id].to_s]
           evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
