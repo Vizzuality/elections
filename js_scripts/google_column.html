@@ -64,14 +64,12 @@
             if (status == google.maps.GeocoderStatus.OK) {
               map.setCenter(results[0].geometry.location);
               console.log('Founded '+place.address);
-              //results[0].geometry.location
               saveRegionPosition(results[0].formatted_address,results[0].geometry.location);
             } else {
               console.log('Not founded '+place.address);
               count++;
               console.log(count+'/'+total);
               findLocation();
-              //alert("Geocode was not successful for the following reason: " + status);
             }
           });
         } else {

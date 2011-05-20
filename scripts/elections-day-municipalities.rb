@@ -244,55 +244,98 @@ provinces_ine = {
 #
 # http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-[CCAA]-[PROVINCIA]-[MUNICIPIO]-DATOS-ES.xml
 # http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-PARTICIPACION-[CCAA]-[PROVINCIA]-[MUNICIPIO]-DATOS-ES-DATOS-ES.xml
-# base_url = "xmls/2011-M-RESULTADOS-<autonomy>-<province>-<municipality>-DATOS-ES.xml"
-#
-# autonomies     = get_autonomies
-# all_provinces  = get_provinces
-# autonomies.each do |autonomy|
-#   provinces = all_provinces.select{ |p| p[:id_1] == autonomy[:id_1] }
-#   provinces.each do |province|
-#     # puts "autonomies_ine[#{autonomy[:cc_1].to_i}]: #{autonomies_ine[autonomy[:cc_1].to_i]} - provinces_ine[#{province[:cc_2]}]: #{provinces_ine[province[:cc_2].to_i]}"
-#     municipalities = get_municipalities(province[:name_2])
-#     municipalities.each do |municipality|
-#       next if municipality[:name].blank?
-#       url = base_url.gsub(/<autonomy>/,autonomies_ine[autonomy[:cc_1].to_i])
-#                     .gsub(/<province>/,provinces_ine[province[:cc_2].to_i]) 
-#                     .gsub(/<municipality>/,municipality[:name])
-#       puts url
-#     end
-#   end
-# end
+base_url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-<autonomy>-<province>-<municipality>-DATOS-ES.xml"
 
-file = File.open('output.log', 'w+')
+file = File.open('urls.log', 'w+')
 logger = Logger.new(file)
-logger.info "****\n"
-logger.info "Starting process at #{Time.now}"
-
-# Constant
-proceso_electoral_id = 74
-
-url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-madrid-madrid-madrid-DATOS-ES.xml"
-begin
-  parser = XML::SaxParser.io(open(url))
-  parser.callbacks = MunicipalityVotes.new(1,2,3)
-  parser.parse
-
-  temporal_result = parser.callbacks.result
-rescue OpenURI::HTTPError
-  logger.info "[ERROR] #{$!} - #{url}"
-  temporal_result = {}
+puts "Starting...."
+autonomies     = get_autonomies
+all_provinces  = get_provinces
+autonomies.each do |autonomy|
+  provinces = all_provinces.select{ |p| p[:id_1] == autonomy[:id_1] }
+  provinces.each do |province|
+    # puts "autonomies_ine[#{autonomy[:cc_1].to_i}]: #{autonomies_ine[autonomy[:cc_1].to_i]} - provinces_ine[#{province[:cc_2]}]: #{provinces_ine[province[:cc_2].to_i]}"
+    municipalities = get_municipalities(province[:name_2])
+    municipalities.each do |municipality|
+      next if municipality[:name].blank?
+      municipality_name = municipality[:name].downcase.gsub(/\(/,'').gsub(/\)/,'').gsub(/\s/,'-').gsub(/Ñ/,'n')
+      url = base_url.gsub(/<autonomy>/,autonomies_ine[autonomy[:cc_1].to_i])
+                    .gsub(/<province>/,provinces_ine[province[:cc_2].to_i]) 
+                    .gsub(/<municipality>/,municipality_name)
+      uri = nil
+      begin
+        uri = URI.parse(url)
+      rescue
+        municipality_name = municipality[:name].normalize
+        url = base_url.gsub(/<autonomy>/,autonomies_ine[autonomy[:cc_1].to_i])
+                      .gsub(/<province>/,provinces_ine[province[:cc_2].to_i]) 
+                      .gsub(/<municipality>/,municipality_name)
+        begin
+          uri = URI.parse(url)
+        rescue
+          uri = nil
+        end
+      end
+      next if uri.nil?
+      response = nil
+      Net::HTTP.start(uri.host, uri.port) do |http|
+        response = http.head(uri.path)
+      end
+      if response.code == "404"
+        municipality_name = municipality[:name2].downcase.gsub(/\(/,'').gsub(/\)/,'').gsub(/\s/,'-').normalize
+        url = base_url.gsub(/<autonomy>/,autonomies_ine[autonomy[:cc_1].to_i])
+                      .gsub(/<province>/,provinces_ine[province[:cc_2].to_i]) 
+                      .gsub(/<municipality>/,municipality_name)
+        uri = URI.parse(url)
+        response = nil
+        Net::HTTP.start(uri.host, uri.port) do |http|
+          response = http.head(uri.path)
+        end
+        if response.code == "404"
+          logger.info "KO #{url.split('/').last} - #{municipality.inspect}"
+          putc 'E'
+        elsif response.code == "200"
+          logger.info "OK #{url}"        
+          putc '.'          
+        end
+      elsif response.code == "200"
+        logger.info "OK #{url}"        
+        putc '.'
+      end
+    end
+  end
 end
 
-url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-madrid-madrid-madrid-DATOS-ES.xml"
-begin
-  parser = XML::SaxParser.io(open(url))
-  parser.callbacks = MunicipalityParticipation.new
-  parser.parse
-
-  puts temporal_result.merge(parser.callbacks.result).inspect
-rescue OpenURI::HTTPError
-  logger.info "[ERROR] #{$!}"
-  puts "Nothing"
-end
-
-logger.info "Finishing process at #{Time.now}"
+# file = File.open('output.log', 'w+')
+# logger = Logger.new(file)
+# logger.info "****\n"
+# logger.info "Starting process at #{Time.now}"
+# 
+# # Constant
+# proceso_electoral_id = 74
+# 
+# url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-madrid-madrid-madrid-DATOS-ES.xml"
+# begin
+#   parser = XML::SaxParser.io(open(url))
+#   parser.callbacks = MunicipalityVotes.new(1,2,3)
+#   parser.parse
+# 
+#   temporal_result = parser.callbacks.result
+# rescue OpenURI::HTTPError
+#   logger.info "[ERROR] #{$!} - #{url}"
+#   temporal_result = {}
+# end
+# 
+# url = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-madrid-madrid-madrid-DATOS-ES.xml"
+# begin
+#   parser = XML::SaxParser.io(open(url))
+#   parser.callbacks = MunicipalityParticipation.new
+#   parser.parse
+# 
+#   puts temporal_result.merge(parser.callbacks.result).inspect
+# rescue OpenURI::HTTPError
+#   logger.info "[ERROR] #{$!}"
+#   puts "Nothing"
+# end
+# 
+# logger.info "Finishing process at #{Time.now}"
