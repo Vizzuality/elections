@@ -612,6 +612,7 @@ function initializeGraph() {
 /*GRAPH FUNCTIONS!*/
 
 function restartGraph(force_create) {
+  nBubbles = 0;
   graphLegend.hide();
   graph_bubble_index = 100;
   $('div#graph_container .bubbleContainer').remove();
