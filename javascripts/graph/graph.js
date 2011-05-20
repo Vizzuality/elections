@@ -153,7 +153,7 @@ function initializeGraph() {
     var comparison_variable = normalization[compare];
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
-    console.log(textInfoWindow, comparison_variable, normalization);
+    //console.log(textInfoWindow, comparison_variable, normalization);
 
     var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
     var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
@@ -274,22 +274,24 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-    var firstYearData = _.detect(data, function(num) { return num != 0; }); // index of the first year with information
-    var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
-    var firstYear = 1975 + firstYearIndex; // first year with information
-
-    var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
-    var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
-    var startYearIndex = nextElectionYearIndex - 1;
 
     selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    //    console.log(firstYearIndex);
-    //    console.log(data, data[firstYearIndex]);
+    var availableYears = availableData[deep][normalization[compare]];
+    var firstYear = availableYears[0];
+    var lastYear = availableYears[availableYears.length - 1];
 
-    for (var i = firstYearIndex; i < data.length; i++) {
+    var firstYearIndex = 36 - (maxYear- firstYear);
+    var lastYearIndex  = 36 - (maxYear- lastYear);
+    var currentYearIndex = 36 - (maxYear- year);
+    var marginRight = 36 - lastYearIndex;
+
+    //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
+    //console.log(data, data[firstYearIndex]);
+
+    for (var i = firstYearIndex; i < lastYearIndex; i++) {
       if (!find) {
-        if (year - minYear == i  ) {
+        if (i == currentYearIndex) {
           find = true;
           find_year = count;
         }
@@ -300,18 +302,17 @@ function initializeGraph() {
       }
 
       chartDataString += data[i]+ ',';
-
       count++;
     }
 
-    if (find_year === undefined && year == maxYear) {
-      find_year = count;
+    if (find_year == null) {
+      find_year = lastYearIndex;
     }
-
+    //console.log(find_year, data[find_year]);
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((data.length - firstYearIndex - 1)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-        $('div#graph_infowindow div.chart img').css({margin:'0 0px 0 0'});
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((lastYearIndex - firstYearIndex)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+        $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
     showInfowindow(left,top);
@@ -632,10 +633,10 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-console.log("Create bubbles", url);
+//console.log("Create bubbles", url);
 
   if (normalization[compare] === undefined) {
-    console.log(normalization[compare]);
+  //  console.log(normalization[compare]);
     chooseMessage.show();
     return;
   } else {
@@ -682,7 +683,7 @@ console.log("Create bubbles", url);
 }
 
 function updateBubbles(url){
-  console.log("Update bubbles", url);
+  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
@@ -728,10 +729,10 @@ function goDeeper(url){
   //Get new name and deep
 
   var url_split = url.split('/');
-  console.log("url_split", url_split);
+  //console.log("url_split", url_split);
 
   deep = url_split[5];
-  console.log("deep", deep);
+  //console.log("deep", deep);
 
   var length = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].length;
 
