@@ -288,7 +288,7 @@ function initializeGraph() {
     //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
     //console.log(data, data[firstYearIndex]);
 
-    for (var i = firstYearIndex; i < lastYearIndex; i++) {
+    for (var i = firstYearIndex; i < lastYearIndex + 1; i++) {
       if (!find) {
         if (i == currentYearIndex) {
           find = true;
@@ -689,7 +689,6 @@ function updateBubbles(url){
   $.getJSON(url, function(data) {
 
   if (data == null) {
-      console.log("404", url);
     failCircle.show();
     return;
   }
