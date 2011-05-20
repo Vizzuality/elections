@@ -228,7 +228,7 @@
       this.show();
     }
 
-    CompareWindow.prototype.compareSecondRegion = function(info,formatted_address) {
+    CompareWindow.prototype.compareSecondRegion = function(info,formatted_address, region_name) {
       var me = this;
       this.cleanSecondRegion();
       var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json';
@@ -240,7 +240,7 @@
           url: url,
           success: function(info) {
             if (info!=null) {
-              fillData(info);
+              fillData(info, region_name);
               $('div#comparewindow p.refer').hide();
             } else {
               $('div#comparewindow div.bottom').addClass('search').removeClass('region')
@@ -253,11 +253,12 @@
           }
         });
       } else {
-        fillData(info);
+        fillData(info, region_name);
       }
 
 
-      function fillData(info) {
+      function fillData(info, region_name) {
+      console.log(region_name);
         me.secondData = info;
         me.createChart(info,false);
 
@@ -275,7 +276,13 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        var deep_level;
+
+        if (region_name == null) {
+          deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        } else {
+          deep_level = region_name;
+        }
 
         if (deep_level != "municipios") {
           me.drawTotalNumber(1, 2, me.secondData, false);
