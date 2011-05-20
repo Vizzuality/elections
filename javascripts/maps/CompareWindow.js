@@ -67,15 +67,15 @@
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
             '</div>'+
-          '</div>'+
-          '<div class="summary">'+
-          '<h4>Municipios en los que es el más votado...</h4>'+
-          '<ul>'+
-            '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
-            '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
-            '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-            '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
-          '</ul>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
           '</div>'+
         '</div>';
 
@@ -177,7 +177,10 @@
     	var me = this;
     	var div = this.div;
     	this.firstData = info;
-    	this.firstZoom = zoom;
+
+    	if (zoom != null) {
+        this.firstZoom = zoom;
+    	}
     	// Reset graphs containers
       $('div.stats_slider').empty();
     	//Reset
@@ -187,7 +190,7 @@
     	//Create charts
     	this.createChart(info,true);
     	this.setUpChartView();
-      this.deep_level = getDeepLevelFromZoomLevel(zoom);
+      this.deep_level = getDeepLevelFromZoomLevel(this.firstZoom);
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -225,7 +228,7 @@
       this.show();
     }
 
-    CompareWindow.prototype.compareSecondRegion = function(info,formatted_address) {
+    CompareWindow.prototype.compareSecondRegion = function(info,formatted_address, region_name) {
       var me = this;
       this.cleanSecondRegion();
       var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json';
@@ -237,7 +240,7 @@
           url: url,
           success: function(info) {
             if (info!=null) {
-              fillData(info);
+              fillData(info, region_name);
               $('div#comparewindow p.refer').hide();
             } else {
               $('div#comparewindow div.bottom').addClass('search').removeClass('region')
@@ -250,11 +253,12 @@
           }
         });
       } else {
-        fillData(info);
+        fillData(info, region_name);
       }
 
 
-      function fillData(info) {
+      function fillData(info, region_name) {
+      console.log(region_name);
         me.secondData = info;
         me.createChart(info,false);
 
@@ -272,7 +276,13 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        var deep_level;
+
+        if (region_name == null) {
+          deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+        } else {
+          deep_level = region_name;
+        }
 
         if (deep_level != "municipios") {
           me.drawTotalNumber(1, 2, me.secondData, false);
@@ -340,8 +350,8 @@
 
       if (party_id < 4) {
 
-      var partido = info.data[year][positions[id] +'_partido_name'];
-      var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+        var partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido) !== -1) {
           $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass(partido_class);
@@ -355,13 +365,6 @@
       }
 
       if (animated == true) {
-
-        if (party_id < 4) {
-          var partido = info.data[year][positions[id] +'_partido_name'];
-        } else {
-          partido = "otros";
-        }
-
         var old_percent = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text();
 
         if (old_percent != percent) {
@@ -372,7 +375,6 @@
           });
         }
       } else {
-        partido = "otros";
         $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
         $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
       }
@@ -406,35 +408,37 @@
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
+        this.updateTotalNumber();
+        this.updateBars();
+      }
+    }
+
+    CompareWindow.prototype.updateTotalNumber = function() {
+        $('div#comparewindow div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        for (var i = 1; i <= 4; i++) {
+          this.drawTotalNumber(i, 1, this.firstData, true);
+
+          if (this.secondData.data != undefined) {
+            this.drawTotalNumber(i, 2, this.secondData, true);
+          }
+        }
+    }
+
+    CompareWindow.prototype.updateBars = function() {
 
         $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        $('div#comparewindow div.summary li.partido').each(function(i,ele){
-          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-        });
+      for (var i = 1; i <= 4; i++) {
+        this.drawBar(i,"top", this.firstData);
 
-
-          this.drawTotalNumber(1, 1, this.firstData, true);
-          this.drawTotalNumber(2, 1, this.firstData, true);
-          this.drawTotalNumber(3, 1, this.firstData, true);
-          this.drawTotalNumber(4, 1, this.firstData, true);
-
-            this.drawTotalNumber(1, 2, this.secondData, true);
-            this.drawTotalNumber(2, 2, this.secondData, true);
-            this.drawTotalNumber(3, 2, this.secondData, true);
-            this.drawTotalNumber(4, 2, this.secondData, true);
-
-          this.drawBar(1,"top", this.firstData);
-          this.drawBar(2,"top", this.firstData);
-          this.drawBar(3,"top", this.firstData);
-          this.drawBar(4,"top", this.firstData);
-
-            this.drawBar(1,"bottom", this.secondData);
-            this.drawBar(2,"bottom", this.secondData);
-            this.drawBar(3,"bottom", this.secondData);
-            this.drawBar(4,"bottom", this.secondData);
+        if (this.secondData.data != undefined) {
+          this.drawBar(i,"bottom", this.secondData);
+        }
       }
     }
 
@@ -499,7 +503,6 @@
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info['data'][year][ele]!=undefined) {
-
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];

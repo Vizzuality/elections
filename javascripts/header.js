@@ -639,7 +639,7 @@
     if (compare=="ninguna") {
       $('div.wadusText').hide();
     } else {
-      $('div.wadusText p').html('Viendo '+$('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text()+' <sup>['+year+']</sup>');
+      $('div.wadusText p').html($('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text()+' <sup>['+year+']</sup>');
       $('div.wadusText').show();
     }
   }

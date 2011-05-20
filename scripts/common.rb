@@ -73,7 +73,7 @@ end
 
 def get_municipalities(province)
   $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2
-                  from ine_poly, gadm2, municipios 
+                  from ine_poly, gadm2, municipios
                   where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}' and ine_poly_cartodb_id = ine_poly.cartodb_id")[:rows].compact
 end
 
@@ -468,38 +468,21 @@ def vars_sql_select(gadm_level)
   select.join(', ')
 end
 
-def max_min_vars_query(zoom_level)
+def max_min_vars_query
 
-  gadm_levels_for_zoom_leves = {
-    6 => 1,
-    7 => 2,
-    11 => 4
-  }
+  with_avg = %w(audiencia_diaria_tv_normalizado detenidos edad_media envejecimiento inmigracion jovenes_parados matriculaciones parados_larga_duracion paro_epa penetracion_internet_normalizado pib prensa_diaria_normalizado salario_medio saldo_vegetativo secundaria_acabada)
+  only_max_min = %w(audiencia_diaria_tv_normalizado detenidos_normalizado edad_media_normalizado envejecimiento_normalizado inmigracion_normalizado jovenes_parados_normalizado matriculaciones_normalizado parados_larga_duracion_normalizado paro_epa_normalizado penetracion_internet_normalizado pib_normalizado prensa_diaria_normalizado salario_medio_normalizado saldo_vegetativo_normalizado secundaria_acabada_normalizado)
 
-  tables = {
-    1 => 'vars_socioeco_x_autonomia',
-    2 => 'vars_socioeco_x_provincia',
-    4 => 'vars_socioeco_x_municipio',
-    6 => 'vars_socioeco_x_autonomia',
-    7 => 'vars_socioeco_x_provincia',
-    11 => 'vars_socioeco_x_municipio'
-  }
-
-  variables = *variables_vars.first
+  variables = get_cartodb_connection.query("SELECT codigo, min_year, max_year, min_gadm, max_gadm FROM variables").rows
 
   selects = []
   froms = []
   variables.each do |variable|
-    next if variable.min_gadm.to_i > gadm_levels_for_zoom_leves[zoom_level]
-    next unless variable.max_gadm.to_i  >= gadm_levels_for_zoom_leves[zoom_level]
-
     fields = []
     variable.min_year.upto(variable.max_year) do |year|
-      fields << <<-SQL
-        max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max,
-        min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min,
-        avg(#{variable.codigo.gsub(/_normalizad./, '')}_#{year}) as #{variable.codigo}_#{year}_avg
-      SQL
+      fields << "max(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_max"
+      fields << "min(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_min"
+      fields << "avg(#{variable.codigo}_#{year}) as #{variable.codigo}_#{year}_avg" if with_avg.include?(variable.codigo)
     end
 
     selects << <<-SQL
@@ -509,7 +492,7 @@ def max_min_vars_query(zoom_level)
     froms << <<-SQL
       (SELECT
         #{fields.join(', ')}
-      FROM #{tables[zoom_level]}) AS #{variable.codigo}_min_max
+      FROM vars_socioeco_x_autonomia) AS #{variable.codigo}_min_max
     SQL
   end
 
