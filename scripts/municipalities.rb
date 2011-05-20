@@ -103,11 +103,22 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
-        json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_s]
+        json[municipality_name][:parent_results] = if province_results[province_name]
+          if province_results[province_name][proceso_electoral_id.to_s]
+            province_results[province_name][proceso_electoral_id.to_s]
+          elsif province_results[province_name][proceso_electoral_id.to_i]
+            province_results[province_name][proceso_electoral_id.to_i]
+          end
+        else
+          # raise "Province results not found for province_name #{province_name} in proceso_electoral_id #{proceso_electoral_id}"
+		nil
+        end
         json[municipality_name][:evolution] = if evolution[custom_variable_name][municipality[:cartodb_id].to_s]
           evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
+        elsif evolution[custom_variable_name][municipality[:cartodb_id].to_i]
+          evolution[custom_variable_name][municipality[:cartodb_id].to_i].join(',')
         else
-          "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+          raise "No evolution found for #{variable} in municipality #{municipality[:cartodb_id]} - #{municipality.inspect}"
         end
       end
       putc '.'
