@@ -134,11 +134,12 @@
       }
 
       if (animated == true) {
-      var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
+        var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
 
       if (old_percent != percent) {
         $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
           $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
+          console.log("Partido", partido);
           $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
           $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeIn("slow");
         });
@@ -320,7 +321,7 @@
 
 
     InfoWindow.prototype.updateValues = function() {
-      
+
       if (this.div_) {
 
         if (this.deep_level != "municipios") {
