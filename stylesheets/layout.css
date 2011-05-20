@@ -5,13 +5,13 @@ body {height:auto; background:#ccc; min-width:1000px;}
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
 /* RTVE header */
 div.rtve {height:51px; width:100%!important; background:white;}
-div.rtve div.left {float:left;}
+div.rtve div.left {float:left; width:70%;}
 div.rtve a.logo {float:left; width:96px; height:37px; margin:5px 0 0 15px; background:url('../images/rtve.jpg') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div.rtve div.left ul {display:inline-block; margin:15px 0 0 10px;}
-div.rtve div.left ul li {display:inline-block; width:96px; height:28px;}
+div.rtve div.left ul li {display:inline; width:96px; height:28px;}
 div.rtve div.left ul li a {display:inline-block; width:96px; height:16px; padding:6px 0; background:url('../images/header_linkgs_bkg.jpg') no-repeat 0 0; text-align:center; font:normal 16px "Officina Regular"; color:white; line-height:16px; text-decoration:none;}
 div.rtve div.left ul li a:hover {background-position:0 -28px;}
-div.rtve div.right {float:right; width:182px; padding:0!important; margin:13px 10px 0 0;}
+div.rtve div.right {float:right; width:182px; padding:0!important; margin:13px 10px 0 0!important;}
 div.rtve div.right input#textRTVE {float:left; width:108px; height:14px; padding:8px 5px; background:url('../images/search_rtve_bkg.jpg') no-repeat 0 0; border:none; text-align:left; font:normal 14px "Officina Regular"; color:#666666; line-height:;}
 div.rtve div.right input#submitRTVE {float:left; width:64px; height:30px; padding:0; background:url('../images/submit_rtve_bkg.jpg') no-repeat right 0; border:none; text-align:center; color:white; font:normal 16px "Officina Regular";}
 div.rtve div.right input#submitRTVE:hover {background-position:0 -30px; cursor:pointer;}
