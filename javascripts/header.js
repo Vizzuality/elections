@@ -23,7 +23,7 @@
 
     /* Receive all the vars without data */
     getUnavailableData(deep_level);
-    
+
     updateWadusText();
 
     // Graph - Map
@@ -270,7 +270,7 @@
     /*failCircle*/
     failCircle = (function() {
       var showed = false;
-      
+
       var data_not_found = false;
 
       $("div.fail a.why").live("click", function(ev) {
@@ -332,7 +332,7 @@
           }
         }
       }
-      
+
       function resetShowed() {
         showed = false;
       }
@@ -416,38 +416,28 @@
     });
   }
 
-
   function drawNoDataBars() {
     $('span.slider_no_data_left').hide();
     $('span.slider_no_data_right').hide();
 
-    var zoom = peninsula.getZoom();
-    var deep;
+    var deep_level;
 
-    if (zoom==6) {
-      deep = "autonomias";
-      if (years_nodata["autonomias"]==undefined) {
-        getUnavailableData('autonomias');
-        return false;
-      }
-    } else if (zoom>6 && zoom<11) {
-      deep = "provincias";
-      if (years_nodata["provincias"]==undefined) {
-        getUnavailableData('provincias');
-        return false;
-      }
+    if (state == "mapa") {
+      var zoom = peninsula.getZoom();
+      deep_level = getDeepLevelFromZoomLevel(zoom);
     } else {
-      deep = "municipios";
-      if (years_nodata["municipios"]==undefined) {
-        getUnavailableData('municipios');
-        return false;
-      }
+      deep_level = deep;
     }
 
-    if (years_nodata[deep][normalization[compare]]!=undefined) {
-      var left_no = years_nodata[deep][normalization[compare]][0] - 1987;
-      var lenght_array = years_nodata[deep][normalization[compare]].length;
-      var right_no = 2011 - years_nodata[deep][normalization[compare]][lenght_array-1];
+    if (years_nodata[deep_level]==undefined) {
+      getUnavailableData(deep_level);
+      return false;
+    }
+
+    if (years_nodata[deep_level][normalization[compare]]!=undefined) {
+      var left_no = years_nodata[deep_level][normalization[compare]][0] - 1987;
+      var lenght_array = years_nodata[deep_level][normalization[compare]].length;
+      var right_no = 2011 - years_nodata[deep_level][normalization[compare]][lenght_array-1];
 
       if (left_no!=0) {
         $('span.slider_no_data_left').css({width:(left_no*4.16)+"%"});
@@ -472,7 +462,24 @@
   }
 
   function checkFailYear(year) {
+    if (state == "mapa") {
+      checkFailYearForMap(year);
+    } else {
+      checkFailYearForGraph(year);
+    }
+  }
+
+  function checkFailYearForMap(year) {
     var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
+    if (years_nodata[region_type][normalization[compare]]!=undefined) {
+      var length_array = years_nodata[region_type][normalization[compare]].length;
+      return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
+    } else {
+      return true;
+    }
+  }
+  function checkFailYearForGraph(year) {
+    var region_type = deep;
     if (years_nodata[region_type][normalization[compare]]!=undefined) {
       var length_array = years_nodata[region_type][normalization[compare]].length;
       return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
@@ -514,20 +521,20 @@
     $("div.year_slider").slider('value', new_year);
     changeHash();
   }
-  
-  
+
+
   function unSelectAllVariables() {
     compare = 'ninguna';
     // Remove selected variable
     $('div.option_list ul li.selected').each(function(i,ele){$(ele).removeClass('selected');});
     $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
     $('div.select span.inner_select a').each(function(i,ele){var text = $(ele).attr('title'); $(ele).text(text);});
-    
+
     changeHash();
     refreshBubbles();
   }
-  
-  
+
+
   function updateWadusText() {
     if (compare=="ninguna") {
       $('div.wadusText').hide();
