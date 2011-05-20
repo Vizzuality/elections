@@ -16,16 +16,16 @@
     <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
 
-   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>    		
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="http://maps.google.com/maps/api/js?sensor=false&region=ES&language=ES&libraries=places" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/plugins/jquery-ui-1.8.12.custom.min.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- ON DEPLOY RUN THE CLOSURE COMPRESSOR (./lib/compress-javascript.sh) AND UNCOMMENT THIS -->
 		<!--	<script src="lib/application.closure.js" type="text/javascript" charset="utf-8"></script> -->
-		
+
 		<!-- ON DEPLOY DELETE ALL THESE JS ONCE COMPRESSED JS IS ACTIVE ABOVE -->
-		
-		
+
+
 		<script src="javascripts/max_min_avg.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/environment.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/plugins/underscore.js" type="text/javascript" charset="utf-8"></script>
@@ -42,10 +42,14 @@
     <script src="javascripts/maps/maps.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/graph/graph.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/header.js" type="text/javascript" charset="utf-8"></script>
-    <script src="javascripts/application.js" type="text/javascript" charset="utf-8"></script> 
-		
+    <script src="javascripts/application.js" type="text/javascript" charset="utf-8"></script>
+
 		<!-- ON DEPLOY DELETE ALL THESE JS ONCE COMPRESSED JS IS ACTIVE ABOVE -->
-		
+
+		<!--[if lt IE 9 ]>
+      <script src="javascripts/ie.js" type="text/javascript" charset="utf-8"></script>
+    <![endif]-->
+
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-23457558-1']);
@@ -152,6 +156,7 @@
           <form class="search">
             <input id="headerSearchInput" type="text" value="Introduce una ubicación" class="text" />
           </form>
+          <div class="searchLens"></div>
         </div>
         <div class="right">
          	 <div class="selects">
@@ -179,7 +184,7 @@
   	                  <li><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
   	                  <li><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
   	                  <li><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
-  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Penetr. internet</a></li>
+  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Acceso Internet</a></li>
   	                  <li><a class="detenidos" href="#detenidos">Detenidos</a></li>
   	                </ul>
   	              </div>
@@ -215,7 +220,7 @@
   	                <ul>
   	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
   	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
-  	                  <li><a class="inmigracion" href="#inmigracion">% Inmigración</a></li>
+  	                  <li><a class="inmigracion" href="#inmigracion">Inmigración</a></li>
   	                  <li><a class="saldo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
   	                </ul>
   	              </div>
@@ -285,6 +290,9 @@
         </div>
       </div>
       <div id="graph">
+        <span class="loader">
+          <p>Cargando...</p>
+        </span>
         <div id="top_legend" class="legend">Más % de paro</div>
         <div id="bottom_legend" class="legend">Menos % de paro</div>
         <div id="graph_container"></div>

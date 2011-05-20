@@ -134,11 +134,6 @@
       }
 
       if (animated == true) {
-        if (party_id < 4) {
-          var partido = info.data[year][positions[id] +'_partido_name'];
-        } else {
-          partido = "otros";
-        }
         var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
 
       if (old_percent != percent) {
@@ -150,7 +145,6 @@
         });
         }
       } else {
-        partido = "otros";
         $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
         $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
       }
@@ -287,12 +281,16 @@
     InfoWindow.prototype.hide = function() {
       if (this.div_) {
         var div = this.div_;
-        $(div).stop().animate({
-          top: '+=' + 10 + 'px',
-          opacity: 0
-        }, 100, 'swing', function(ev){
-          div.style.visibility = "hidden";
-        });
+       if (ie_) {
+         $(div).css({"visibility": "hidden"});
+        } else {
+          $(div).stop().animate({
+            top: '+=' + 10 + 'px',
+            opacity: 0
+          }, 100, 'swing', function(ev){
+            div.style.visibility = "hidden";
+          });
+        }
       }
     }
 
@@ -300,13 +298,19 @@
     InfoWindow.prototype.show = function() {
       if (this.div_) {
         var div = this.div_;
-        $(div).css({opacity:0});
-        div.style.visibility = "visible";
+        if (ie_) {
+          $(div).css({"visibility": "visible"});
+        } else {
+          $(div).css({opacity:0});
+          div.style.visibility = "visible";
 
-        $(div).stop().animate({
-          top: '-=' + 10 + 'px',
-          opacity: 1
-        }, 250, 'swing');
+          $(div).stop().animate({
+            top: '-=' + 10 + 'px',
+            opacity: 1
+          }, 250, 'swing');
+        }
+        
+
       }
     }
 
@@ -317,7 +321,7 @@
 
 
     InfoWindow.prototype.updateValues = function() {
-      
+
       if (this.div_) {
 
         if (this.deep_level != "municipios") {

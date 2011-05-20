@@ -172,7 +172,7 @@
 
     
     $('div#peninsula div').each(function(i,ele){
-      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {            
+      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1 && $(ele).children('img').length>0) {            
 
         //work out old and new urls
         var old_image = $(ele).children('img');
@@ -207,6 +207,20 @@
       }
     });
   }
+  
+  
+  // function simpleRefreshTiles() {
+  //   $('div#peninsula div').each(function(i,ele){
+  //     if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1 && $(ele).children('img').length>0) {
+  //       var old_image = $(ele).children('img');        
+  //       var old_url = old_image.attr('src');
+  //       var tm = old_url.split("/");
+  //       var old_process = tm[tm.length-2];
+  //       var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
+  //       old_image.attr('src',new_url);
+  //     }
+  //   });
+  // }
 
 
   var loaded = false;
