@@ -20,8 +20,8 @@ div.rtve div.right input#submitRTVE:hover {background-position:0 -30px; cursor:p
 div#header {position:absolute; left:0; right:0; top:51px; height:179px; min-width:1030px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
 div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
-div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
-div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
+div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
+div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.secondContainer div.left {float:left; width:320px; height:auto; margin:0; padding:0;}
 div#header div.secondContainer div.left form {display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
@@ -34,27 +34,27 @@ div#header div.secondContainer div.left form div.pac-container div.pac-selected 
 
 div#header div.share {float:right; width:300px; height:24px; margin:20px 0 0 0;}
 div#header div.share div.outer_share {float:right; width:134px!important; height:24px; padding:0; margin:0; background:url('../images/share_bkg.png') no-repeat 0 0;}
-div#header div.share div.outer_share p {float:left; width:64px; height:19px; padding:5px 0 0 7px; font:normal 13px "Officina Bold"; color:white; text-shadow:0 1px #371530; line-height:13px;}
+div#header div.share div.outer_share p {float:left; width:64px; height:19px; padding:5px 0 0 7px; font:normal 13px "Officina Bold"; color:white; text-shadow:0 1px #371530; line-height:13px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.share div.outer_share a.facebook {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat 2px 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.share div.outer_share a.facebook:hover {background-position:2px -21px; cursor:pointer;}
 div#header div.share div.outer_share a.twitter {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.share div.outer_share a.twitter:hover {background-position:right -21px; cursor:pointer;}
-div#header div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px;}
+div#header div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 
 div#header div.secondContainer div.right {float:right; width:650px; margin:0 7px 0 0; padding:0;}
 div#header div.secondContainer div.right div.info_tooltip{position:absolute; display:none; top:125px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('../images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
-div#header div.secondContainer div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white;}
-div#header div.secondContainer div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.secondContainer div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
+div#header div.secondContainer div.right div.info_tooltip div.content p {margin-bottom: 10px; font:normal 12px Arial; color:#999999; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.info_tooltip div.content ul {clear:both; overflow:hidden;}
-div#header div.secondContainer div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white;}
+div#header div.secondContainer div.right div.info_tooltip div.content ul li {float:left; padding-top: 5px; width:30px; height:38px; font:normal 11px Arial; color:#999999; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.info_tooltip div.content ul li span {position:absolute; padding-top: 7px;}
 div#header div.secondContainer div.right div.info_tooltip div.content ul li.left {margin-right: 25px; padding-left: 40px; background:url('../images/grey_marker_tooltip.png') no-repeat left 0; text-align:left; }
 div#header div.secondContainer div.right div.info_tooltip div.content ul li.left span {left:9px;}
 div#header div.secondContainer div.right div.info_tooltip div.content ul li.right {width: 40px; padding-right: 40px; background:url('../images/orange_marker_tooltip.png') no-repeat right 0; text-align:right;}
 div#header div.secondContainer div.right div.info_tooltip div.content ul li.right span {right:15px; color: #FF9900;}
-div#header div.secondContainer div.right div.info_tooltip div.content a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white;}
+div#header div.secondContainer div.right div.info_tooltip div.content a.more {float:left; width:auto; padding-top: 14px; font:normal 13px Arial; color:#333; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.info_tooltip div.content a.more:hover {color:black;}
 div#header div.secondContainer div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('../images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div#header div.secondContainer div.right div.info_tooltip div.content a.close:hover {background-position:0 -32px;}
@@ -76,7 +76,7 @@ div#header div.secondContainer div.right div.selects div.select.selected div.out
 div#header div.secondContainer div.right div.selects div.select div.outer_select:hover {background-position:0 -49px; cursor:pointer;}
 div#header div.secondContainer div.right div.selects div.select div.outer_select:hover span.inner_select a {color:white;}
 div#header div.secondContainer div.right div.selects div.select div.outer_select:hover span.inner_select {background-position:right -49px;}
-div#header div.secondContainer div.right div.selects div.select div.outer_select span a {font:normal 15px "Officina Regular"; color:#DDCAD8; text-shadow:0 1px #371530; text-decoration:none; line-height:15px;}
+div#header div.secondContainer div.right div.selects div.select div.outer_select span a {font:normal 15px "Officina Regular"; color:#DDCAD8; text-shadow:0 1px #371530; text-decoration:none; line-height:15px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.secondContainer div.right div.selects div.select.selected div.outer_select span a {color:white;}
 div#header div.secondContainer div.right div.selects div.select div.option_list {position:absolute; display:none; top:0; left:-2px; width:198px; z-index:50;}
 div#header div.secondContainer div.right div.selects div.select.opened div.option_list {display:block;}
@@ -85,7 +85,7 @@ div#header div.secondContainer div.right div.selects div.select div.option_list 
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul {padding:5px 0 0 0;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li {padding:0 0 5px 16px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('../images/selected_arrows.png') no-repeat 195px 4px;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 1px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#bbbbbb!important;}
@@ -136,7 +136,7 @@ div.tabs {position:absolute; left:0; right:0; top:223px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
 div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
-div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:rgba(0,0,0,0.5); z-index:10; text-decoration:none;}
+div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:url('../images/canary_bkg.png') repeat 0 0; z-index:10; text-decoration:none;}
 div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
@@ -168,15 +168,15 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.bubbleContainer span.name{display:none;}
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
-p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white;}
+p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
 
 /*WADUS TEXT*/
-div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; text-shadow: #000000 0px 0px 7px;}
-div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px;}
+div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; }
+div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px; text-shadow: #000000 0px 0px 7px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#000000);}
 div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
-div.wadusText a{font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px;}
+div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px; text-shadow: #000000 0px 0px 7px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#000000);}
 
 /*MAP CONTROLS*/
 div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
@@ -212,7 +212,7 @@ div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 div.bubble {position:absolute; padding:0; margin:0; overflow:visible;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
 div.bubble p.stat {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
-div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center;}
+div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
@@ -253,7 +253,7 @@ div.infowindow div.bottom div.chart {width:205px; height:35px; background:url('.
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.goTo {float:left; margin:16px 0 0 0; font:normal 13px "Officina Regular"; color:black; text-decoration:underline; text-shadow:0 1px white;}
 div.infowindow div.bottom a.goTo:hover {}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:12px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindow div.bottom a.more:hover {color:black;}

@@ -171,6 +171,8 @@
                   '</div>';
     $(div).append(bubble);
 
+
+
     if (radius < 14) {
       $('div.bubble[id="'+point.id+'"]').find('p.stat').css('display',"none");
     }
