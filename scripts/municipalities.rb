@@ -104,7 +104,11 @@ SQL
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
         json[municipality_name][:parent_results] = province_results[province_name][proceso_electoral_id.to_s]
-        json[municipality_name][:evolution] = evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
+        json[municipality_name][:evolution] = if evolution[custom_variable_name][municipality[:cartodb_id].to_s]
+          evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
+        else
+          "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+        end
       end
       putc '.'
       fd = File.open('../' + municipalities_path(province_name,variable),'w+')
