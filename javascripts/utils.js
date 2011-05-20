@@ -229,28 +229,28 @@ var textInfoWindow = {
     after_positive: "% más de radio que la media nacional <strong>(<%= media %>)</strong>."
   },
   matriculaciones_normalizado : {
-    before_negative: " ",
-    after_negative: "% <strong>(<%= media %>)</strong>.",
-    before_positive: " ",
-    after_positive: "% <strong>(<%= media %>)</strong>."
+    before_negative: "Hay un ",
+    after_negative: "% menos de vehículos matriculados respecto a la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "Hay un ",
+    after_positive: "% mas de vehículos matriculados respecto a la media nacional <strong>(<%= media %>)</strong>."
   },
   detenidos_normalizado : {
-    before_negative: " ",
-    after_negative: "% <strong>(<%= media %>)</strong>.",
-    before_positive: " ",
-    after_positive: "% <strong>(<%= media %>)</strong>."
+    before_negative: "Hay un ",
+    after_negative: "% menos de detenidos respecto a la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "Hay un ",
+    after_positive: "% mas de detenidos respecto a la media nacional <strong>(<%= media %>)</strong>."
   },
   jovenes_parados_normalizado: {
-    before_negative: " ",
-    after_negative: "% <strong>(<%= media %>)</strong>",
-    before_positive: " ",
-    after_positive: "% <strong>(<%= media %>)</strong>"
+    before_negative: "Hay un",
+    after_negative: "% menos de jóvenes parados respecto a la media nacional <strong>(<%= media %>)</strong>",
+    before_positive: "Hay un",
+    after_positive: "% mas de jóvenes parados respecto a la media nacional <strong>(<%= media %>)</strong>"
   },
   parados_larga_duracion_normalizado: {
-    before_negative: " ",
-    after_negative: "% <strong>(<%= media %>)</strong>",
-    before_positive: " ",
-    after_positive: "% <strong>(<%= media %>)</strong>"
+    before_negative: "Hay un ",
+    after_negative: "% menos de parados de larga duración respecto a la media nacional <strong>(<%= media %>)</strong>",
+    before_positive: "Hay un ",
+    after_positive: "% mas de parados de larga duración respecto a la media nacional <strong>(<%= media %>)</strong>"
   }
 };
 
