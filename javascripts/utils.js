@@ -149,9 +149,9 @@ var tooltipInfo = {
 var textInfoWindow = {
   envejecimiento_normalizado : {
     before_negative: "Aquí hay un ",
-    after_negative: "% menos de personas mayores de 65 años, que en el resto de España",
+    after_negative: "% menos de personas mayores de 65 años, que en el resto de España <strong>(<%= media %>)</strong>.",
     before_positive: "Aquí hay un ",
-    after_positive: "% más de personas mayores de 65 años, que en el resto de España"
+    after_positive: "% más de personas mayores de 65 años, que en el resto de España <strong>(<%= media %>)</strong>."
   },
   paro_epa_normalizado : {
     before_negative: "La tasa de paro se encuentra a un ",
@@ -197,15 +197,15 @@ var textInfoWindow = {
   },
   secundaria_acabada_normalizado: {
     before_negative: "Un ",
-    after_negative: "% menos que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados",
+    after_negative: "% menos que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados.",
     before_positive: "Un ",
-    after_positive: "% más que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados"
+    after_positive: "% más que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados."
   },
   penetracion_internet_normalizado: {
     before_negative: "Un ",
-    after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet.",
     before_positive: "Un ",
-    after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí"
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet."
   },
   audiencia_diaria_tv_normalizado : {
     before_negative: "Su población consume un ",

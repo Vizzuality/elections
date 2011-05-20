@@ -317,7 +317,7 @@
 
 
     InfoWindow.prototype.updateValues = function() {
-
+      
       if (this.div_) {
 
         if (this.deep_level != "municipios") {
@@ -331,6 +331,7 @@
           this.drawTotalNumber(3, this.information, true);
           this.drawTotalNumber(4, this.information, true);
         }
+
         else {
           $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
