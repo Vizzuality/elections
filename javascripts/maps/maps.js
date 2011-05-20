@@ -20,10 +20,8 @@
   function initializeMap() {
 
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,scrollwheel: false, minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
-    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']},draggable:false};
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
-    canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
 
 
     //Custom styled map - custom_map_style
@@ -31,8 +29,6 @@
     var rtveMapType = new google.maps.StyledMapType(custom_map_style, styledMapOptions);
     peninsula.mapTypes.set('rtve', rtveMapType);
     peninsula.setMapTypeId('rtve');
-    canary_island.mapTypes.set('rtve', rtveMapType);
-    canary_island.setMapTypeId('rtve');
 
 
     var mapChartOptions = {
@@ -71,7 +67,6 @@
        alt: ""
     });
     peninsula.overlayMapTypes.insertAt(1,political_parties);
-    canary_island.overlayMapTypes.setAt(0,political_parties);
 
 
 
@@ -207,20 +202,7 @@
       }
     });
   }
-  
-  
-  // function simpleRefreshTiles() {
-  //   $('div#peninsula div').each(function(i,ele){
-  //     if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1 && $(ele).children('img').length>0) {
-  //       var old_image = $(ele).children('img');        
-  //       var old_url = old_image.attr('src');
-  //       var tm = old_url.split("/");
-  //       var old_process = tm[tm.length-2];
-  //       var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
-  //       old_image.attr('src',new_url);
-  //     }
-  //   });
-  // }
+
 
 
   var loaded = false;
