@@ -67,15 +67,15 @@
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
             '</div>'+
-          '</div>'+
-          '<div class="summary">'+
-          '<h4>Municipios en los que es el más votado...</h4>'+
-          '<ul>'+
-            '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
-            '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
-            '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-            '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
-          '</ul>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
           '</div>'+
         '</div>';
 
@@ -501,7 +501,6 @@
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info['data'][year][ele]!=undefined) {
-
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
