@@ -258,7 +258,6 @@
 
 
       function fillData(info, region_name) {
-      console.log(region_name);
         me.secondData = info;
         me.createChart(info,false);
 
@@ -272,17 +271,18 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        $('div#comparewindow div#compare_region2 div.summary div.partido').each(function(i,ele){
+        $('div#comparewindow div#compare_region2 div.summary li.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
         var deep_level;
 
-        if (region_name == null) {
+        if (region_name == undefined) {
           deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
         } else {
           deep_level = region_name;
         }
+        console.log("region_name", deep_level);
 
         if (deep_level != "municipios") {
           me.drawTotalNumber(1, 2, me.secondData, false);
