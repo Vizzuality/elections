@@ -59,6 +59,7 @@
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
             '</div>'+
+            '<a href="#ver_provincias" class="goTo">Ver provincias</a>'+
             '<a class="compare">Comparar</a>'+
           '</div>'+
           '<div class="footer">'+
@@ -73,7 +74,17 @@
 		    /*Infowindow events*/
 		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
 		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
-        $('div#infowindow p.info a.why_no_data').live('click',function(ev){alert('jamon'); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
+        $('div#infowindow').delegate('.why_no_data','click',function(ev){ev.preventDefault(); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
+        $('div#infowindow').delegate('.goTo','click',function(ev){
+          ev.preventDefault(); 
+          try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};
+          var zoom = peninsula.getZoom();
+          if (zoom==6) {
+            peninsula.setZoom(7);
+          } else if (zoom==7 || zoom==8) {
+            peninsula.setZoom(11);
+          }
+        });
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
           try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
@@ -229,7 +240,7 @@
 
         console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+        var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
@@ -237,7 +248,22 @@
         $('div#infowindow p.info').html('No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>');
         $('div#infowindow div.chart').hide();
       }
+      
+      if (this.deep_level=="municipios") {
+        $('div.infowindow a.goTo').hide();
+      } else if (this.deep_level=="provincias") {
+        $('div.infowindow a.goTo').text('Ver municipios');
+        $('div.infowindow a.goTo').attr('href','#ver_municipios');
+        $('div.infowindow a.goTo').show();
+      } else {
+        $('div.infowindow a.goTo').text('Ver provincias');
+        $('div.infowindow a.goTo').attr('href','#ver_provincias');
+        $('div.infowindow a.goTo').show('Ver provincias');
+      }
+      
 
+      //'<a href="#ver_provincias" class="goTo">Ver provincias</a>'+
+      
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       me.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
 
@@ -356,7 +382,7 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-          var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
           text = _.template(text)({media : media});
           // Change image url
           var statImage = this.generateStatImage();
