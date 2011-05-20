@@ -647,6 +647,7 @@ function createBubbles(url){
     if (data == null) {
       createdBubbles = false;
       failCircle.show();
+      console.log("404", url);
       return;
     }
 
@@ -688,6 +689,7 @@ function updateBubbles(url){
   $.getJSON(url, function(data) {
 
   if (data == null) {
+      console.log("404", url);
     failCircle.show();
     return;
   }
