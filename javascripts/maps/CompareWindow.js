@@ -1,8 +1,9 @@
-
+    var google_autocomplete;
 
     function CompareWindow() {
       this.create();
       this.firstZoom = 12;
+      this.position = "top";
       this.firstData = {};
       this.secondData = {};
       this.bar_width_multiplier = 140;
@@ -41,7 +42,7 @@
           '<div class="search">'+
             '<h4>Selecciona otro lugar para comparar...</h4>'+
             '<form class="search_compare">'+
-              '<input class="text" type="text" value="Busca una localidad..." />'+
+              '<input class="text" type="text" value="Introduce una ubicación" id="google_compare_autocomplete" />'+
               '<input class="submit" type="submit" value=""/>'+
             '</form>'+
             '<p class="refer">¿Te refieres a... <a href="#Almendralejo">Almendralejo, Extremadura</a>?</p>'+
@@ -63,57 +64,72 @@
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
 
+      
       $('div.compare_graph a.right').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo({top:'+=0',left:'+=299'}, 500);
       });
 
+      
       $('div.compare_graph a.left').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo( {top:'+=0',left:'-=299'}, 500);
       });
-
-      $('form.search_compare input.text').focusin(function(){
-        var value = $(this).val();
-        if (value=="Busca una localidad...") {
-          $(this).val('');
-        }
+      
+      $('form.search_compare').submit(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
       });
 
-      $('form.search_compare input.text').focusout(function(){
-        var value = $(this).val();
-        if (value=="") {
-          $(this).val('Busca una localidad...');
-        }
-      });
 
       $('form.search_compare').submit(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        searchCompareLocation($(this).find('input.text').val());
       });
 
+      
       $('a.remove_compare').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         me.removeRegion($(this).closest('div').attr('class'));
       });
 
-
+      
       $('a.resumen').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "up";
         $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
       });
 
+      
       $('a.evolucion').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "down";
         $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
       });
+      
+      me.addGoogleAutocomplete();
     }
+    
+    
+    CompareWindow.prototype.addGoogleAutocomplete = function() {
+      var me = this;
+      var input = document.getElementById('google_compare_autocomplete');
+      var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(27.391278222579277, -18.45703125),new google.maps.LatLng(42.601619944327965, 4.0869140625));
+      var options = {bounds: defaultBounds};
+      google_autocomplete = new google.maps.places.Autocomplete(input, options);
+      
+      
+      google.maps.event.addListener(google_autocomplete, 'place_changed', function() {
+        var place = google_autocomplete.getPlace();
+        comparewindow.compareSecondRegion(null,place.formatted_address);
+      });
+    }
+
 
 
     CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
@@ -128,7 +144,9 @@
     	// Move slider to the start
     	$('div.outer_stats_slider').scrollTo({top:'0',left:'0'}, 1);
     	//Create charts
+    	$('div.stats_slider').empty();
     	this.createChart(info);
+    	this.setUpChartView();
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -191,7 +209,6 @@
       var me = this;
       this.cleanSecondRegion();
       var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json';
-      console.log("comparing", url);
 
       if (info==null) {
         $.ajax({
@@ -268,6 +285,7 @@
       }
     }
 
+
     CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
@@ -284,7 +302,7 @@
         $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') span.c').animate({
           width: bar_width.toString() +"px"
         }, 500, 'easeOutCubic');
-        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ' + bar_width + ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
       } else {
 
         bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
@@ -293,6 +311,7 @@
 
       }
     }
+
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
@@ -311,20 +330,24 @@
       }
     }
 
+
     CompareWindow.prototype.resetSearch = function() {
-      $('div#comparewindow div.bottom input.text').val('Busca una localidad...');
+      $('div#comparewindow div.bottom input.text').val('Introduce una ubicación');
       $('div#comparewindow div.bottom p.refer').hide();
       $('div#comparewindow div.bottom').removeClass('region').addClass('search');
     }
+
 
     CompareWindow.prototype.show = function() {
       $(this.div).css('margin','-200px 0 0 -178px').css('top','50%').css('left','50%');
       $(this.div).fadeIn();
     }
 
+
     CompareWindow.prototype.hide = function() {
       $(this.div).fadeOut();
     }
+
 
     CompareWindow.prototype.removeRegion = function(from) {
 
@@ -357,6 +380,8 @@
 
 
     CompareWindow.prototype.createChart = function(info) {
+
+      
       $('div.stats_slider').width(_.size(normalization)*298);
       var width = 130;
 
@@ -446,6 +471,10 @@
         }
       });
 
+    }
+
+
+    CompareWindow.prototype.setUpChartView = function() {
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
         setTimeout(function(){$('div.outer_stats_slider').scrollTo($('div.stats_slider div[alt="'+compare+'"].up'),1);},20);
       }
