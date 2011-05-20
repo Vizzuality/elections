@@ -110,7 +110,7 @@
       } else {
         $('div#infowindow h2').html(info.name);
       }
-      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
+      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' votantes':''));
 
 
       if (info['data'][year]['primer_partido_name']!=undefined) {

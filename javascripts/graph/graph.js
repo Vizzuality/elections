@@ -234,9 +234,7 @@ function initializeGraph() {
     var title = valuesHash[data_id].name;
 
     if (title.length > 24) {
-       title = title.substr(0,21) + "... <sup>("+year+")</sup>";
-    } else {
-       title = title + " <sup>("+year+")</sup>";
+       title = title.substr(0,21) + "...";
     }
 
     $("#graph_infowindow").find(".top").find("h2").append(title);
@@ -254,7 +252,7 @@ function initializeGraph() {
     var porcentaje_participacion = Math.floor(parseInt(valuesHash[data_id].porcentaje_participacion));
 
     $("#graph_infowindow").find(".top").find(".province").empty();
-    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes");
+    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes, " + year);
     $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
     $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
@@ -273,12 +271,16 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-
     selected_value = parseFloat(data[36 - (maxYear - year)]);
 
     var availableYears = availableData[deep][normalization[compare]];
+
     var firstYear = availableYears[0];
-    var lastYear = availableYears[availableYears.length - 1];
+
+    if (firstYear < 1987) {
+      firstYear = 1987;
+    }
+    var lastYear  = availableYears[availableYears.length - 1];
 
     var firstYearIndex = 36 - (maxYear- firstYear);
     var lastYearIndex  = 36 - (maxYear- lastYear);
@@ -307,10 +309,10 @@ function initializeGraph() {
     if (find_year == null) {
       find_year = lastYearIndex;
     }
-    //console.log(find_year, data[find_year]);
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
+    var width = (lastYearIndex - firstYearIndex)*8+10;
 
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((lastYearIndex - firstYearIndex)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+width+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
         $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
@@ -538,11 +540,11 @@ function initializeGraph() {
 
     if (names.length > 0) {
       if (names.length == 1) {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
+        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ')).show();
         $('div.graph_legend p.autonomy a').text('Volver a España')
         $('div.graph_legend p.autonomy a').attr('href','#ver_España');
       } else {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
+        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ')).show();
         $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
         $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
       }

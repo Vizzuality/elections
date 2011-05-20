@@ -126,6 +126,7 @@
 
     var radius;
     if (point['data'][year]!=undefined) {
+    
       if (normalization[compare]!=undefined && point['data'][year][normalization[compare]]!=undefined) {
         var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
         var max = max_min[region_type][normalization[compare]+'_'+year+'_max'];
