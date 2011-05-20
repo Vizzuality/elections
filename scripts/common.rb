@@ -408,12 +408,16 @@ def create_years_hash(records, variables, max_year, min_year)
       if row.proceso_electoral_year && row.proceso_electoral_year <= year
         data[:censo_total]             = row.censo_total
         data[:percen_participacion]    = row.percen_participacion
+        data[:primer_partido_total]  = row.primer_partido_votos
         data[:primer_partido_percent]  = row.primer_partido_percent
         data[:primer_partido_name]     = row.primer_partido_name
+        data[:segundo_partido_total] = row.segundo_partido_votos
         data[:segundo_partido_percent] = row.segundo_partido_percent
         data[:segundo_partido_name]    = row.segundo_partido_name
+        data[:tercer_partido_total]  = row.tercer_partido_votos
         data[:tercer_partido_percent]  = row.tercer_partido_percent
         data[:tercer_partido_name]     = row.tercer_partido_name
+        data[:otros_partido_total]   = row.otros_partido_votos
         data[:otros_partido_percent]   = row.otros_partido_percent
       else
         next
