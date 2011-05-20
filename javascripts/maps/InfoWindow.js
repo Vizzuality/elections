@@ -134,11 +134,6 @@
       }
 
       if (animated == true) {
-        if (party_id < 4) {
-          var partido = info.data[year][positions[id] +'_partido_name'];
-        } else {
-          partido = "otros";
-        }
         var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
 
       if (old_percent != percent) {
@@ -150,7 +145,6 @@
         });
         }
       } else {
-        partido = "otros";
         $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
         $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
       }
@@ -317,7 +311,7 @@
 
 
     InfoWindow.prototype.updateValues = function() {
-      
+
       if (this.div_) {
 
         if (this.deep_level != "municipios") {
