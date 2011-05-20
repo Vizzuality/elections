@@ -183,14 +183,14 @@
         old_image.attr('src',new_url);
 
         // when it loads the new image, fade out the old one
+        old_image.unbind("load");
         old_image.one("load",function(){
           new_image.animate({opacity:0},{ duration: 800, queue: false ,complete: function() {
               new_image.remove();
             }
           });
           
-          old_image.animate({opacity:100},{ duration: 0, queue: false})
-          .each(function(){
+          old_image.each(function(){
             if(this.complete) $(this).trigger("load");
           });
         }); 
