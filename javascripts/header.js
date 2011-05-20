@@ -504,7 +504,7 @@
       }
       if(comparewindow.isVisible()){
         comparewindow.updateValues();
-        comparewindow.createChart(infowindow.information);
+        comparewindow.createChart(infowindow.information,true,true);
       }
     } else {
       graphBubbleTooltip.hide();
