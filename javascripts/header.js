@@ -358,6 +358,7 @@
       }
 
       function hideError() {
+        
         var $state = (state == "mapa") ? $("#map") : $("#graph");
         $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
       }
@@ -452,10 +453,15 @@
   }
 
   function checkStartYear() {
-    if (checkFailYear(year)) {
-      animate_interval = setInterval(function(){animateSlider();},2500);
+    if (year!=2011) {
+      if (checkFailYear(year)) {
+        animate_interval = setInterval(function(){animateSlider();},2500);
+      } else {
+        updateNewSliderValue(getFirstAvailableYear(getDeepLevelFromZoomLevel(peninsula.getZoom())),year);
+        animate_interval = setInterval(function(){animateSlider();},2500);
+      }
     } else {
-      updateNewSliderValue(getFirstAvailableYear(getDeepLevelFromZoomLevel(peninsula.getZoom())),year);
+      updateNewSliderValue(1987,2011);
       animate_interval = setInterval(function(){animateSlider();},2500);
     }
   }
@@ -516,7 +522,6 @@
     }
 
     var comparison_var = normalization[compare];
-    //console.log(deep_level, comparison_var, years_nodata, years_nodata[deep_level], years_nodata[deep_level][comparison_var]);
 
     if (years_nodata[deep_level][comparison_var]!=undefined) {
 
@@ -588,10 +593,10 @@
     if (state == 'mapa') {
       if (previous_year!=undefined) {
         if (graph_hack_year[previous_year] != graph_hack_year[new_year]) {
-          (!animation)?refreshTiles():simpleRefreshTiles();
+          refreshTiles();
         }
       } else {
-        (!animation)?refreshTiles():simpleRefreshTiles();
+        refreshTiles();
       }
 
       if (!checkFailYear(new_year)) {
