@@ -100,13 +100,23 @@
       $("#welcomewindow").fadeOut("slow");
     });
 
-    $("#welcomewindow a.explore").click(function(ev) {
+    $("#welcomewindow a.start").click(function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
       $("#welcomewindow").fadeOut("slow");
+
+        var text = $("div.select div.option_list ul li a.paro").text();
+        $("div.select div.outer_select.money").parent().addClass("selected");
+        $("div.select div.outer_select.money span.inner_select a").text(text);
+        $("div.select div.option_list ul li a.paro").parent().addClass("selected");
+        compare = "paro";
+        updateNewSliderValue(2005, year);
+        changeHash();
+        console.log(compare);
+
     });
 
-    $("#welcomewindow a.start").click(function(ev) {
+    $("#welcomewindow a.explore").click(function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
       $("#welcomewindow").fadeOut("slow");
@@ -115,7 +125,9 @@
     $("#welcomewindow a.more_info").click(function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow");
+      $("#welcomewindow").fadeOut("slow", function() {
+        explanationwindow.show();
+      });
     });
 
     $("#welcomewindow a.know_more").click(function(ev) {
