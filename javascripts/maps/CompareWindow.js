@@ -406,37 +406,36 @@
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
+        this.updateTotalNumber();
+        this.updateBars();
+      }
+    }
+
+    CompareWindow.prototype.updateTotalNumber = function() {
+        $('div#comparewindow div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        for (var i = 1; i <= 4; i++) {
+          this.drawTotalNumber(i, 1, this.firstData, true);
+
+          if (this.secondData.data != undefined) {
+            this.drawTotalNumber(i, 2, this.secondData, true);
+          }
+        }
+    }
+
+    CompareWindow.prototype.updateBars = function() {
 
         $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        $('div#comparewindow div.summary li.partido').each(function(i,ele){
-          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-        });
+      for (var i = 1; i <= 4; i++) {
+        this.drawBar(i,"top", this.firstData);
 
-        this.drawTotalNumber(1, 1, this.firstData, true);
-        this.drawTotalNumber(2, 1, this.firstData, true);
-        this.drawTotalNumber(3, 1, this.firstData, true);
-        this.drawTotalNumber(4, 1, this.firstData, true);
-
-        if (this.secondData != null) {
-          this.drawTotalNumber(1, 2, this.secondData, true);
-          this.drawTotalNumber(2, 2, this.secondData, true);
-          this.drawTotalNumber(3, 2, this.secondData, true);
-          this.drawTotalNumber(4, 2, this.secondData, true);
-        }
-
-        this.drawBar(1,"top", this.firstData);
-        this.drawBar(2,"top", this.firstData);
-        this.drawBar(3,"top", this.firstData);
-        this.drawBar(4,"top", this.firstData);
-
-        if (this.secondData != null) {
-          this.drawBar(1,"bottom", this.secondData);
-          this.drawBar(2,"bottom", this.secondData);
-          this.drawBar(3,"bottom", this.secondData);
-          this.drawBar(4,"bottom", this.secondData);
+        if (this.secondData.data != undefined) {
+          this.drawBar(i,"bottom", this.secondData);
         }
       }
     }
