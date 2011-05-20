@@ -351,6 +351,10 @@ div#appInfo div.explain h1 {padding:0 0 5px 0; font:normal 17px "Officina Bold";
 div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#666666;}
 div#appInfo div.explain p a {color:#8C1F74;}
 div#appInfo div.explain p.rango {padding: 0 0 10px 0; font:normal 13px Arial; color:#999999}
+div#appInfo div.explain img.chart {margin: 20px 0 0 0; border: 1px solid white; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#appInfo div.explain div.chartCurrentLabel {position: relative; float: right; top: -70px; width: 150px; text-align: right; margin: 0 20px 0 0;}
+div#appInfo div.explain div.chartCurrentLabel span.value {width: 100%; text-align: right; font: normal 37px "Officina Regular"; color: #363636;}
+div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align: right; font: normal 13px "Arial"; color: #363636;}
 
 /*GRAPH*/
 /*Legend*/
