@@ -48,6 +48,7 @@
           comparewindow.hide();
           graphBubbleTooltip.hide();
           state = "mapa";
+          drawNoDataBars();
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
@@ -63,6 +64,7 @@
           comparewindow.hide();
           graphBubbleTooltip.hide();
           $("#graph").show();
+          drawNoDataBars();
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           restartGraph(true);
@@ -425,6 +427,7 @@
     if (state == "mapa") {
       var zoom = peninsula.getZoom();
       deep_level = getDeepLevelFromZoomLevel(zoom);
+      console.log(deep_level);
     } else {
       deep_level = deep;
     }
@@ -434,7 +437,10 @@
       return false;
     }
 
+    console.log(deep_level, years_nodata, years_nodata[deep_level], years_nodata[deep_level][normalization[compare]]);
+
     if (years_nodata[deep_level][normalization[compare]]!=undefined) {
+
       var left_no = years_nodata[deep_level][normalization[compare]][0] - 1987;
       var lenght_array = years_nodata[deep_level][normalization[compare]].length;
       var right_no = 2011 - years_nodata[deep_level][normalization[compare]][lenght_array-1];
@@ -452,6 +458,16 @@
       } else {
         $('span.slider_no_data_right').hide();
       }
+    } else {
+      if (state == "grafico") {
+        $('span.slider_no_data_left').css({width:"100%"});
+        $('span.slider_no_data_right').css({width:"0%"});
+
+        $('span.slider_no_data_left').show();
+        $('span.slider_no_data_right').show();
+        failCircle.show();
+        return;
+      }
     }
 
     if (!checkFailYear(year)) {
@@ -463,9 +479,9 @@
 
   function checkFailYear(year) {
     if (state == "mapa") {
-      checkFailYearForMap(year);
+      return checkFailYearForMap(year);
     } else {
-      checkFailYearForGraph(year);
+      return checkFailYearForGraph(year);
     }
   }
 
