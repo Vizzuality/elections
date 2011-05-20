@@ -515,6 +515,10 @@ def max_min_vars_query(zoom_level)
   SQL
 end
 
+def root_data_path
+  Dir.exists?('/mnt/www/data') ? '/mnt/www/data' : "#{FileUtils.pwd}/../json/generated_data"
+end
+
 def next_folder(path)
   last_dir = Dir.entries(path).map(&:to_i).sort.last
   version_path = last_dir + 1
