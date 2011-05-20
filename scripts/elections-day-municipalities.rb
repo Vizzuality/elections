@@ -8,7 +8,9 @@ require 'open-uri'
 
 include LibXML
 
-$parties = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:siglas]; h}
+rows = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows]
+$parties_ids = rows.inject({}){ |h, row| h[row[:siglas]] = row[:cartodb_id]; h}
+$parties = rows.inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
 $rparties = $parties.invert
 
 class MunicipalityParticipation
@@ -148,14 +150,18 @@ class MunicipalityVotes
     end
     # Insert all non existing parties
     array.each do |p|
-      if $rparties[p[3]].nil?
-        # $cartodb.query("INSERT INTO partidos_politicos (name) VALUES ('#{p[0].gsub(/\'/,"\\\'")}')").rows
-        puts "Insertando #{p[0]} en partidos_politicos" 
-        $parties = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:siglas]; h}
-        $rparties = $parties.invert
+      if $rparties[p[0]].nil?
+        if $parties_ids[p[3]].nil?
+          # $cartodb.query("INSERT INTO partidos_politicos (name) VALUES ('#{p[0].gsub(/\'/,"\\\'")}')").rows
+          puts "Insertando #{p[0]} en partidos_politicos" 
+          rows = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows]
+          $parties_ids = rows.inject({}){ |h, row| h[row[:siglas]] = row[:cartodb_id]; h}
+          $parties = rows.inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
+          $rparties = $parties.invert
+        end
       end
     end
-    
+        
     @final_result = {
       :municipio_id => @municipio_id, :proceso_electoral_id => 76, 
       :mesas_electorales => nil, :censo_total=>nil, :votantes_totales=>nil, :votos_validos=>nil, :votos_en_blanco=>nil, :votos_nulos=>nil, 
