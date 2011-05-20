@@ -276,7 +276,7 @@ div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; back
 div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 
-div#comparewindow div div.summary {display:inline-block; width:276px; height:75px; margin:8px 0 0 40px;}
+div#comparewindow div div.summary {display:none; width:276px; height:75px; margin:8px 0 0 40px;}
 div#comparewindow div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
 div#comparewindow div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
 div#comparewindow div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
