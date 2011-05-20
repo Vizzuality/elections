@@ -184,10 +184,10 @@ var textInfoWindow = {
     after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>)</strong>."
   },
   saldo_vegetativo_normalizado : {
-    before_negative: "El crecimiento natural es de ",
-    after_negative: " por cada mil habitantes",
-    before_positive: "El crecimiento natural es de ",
-    after_positive: " por cada mil habitantes"
+    before_negative: "El crecimiento natural de la población está un ",
+    after_negative: "<strong>%</strong> por debajo de la media.",
+    before_positive: "El crecimiento natural de la población está un ",
+    after_positive: "<strong>%</strong> por encima de la media."
   },
   salario_medio_normalizado : {
     before_negative: "Salario medio ",
@@ -203,27 +203,27 @@ var textInfoWindow = {
   },
   penetracion_internet_normalizado: {
     before_negative: "Un ",
-    after_negative: "<strong>%</strong> de su población tiene acceso a internet.",
+    after_negative: "<strong>%</strong> menos que la media nacional <strong>(<%= media %>%)</strong>, tiene acceso a internet.",
     before_positive: "Un ",
-    after_positive: "<strong>%</strong> de su población tiene acceso a internet."
+    after_positive: "<strong>%</strong> más que la media nacional <strong>(<%= media %>%)</strong>, tiene acceso a internet."
   },
   audiencia_diaria_tv_normalizado : {
-    before_negative: "Un ",
-    after_negative: "<strong>%</strong> de su población ve TV.",
-    before_positive: "Se consume un ",
-    after_positive: "<strong>%</strong> de su población ve TV."
+    before_negative: "Consume un ",
+    after_negative: "<strong>%</strong> menos de televisión que la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "Consume un ",
+    after_positive: "<strong>%</strong> más de televisión que la media nacional <strong>(<%= media %>)</strong>."
   },
   prensa_diaria_normalizado : {
-    before_negative: "Un ",
-    after_negative: "<strong>%</strong> de su población lée Prensa.",
-    before_positive: "Un ",
-    after_positive: "<strong>%</strong> de su población lée Prensa."
+    before_negative: "Consume un ",
+    after_negative: "<strong>%</strong> menos de radio que la media nacional <strong>(<%= media %>)</strong>.",
+    before_positive: "El porcentaje de inmigración ",
+    after_positive: "<strong>%</strong> más de radio que la media nacional <strong>(<%= media %>)</strong>."
   },
   matriculaciones_normalizado : {
-    before_negative: "Hay ",
-    after_negative: " vehículos matriculados menos que la media nacional <strong>(<%= media %>)</strong>.",
+    before_negative: "Hay un ",
+    after_negative: "% menos de vehículos matriculados que la media nacional.",
     before_positive: "Hay un ",
-    after_positive: " vehículos matriculados más que la media nacional <strong>(<%= media %>)</strong>."
+    after_positive: "% más de vehículos matriculados que la media nacional."
   },
   detenidos_normalizado : {
     before_negative: "Hay un ",
@@ -235,13 +235,13 @@ var textInfoWindow = {
     before_negative: "Hay un",
     after_negative: "<strong>%</strong> menos de jóvenes parados respecto a la media nacional <strong>(<%= media %>%)</strong>",
     before_positive: "Hay un",
-    after_positive: "<strong>%</strong> mas de jóvenes parados respecto a la media nacional <strong>(<%= media %>%)</strong>."
+    after_positive: "<strong>%</strong> mas de jóvenes parados respecto a la media nacional <strong>(<%= media %>%)</strong>"
   },
   parados_larga_duracion_normalizado: {
     before_negative: "Hay un ",
     after_negative: "<strong>%</strong> menos de parados de larga duración respecto a la media nacional <strong>(<%= media %>)</strong>",
     before_positive: "Hay un ",
-    after_positive: "<strong>%</strong> mas de parados de larga duración respecto a la media nacional <strong>(<%= media %>)</strong>."
+    after_positive: "<strong>%</strong> mas de parados de larga duración respecto a la media nacional <strong>(<%= media %>)</strong>"
   }
 };
 
