@@ -89,12 +89,15 @@
 					if (chartData.charAt(chartData.length-1) == ',') {
 						chartData = chartData.substring(0,chartData.length-1);
 					}
+					minValue -= 0.1*maxValue;
+					maxValue += 0.1*maxValue;					
 					var urlChart = "http://chart.apis.google.com/chart?chs=480x166&cht=ls&chco=862071&chd=t:"+chartData+"&chg=5,-1,0,1&chls=3&chma=|0,3&chm=B,E6DBE4,0,0,0&chds="+minValue+","+maxValue;
         	$('div#appInfo div.explain').append("<img src='"+urlChart+"' class='chart'/>");
-        	$('div#appInfo div.explain').append("<div class='chartCurrentLabel'><span class='value'>"+max_min_avg[varName+"_"+lastYear+"_avg"]+"</span><br/><span class='year'>en "+lastYear+"</span>")
-        	$('div#appInfo div.explain').append(explanationContent[$(this).parent().text()].sourceText);
+        	$('div#appInfo div.explain').append("<div class='chartCurrentLabel'><span class='value'>"+max_min_avg[varName+"_"+lastYear+"_avg"]+"</span><br/><span class='year'>"+explanationContent[$(this).parent().text()].units+" en "+lastYear+"</span>")
 				}
-
+        $('div#appInfo div.explain').append(explanationContent[$(this).parent().text()].sourceText); 				
+				var offset = $(this).position().top;
+        $('div#appInfo span.arrow').animate({top:offset+'px'},300);				
       }
 
     });
