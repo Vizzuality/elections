@@ -48,6 +48,7 @@
           $("#graph").hide();
           comparewindow.hide();
           graphBubbleTooltip.hide();
+          $("#welcomewindow").fadeOut();
           state = "mapa";
           drawNoDataBars();
 
@@ -63,6 +64,7 @@
 
         } else {
           state = "grafico";
+          $("#welcomewindow").fadeOut();
           comparewindow.hide();
           graphBubbleTooltip.hide();
           $("#graph").show();
@@ -214,6 +216,8 @@
       ev.stopPropagation();
       ev.preventDefault();
 
+          $("#welcomewindow").fadeOut();
+
       $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
 
       if (!$(this).closest('div.select').hasClass('opened')) {
@@ -242,6 +246,8 @@
     $('div.option_list ul li a').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
+
+          $("#welcomewindow").fadeOut();
 
       var value = $(this).text();
 
