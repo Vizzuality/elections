@@ -234,9 +234,7 @@ function initializeGraph() {
     var title = valuesHash[data_id].name;
 
     if (title.length > 24) {
-       title = title.substr(0,21) + "... <sup>("+year+")</sup>";
-    } else {
-       title = title + " <sup>("+year+")</sup>";
+       title = title.substr(0,21) + "...";
     }
 
     $("#graph_infowindow").find(".top").find("h2").append(title);
@@ -254,7 +252,7 @@ function initializeGraph() {
     var porcentaje_participacion = Math.floor(parseInt(valuesHash[data_id].porcentaje_participacion));
 
     $("#graph_infowindow").find(".top").find(".province").empty();
-    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes");
+    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes, " + year);
     $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
     $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
@@ -542,11 +540,11 @@ function initializeGraph() {
 
     if (names.length > 0) {
       if (names.length == 1) {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
+        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ')).show();
         $('div.graph_legend p.autonomy a').text('Volver a España')
         $('div.graph_legend p.autonomy a').attr('href','#ver_España');
       } else {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
+        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ')).show();
         $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
         $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
       }
