@@ -242,7 +242,11 @@
 
         console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+        if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
+          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+        } else {
+          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+        }
         text = _.template(text)({media : media});
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
@@ -396,7 +400,11 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          }
           text = _.template(text)({media : media});
           // Change image url
           var statImage = this.generateStatImage();
