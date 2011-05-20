@@ -44,6 +44,15 @@
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
               '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
             '</div>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
           '</div>'+
           '<div class="bottom">'+
             '<p class="info">La region tiene <strong></strong> de la media en España.</p>'+
@@ -94,6 +103,30 @@
       }
     };
 
+    InfoWindow.prototype.drawTotalNumber = function(party_id, info) {
+
+      var id        = party_id - 1;
+      var positions = ["primer", "segundo", "tercer", "otros"];
+      var percent   = info.data[year][positions[id]+'_partido_percent'];
+
+      if (party_id < 4) {
+        var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#infowindow div.summary li.partido:eq('+id+')').addClass(partido);
+          this.oldPar = partido;
+        } else {
+          $('div#infowindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
+          this.oldPar = "par"+party_id;
+        }
+      } else {
+        partido = "otros";
+      }
+
+      $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
+      $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+    }
+
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
@@ -140,9 +173,7 @@
 
       if (info['data'][year]['primer_partido_name']!=undefined) {
 
-        if (this.deep_level == "autonomias") {
-          $('div#infowindow div.stats h4').text("Municipios en los que es el mas votado...");
-        } else {
+        if (this.deep_level != "autonomias") {
           $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
         }
 
@@ -151,11 +182,26 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
+        $('div#infowindow div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        if (this.deep_level != "autonomias") {
           this.drawPartyBar(1, info);
           this.drawPartyBar(2, info);
           this.drawPartyBar(3, info);
           this.drawPartyBar(4, info);
           $('div#infowindow div.stats').show();
+          $('div#infowindow div.summary').hide();
+        }
+        else {
+          this.drawTotalNumber(1, info);
+          this.drawTotalNumber(2, info);
+          this.drawTotalNumber(3, info);
+          this.drawTotalNumber(4, info);
+          $('div#infowindow div.summary').show();
+          $('div#infowindow div.stats').hide();
+        }
 
       } else {
         $('div#infowindow div.stats').hide();
@@ -173,7 +219,7 @@
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
 
-        //console.log(info_text, normalization, compare, normalization[compare]);
+        console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
