@@ -4,6 +4,7 @@
       this.create();
       this.firstZoom = 12;
       this.position = "top";
+      this.deep_level;
       this.firstData = {};
       this.secondData = {};
       this.bar_width_multiplier = 140;
@@ -177,6 +178,7 @@
     	//Create charts
     	this.createChart(info,true);
     	this.setUpChartView();
+      this.deep_level = getDeepLevelFromZoomLevel(zoom);
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -308,10 +310,11 @@
       var percent   = info.data[year][positions[id]+'_partido_percent'];
 
       if (party_id < 4) {
-        var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+        var partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido) !== -1) {
-          $('div#comparewindow div.summary li.partido:eq('+id+')').addClass(partido);
+          $('div#comparewindow div.summary li.partido:eq('+id+')').addClass(partido_class);
           this.oldPar = partido;
         } else {
           $('div#comparewindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
