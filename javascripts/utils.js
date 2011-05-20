@@ -149,9 +149,9 @@ var tooltipInfo = {
 var textInfoWindow = {
   envejecimiento_normalizado : {
     before_negative: "Aquí hay un ",
-    after_negative: "% menos de personas mayores de 65 años, que en el resto de España",
+    after_negative: "% menos de personas mayores de 65 años, que en el resto de España <strong>(<%= media %>)</strong>.",
     before_positive: "Aquí hay un ",
-    after_positive: "% más de personas mayores de 65 años, que en el resto de España"
+    after_positive: "% más de personas mayores de 65 años, que en el resto de España <strong>(<%= media %>)</strong>."
   },
   paro_epa_normalizado : {
     before_negative: "La tasa de paro se encuentra a un ",
