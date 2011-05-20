@@ -424,11 +424,11 @@
     if (new_value>2011) {
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');
-      animate = false;
+      animation = false;
       clearInterval(animate_interval);
       return false;
     } else {
-      animate = true;
+      animation = true;
       updateNewSliderValue(new_value);
     }
   }
@@ -487,8 +487,14 @@
       } else {
         $('span.slider_no_data_right').hide();
       }
+      
+      if (!checkFailYear(year)) {
+        failCircle.show();
+      } else {
+        failCircle.hide();
+      }
     } else {
-      if (state == "grafico") {
+      if (compare!="ninguna") {
         $('span.slider_no_data_left').css({width:"100%"});
         $('span.slider_no_data_right').css({width:"0%"});
 
@@ -497,12 +503,6 @@
         failCircle.show();
         return;
       }
-    }
-
-    if (!checkFailYear(year)) {
-      failCircle.show();
-    } else {
-      failCircle.hide();
     }
   }
 
