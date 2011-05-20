@@ -94,6 +94,30 @@
       }
     };
 
+    InfoWindow.prototype.drawPartyBar = function(party_id, info) {
+      var id = party_id - 1;
+      var positions = ["primer", "segundo", "tercer"];
+      var bar_width;
+
+      if (party_id < 4) {
+        var partido = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido);
+          this.oldPar = partido;
+        } else {
+          $('div#infowindow div.stats div.partido:eq('+id+')').addClass('par'+party_id);
+          this.oldPar = "par"+party_id;
+        }
+        bar_width = normalizeBarWidth((info['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq('+id+') p').text(info['data'][year][positions[id] + '_partido_name']+' ('+info['data'][year][positions[id]+'_partido_percent']+'%)');
+      } else {
+        // Other
+        bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+        $('div#infowindow div.stats div.partido:eq('+id+') p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+      }
+    }
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
     	var me = this;
@@ -101,6 +125,7 @@
     	this.latlng_ = latlng;
     	this.information = info;
     	this.actualZoom = peninsula.getZoom();
+    	this.deep_level = getDeepLevelFromZoomLevel(this.actualZoom);
 
     	//Hide char image.
     	$('div#infowindow div.chart img').hide();
@@ -114,64 +139,27 @@
 
 
       if (info['data'][year]['primer_partido_name']!=undefined) {
-        $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
+
+        if (this.deep_level == "autonomias") {
+          $('div#infowindow div.stats h4').text("Municipios en los que es el mas votado...");
+        } else {
+          $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
+        }
 
         // Remove previous political style bars
         $('div#infowindow div.stats div.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
-        var bar_width;
 
-        // First political party
-        var partido_1 = normalizePartyName(info['data'][year]['primer_partido_name']);
-        if (_.indexOf(parties, partido_1) !== -1) {
-          $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
-          this.oldPar1 = partido_1;
-        } else {
-          $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
-          this.oldPar1 = "par1";
-        }
-        bar_width = normalizeBarWidth((info['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
+          this.drawPartyBar(1, info);
+          this.drawPartyBar(2, info);
+          this.drawPartyBar(3, info);
+          this.drawPartyBar(4, info);
+          $('div#infowindow div.stats').show();
 
-        // Second political party
-        var partido_2 = normalizePartyName(info['data'][year]['segundo_partido_name']);
-        if (_.indexOf(parties, partido_2) !== -1) {
-          $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
-          this.oldPar2 = partido_2;
-        } else {
-          $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
-          this.oldPar2 = "par2";
-        }
-        bar_width = normalizeBarWidth((info['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
-
-        // Third political party
-        var partido_3 = normalizePartyName(info['data'][year]['tercer_partido_name']);
-        if (_.indexOf(parties, partido_3) !== -1) {
-          $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
-          this.oldPar3 = partido_3;
-        } else {
-          $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
-          this.oldPar3 = "par3";
-        }
-
-        bar_width = normalizeBarWidth((info['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
-
-        // Other
-        bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-        $('div#infowindow div.stats').show();
       } else {
         $('div#infowindow div.stats').hide();
       }
-
-
 
       if (info['data'][year][normalization[compare]]!=null) {
         $('div#infowindow div.chart').show();
@@ -184,6 +172,8 @@
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
+
+        //console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
