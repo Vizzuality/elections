@@ -3,20 +3,29 @@ body {height:auto; background:#ccc; min-width:1000px;}
 
 /*iframe*/
 iframe {position:absolute; top:0; left:50%; margin:0 0 0 -500px;}
-div.rtve {height:51px; width:100%!important; background:#fff;}
+/* RTVE header */
+div.rtve {height:51px; width:100%!important; background:white;}
+div.rtve div.left {float:left;}
+div.rtve a.logo {float:left; width:96px; height:37px; margin:5px 0 0 15px; background:url('../images/rtve.jpg') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
+div.rtve div.left ul {display:inline-block; margin:15px 0 0 10px;}
+div.rtve div.left ul li {display:inline-block; width:96px; height:28px;}
+div.rtve div.left ul li a {display:inline-block; width:96px; height:16px; padding:6px 0; background:url('../images/header_linkgs_bkg.jpg') no-repeat 0 0; text-align:center; font:normal 16px "Officina Regular"; color:white; line-height:16px; text-decoration:none;}
+div.rtve div.left ul li a:hover {background-position:0 -28px;}
+div.rtve div.right {float:right; width:182px; padding:0!important; margin:13px 10px 0 0;}
+div.rtve div.right input#textRTVE {float:left; width:108px; height:14px; padding:8px 5px; background:url('../images/search_rtve_bkg.jpg') no-repeat 0 0; border:none; text-align:left; font:normal 14px "Officina Regular"; color:#666666; line-height:;}
+div.rtve div.right input#submitRTVE {float:left; width:64px; height:30px; padding:0; background:url('../images/submit_rtve_bkg.jpg') no-repeat right 0; border:none; text-align:center; color:white; font:normal 16px "Officina Regular";}
+div.rtve div.right input#submitRTVE:hover {background-position:0 -30px; cursor:pointer;}
 
 /*HEADER*/
 div#header {position:absolute; left:0; right:0; top:51px; height:179px; min-width:1000px; background:url('../images/header_bkg.png') repeat-x 0 0; z-index:50;}
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
 div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
-div#header h1 {float: left; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
-div#header h2 {float: left; width:90%; margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
+div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white;}
+div#header h2 {float: left;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white;}
 div#header div.secondContainer div.left {float:left; width:320px; margin: 5px 0 0 0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:10px 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
-/*div#header div.secondContainer div.left form input.submit {position:absolute; right:5px; top:4px; width:25px; height:25px; border:none; background:url('../images/lens.png') no-repeat 0 0;}
-div#header div.secondContainer div.left form input.submit:hover {background-position:0 -25px; cursor:pointer;}*/
 div#header div.secondContainer div.left form input:focus {outline:none; color:#333333;}
 
 div#header div.secondContainer div.left form div.pac-container {left:0px!important; top:29px!important; width:262px!important; padding:5px 0 5px; background:url('../images/autocomplete_bkg.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
@@ -151,7 +160,7 @@ div.tabs div#graph div#bottom_legend {top: 510px;}
 
 /* Fail circle */
 div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
-div.tabs div.fail div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.fail div.content {position:absolute; left:50%; margin: 127px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
 div.tabs div.fail p {position:absolute; width:300px; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
 div.tabs div#graph div.fail p {margin-top: 130px;}
 div.tabs div.fail p small {font-size:14px!important;}
@@ -160,7 +169,7 @@ div.tabs div.fail a.why {position:relative; display:block; top: 85px;}
 
 /* Message circle */
 div.tabs div.message {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
-div.tabs div.message div.content {position:absolute; left:50%; margin: 167px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
+div.tabs div.message div.content {position:absolute; left:50%; margin: 127px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
 div.tabs div.message p {width:200px; margin:auto; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 24px;}
 div.tabs div.message p small {color: #666666; font-size:15px!important;}
 div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
@@ -245,7 +254,7 @@ div.infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#
 div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a {color:#333333;}
 div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
-div.infowindow div.bottom div.chart {width:205px; height:33px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
+div.infowindow div.bottom div.chart {width:205px; height:35px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
 div.infowindow div.bottom div.chart img {float:right; height:22px;}
 div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:12px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
 div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
@@ -308,7 +317,14 @@ div#comparewindow div.bottom.region div.search {display:none;}
 div#comparewindow div.bottom.region div.region {display:block;}
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div.bottom form {position:relative; width:276px; height:28px; margin:5px 0 0 40px;}
-div#comparewindow div.bottom form input.text {width:276px; height:13px; padding:8px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form input#google_compare_autocomplete {width:244px; height:13px; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form div.pac-container {left:0px!important; top:25px!important; width:276px!important; padding:5px 0 5px; background:url('../images/search_compare_google.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
+div#comparewindow div.bottom form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
+div#comparewindow div.bottom form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
+div#comparewindow div.bottom form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}
+
+
+
 div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('../images/tiny_search_len.png') no-repeat 0 0;}
 div#comparewindow div.bottom form input.submit:hover {background-position:0 -13px; cursor:pointer;}
 div#comparewindow div.bottom p.refer {display:none; width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:right; font:normal 13px "Officina Regular"; color:#666666;}
