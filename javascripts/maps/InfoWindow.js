@@ -1,9 +1,9 @@
 
     function InfoWindow(latlng, map) {
       this.latlng_ = latlng;
-    	this.information = {};
-    	this.spain_id = 0;
-    	this.map_ = map;
+      this.information = {};
+      this.spain_id = 0;
+      this.map_ = map;
       this.offsetVertical_ = -276;
       this.offsetHorizontal_ = -127;
       this.bar_width_multiplier = 140;
@@ -22,7 +22,7 @@
     InfoWindow.prototype.draw = function() {
 
       var me = this;
-    	var num = 0;
+      var num = 0;
 
       var div = this.div_;
       if (!div) {
@@ -69,11 +69,11 @@
 
 
         var panes = this.getPanes();
-		    panes.floatPane.appendChild(div);
+        panes.floatPane.appendChild(div);
 
-		    /*Infowindow events*/
-		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
-		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
+        /*Infowindow events*/
+        $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
+        $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
         $('div#infowindow').delegate('.why_no_data','click',function(ev){ev.preventDefault(); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
         $('div#infowindow').delegate('.goTo','click',function(ev){
           ev.preventDefault();
@@ -97,12 +97,12 @@
         });
       }
 
-    	var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+      var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       if (pixPosition) {
-    	  div.style.width = me.width_ + 'px';
-    	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
-    	  div.style.height = me.height_ + 'px';
-    	  div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
+        div.style.width = me.width_ + 'px';
+        div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
+        div.style.height = me.height_ + 'px';
+        div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
       }
     };
 
@@ -118,7 +118,7 @@
 
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
-      var percent   = info.data[year][positions[id]+'_partido_percent'];
+      var percent   = info.data[year][positions[id]+'_partido_total'];
 
       if (party_id < 4) {
         var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
@@ -176,15 +176,15 @@
     }
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
-    	var me = this;
-    	var div = this.div_;
-    	this.latlng_ = latlng;
-    	this.information = info;
-    	this.actualZoom = peninsula.getZoom();
-    	this.deep_level = getDeepLevelFromZoomLevel(this.actualZoom);
+      var me = this;
+      var div = this.div_;
+      this.latlng_ = latlng;
+      this.information = info;
+      this.actualZoom = peninsula.getZoom();
+      this.deep_level = getDeepLevelFromZoomLevel(this.actualZoom);
 
-    	//Hide char image.
-    	$('div#infowindow div.chart img').hide();
+      //Hide char image.
+      $('div#infowindow div.chart img').hide();
 
       $('div#infowindow h2').html(info.name);
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
@@ -268,11 +268,11 @@
       me.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
 
       if (pixPosition) {
-    	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
-    	  div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
+        div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
+        div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
       }
       this.moveMaptoOpen();
-    	this.show();
+      this.show();
     }
 
 
@@ -283,8 +283,8 @@
           top: '+=' + 10 + 'px',
           opacity: 0
         }, 100, 'swing', function(ev){
-    			div.style.visibility = "hidden";
-    		});
+          div.style.visibility = "hidden";
+        });
       }
     }
 
@@ -292,20 +292,20 @@
     InfoWindow.prototype.show = function() {
       if (this.div_) {
         var div = this.div_;
-    		$(div).css({opacity:0});
-    		div.style.visibility = "visible";
+        $(div).css({opacity:0});
+        div.style.visibility = "visible";
 
         $(div).stop().animate({
           top: '-=' + 10 + 'px',
           opacity: 1
         }, 250, 'swing');
-    	}
+      }
     }
 
 
     InfoWindow.prototype.isOpen = function() {
       return this.div_.style.visibility == "visible";
-  	}
+    }
 
 
     InfoWindow.prototype.updateValues = function() {
@@ -419,24 +419,24 @@
 
 
     InfoWindow.prototype.moveMaptoOpen = function() {
-    	var left = 0;
-    	var top = 0;
+      var left = 0;
+      var top = 0;
 
       var pixPosition = this.getProjection().fromLatLngToContainerPixel(this.latlng_);
 
-    	if ((pixPosition.x + this.offsetHorizontal_) < 0) {
-    		left = (pixPosition.x + this.offsetHorizontal_ - 20);
-    	}
+      if ((pixPosition.x + this.offsetHorizontal_) < 0) {
+        left = (pixPosition.x + this.offsetHorizontal_ - 20);
+      }
 
-    	if ((pixPosition.x - this.offsetHorizontal_) >= ($('div#peninsula').width())) {
-    		left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
-    	}
+      if ((pixPosition.x - this.offsetHorizontal_) >= ($('div#peninsula').width())) {
+        left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
+      }
 
-    	if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
-    		top = (pixPosition.y + this.offsetVertical_ - 40);
-    	}
+      if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
+        top = (pixPosition.y + this.offsetVertical_ - 40);
+      }
 
-    	this.map_.panBy(left,top);
+      this.map_.panBy(left,top);
     }
 
 
