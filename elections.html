@@ -15,8 +15,6 @@
     <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" type="text/css" href="http://www.rtve.es/css/miniheadwhite.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="http://www.rtve.es/css/css_externos.css" media="screen">
 
     <script src="javascripts/plugins/jquery-1.6.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/environment.js" type="text/javascript" charset="utf-8"></script>
@@ -102,69 +100,29 @@
 
     <!--INCLUDE-->
     <!-- estadisticas sin overlay -->
-    <div class="hddn">
+    
+    <div class="rtve">
+      <div class="left">
+        <a class="logo" href="http://rtve.es">RTVE.es</a>
+        <ul>
+          <li><a class="portada" title="Portada" href="http://www.rtve.es/">Portada</a></li>
+          <li><a class="noticias" title="Noticias" href="http://www.rtve.es/noticias/">Noticias</a></li>
+          <li><a class="television" title="Televisi&oacute;n" href="http://www.rtve.es/television/">Televisión</a></li>
+          <li> <a class="radio" title="Radio" href="http://www.rtve.es/radio/">Radio</a></li>
+          <li><a class="deportes" title="Deportes" href="http://www.rtve.es/deportes/">Deportes</a></li>
+          <li><a class="tiempo" title="Tiempo" href="http://www.rtve.es/eltiempo/">El tiempo</a></li>
+          <li><a class="infantil" title="Infantil" href="http://www.rtve.es/infantil/">Infantil</a></li>
+        </ul>
       </div>
-      <div class="container">
-        <div class="corner4 T2" id="heads">
-          <div class="round">
-            <span class="corner ltop"></span><span class="corner rtop"></span>
-            <div class="mark">
-              <span class="logo"><a title="RTVE.es" href="http://www.rtve.es/"><span class="hddn">RTVE.es</span></a></span>
-              <ul class="maintabs">
-                <li>
-                  <h3>
-                    <a class="portada" title="Portada" href="http://www.rtve.es/"><span class="hddn">Portada</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="noticias" title="Noticias" href="http://www.rtve.es/noticias/"><span class="hddn">Noticias</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="television" title="Televisi&oacute;n" href="http://www.rtve.es/television/"><span class="hddn">Televisi&oacute;n</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="radio" title="Radio" href="http://www.rtve.es/radio/"><span class="hddn">Radio</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="deportes" title="Deportes" href="http://www.rtve.es/deportes/"><span class="hddn">Deportes</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="tiempo" title="Tiempo" href="http://www.rtve.es/eltiempo/"><span class="hddn">Tiempo</span></a>
-                  </h3>
-                </li>
-                <li>
-                  <h3>
-                    <a class="infantil" title="Infantil" href="http://www.rtve.es/infantil/"><span class="hddn">Infantil</span></a>
-                  </h3>
-                </li>
-              </ul>
-              <div class="searchlog">
-                <span class="movile"><a href="http://movil.rtve.es/">M&oacute;viles</a></span>
-                <div class="mainsearchtop">
-                  <form id=formSearch2 method="get" action="http://www.rtve.es/buscador/buscar" >
-                    <input type="hidden" value="3" name="modo" id="modoSearch2"/>
-                    <!--  <input type="hidden" value="" name="cadena" id="cadenaSearch2"/> -->
-                    <input type="hidden" value="1" name="pagina" id="paginaSearch2"/>
-                    <label class="hddn" for="searchHead">Buscar</label>
-                    <input type="search" value="" name="cadena" results="10" autosave="autosave.rtve" id="searchHead" class="searchbox"/>
-                    <input type="submit" value="Buscar" id="buscar" class="btnhead"/>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="right">
+        <form id="formSearch2" method="get" action="http://www.rtve.es/buscador/buscar" >
+          <input type="text" value="" name="cadena" results="10" autosave="autosave.rtve" id="textRTVE" />
+          <input type="submit" value="Buscar" id="submitRTVE" />
+        </form>
       </div>
-    <!-- END INCLUDE-->
+    </div>
+    
+
 
 
     <div id="header">
@@ -211,7 +169,7 @@
   	                  <li><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
   	                  <li><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
   	                  <li><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
-  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Penetración internet</a></li>
+  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Penetr. internet</a></li>
   	                  <li><a class="detenidos" href="#detenidos">Detenidos</a></li>
   	                </ul>
   	              </div>
@@ -230,8 +188,8 @@
   	                  <li><a class="pib" href="#PIB_per_capita">PIB per cápita</a></li>
   	                  <li><a class="salario" href="#Salario_medio">Salario medio</a></li>
   	                  <li><a class="matriculaciones" href="#matriculaciones">Matriculaciones</a></li>
-  	                  <li><a class="jovenes parados" href="#jovenes_parados">Jovenes parados</a></li>
-  	                  <li><a class="parados larga duracion" href="#Parados_larga_duracion">Parados larga dur...</a></li>
+  	                  <li><a class="jovenes_parados" href="#jovenes_parados">Jóvenes parados</a></li>
+  	                  <li><a class="parados_larga_duracion" href="#Parados_larga_duracion">Parados larga dur...</a></li>
   	                </ul>
   	              </div>
   	            </div>
@@ -285,7 +243,7 @@
 
         <div class="wadusText">
           <p class="title">Viendo la tasa del Paro<sup>[2010]</sup></p>
-          <a href="#">Dejar de ver esta variable</a>
+          <a class="deselection" href="#deseleccionar_todas">Dejar de ver esta variable</a>
         </div>
 
         <div id="zoom_control">

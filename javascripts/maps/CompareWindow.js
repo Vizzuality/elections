@@ -1,10 +1,12 @@
-
+    var google_autocomplete;
 
     function CompareWindow() {
       this.create();
       this.firstZoom = 12;
+      this.position = "top";
       this.firstData = {};
       this.secondData = {};
+      this.bar_width_multiplier = 140;
       this.slider_position = 0;
       this.total_variables = 10; // Calculate!! TODO
     }
@@ -40,7 +42,7 @@
           '<div class="search">'+
             '<h4>Selecciona otro lugar para comparar...</h4>'+
             '<form class="search_compare">'+
-              '<input class="text" type="text" value="Busca una localidad..." />'+
+              '<input class="text" type="text" value="Introduce una ubicación" id="google_compare_autocomplete" />'+
               '<input class="submit" type="submit" value=""/>'+
             '</form>'+
             '<p class="refer">¿Te refieres a... <a href="#Almendralejo">Almendralejo, Extremadura</a>?</p>'+
@@ -62,57 +64,72 @@
       $(this.div).children('a.close_infowindow').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
       $(this.div).draggable({containment: 'parent'});
 
+      
       $('div.compare_graph a.right').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo({top:'+=0',left:'+=299'}, 500);
       });
 
+      
       $('div.compare_graph a.left').click(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         $('div.outer_stats_slider').scrollTo( {top:'+=0',left:'-=299'}, 500);
       });
-
-      $('form.search_compare input.text').focusin(function(){
-        var value = $(this).val();
-        if (value=="Busca una localidad...") {
-          $(this).val('');
-        }
+      
+      $('form.search_compare').submit(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
       });
 
-      $('form.search_compare input.text').focusout(function(){
-        var value = $(this).val();
-        if (value=="") {
-          $(this).val('Busca una localidad...');
-        }
-      });
 
       $('form.search_compare').submit(function(ev){
         ev.stopPropagation();
         ev.preventDefault();
-        searchCompareLocation($(this).find('input.text').val());
       });
 
+      
       $('a.remove_compare').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
         me.removeRegion($(this).closest('div').attr('class'));
       });
 
-
+      
       $('a.resumen').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "up";
         $('div.outer_stats_slider').scrollTo( {top:'0px',left:'+=0'}, 500);
       });
 
+      
       $('a.evolucion').live('click',function(ev){
         ev.stopPropagation();
         ev.preventDefault();
+        this.position = "down";
         $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
       });
+      
+      me.addGoogleAutocomplete();
     }
+    
+    
+    CompareWindow.prototype.addGoogleAutocomplete = function() {
+      var me = this;
+      var input = document.getElementById('google_compare_autocomplete');
+      var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(27.391278222579277, -18.45703125),new google.maps.LatLng(42.601619944327965, 4.0869140625));
+      var options = {bounds: defaultBounds};
+      google_autocomplete = new google.maps.places.Autocomplete(input, options);
+      
+      
+      google.maps.event.addListener(google_autocomplete, 'place_changed', function() {
+        var place = google_autocomplete.getPlace();
+        comparewindow.compareSecondRegion(null,place.formatted_address);
+      });
+    }
+
 
 
     CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
@@ -127,7 +144,9 @@
     	// Move slider to the start
     	$('div.outer_stats_slider').scrollTo({top:'0',left:'0'}, 1);
     	//Create charts
+    	$('div.stats_slider').empty();
     	this.createChart(info);
+    	this.setUpChartView();
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
@@ -148,7 +167,7 @@
         } else {
           $('div#comparewindow div.top div.stats div.partido:eq(0)').addClass('par1');
         }
-        bar_width = (info['data'][year]['primer_partido_percent']*175)/100;
+        bar_width = (info['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100;
         $('div#comparewindow div.top div.stats div.partido:eq(0) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq(0) p').text(info['data'][year]['primer_partido_name']+' ('+info['data'][year]['primer_partido_percent']+'%)');
 
@@ -159,7 +178,7 @@
         } else {
           $('div#comparewindow div.top div.stats div.partido:eq(1)').addClass('par2');
         }
-        bar_width = (info['data'][year]['segundo_partido_percent']*175)/100;
+        bar_width = (info['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100;
         $('div#comparewindow div.top div.stats div.partido:eq(1) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq(1) p').text(info['data'][year]['segundo_partido_name']+' ('+info['data'][year]['segundo_partido_percent']+'%)');
 
@@ -171,12 +190,12 @@
           $('div#comparewindow div.top div.stats div.partido:eq(2)').addClass('par3');
         }
 
-        bar_width = (info['data'][year]['tercer_partido_percent']*175)/100;
+        bar_width = (info['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100;
         $('div#comparewindow div.top div.stats div.partido:eq(2) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
 
         // Other
-        bar_width = (info['data'][year]['otros_partido_percent']*175)/100;
+        bar_width = (info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100;
         $('div#comparewindow div.top div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
 
@@ -190,7 +209,6 @@
       var me = this;
       this.cleanSecondRegion();
       var url = global_url+'/google_names_cache/'+gmaps_version+'/'+replaceWeirdCharacters(formatted_address)+'.json';
-      console.log("comparing", url);
 
       if (info==null) {
         $.ajax({
@@ -267,60 +285,54 @@
       }
     }
 
-    CompareWindow.prototype.updateValues = function(){
 
-        //TODO: AÜN NO FUNCIONA
+    CompareWindow.prototype.drawBar = function(party_id, level, data){
+      var id = party_id - 1;
+      var positions = ["primer", "segundo", "tercer"];
 
-        if (this.div) {
-          var partido_1 = normalizePartyName(this.firstData['data'][year]['primer_partido_name']);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_1) !== -1) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass(partido_1);
-          } else if(this.oldPar1 != partido_1) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0)').addClass('par1');
-          }
-          bar_width = normalizeBarWidth((this.firstData['data'][year]['primer_partido_percent']*175)/100);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(0) p').text(this.firstData['data'][year]['primer_partido_name']+' ('+this.firstData['data'][year]['primer_partido_percent']+'%)');
+      if (party_id < 4) {
+        var partido = normalizePartyName(data['data'][year][positions[id] + '_partido_name']);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').removeClass(parties.join(" ") + ' par1 par2 par3');
+        if (_.indexOf(parties, partido) !== -1) {
+          $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').addClass(partido);
+        } else if(this.oldPar1 != partido) {
+          $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+        }
+        bar_width = normalizeBarWidth((data['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') span.c').animate({
+          width: bar_width.toString() +"px"
+        }, 500, 'easeOutCubic');
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
+      } else {
 
+        bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p').text('OTROS ('+data['data'][year]['otros_partido_percent']+'%)');
 
-          var partido_2 = normalizePartyName(this.firstData['data'][year]['segundo_partido_name']);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_2) !== -1) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass(partido_2);
-          } else if(this.oldPar2 != partido_2) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1)').addClass('par2');
-          }
-          bar_width = normalizeBarWidth((this.firstData['data'][year]['segundo_partido_percent']*175)/100);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(1) p').text(this.firstData['data'][year]['segundo_partido_name']+' ('+this.firstData['data'][year]['segundo_partido_percent']+'%)');
-
-          var partido_3 = normalizePartyName(this.firstData['data'][year]['tercer_partido_name']);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_3) !== -1) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass(partido_3);
-          } else if(this.oldPar3 != partido_3) {
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2)').addClass('par3');
-          }
-          bar_width = normalizeBarWidth((this.firstData['data'][year]['tercer_partido_percent']*175)/100);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) p').text(this.firstData['data'][year]['tercer_partido_name']+' ('+this.firstData['data'][year]['tercer_partido_percent']+'%)');
-
-          bar_width = normalizeBarWidth((this.firstData['data'][year]['otros_partido_percent']*175)/100);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-          $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+this.firstData['data'][year]['otros_partido_percent']+'%)');
-
-      	}
       }
+    }
+
+
+    CompareWindow.prototype.updateValues = function(){
+      if (this.div) {
+
+        this.drawBar(1,"top", this.firstData);
+        this.drawBar(2,"top", this.firstData);
+        this.drawBar(3,"top", this.firstData);
+        this.drawBar(4,"top", this.firstData);
+
+        if (this.secondData['data'] !== undefined) {
+          this.drawBar(1,"bottom", this.secondData);
+          this.drawBar(2,"bottom", this.secondData);
+          this.drawBar(3,"bottom", this.secondData);
+          this.drawBar(4,"bottom", this.secondData);
+        }
+      }
+    }
+
 
     CompareWindow.prototype.resetSearch = function() {
-      $('div#comparewindow div.bottom input.text').val('Busca una localidad...');
+      $('div#comparewindow div.bottom input.text').val('Introduce una ubicación');
       $('div#comparewindow div.bottom p.refer').hide();
       $('div#comparewindow div.bottom').removeClass('region').addClass('search');
     }
@@ -368,6 +380,8 @@
 
 
     CompareWindow.prototype.createChart = function(info) {
+
+      
       $('div.stats_slider').width(_.size(normalization)*298);
       var width = 130;
 
@@ -457,6 +471,10 @@
         }
       });
 
+    }
+
+
+    CompareWindow.prototype.setUpChartView = function() {
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
         setTimeout(function(){$('div.outer_stats_slider').scrollTo($('div.stats_slider div[alt="'+compare+'"].up'),1);},20);
       }

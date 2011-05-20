@@ -68,7 +68,7 @@ function initializeGraph() {
       var radius = $(this).height()/2;
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
-      var text = $(this).parent().find('span.name').html();
+      var text = valuesHash[$(this).parent().attr("id")].name;
       graphBubbleTooltip.show(left,top,text);
 
       if (!$.browser.msie ) {
@@ -153,9 +153,10 @@ function initializeGraph() {
     var comparison_variable = normalization[compare];
     var info_text = textInfoWindow[comparison_variable];
     var sign     = (selected_value < 0) ? "negative" : "positive";
-    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-    var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+    //console.log(textInfoWindow, comparison_variable, normalization);
 
+    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+    var media = parseFloat(max_min[deep][normalization[compare]+'_'+year+'_avg']).toFixed(2);
     text = _.template(text)({media : media});
 
     $('div#graph_infowindow p.info').html(text);
@@ -230,7 +231,7 @@ function initializeGraph() {
 
     $("#graph_infowindow").attr('alt',data_id);
     $("#graph_infowindow").find(".top").find("h2").empty();
-    var title = $("div#" + selectedBubble + " span.name").html() ;
+    var title = valuesHash[data_id].name;
 
     if (title.length > 24) {
        title = title.substr(0,21) + "... <sup>("+year+")</sup>";
@@ -272,43 +273,45 @@ function initializeGraph() {
 
     var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-    var firstYearData = _.detect(data, function(num) { return num != 0; }); // index of the first year with information
-    var firstYearIndex = _.indexOf(data, firstYearData); // first year with information
-    var firstYear = 1975 + firstYearIndex; // first year with information
 
-    var nextElectionYear = _.detect(electionYears, function(num){ return firstYear < num; }); // next election year to the firstYear
-    var nextElectionYearIndex = _.indexOf(electionYears, nextElectionYear);                   // index of the next election year to the firstYear
-    var startYearIndex = nextElectionYearIndex - 1;
+    selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    var chartBackgroundTopPadding = 33 * startYearIndex;
+    var availableYears = availableData[deep][normalization[compare]];
+    var firstYear = availableYears[0];
+    var lastYear = availableYears[availableYears.length - 1];
 
-    for (var i = firstYearIndex; i <= data.length; i++) {
-      if (data[i]!=undefined) {
-        if (!find) {
-          if (year - 1975 == i - 1 ) {
-            find = true;
-            find_year = count;
-            selected_value = parseFloat(data[i - 1])
-          }
+    var firstYearIndex = 36 - (maxYear- firstYear);
+    var lastYearIndex  = 36 - (maxYear- lastYear);
+    var currentYearIndex = 36 - (maxYear- year);
+    var marginRight = 36 - lastYearIndex;
+
+    //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
+    //console.log(data, data[firstYearIndex]);
+
+    for (var i = firstYearIndex; i < lastYearIndex; i++) {
+      if (!find) {
+        if (i == currentYearIndex) {
+          find = true;
+          find_year = count;
         }
-
-        if (Math.abs(parseFloat(data[i]))>max) {
-          max = Math.ceil(Math.abs(parseFloat(data[i])));
-        }
-
-        chartDataString += data[i]+ ',';
-      } else {
-        chartDataString += '0,';
       }
+
+      if (Math.abs(parseFloat(data[i]))>max) {
+        max = Math.ceil(Math.abs(parseFloat(data[i])));
+      }
+
+      chartDataString += data[i]+ ',';
       count++;
     }
-    if (find_year === undefined && year == 2011) {
-      find_year = count;
+
+    if (find_year == null) {
+      find_year = lastYearIndex;
     }
+    //console.log(find_year, data[find_year]);
     chartDataString = chartDataString.substring(0, chartDataString.length-1);
 
-    $('div#graph_infowindow div.chart').css("backgroundPosition", "0 -" + chartBackgroundTopPadding + "px");
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+((lastYearIndex - firstYearIndex)*8+10)+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+        $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
     $('div#graph_infowindow div.chart img').show();
 
     showInfowindow(left,top);
@@ -319,10 +322,7 @@ function initializeGraph() {
       try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
 
       hideInfowindow();
-
       var $selectedBubble = $("div#" + selectedBubble);
-
-      var text  = $selectedBubble.find('span.name').html();
       var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
       var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
@@ -372,7 +372,7 @@ function initializeGraph() {
         var radius = $b.height()/2;
         var top    = $b.parent().css('top').replace('px','') - radius - 21;
         var left   = $b.parent().css('left').replace('px','');
-        var text   = $b.parent().find('span.name').html();
+        var text   = valuesHash[selectedBubble].name;
         graphBubbleTooltip.show(left,top,text);
       }
     });
@@ -539,11 +539,11 @@ function initializeGraph() {
     if (names.length > 0) {
       if (names.length == 1) {
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
-        $('div.graph_legend p.autonomy a').text('España')
+        $('div.graph_legend p.autonomy a').text('Volver a España')
         $('div.graph_legend p.autonomy a').attr('href','#ver_España');
       } else {
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ') + '<sup>('+year+')</sup>').show();
-        $('div.graph_legend p.autonomy a').text(names[0].replace(/_/g,' '));
+        $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
         $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
       }
 
@@ -553,7 +553,6 @@ function initializeGraph() {
         ev.stopPropagation();
         ev.preventDefault();
         var url = global_url + "/" + parent_url[parent_url.length-1];
-        console.log("up", url);
         goDeeper(url);
         graphBubbleTooltip.hide();
         graphBubbleInfowindow.hide();
@@ -611,12 +610,16 @@ function initializeGraph() {
 
 /*GRAPH FUNCTIONS!*/
 
-function restartGraph() {
+function restartGraph(force_create) {
+  nBubbles = 0;
   graphLegend.hide();
   graph_bubble_index = 100;
   $('div#graph_container .bubbleContainer').remove();
   valuesHash = {};
   possibleValues = {};
+  if (force_create == true) {
+    createdBubbles = false;
+  }
   createOrUpdateBubbles(global_url + "/graphs/" + deep + "/" + graph_version + "/" + ((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
 }
 
@@ -630,10 +633,10 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-console.log(url);
+//console.log("Create bubbles", url);
 
   if (normalization[compare] === undefined) {
-    console.log(normalization[compare]);
+  //  console.log(normalization[compare]);
     chooseMessage.show();
     return;
   } else {
@@ -671,7 +674,6 @@ console.log(url);
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
-      $('#'+key+" span.name").html(data[key].name);
       $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
@@ -681,7 +683,7 @@ console.log(url);
 }
 
 function updateBubbles(url){
-  console.log("Update bubbles", url);
+  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
@@ -727,10 +729,10 @@ function goDeeper(url){
   //Get new name and deep
 
   var url_split = url.split('/');
-  console.log("url_split", url_split);
+  //console.log("url_split", url_split);
 
   deep = url_split[5];
-  console.log("deep", deep);
+  //console.log("deep", deep);
 
   var length = url_split[url_split.length-1].split(compare.replace(/ /g,'_'))[0].length;
 
@@ -763,7 +765,9 @@ function destroyBubble(b, url){
     $("#"+b).remove();
     nBubbles=nBubbles-1;
     if(nBubbles==0){
-      createBubbles(url);
+      console.log("recreating");
+      createdBubbles = false;
+      createOrUpdateBubbles(url);
     }
   });
 }

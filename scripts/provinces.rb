@@ -38,21 +38,21 @@ variables_json = {}
 variables.each do |variable|
   year = nil
   puts
-  custom_variable_name = variable.gsub(/_\d+/,'')
+  custom_variable_name = variable.gsub(/_\d+$/,'')
   variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
-  unless proceso_electoral_id = processes[variable.match(/\d+/)[0].to_i]  
-    year = variable.match(/\d+/)[0].to_i
+  unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
+    year = variable.match(/\d+$/)[0].to_i
     while proceso_electoral_id.nil? && year > 1974
       year -= 1
       proceso_electoral_id = processes[year]
     end
   end
   next if year == 1974
-  year ||= variable.match(/\d+/)[0].to_i
+  year ||= variable.match(/\d+$/)[0].to_i
   puts "Variable: #{variable} - #{year}"
-  variables_json[custom_variable_name] << variable.match(/\d+/)[0].to_i
+  variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].normalize
     authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
