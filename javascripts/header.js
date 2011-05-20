@@ -524,6 +524,7 @@
     $('div.select span.inner_select a').each(function(i,ele){var text = $(ele).attr('title'); $(ele).text(text);});
     
     changeHash();
+    refreshBubbles();
   }
   
   
