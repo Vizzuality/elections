@@ -18,6 +18,7 @@ provinces      = get_provinces
 parties        = get_parties
 variables      = get_variables(1)
 parties_known  = get_known_parties(parties)
+variables_json = get_all_variables
 
 # votes per autonomy
 query = <<-SQL
@@ -35,10 +36,8 @@ votes_per_autonomy = cartodb.query(query)[:rows]
 #############
 evolution = {}
 puts
-variables_json = {}
 variables.each do |variable|
   custom_variable_name = variable.gsub(/_\d+$/,'')
-  variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_autonomies_variable_evolution(variable)
   unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  

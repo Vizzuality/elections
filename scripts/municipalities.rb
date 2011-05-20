@@ -23,6 +23,7 @@ puts "Finishing..."
 province_results = get_province_results
 oauth_token    = "oauth_token=#{cartodb.send(:access_token).token}"
 uri            =  URI.parse('https://api.cartodb.com/')
+variables_json = get_all_variables
 
 # Parse arguments
 # n: the number of sub-arrays in which split the array of autonomies
@@ -42,7 +43,6 @@ end
 # Get OAuth token from cartodb client, because we are goint to
 # fetch API via net/http library (because of the threads we use)
 puts 
-variables_json = {}
 autonomies.each do |autonomy_hash|
   autonomy_name = autonomy_hash[:name_1].normalize
   provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
@@ -64,7 +64,6 @@ SQL
     response = http.request(request)
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+$/,'')
-      variables_json[custom_variable_name] ||= []
       unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
         year = variable.match(/\d+$/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
