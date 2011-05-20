@@ -23,11 +23,11 @@ div#header span.end_right {position:absolute; right:0; top:0; width:10px; height
 div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.secondContainer div.left {float:left; width:320px; height:auto; margin:0; padding:0;}
-div#header div.secondContainer div.left form {display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
-div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
+div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
+div#header div.secondContainer div.left form input {float:left; width:218px; height:15px; margin:0; padding:9px 37px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 div#header div.secondContainer div.left form input:focus {outline:none; color:#333333;}
-div#header div.secondContainer div.left div.searchLens { background: url('../images/lens.png') 0 0 no-repeat; width: 20px; height: 20px; position: absolute; top: 19px; right: 48px; z-index: 11; }
+div#header div.secondContainer div.left form span.searchLens { background: url('../images/lens.png') 0 0 no-repeat; width: 20px; height: 20px; position: absolute; top: 4px; right: 10px; z-index: 11; }
 div#header div.secondContainer div.left form div.pac-container {left:19px!important; top:29px!important; width:262px!important; padding:5px 0 5px; background:url('../images/autocomplete_bkg.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
 div#header div.secondContainer div.left form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
 div#header div.secondContainer div.left form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
