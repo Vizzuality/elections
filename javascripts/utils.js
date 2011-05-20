@@ -40,13 +40,13 @@ var custom_map_style = [{featureType:"administrative.country",elementType:"all",
 
 var tooltipInfo = {
   "Envejecimiento" : {
-    content: "Desviación respecto a la media del porcentaje de personas mayores de 65 años.",
-    right: "más mayores",
-    left: "más jóvenes",
+    content: "Desviación respecto a la media nacional del índice de envejecimiento.",
+    right: "más envej.",
+    left: "menos envejec.",
     legendTop: "Más % de mayores de 65 años",
     legendBottom:"Menos % de mayores de 65 años"
   },
-  "% Inmigración" : {
+  "Inmigración" : {
     content: "Desviación respecto a la media del número de inmigrantes por habitante en el país.",
     left: "menos inmigr.",
     right: "más inmigr.",
@@ -61,7 +61,7 @@ var tooltipInfo = {
     legendBottom:"Menos % paro"
   },
   "PIB per cápita" : {
-    content: "Desviación respecto a la media nacional del producto interior bruto por habitante.",
+    content: "Desviación respecto a la media nacional del PIB por habitante.",
     left: "menos PIB",
     right: "más PIB",
     legendTop: "Más PIB per cápita",
@@ -75,35 +75,35 @@ var tooltipInfo = {
     legendBottom:"Menos vehículos"
   },
   "Jóvenes parados" : {
-    content: "Desviación sobre la media nacional del porcentaje de jóvenes parados de larga duración.",
+    content: "Desviación respecto la media nacional del porcentaje de jóvenes parados de larga duración.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más jóvenes parados",
     legendBottom:"Menos jóvenes parados"
   },
   "Parados larga duración" : {
-    content: "Desviación sobre la media nacional del porcentaje de parados de larga duración.",
+    content: "Desviación respecto la media nacional del porcentaje de parados de larga duración.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más parados",
     legendBottom:"Menos parados"
   },
   "Edad media" : {
-    content: "Desviación de la edad media nacional respecto a la media de edad nacional.",
+    content: "Desviación respecto la edad media nacional en años.",
     right: "más mayores",
     left: "más jóvenes",
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
   "Saldo Vegetativo" : {
-    content: "Desviación respecto a la media nacional del crecimiento de la población.",
+    content: "Desviación respecto a la media nacional del saldo vegetativo.",
     left: "crece poco",
     right: "crece mucho",
     legendTop: "Mayor crecimiento",
     legendBottom:"Menor crecimiento"
   },
   "Salario medio" : {
-    content: "Desviación respecto a la media nacional del salario medio por habitante.",
+    content: "Desviación respecto a la media nacional del salario medio.",
     left: "sueldos + bajos",
     right: "sueldos + altos",
     legendTop: "Sueldos más altos",
@@ -123,7 +123,7 @@ var tooltipInfo = {
     legendTop: "Más consumo tv",
     legendBottom:"Menos consumo tv"
   },
-  "Penetr. internet" : {
+  "Acceso Internet" : {
     content: "Desviación respecto a la media nacional del porcentaje de personas con acceso a internet",
     left: "menor acceso",
     right: "mayor acceso",
