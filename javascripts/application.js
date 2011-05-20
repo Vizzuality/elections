@@ -1,7 +1,7 @@
   /*Application global vars*/
-  var year            = 2003;
-  var compare         = 'ninguna';
-  var state           = "mapa";
+  var year           = 2003;
+  var compare        = 'ninguna';
+  var state          = "mapa";
 
 
   $(document).ready(function(){
@@ -13,7 +13,7 @@
 
 
   function initializeApp() {
-    initializeWelcomeWindow(); // initialize welcomewindow
+    initWelcomeWindow();
     initializeGraph();         // initialize graph
     initializeHeader();        // initialize header options (selects and more) and graph/map menu
     initializeMap();           // initialize map and map modules
@@ -23,6 +23,7 @@
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
+        welcomewindow.hide();
         explanationwindow.hide();
         comparewindow.hide();
         if (state == "grafico") {
@@ -93,17 +94,25 @@
     initializeApp();
   }
 
-  function initializeWelcomeWindow() {
-    $("#welcomewindow a.close_info").click(function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow");
-    });
+    function initWelcomeWindow() {
+      $('body').click(function(event) {
+        if (!$(event.target).closest('div#welcomewindow').length) {
+          $("#welcomewindow").fadeOut("slow");
+          $('body').unbind('click');
+        }
+      });
 
-    $("#welcomewindow a.start").click(function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow");
+      $("#welcomewindow a.close_info").click(function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        $("#welcomewindow").fadeOut("slow");
+      });
+
+      $("#welcomewindow a.start").click(function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        $("#welcomewindow").fadeOut("slow");
 
         var text = $("div.select div.option_list ul li a.paro").text();
         $("div.select div.outer_select.money").parent().addClass("selected");
@@ -116,30 +125,27 @@
         }
 
         changeHash();
-        console.log(compare);
+      });
 
-    });
+      $("#welcomewindow a.explore").click(function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        $("#welcomewindow").fadeOut("slow");
+      });
 
-    $("#welcomewindow a.explore").click(function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow");
-    });
-
-    $("#welcomewindow a.more_info").click(function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow", function() {
+      $("#welcomewindow a.more_info").click(function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        $("#welcomewindow").fadeOut("slow");
         explanationwindow.show();
       });
-    });
 
-    $("#welcomewindow a.know_more").click(function(ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      $("#welcomewindow").fadeOut("slow");
-    });
-  }
+      $("#welcomewindow a.know_more").click(function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        $("#welcomewindow").fadeOut("slow");
+      });
+    }
 
   function changeHash() {
     var latlng = peninsula.getCenter();

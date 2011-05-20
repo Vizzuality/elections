@@ -1,9 +1,9 @@
 
     function InfoWindow(latlng, map) {
       this.latlng_ = latlng;
-    	this.information = {};
-    	this.spain_id = 0;
-    	this.map_ = map;
+      this.information = {};
+      this.spain_id = 0;
+      this.map_ = map;
       this.offsetVertical_ = -276;
       this.offsetHorizontal_ = -127;
       this.bar_width_multiplier = 140;
@@ -22,7 +22,7 @@
     InfoWindow.prototype.draw = function() {
 
       var me = this;
-    	var num = 0;
+      var num = 0;
 
       var div = this.div_;
       if (!div) {
@@ -59,6 +59,7 @@
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
             '</div>'+
+            '<a href="#ver_provincias" class="goTo">Ver provincias</a>'+
             '<a class="compare">Comparar</a>'+
           '</div>'+
           '<div class="footer">'+
@@ -68,12 +69,22 @@
 
 
         var panes = this.getPanes();
-		    panes.floatPane.appendChild(div);
+        panes.floatPane.appendChild(div);
 
-		    /*Infowindow events*/
-		    $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
-		    $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
-        $('div#infowindow p.info a.why_no_data').live('click',function(ev){alert('jamon'); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
+        /*Infowindow events*/
+        $('div#infowindow a.close_infowindow').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.hide();});
+        $('div#infowindow a.compare').click(function(ev){try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};me.openCompare();});
+        $('div#infowindow').delegate('.why_no_data','click',function(ev){ev.preventDefault(); try{ev.stopPropagation();}catch(e){event.cancelBubble=true;}; me.hide(); explanationwindow.show();});
+        $('div#infowindow').delegate('.goTo','click',function(ev){
+          ev.preventDefault();
+          try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};
+          var zoom = peninsula.getZoom();
+          if (zoom==6) {
+            peninsula.setZoom(7);
+          } else if (zoom==7 || zoom==8) {
+            peninsula.setZoom(11);
+          }
+        });
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
           try { ev.stopPropagation(); } catch(e) { event.cancelBubble=true; };
@@ -86,12 +97,12 @@
         });
       }
 
-    	var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+      var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       if (pixPosition) {
-    	  div.style.width = me.width_ + 'px';
-    	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
-    	  div.style.height = me.height_ + 'px';
-    	  div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
+        div.style.width = me.width_ + 'px';
+        div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
+        div.style.height = me.height_ + 'px';
+        div.style.top = (pixPosition.y + me.offsetVertical_ - (($(div).css('opacity') == 1)? 10 : 0)) + 'px';
       }
     };
 
@@ -107,7 +118,7 @@
 
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
-      var percent   = info.data[year][positions[id]+'_partido_percent'];
+      var percent   = info.data[year][positions[id]+'_partido_total'];
 
       if (party_id < 4) {
         var partido = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
@@ -165,15 +176,15 @@
     }
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
-    	var me = this;
-    	var div = this.div_;
-    	this.latlng_ = latlng;
-    	this.information = info;
-    	this.actualZoom = peninsula.getZoom();
-    	this.deep_level = getDeepLevelFromZoomLevel(this.actualZoom);
+      var me = this;
+      var div = this.div_;
+      this.latlng_ = latlng;
+      this.information = info;
+      this.actualZoom = peninsula.getZoom();
+      this.deep_level = getDeepLevelFromZoomLevel(this.actualZoom);
 
-    	//Hide char image.
-    	$('div#infowindow div.chart img').hide();
+      //Hide char image.
+      $('div#infowindow div.chart img').hide();
 
       $('div#infowindow h2').html(info.name);
       $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
@@ -229,7 +240,7 @@
 
         console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+        var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         text = _.template(text)({media : media});
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
@@ -238,15 +249,30 @@
         $('div#infowindow div.chart').hide();
       }
 
+      if (this.deep_level=="municipios") {
+        $('div.infowindow a.goTo').hide();
+      } else if (this.deep_level=="provincias") {
+        $('div.infowindow a.goTo').text('Ver municipios');
+        $('div.infowindow a.goTo').attr('href','#ver_municipios');
+        $('div.infowindow a.goTo').show();
+      } else {
+        $('div.infowindow a.goTo').text('Ver provincias');
+        $('div.infowindow a.goTo').attr('href','#ver_provincias');
+        $('div.infowindow a.goTo').show('Ver provincias');
+      }
+
+
+      //'<a href="#ver_provincias" class="goTo">Ver provincias</a>'+
+
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       me.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;
 
       if (pixPosition) {
-    	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
-    	  div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
+        div.style.left = (pixPosition.x + me.offsetHorizontal_) + "px";
+        div.style.top = (pixPosition.y + me.offsetVertical_ - occ_offset) + "px";
       }
       this.moveMaptoOpen();
-    	this.show();
+      this.show();
     }
 
 
@@ -257,8 +283,8 @@
           top: '+=' + 10 + 'px',
           opacity: 0
         }, 100, 'swing', function(ev){
-    			div.style.visibility = "hidden";
-    		});
+          div.style.visibility = "hidden";
+        });
       }
     }
 
@@ -266,20 +292,20 @@
     InfoWindow.prototype.show = function() {
       if (this.div_) {
         var div = this.div_;
-    		$(div).css({opacity:0});
-    		div.style.visibility = "visible";
+        $(div).css({opacity:0});
+        div.style.visibility = "visible";
 
         $(div).stop().animate({
           top: '-=' + 10 + 'px',
           opacity: 1
         }, 250, 'swing');
-    	}
+      }
     }
 
 
     InfoWindow.prototype.isOpen = function() {
       return this.div_.style.visibility == "visible";
-  	}
+    }
 
 
     InfoWindow.prototype.updateValues = function() {
@@ -296,58 +322,59 @@
           this.drawTotalNumber(2, this.information, true);
           this.drawTotalNumber(3, this.information, true);
           this.drawTotalNumber(4, this.information, true);
-          return;
         }
-        $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
+        else {
+          $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
-        if (this.information['data'][year]['primer_partido_name']!=undefined) {
-          $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
+          if (this.information['data'][year]['primer_partido_name']!=undefined) {
+            $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
 
-          var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
-          $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_1) !== -1) {
-            $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
-          } else if(this.oldPar1 != partido_1) {
-            $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+            var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
+            $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
+            if (_.indexOf(parties, partido_1) !== -1) {
+              $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+            } else if(this.oldPar1 != partido_1) {
+              $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+            }
+            bar_width = normalizeBarWidth((this.information['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100);
+            $('div#infowindow div.stats div.partido:eq(0) span.c').animate({
+              width: bar_width.toString() +"px"
+            }, 500, 'easeOutCubic');
+            $('div#infowindow div.stats div.partido:eq(0) p').text(this.information['data'][year]['primer_partido_name']+' ('+this.information['data'][year]['primer_partido_percent']+'%)');
+
+            var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
+            $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
+            if (_.indexOf(parties, partido_2) !== -1) {
+              $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
+            } else if(this.oldPar2 != partido_2) {
+              $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+            }
+            bar_width = normalizeBarWidth((this.information['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100);
+            $('div#infowindow div.stats div.partido:eq(1) span.c').animate({
+              width: bar_width.toString() +"px"
+            }, 500, 'easeOutCubic');
+            $('div#infowindow div.stats div.partido:eq(1) p').text(this.information['data'][year]['segundo_partido_name']+' ('+this.information['data'][year]['segundo_partido_percent']+'%)');
+
+            var partido_3 = normalizePartyName(this.information['data'][year]['tercer_partido_name']);
+            $('div#infowindow div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
+            if (_.indexOf(parties, partido_3) !== -1) {
+              $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
+            } else if(this.oldPar3 != partido_3) {
+              $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
+            }
+            bar_width = normalizeBarWidth((this.information['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100);
+            $('div#infowindow div.stats div.partido:eq(2) span.c').animate({
+              width: bar_width.toString() +"px"
+            }, 500, 'easeOutCubic');
+            $('div#infowindow div.stats div.partido:eq(2) p').text(this.information['data'][year]['tercer_partido_name']+' ('+this.information['data'][year]['tercer_partido_percent']+'%)');
+
+            bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
+            $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+            $('div#infowindow div.stats').show();
+          } else {
+            $('div#infowindow div.stats').hide();
           }
-          bar_width = normalizeBarWidth((this.information['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100);
-          $('div#infowindow div.stats div.partido:eq(0) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#infowindow div.stats div.partido:eq(0) p').text(this.information['data'][year]['primer_partido_name']+' ('+this.information['data'][year]['primer_partido_percent']+'%)');
-
-          var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
-          $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_2) !== -1) {
-            $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
-          } else if(this.oldPar2 != partido_2) {
-            $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
-          }
-          bar_width = normalizeBarWidth((this.information['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100);
-          $('div#infowindow div.stats div.partido:eq(1) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#infowindow div.stats div.partido:eq(1) p').text(this.information['data'][year]['segundo_partido_name']+' ('+this.information['data'][year]['segundo_partido_percent']+'%)');
-
-          var partido_3 = normalizePartyName(this.information['data'][year]['tercer_partido_name']);
-          $('div#infowindow div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
-          if (_.indexOf(parties, partido_3) !== -1) {
-            $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
-          } else if(this.oldPar3 != partido_3) {
-            $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
-          }
-          bar_width = normalizeBarWidth((this.information['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100);
-          $('div#infowindow div.stats div.partido:eq(2) span.c').animate({
-            width: bar_width.toString() +"px"
-          }, 500, 'easeOutCubic');
-          $('div#infowindow div.stats div.partido:eq(2) p').text(this.information['data'][year]['tercer_partido_name']+' ('+this.information['data'][year]['tercer_partido_percent']+'%)');
-
-          bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
-          $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-          $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
-          $('div#infowindow div.stats').show();
-        } else {
-          $('div#infowindow div.stats').hide();
         }
 
         if (this.information['data'][year][normalization[compare]]!=null) {
@@ -356,7 +383,7 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-          var media = parseFloat(max_min[getDeepLevelFromZoomLevel(peninsula.getZoom())][normalization[compare]+'_'+year+'_avg']).toFixed(2);
+          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
           text = _.template(text)({media : media});
           // Change image url
           var statImage = this.generateStatImage();
@@ -380,7 +407,6 @@
       }
     }
 
-
     InfoWindow.prototype.openCompare = function() {
       this.hide();
       if (comparewindow.isVisible()) {
@@ -392,24 +418,24 @@
 
 
     InfoWindow.prototype.moveMaptoOpen = function() {
-    	var left = 0;
-    	var top = 0;
+      var left = 0;
+      var top = 0;
 
       var pixPosition = this.getProjection().fromLatLngToContainerPixel(this.latlng_);
 
-    	if ((pixPosition.x + this.offsetHorizontal_) < 0) {
-    		left = (pixPosition.x + this.offsetHorizontal_ - 20);
-    	}
+      if ((pixPosition.x + this.offsetHorizontal_) < 0) {
+        left = (pixPosition.x + this.offsetHorizontal_ - 20);
+      }
 
-    	if ((pixPosition.x - this.offsetHorizontal_) >= ($('div#peninsula').width())) {
-    		left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
-    	}
+      if ((pixPosition.x - this.offsetHorizontal_) >= ($('div#peninsula').width())) {
+        left = (pixPosition.x - this.offsetHorizontal_ - $('div#peninsula').width() + 20);
+      }
 
-    	if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
-    		top = (pixPosition.y + this.offsetVertical_ - 40);
-    	}
+      if ((pixPosition.y + this.offsetVertical_ - 40) < 0) {
+        top = (pixPosition.y + this.offsetVertical_ - 40);
+      }
 
-    	this.map_.panBy(left,top);
+      this.map_.panBy(left,top);
     }
 
 
