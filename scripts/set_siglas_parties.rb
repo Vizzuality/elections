@@ -7,8 +7,8 @@ require 'logger'
 require 'open-uri'
 
 include LibXML
-
-$parties = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:siglas]; h}
+$parties_ids = $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:name]] = row[:cartodb_id]; h}
+$parties = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:name]] = row[:siglas]; h}
 $rparties = $parties.invert
 
 class MunicipalityParticipation
@@ -72,6 +72,7 @@ class MunicipalityVotes
     @municipio_id = municipio_id
     @codinemuni = codinemuni
     @codineprov = codineprov
+    @party_id = nil
   end
   
   def on_start_document
@@ -144,27 +145,24 @@ class MunicipalityVotes
   
   def on_end_document
     array = @result['Partidos'].map do |party_name,values|
-      [party_name, values['Votos'],values['Porcentaje'], values['ID']]
+      [party_name, values['Votos'],values['Porcentaje']]
     end
     # Insert all non existing parties
     array.each do |p|
-      if $rparties[p[3]].nil?
-        # $cartodb.query("INSERT INTO partidos_politicos (name) VALUES ('#{p[0].gsub(/\'/,"\\\'")}')").rows
-        puts "Insertando #{p[0]} en partidos_politicos" 
-        $parties = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:siglas]; h}
-        $rparties = $parties.invert
+      next if p[0].blank?
+      if $parties.keys.include?(p[0]) && $parties[p[0]].nil?
+        if !@result["Partidos"][p[0]]["ID"].blank? && !$parties_ids[p[0]].blank?
+          $cartodb.query("UPDATE partidos_politicos SET siglas = '#{@result["Partidos"][p[0]]["ID"]}' WHERE cartodb_id='#{$parties_ids[p[0]]}'")
+          puts "Actualizando siglas del partido #{p[0]}" 
+          rows = $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows]
+          $parties_ids = rows.inject({}){ |h, row| h[row[:name]] = row[:cartodb_id]; h}
+          $parties = rows.inject({}){ |h, row| h[row[:name]] = row[:siglas]; h}
+          $rparties = $parties.invert
+        end
       end
     end
     
-    @final_result = {
-      :municipio_id => @municipio_id, :proceso_electoral_id => 76, 
-      :mesas_electorales => nil, :censo_total=>nil, :votantes_totales=>nil, :votos_validos=>nil, :votos_en_blanco=>nil, :votos_nulos=>nil, 
-      :primer_partido_id=>$rparties[array[0][0]], :segundo_partido_id=>$rparties[array[1][0]], :tercer_partido_id=>$rparties[array[2][0]], 
-      :resto_partido_votos=>array[3..-1].inject(0){|sum,e| sum+=e[1]; sum}, :resto_partido_percent=>(100 - array[0][2].to_i - array[1][2].to_i - array[2][2].to_i), 
-      :primer_partido_votos=>array[0][1], :primer_partido_percent=>array[0][2], 
-      :segundo_partido_votos=>array[1][1], :segundo_partido_percent=>array[1][2], :tercer_partido_votos=>array[2][1], :tercer_partido_percent=>array[0][2], 
-      :codinemuni=>@codinemuni, :codineprov=>@codineprov 
-    }
+    @final_result = {}
   end
   
   def result
@@ -258,10 +256,11 @@ provinces_ine = {
 base_url1 = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-<autonomy>-<province>-<municipality>-DATOS-ES.xml"
 base_url2 = "http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-<autonomy>-<province>-<municipality>-DATOS-ES.xml"
 
-file = File.open('urls.log', 'w+')
+file = File.open('urls-v3.log', 'w+')
 logger = Logger.new(file)
 
-fd = File.open('inserts.log', 'w+')
+file2 = File.open('inserts.log', 'w+')
+logger2 = Logger.new(file2)
 
 puts "Starting...."
 autonomies     = get_autonomies
@@ -349,38 +348,12 @@ autonomies.each do |autonomy|
       temporal_result = {}
       begin
         parser = XML::SaxParser.io(open(url))
-        # (municipio_id, codinemuni, codineprov)
-        parser.callbacks = MunicipalityVotes.new(municipality[:cartodb_id],municipality[:codinemuni], municipality[:codineprov])
+        parser.callbacks = MunicipalityVotes.new(1,2,3)
         parser.parse
-      
-        temporal_result = parser.callbacks.result
       rescue OpenURI::HTTPError
         logger.info "[ERROR] #{$!} - #{url}"
         temporal_result = {}
       end
-      next if temporal_result.empty?
-      
-      url = url2
-      begin
-        parser = XML::SaxParser.io(open(url))
-        parser.callbacks = MunicipalityParticipation.new
-        parser.parse
-        final_result = temporal_result.merge(parser.callbacks.result)
-        names = []
-        values = []
-        final_result.each do |k,v|
-          names << k
-          values << (v.nil? ? "NULL" : v)
-        end        
-        fd.write "INSERT INTO votaciones_por_municipio (#{names.join(',')}) values (#{values.join(',')});"
-      rescue OpenURI::HTTPError
-        logger.info "[ERROR] #{$!}"
-        puts "Nothing"
-      end
-      
-      logger.info "Finishing process at #{Time.now}"
     end
   end
 end
-
-fd.close
