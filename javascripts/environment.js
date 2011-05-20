@@ -8,6 +8,7 @@
   var graph_version   = "current"; //"v7";
   var ua = $.browser;
   
+  
   if (window.location.hostname == "localhost" || window.location.hostname == "elections" || window.location.hostname == "192.168.1.147") {
     global_url = proxy_url+"?proxy_url="+global_url;
     //tiles_pngs_url = "http://rtvedata{n}.ipq.co/data/tiles/";
@@ -16,8 +17,7 @@
   }
 
 
-
-
+  //Go to IE6 page
   if (ua.msie && ua.version.slice(0,3) < '7.0') {
     window.location.href = "../ie6.html";
   }
