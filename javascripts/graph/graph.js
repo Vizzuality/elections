@@ -1,5 +1,4 @@
 // Graph global vars {#}
-//var deep = "autonomias";
 var name = "España";
 var bar_width_multiplier = 140;
 var availableData = {};
@@ -21,39 +20,39 @@ jQuery.easing.def = "easeInOutCubic";
 function initAvailableData(deep) {
   $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) { availableData[deep] = data; });
 }
-    chooseMessage = (function() {
+chooseMessage = (function() {
 
-      $("div#graph div.message a").live("click", function(ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        hideError();
-        var text = $("div.select div.option_list ul li a.paro").text();
-        $("div.select div.outer_select.money").parent().addClass("selected");
-        $("div.select div.outer_select.money span.inner_select a").text(text);
-        $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-        compare = "paro";
+  $("div#graph div.message a").live("click", function(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    hideError();
+    var text = $("div.select div.option_list ul li a.paro").text();
+    $("div.select div.outer_select.money").parent().addClass("selected");
+    $("div.select div.outer_select.money span.inner_select a").text(text);
+    $("div.select div.option_list ul li a.paro").parent().addClass("selected");
+    compare = "paro";
 
-        if (year < 2005) { // because we don't have paro information prior 2005
-          updateNewSliderValue(2005, year);
-        }
+    if (year < 2005) { // because we don't have paro information prior 2005
+      updateNewSliderValue(2005, year);
+    }
 
-        changeHash();
-        restartGraph();
-      });
+    changeHash();
+    restartGraph();
+  });
 
-      function showError() {
-        $('div#graph div.message').fadeIn("slow");
-      }
+  function showError() {
+    $('div#graph div.message').fadeIn("slow");
+  }
 
-      function hideError() {
-        $('div#graph div.message').fadeOut("slow");
-      }
+  function hideError() {
+    $('div#graph div.message').fadeOut("slow");
+  }
 
-      return {
-        show: showError,
-        hide: hideError
-      }
-    })();
+  return {
+    show: showError,
+    hide: hideError
+  }
+})();
 
 function initializeGraph() {
   if (state == "grafico") {
@@ -122,276 +121,276 @@ function initializeGraph() {
     $('body').append(
       '<div class="infowindow" id="graph_infowindow" style="visibility:hidden; z-index:1000">'+
         '  <a class="close_infowindow"></a>'+
-        '  <div class="top">'+
-        '    <h2>Alaejos</h2>'+
-        '    <p class="province">11.982 habitantes.</p>'+
-        '    <div class="stats">'+
-        '      <h4>65% de participación</h4>'+
-        '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
-        '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
-        '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-        '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
-        '    </div>'+
-        '  </div>'+
-        '  <div class="bottom">'+
-        '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
-        '<div class="chart">'+
-        '    <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
-        '  </div>'+
-        '    <a class="more">Ver más</a>'+
-        '    <a class="compare">Comparar</a>'+
-        '  </div>'+
-        '  <div class="footer"></div>'+
-    '</div>');
+          '  <div class="top">'+
+            '    <h2>Alaejos</h2>'+
+              '    <p class="province">11.982 habitantes.</p>'+
+                '    <div class="stats">'+
+                  '      <h4>65% de participación</h4>'+
+                    '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
+                      '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
+                        '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
+                          '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
+                            '    </div>'+
+                              '  </div>'+
+                                '  <div class="bottom">'+
+                                  '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
+                                    '<div class="chart">'+
+                                      '    <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
+                                        '  </div>'+
+                                          '    <a class="more">Ver más</a>'+
+                                            '    <a class="compare">Comparar</a>'+
+                                              '  </div>'+
+                                                '  <div class="footer"></div>'+
+                                                  '</div>');
 
-  bindEvents();
+                                                  bindEvents();
 
-  function isOpen() {
-    return open;
-  }
+                                                  function isOpen() {
+                                                    return open;
+                                                  }
 
-  function refreshInfowindow() {
-    $('div#graph_infowindow').css({opacity:1,visibility:'visible'});
-  }
+                                                  function refreshInfowindow() {
+                                                    $('div#graph_infowindow').css({opacity:1,visibility:'visible'});
+                                                  }
 
-  function updateInfoText() {
-    var comparison_variable = normalization[compare];
-    var info_text = textInfoWindow[comparison_variable];
-    var sign     = (selected_value < 0) ? "negative" : "positive";
-    //console.log(textInfoWindow, comparison_variable, normalization);
+                                                  function updateInfoText() {
+                                                    var comparison_variable = normalization[compare];
+                                                    var info_text = textInfoWindow[comparison_variable];
+                                                    var sign     = (selected_value < 0) ? "negative" : "positive";
+                                                    //console.log(textInfoWindow, comparison_variable, normalization);
 
-    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-    var media = parseFloat(max_min_avg[normalization[compare]+'_'+year+'_avg']).toFixed(2);
-    text = _.template(text)({media : media});
+                                                    var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+                                                    var media = parseFloat(max_min_avg[normalization[compare]+'_'+year+'_avg']).toFixed(2);
+                                                    text = _.template(text)({media : media});
 
-    $('div#graph_infowindow p.info').html(text);
-  }
+                                                    $('div#graph_infowindow p.info').html(text);
+                                                  }
 
-  function showInfowindow(left, top) {
+                                                  function showInfowindow(left, top) {
 
-    if (deep == "provincias" || deep == "autonomias") {
-      $('div#graph_infowindow a.compare').hide();
-    } else {
-      $('div#graph_infowindow a.compare').show();
-    }
+                                                    if (deep == "provincias" || deep == "autonomias") {
+                                                      $('div#graph_infowindow a.compare').hide();
+                                                    } else {
+                                                      $('div#graph_infowindow a.compare').show();
+                                                    }
 
-    if ( $.browser.msie ) {
-      $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
-      $('div#graph_infowindow').show();
-      open = true;
-    } else {
+                                                    if ( $.browser.msie ) {
+                                                      $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
+                                                      $('div#graph_infowindow').show();
+                                                      open = true;
+                                                    } else {
 
-      $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
-      $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
-    }
-    updateInfoText();
-  }
+                                                      $('div#graph_infowindow').css({opacity:0,visibility:'visible',left:left+'px',top:top+'px'});
+                                                      $('div#graph_infowindow').stop().animate({ top: '-=' + 10 + 'px', opacity: 1 }, 250, 'swing', function(ev) {open = true;});
+                                                    }
+                                                    updateInfoText();
+                                                  }
 
-  function hideInfowindow() {
-    if (isOpen()) {
-      if ( $.browser.msie ) {
+                                                  function hideInfowindow() {
+                                                    if (isOpen()) {
+                                                      if ( $.browser.msie ) {
 
-        $('div#graph_infowindow').hide();
-        open = false;
-        return;
-      }
+                                                        $('div#graph_infowindow').hide();
+                                                        open = false;
+                                                        return;
+                                                      }
 
-      $('div#graph_infowindow').stop().animate({ top: '+=' + 10 + 'px',
-        opacity: 0
-      }, 100, 'swing', function(ev){
-        $('div#graph_infowindow').css({visibility:"hidden"});
-        open = false;
-      });
-    }
-  }
+                                                      $('div#graph_infowindow').stop().animate({ top: '+=' + 10 + 'px',
+                                                                                               opacity: 0
+                                                      }, 100, 'swing', function(ev){
+                                                        $('div#graph_infowindow').css({visibility:"hidden"});
+                                                        open = false;
+                                                      });
+                                                    }
+                                                  }
 
-  function drawPartyBar(data_id, party_id){
-    var id = party_id - 1;
-    var party_name            = valuesHash[data_id]["partido_"+party_id][0];
-    var normalized_party_name = normalizePartyName(party_name);
+                                                  function drawPartyBar(data_id, party_id){
+                                                    var id = party_id - 1;
+                                                    var party_name            = valuesHash[data_id]["partido_"+party_id][0];
+                                                    var normalized_party_name = normalizePartyName(party_name);
 
-    p = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
+                                                    p = $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').attr('class').split(" ");
 
-    $.each(p, function(c){
-      if (p[c] != "partido"){
-        $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(p[c]);
-      }
-    });
+                                                    $.each(p, function(c){
+                                                      if (p[c] != "partido"){
+                                                        $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').removeClass(p[c]);
+                                                      }
+                                                    });
 
-    if (_.indexOf(parties, normalized_party_name) !== -1) {
-      $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(normalized_party_name);
-    } else {
-      $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
-    }
-    bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
+                                                    if (_.indexOf(parties, normalized_party_name) !== -1) {
+                                                      $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass(normalized_party_name);
+                                                    } else {
+                                                      $('div#graph_infowindow div.top div.stats div.partido:eq('+id+')').addClass('par1');
+                                                    }
+                                                    bar_width = normalizeBarWidth((valuesHash[data_id]["partido_" + party_id][1]*bar_width_multiplier)/100);
 
-    $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
-    $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
-  }
+                                                    $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') span').width(bar_width);
+                                                    $('div#graph_infowindow div.top div.stats div.partido:eq('+id+') p').text(party_name +' ('+(valuesHash[data_id]["partido_"+party_id][1])+'%)');
+                                                  }
 
-  function changeData(left,top,data_id) {
-    if ($("#graph_infowindow").attr('alt') == data_id && isOpen()) {
-      return false;
-    }
+                                                  function changeData(left,top,data_id) {
+                                                    if ($("#graph_infowindow").attr('alt') == data_id && isOpen()) {
+                                                      return false;
+                                                    }
 
-    $("#graph_infowindow").attr('alt',data_id);
-    $("#graph_infowindow").find(".top").find("h2").empty();
-    var title = valuesHash[data_id].name;
+                                                    $("#graph_infowindow").attr('alt',data_id);
+                                                    $("#graph_infowindow").find(".top").find("h2").empty();
+                                                    var title = valuesHash[data_id].name;
 
-    if (title.length > 24) {
-       title = title.substr(0,21) + "...";
-    }
+                                                    if (title.length > 24) {
+                                                      title = title.substr(0,21) + "...";
+                                                    }
 
-    $("#graph_infowindow").find(".top").find("h2").append(title);
+                                                    $("#graph_infowindow").find(".top").find("h2").append(title);
 
-    $("#graph_infowindow a.more").show();
+                                                    $("#graph_infowindow a.more").show();
 
-    if (deep == "autonomias") {
-      $("#graph_infowindow a.more").text("Ver provincias");
-    } else if (deep == "provincias") {
-      $("#graph_infowindow a.more").text("Ver municipios");
-    } else {
-      $("#graph_infowindow a.more").hide();
-    }
+                                                    if (deep == "autonomias") {
+                                                      $("#graph_infowindow a.more").text("Ver provincias");
+                                                    } else if (deep == "provincias") {
+                                                      $("#graph_infowindow a.more").text("Ver municipios");
+                                                    } else {
+                                                      $("#graph_infowindow a.more").hide();
+                                                    }
 
-    var porcentaje_participacion = Math.floor(parseInt(valuesHash[data_id].porcentaje_participacion));
+                                                    var porcentaje_participacion = Math.floor(parseInt(valuesHash[data_id].porcentaje_participacion));
 
-    $("#graph_infowindow").find(".top").find(".province").empty();
-    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes, " + year);
-    $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
-    $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
+                                                    $("#graph_infowindow").find(".top").find(".province").empty();
+                                                    $("#graph_infowindow").find(".top").find(".province").append(valuesHash[data_id].censo_total + " habitantes, " + year);
+                                                    $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
+                                                    $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
-    drawPartyBar(data_id, 1);
-    drawPartyBar(data_id, 2);
-    drawPartyBar(data_id, 3);
+                                                    drawPartyBar(data_id, 1);
+                                                    drawPartyBar(data_id, 2);
+                                                    drawPartyBar(data_id, 3);
 
-    // Other political party
-    bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-    $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-    $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+                                                    // Other political party
+                                                    bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
+                                                    $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
+                                                    $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
 
-    var data = valuesHash[data_id].evolution.split(",");
-    var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
-    var minYear = 1975; var maxYear = 2011;
+                                                    var data = valuesHash[data_id].evolution.split(",");
+                                                    var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
+                                                    var minYear = 1975; var maxYear = 2011;
 
-    var electionYears = [1987,1991,1995,1999,2003,2007,2011];
+                                                    var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-    selected_value = parseFloat(data[36 - (maxYear - year)]);
+                                                    selected_value = parseFloat(data[36 - (maxYear - year)]);
 
-    var availableYears = availableData[deep][normalization[compare]];
+                                                    var availableYears = availableData[deep][normalization[compare]];
 
-    var firstYear = availableYears[0];
+                                                    var firstYear = availableYears[0];
 
-    if (firstYear < 1987) {
-      firstYear = 1987;
-    }
-    var lastYear  = availableYears[availableYears.length - 1];
+                                                    if (firstYear < 1987) {
+                                                      firstYear = 1987;
+                                                    }
+                                                    var lastYear  = availableYears[availableYears.length - 1];
 
-    var firstYearIndex = 36 - (maxYear- firstYear);
-    var lastYearIndex  = 36 - (maxYear- lastYear);
-    var currentYearIndex = 36 - (maxYear- year);
-    var marginRight = 36 - lastYearIndex;
+                                                    var firstYearIndex = 36 - (maxYear- firstYear);
+                                                    var lastYearIndex  = 36 - (maxYear- lastYear);
+                                                    var currentYearIndex = 36 - (maxYear- year);
+                                                    var marginRight = 36 - lastYearIndex;
 
-    //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
-    //console.log(data, data[firstYearIndex]);
+                                                    //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
+                                                    //console.log(data, data[firstYearIndex]);
 
-    for (var i = firstYearIndex; i < lastYearIndex + 1; i++) {
-      if (!find) {
-        if (i == currentYearIndex) {
-          find = true;
-          find_year = count;
-        }
-      }
+                                                    for (var i = firstYearIndex; i < lastYearIndex + 1; i++) {
+                                                      if (!find) {
+                                                        if (i == currentYearIndex) {
+                                                          find = true;
+                                                          find_year = count;
+                                                        }
+                                                      }
 
-      if (Math.abs(parseFloat(data[i]))>max) {
-        max = Math.ceil(Math.abs(parseFloat(data[i])));
-      }
+                                                      if (Math.abs(parseFloat(data[i]))>max) {
+                                                        max = Math.ceil(Math.abs(parseFloat(data[i])));
+                                                      }
 
-      chartDataString += data[i]+ ',';
-      count++;
-    }
+                                                      chartDataString += data[i]+ ',';
+                                                      count++;
+                                                    }
 
-    if (find_year == null) {
-      find_year = lastYearIndex;
-    }
-    chartDataString = chartDataString.substring(0, chartDataString.length-1);
-    var width = (lastYearIndex - firstYearIndex)*8+10;
+                                                    if (find_year == null) {
+                                                      find_year = lastYearIndex;
+                                                    }
+                                                    chartDataString = chartDataString.substring(0, chartDataString.length-1);
+                                                    var width = (lastYearIndex - firstYearIndex)*8+10;
 
-    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+width+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
-        $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
-    $('div#graph_infowindow div.chart img').show();
+                                                    $('div#graph_infowindow div.chart img').attr('src','http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+width+'x22&cht=ls&chco=8B1F72&chds=-'+max+','+max+'&chd=t:' + chartDataString + '&chdlp=b&chls=1&chm=o,8B1F72,0,'+find_year+',6&chma=3,3,3,3');
+                                                      $('div#graph_infowindow div.chart img').css({margin:'0 '+marginRight*7+'px 0 0'});
+                                                    $('div#graph_infowindow div.chart img').show();
 
-    showInfowindow(left,top);
-  }
+                                                    showInfowindow(left,top);
+                                                  }
 
-  function bindEvents() {
-    $('div#graph_infowindow a.compare').click(function(ev){
-      try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
+                                                  function bindEvents() {
+                                                    $('div#graph_infowindow a.compare').click(function(ev){
+                                                      try { ev.stopPropagation(); } catch(e){ event.cancelBubble=true; };
 
-      hideInfowindow();
-      var $selectedBubble = $("div#" + selectedBubble);
-      var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
-      var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
+                                                      hideInfowindow();
+                                                      var $selectedBubble = $("div#" + selectedBubble);
+                                                      var place = replaceWeirdCharacters(valuesHash[selectedBubble].google_maps_name);
+                                                      var url   = global_url+'/google_names_cache/'+gmaps_version+'/'+place+'.json';
 
-      if (comparewindow.isVisible()) {
-        comparewindow.compareSecondRegion(null, place, deep);
-      } else {
-        $.ajax({
-          method: "GET",
-          dataType: 'json',
-          url: url,
-          success: function(info) {
-            comparewindow.compareFirstRegion(info);
-            comparewindow.show();
-          },
-          error: function(error) {
-            $('div#comparewindow div.bottom').addClass('search').removeClass('region')
-            $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
-          }
-        });
+                                                      if (comparewindow.isVisible()) {
+                                                        comparewindow.compareSecondRegion(null, place, deep);
+                                                      } else {
+                                                        $.ajax({
+                                                          method: "GET",
+                                                          dataType: 'json',
+                                                          url: url,
+                                                          success: function(info) {
+                                                            comparewindow.compareFirstRegion(info);
+                                                            comparewindow.show();
+                                                          },
+                                                          error: function(error) {
+                                                            $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+                                                            $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
+                                                          }
+                                                        });
 
-      }
-    });
+                                                      }
+                                                    });
 
-    $('div#graph_infowindow a.more').click(function(ev){
-      ev.stopPropagation();
-      ev.preventDefault();
+                                                    $('div#graph_infowindow a.more').click(function(ev){
+                                                      ev.stopPropagation();
+                                                      ev.preventDefault();
 
-      graphBubbleTooltip.hide();
-      graphBubbleInfowindow.hide();
+                                                      graphBubbleTooltip.hide();
+                                                      graphBubbleInfowindow.hide();
 
-      var $selectedBubble = $("div#" + selectedBubble);
-      var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
-      if (url === null) {
-        return false;
-      } else {
-        goDeeper(global_url + "/" + url);
-      }
-    });
+                                                      var $selectedBubble = $("div#" + selectedBubble);
+                                                      var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
+                                                      if (url === null) {
+                                                        return false;
+                                                      } else {
+                                                        goDeeper(global_url + "/" + url);
+                                                      }
+                                                    });
 
-    $('div#graph_infowindow a.close_infowindow').click(function(ev){
-      ev.stopPropagation();
-      ev.preventDefault();
-      hideInfowindow();
+                                                    $('div#graph_infowindow a.close_infowindow').click(function(ev){
+                                                      ev.stopPropagation();
+                                                      ev.preventDefault();
+                                                      hideInfowindow();
 
-      if (selectedBubble !== undefined) {
-        var $b = $("div#" + selectedBubble + " div.innerBubble");
-        var radius = $b.height()/2;
-        var top    = $b.parent().css('top').replace('px','') - radius - 21;
-        var left   = $b.parent().css('left').replace('px','');
-        var text   = valuesHash[selectedBubble].name;
-        graphBubbleTooltip.show(left,top,text);
-      }
-    });
-  }
+                                                      if (selectedBubble !== undefined) {
+                                                        var $b = $("div#" + selectedBubble + " div.innerBubble");
+                                                        var radius = $b.height()/2;
+                                                        var top    = $b.parent().css('top').replace('px','') - radius - 21;
+                                                        var left   = $b.parent().css('left').replace('px','');
+                                                        var text   = valuesHash[selectedBubble].name;
+                                                        graphBubbleTooltip.show(left,top,text);
+                                                      }
+                                                    });
+                                                  }
 
-  return {
-    show: showInfowindow,
-    hide: hideInfowindow,
-    refresh: refreshInfowindow,
-    change: changeData,
-    isOpen: isOpen
-  };
+                                                  return {
+                                                    show: showInfowindow,
+                                                    hide: hideInfowindow,
+                                                    refresh: refreshInfowindow,
+                                                    change: changeData,
+                                                    isOpen: isOpen
+                                                  };
   }());
 
   // Tooltip when mouseover some bubble
@@ -445,168 +444,168 @@ function initializeGraph() {
   graphLegend = (function() {
     // Create the element - add it to DOM
     $('div#graph_container').append('<div class="graph_legend">\
-        <h2>Tasa de Paro en España<sup>(2010)</sup></h2>\
-        <p class="autonomy"><a href="#">Castilla y León</a></p>\
-        <div class="stats">\
-        <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
-        <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
-        <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
-        <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
-        </div>\
-        <form>\
-        <input class="text" type="text" value="Busca tu CCAA"/>\
-        <input class="submit" type="submit" value=""/>\
-        </form>\
-        <div class="search_error">\
-        <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
-        <p>Comprueba que has escrito bien el nombre que buscabas</p>\
-        <a class="close" href="#cerrar">Cerrar</a>\
-        </div>\
-    </div>');
+                                    <h2>Tasa de Paro en España<sup>(2010)</sup></h2>\
+                                      <p class="autonomy"><a href="#">Castilla y León</a></p>\
+                                        <div class="stats">\
+                                          <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
+                                            <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
+                                              <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
+                                                <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
+                                                  </div>\
+                                                    <form>\
+                                                      <input class="text" type="text" value="Busca tu CCAA"/>\
+                                                        <input class="submit" type="submit" value=""/>\
+                                                          </form>\
+                                                            <div class="search_error">\
+                                                              <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
+                                                                <p>Comprueba que has escrito bien el nombre que buscabas</p>\
+                                                                  <a class="close" href="#cerrar">Cerrar</a>\
+                                                                    </div>\
+                                                                      </div>');
 
-  $('div.graph_legend div.search_error a.close').click(function(ev){
-    ev.preventDefault();
-    ev.stopPropagation();
-    $(this).parent().fadeOut();
-  });
+    $('div.graph_legend div.search_error a.close').click(function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      $(this).parent().fadeOut();
+    });
 
-  $('div.graph_legend form').submit(function(ev){
-    ev.preventDefault();
-    ev.stopPropagation();
-    $('div.graph_legend div.search_error a.close').trigger('click');
-    var value = $(this).children('input.text').val();
-    addNewBubble(value);
-  });
+    $('div.graph_legend form').submit(function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      $('div.graph_legend div.search_error a.close').trigger('click');
+      var value = $(this).children('input.text').val();
+      addNewBubble(value);
+    });
 
-  $('div.graph_legend form input.text').focusin(function(){
-    var value = $(this).val();
-    if (value == "Busca tu CCAA" || value == "Busca tu provincia" || value == "Busca tu municipio") {
-      $(this).val('');
-    }
-  });
-
-  function updateSearchInput() {
-    $input = $('div.graph_legend form input.text');
-    if (deep == "autonomias") {
-      $input.val('Busca tu CCAA');
-    } else if (deep == "provincias") {
-      $input.val('Busca tu provincia');
-    } else {
-      $input.val('Busca tu municipio');
-    }
-  }
-
-  $('div.graph_legend form input.text').focusout(function(){
-    var value = $(this).val();
-    if (value == "") {
-      updateSearchInput();
-    }
-  });
-
-  function showLegend() {
-    $('div.graph_legend').fadeIn();
-  }
-
-  function hideSearchError() {
-    $('div.graph_legend div.search_error').hide();
-  }
-
-  function showSearchError() {
-    var formTopPosition = $('div.graph_legend form ').position().top;
-    $('div.graph_legend div.search_error').css("top", formTopPosition + 40);
-    $('div.graph_legend div.search_error').fadeIn();
-  }
-
-  function hideLegend() {
-    $('div.graph_legend').fadeOut("slow", function() { updateSearchInput(); });
-  }
-
-  function hideFast() {
-    $('div.graph_legend').hide();
-    $('div.graph_legend div.search_error').hide();
-  }
-
-  function drawPartyBar(party_data, party_id) {
-    var id = party_id - 1;
-    var partido = normalizePartyName(party_data["partido_"+party_id][0]);
-
-    if (_.indexOf(parties, partido) !== -1) {
-      $('div.graph_legend div.stats div.partido:eq('+id+')').addClass(partido);
-    } else {
-      $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
-    }
-    bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
-
-    $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
-    $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
-  }
-
-  function changeData(results,names,parent_url) {
-
-    if (names.length > 0) {
-      if (names.length == 1) {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ')).show();
-        $('div.graph_legend p.autonomy a').text('Volver a España')
-        $('div.graph_legend p.autonomy a').attr('href','#ver_España');
-      } else {
-        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ')).show();
-        $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
-        $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
+    $('div.graph_legend form input.text').focusin(function(){
+      var value = $(this).val();
+      if (value == "Busca tu CCAA" || value == "Busca tu provincia" || value == "Busca tu municipio") {
+        $(this).val('');
       }
+    });
 
-      $('div.graph_legend p.autonomy').show();
-      $('div.graph_legend p.autonomy a').unbind('click');
-      $('div.graph_legend p.autonomy a').click(function(ev){
-        ev.stopPropagation();
-        ev.preventDefault();
-        var url = global_url + "/" + parent_url[parent_url.length-1];
-        goDeeper(url);
-        graphBubbleTooltip.hide();
-        graphBubbleInfowindow.hide();
-      });
-
-      $('div.graph_legend div.stats').show();
-
-      // Remove previous political style bars
-      $('div.graph_legend div.stats div.partido').each(function(i,ele){
-        $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-      });
-
-      var bar_width;
-
-      drawPartyBar(results,1);
-      drawPartyBar(results,2);
-      drawPartyBar(results,3);
-
-
-      // Other
-      bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-
-      $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
-      $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
-      showLegend();
-    } else {
-      $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
-      $('div.graph_legend p.autonomy').show();
-      $('div.graph_legend p.autonomy a').unbind('click');
-      showSearch();
+    function updateSearchInput() {
+      $input = $('div.graph_legend form input.text');
+      if (deep == "autonomias") {
+        $input.val('Busca tu CCAA');
+      } else if (deep == "provincias") {
+        $input.val('Busca tu provincia');
+      } else {
+        $input.val('Busca tu municipio');
+      }
     }
-  }
 
-  function showSearch() {
-    $('div.graph_legend div.stats').hide();
-    $('div.graph_legend p.autonomy').hide();
-    showLegend();
-  }
+    $('div.graph_legend form input.text').focusout(function(){
+      var value = $(this).val();
+      if (value == "") {
+        updateSearchInput();
+      }
+    });
 
-  return {
-    hide: hideLegend,
-    hideFast: hideFast,
-    show: showLegend,
-    showError: showSearchError,
-    hideError: hideSearchError,
-    change: changeData
-  }
+    function showLegend() {
+      $('div.graph_legend').fadeIn();
+    }
+
+    function hideSearchError() {
+      $('div.graph_legend div.search_error').hide();
+    }
+
+    function showSearchError() {
+      var formTopPosition = $('div.graph_legend form ').position().top;
+      $('div.graph_legend div.search_error').css("top", formTopPosition + 40);
+      $('div.graph_legend div.search_error').fadeIn();
+    }
+
+    function hideLegend() {
+      $('div.graph_legend').fadeOut("slow", function() { updateSearchInput(); });
+    }
+
+    function hideFast() {
+      $('div.graph_legend').hide();
+      $('div.graph_legend div.search_error').hide();
+    }
+
+    function drawPartyBar(party_data, party_id) {
+      var id = party_id - 1;
+      var partido = normalizePartyName(party_data["partido_"+party_id][0]);
+
+      if (_.indexOf(parties, partido) !== -1) {
+        $('div.graph_legend div.stats div.partido:eq('+id+')').addClass(partido);
+      } else {
+        $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+      }
+      bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
+
+      $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
+      $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
+    }
+
+    function changeData(results,names,parent_url) {
+
+      if (names.length > 0) {
+        if (names.length == 1) {
+          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ')).show();
+          $('div.graph_legend p.autonomy a').text('Volver a España')
+          $('div.graph_legend p.autonomy a').attr('href','#ver_España');
+        } else {
+          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ')).show();
+          $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
+          $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
+        }
+
+        $('div.graph_legend p.autonomy').show();
+        $('div.graph_legend p.autonomy a').unbind('click');
+        $('div.graph_legend p.autonomy a').click(function(ev){
+          ev.stopPropagation();
+          ev.preventDefault();
+          var url = global_url + "/" + parent_url[parent_url.length-1];
+          goDeeper(url);
+          graphBubbleTooltip.hide();
+          graphBubbleInfowindow.hide();
+        });
+
+        $('div.graph_legend div.stats').show();
+
+        // Remove previous political style bars
+        $('div.graph_legend div.stats div.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        var bar_width;
+
+        drawPartyBar(results,1);
+        drawPartyBar(results,2);
+        drawPartyBar(results,3);
+
+
+        // Other
+        bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
+
+        $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
+        $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
+        showLegend();
+      } else {
+        $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
+        $('div.graph_legend p.autonomy').show();
+        $('div.graph_legend p.autonomy a').unbind('click');
+        showSearch();
+      }
+    }
+
+    function showSearch() {
+      $('div.graph_legend div.stats').hide();
+      $('div.graph_legend p.autonomy').hide();
+      showLegend();
+    }
+
+    return {
+      hide: hideLegend,
+      hideFast: hideFast,
+      show: showLegend,
+      showError: showSearchError,
+      hideError: hideSearchError,
+      change: changeData
+    }
   }());
 
   //Control resize window
@@ -632,7 +631,7 @@ function restartGraph(force_create) {
 
 
 function createOrUpdateBubbles(url){
-    showGraphLoader();
+  showGraphLoader();
   if (createdBubbles == true) {
     updateBubbles(url);
   } else {
@@ -641,15 +640,13 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-//console.log("Create bubbles", url);
+  //console.log("Create bubbles", url);
 
-  if (normalization[compare] === undefined) {
-  //  console.log(normalization[compare]);
+  if (compare === "ninguna") {
     hideGraphLoader();
     chooseMessage.show();
     return;
   } else {
-    chooseMessage.show();
     chooseMessage.hide();
   }
 
@@ -704,13 +701,13 @@ function updateBubbles(url){
 
   $.getJSON(url, function(data) {
 
-  if (data == null) {
-    failCircle.show();
-    hideGraphLoader();
-    return;
-  }
+    if (data == null) {
+      failCircle.show();
+      hideGraphLoader();
+      return;
+    }
 
-  failCircle.hide();
+    failCircle.hide();
     var one = true;
     var count = 0;
     _.each(data, function(v,key) {
@@ -764,10 +761,10 @@ function goDeeper(url){
 
   name = url_split[url_split_length].split(compare_var)[0].substring(0, length-1);
 
- // console.log("url_split", url_split);
- // console.log("deep", deep);
- // console.log("name", name);
- // console.log("compare", compare);
+  // console.log("url_split", url_split);
+  // console.log("deep", deep);
+  // console.log("name", name);
+  // console.log("compare", compare);
 
   graphLegend.hideError();
   drawNoDataBars();
@@ -849,4 +846,3 @@ function showGraphLoader() {
 function hideGraphLoader() {
   $('div#graph span.loader').fadeOut();
 }
-
