@@ -95,6 +95,14 @@
   }
 
   function initializeWelcomeWindow() {
+
+    $('body').click(function(event) {
+      if (!$(event.target).closest('div#welcomewindow').length) {
+        $("#welcomewindow").fadeOut("slow");
+        $('body').unbind('click');
+      }
+    });
+
     $("#welcomewindow a.close_info").click(function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
@@ -104,6 +112,8 @@
     $("#welcomewindow a.start").click(function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
+
+
       $("#welcomewindow").fadeOut("slow");
 
         var text = $("div.select div.option_list ul li a.paro").text();
