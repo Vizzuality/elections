@@ -234,6 +234,11 @@ div.infowindow div.top div.stats div.bar {position:relative; float:left; width:a
 div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
 div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div.infowindow div.top div.summary h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
+div.infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
+div.infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
+div.infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
+div.infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
 
 div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div.infowindow div.bottom {display:inline-block; width:252px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
@@ -312,14 +317,23 @@ div#comparewindow div.bottom form div.pac-container div.pac-unselected {padding:
 div#comparewindow div.bottom form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
 div#comparewindow div.bottom form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}
 
-
-
 div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('../images/tiny_search_len.png') no-repeat 0 0;}
 div#comparewindow div.bottom form input.submit:hover {background-position:0 -13px; cursor:pointer;}
 div#comparewindow div.bottom p.refer {display:none; width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:right; font:normal 13px "Officina Regular"; color:#666666;}
 div#comparewindow div.bottom p.refer a {width:auto; color:#8C1F74;}
 div#comparewindow div.bottom p.refer a:hover {color:#5C134C;}
 
+/*WELCOME WINDOW*/
+div#welcomewindow {position:absolute; width:548px; height:354px; padding: 30px;left:50%; top:50%; margin:-257px 0 0 -304px; background:url('../images/welcome_window.png') no-repeat; z-index:100;}
+div#welcomewindow a.close_info {position:absolute; right:3px; top:1px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
+div#welcomewindow h1 {margin-bottom: 15px; font:normal 22px "Officina Bold"; color:#333;}
+div#welcomewindow p {font:normal 15px "Officina Regular"; color:#666; margin-bottom:31px;}
+div#welcomewindow div.header {clear:both; overflow:hidden; margin-bottom: 31px; font:normal 26px "Officina Regular"; color:#333;}
+div#welcomewindow div.header small {float:left; font:normal 12px "Officina Regular"; color:#ccc;}
+div#welcomewindow div.header div.nav {float:right; font:normal 12px "Officina Regular"; color:#333;}
+div#welcomewindow div.header div.nav a {font:normal 12px "Officina Regular"; color:#333;}
+div#welcomewindow a.start{display:block; width: 331px; height:22px; font:bold 16px "Officina Bold"; color: #8B1F74; margin:0 auto 3px auto; padding: 15px 0; text-align:center; background:url('../images/button_bkg.png') no-repeat; text-decoration:none;}
+div#welcomewindow a.explore {display:block; margin:auto; font:normal 15px "Officina Regular"; color:#666; text-align:center;}
 
 /*START WINDOW*/
 div#appInfo {position:absolute; display:none; width:775px; height:514px; left:50%; top:50%; margin:-257px 0 0 -385px; z-index:100; background:url('../images/info_bkg.png') no-repeat 0 0;}
@@ -373,104 +387,104 @@ div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #d
 /*psoe*/
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
 div.stats div.partido.psoe div.bar span.c {background-position:right -0px!important;}
-div.stats div.partido.psoe p {color:red;}
+div.stats div.partido.psoe p, li.partido.psoe {color:red;}
 /*pp*/
 div div.stats div.partido.pp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp div.bar span.c{background-position:right -6px!important;}
-div div.stats div.partido.pp p {color:#00B2EB;}
+div div.stats div.partido.pp, li.partido.pp {color:#00B2EB;}
 /*iu*/
 div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.iu p {color:#54A551;}
+div div.stats div.partido.iu p, li.partido.iu {color:#54A551;}
 /*ap*/
 div div.stats div.partido.ap div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.ap div.bar span.c {background-position:right -6px!important}
-div div.stats div.partido.ap p {color:#00B2EB;}
+div div.stats div.partido.ap p, li.partido.ap {color:#00B2EB;}
 /*indep*/
 div div.stats div.partido.indep div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.indep div.bar span.c {background-position:right -24px!important}
-div div.stats div.partido.indep p {color:gray;}
+div div.stats div.partido.indep p, li.partido.indep {color:gray;}
 /*pa*/
 div div.stats div.partido.pa div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.pa div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.pa p {color:#54A551;}
+div div.stats div.partido.pa p, li.partido.pa {color:#54A551;}
 /*bng*/
 div div.stats div.partido.bng div.bar {background-position:0 0px!important;}
 div div.stats div.partido.bng div.bar span.c {background-position:right 0px!important}
-div div.stats div.partido.bng p {color:red;}
+div div.stats div.partido.bng p, li.partido.bng {color:red;}
 /*pdp*/
 div div.stats div.partido.pdp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pdp div.bar span.c {background-position:right -6px!important}
-div div.stats div.partido.pdp p {color:#00B2EB;}
+div div.stats div.partido.pdp p, li.partido.pdp {color:#00B2EB;}
 /*erc-am*/
 div div.stats div.partido.erc_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc_am div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.erc_am p {color:#EC7B37;}
+div div.stats div.partido.erc_am p, li.partido.erc_am {color:#EC7B37;}
 /*esquerra-am*/
 div div.stats div.partido.esquerra_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.esquerra_am p {color:#EC7B37;}
+div div.stats div.partido.esquerra_am p, li.partido.esquerra_am {color:#EC7B37;}
 /*erc*/
 div div.stats div.partido.erc div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.erc p {color:#EC7B37;}
+div div.stats div.partido.erc p, li.partido.erc {color:#EC7B37;}
 /*hb*/
 div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
-div div.stats div.partido.hb p {color:#800080;}
+div div.stats div.partido.hb p, li.partido.hb {color:#800080;}
 /*ciu*/
 div.innerBubble.ciu{background:url('../images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
-div div.stats div.partido.ciu p {color:#ec7b37;}
+div div.stats div.partido.ciu p, li.partido.ciu {color:#ec7b37;}
 /*cds*/
 div.innerBubble.cds{background:url('../images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
-div div.stats div.partido.cds p {color:#62A558;}
+div div.stats div.partido.cds p, li.partido.cds {color:#62A558;}
 /*par*/
 div.innerBubble.par{background:url('../images/backgrounds/par.png'); }
 div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
-div div.stats div.partido.par p {color:#fdb202;}
+div div.stats div.partido.par p, li.partido.par {color:#fdb202;}
 /*eaj-pnv*/
 div.innerBubble.eaj_pnv{background:url('../images/backgrounds/eaj_pnv.png'); }
 div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.eaj_pnv p {color:#CE0E16;}
+div div.stats div.partido.eaj_pnv p, li.partido.eaj_pnv {color:#CE0E16;}
 /*ea*/
 div.innerBubble.ea{background:url('../images/backgrounds/ea.png'); }
 div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
 div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
-div div.stats div.partido.ea p {color:#B41318;}
+div div.stats div.partido.ea p, li.partido.ea {color:#B41318;}
 /*prc*/
 div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.prc p {color:#800080;}
+div div.stats div.partido.prc p, li.partido.prc {color:#800080;}
 /*pr*/
 div.innerBubble.pr{background:url('../images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.pr p {color:#008140;}
+div div.stats div.partido.pr p, li.partido.pr {color:#008140;}
 /*uv*/
 div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
-div div.stats div.partido.uv p {color:#EC7B37;}
+div div.stats div.partido.uv p, li.partido.uv {color:#EC7B37;}
 /*otros*/
 div div.stats div.partido.otros div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.otros div.bar span.c {background-position:right -24px!important;}
-div div.stats div.partido.otros p {color:#999999;}
+div div.stats div.partido.otros p, li.partido.otros {color:#999999;}
 /*par1*/
 div div.stats div.partido.par1 div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.par1 div.bar span.c {background-position:right -36px!important;}
-div div.stats div.partido.par1 p {color:#990033;}
+div div.stats div.partido.par1 p, li.partido.par1 {color:#990033;}
 /*par2*/
 div div.stats div.partido.par2 div.bar {background-position:0 -34px!important;}
 div div.stats div.partido.par2 div.bar span.c {background-position:right -30px!important;}
-div div.stats div.partido.par2 p {color:orange;}
+div div.stats div.partido.par2 p, li.partido.par2 {color:orange;}
 /*par3*/
 div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
-div div.stats div.partido.par3 p {color:#666;}
+div div.stats div.partido.par3 p, li.partido.par3 {color:#666;}
 /*end bars*/
