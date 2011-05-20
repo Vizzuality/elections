@@ -43,7 +43,7 @@
       ev.preventDefault();
       var className = ($(this).hasClass('map'))?'map':'graph';
       if (!$(this).hasClass('selected')) {
-        infoTooltip.hide();
+        infoTooltip.hide_();
         $('div#tab_menu a').removeClass('selected');
         if (className == 'map') {
           $("#graph").hide();
@@ -188,6 +188,7 @@
             $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);
 
             $("div.info_tooltip").css("left", position-7);
+            
             $("div.info_tooltip").fadeIn("slow", function() {
               $('body').click(function(event) {
                 if (!$(event.target).closest('div.info_tooltip').length) { hideTooltip(); }
@@ -205,8 +206,8 @@
       }
 
       return {
-        hide: hideTooltip,
-        show: showInfoTooltip
+        hide_: hideTooltip,
+        show_: showInfoTooltip
       };
     }());
 
@@ -222,7 +223,7 @@
       $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
 
       if (!$(this).closest('div.select').hasClass('opened')) {
-        infoTooltip.hide();
+        infoTooltip.hide_();
         failCircle.reset();
         if ($(this).parent().find('li.selected').length) {
           var index = $(this).parent().find('li.selected').index();
@@ -273,7 +274,7 @@
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
 
-        infoTooltip.show(value, $(this).closest('div.select').position().left);
+        infoTooltip.show_(value, $(this).closest('div.select').position().left);
 
         $(this).parent().addClass('selected');
         $(this).closest('div.select').addClass('selected').removeClass('opened');
