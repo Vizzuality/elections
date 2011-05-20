@@ -181,7 +181,6 @@
         old_image.attr('src',new_url);
 
         // when it loads the new image, fade out the old one
-        old_image.unbind("load");
         old_image.one("load",function(){
           new_image.animate({opacity:0},{ duration: 800, queue: false ,complete: function() {
               new_image.remove();
