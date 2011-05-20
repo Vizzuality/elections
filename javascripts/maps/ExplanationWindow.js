@@ -42,7 +42,7 @@
       '</div>'+
       '<div class="explain"></div>';
 
-    $('body').append(this.div);
+    $('div.tabs').append(this.div);
     $(this.div).children('a.close_info').click(function(ev){ev.stopPropagation();ev.preventDefault();me.hide();});
 
     $(this.div).find('li').children('a').click(function(ev){
