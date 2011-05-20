@@ -13,10 +13,11 @@
 
 
   function initializeApp() {
-    initializeGraph();        // initialize graph
-    initializeHeader();       // initialize header options (selects and more) and graph/map menu
-    initializeMap();          // initialize map and map modules
-    initializeKeyBindings();  // initialize key bindings
+    initializeWelcomeWindow(); // initialize welcomewindow
+    initializeGraph();         // initialize graph
+    initializeHeader();        // initialize header options (selects and more) and graph/map menu
+    initializeMap();           // initialize map and map modules
+    initializeKeyBindings();   // initialize key bindings
   }
 
   function initializeKeyBindings() {
@@ -90,6 +91,38 @@
     $('div.option_list ul li a.'+route[5]).closest('div.select').find('span.inner_select a').text(value);
 
     initializeApp();
+  }
+
+  function initializeWelcomeWindow() {
+    $("#welcomewindow a.close_info").click(function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+    });
+
+    $("#welcomewindow a.explore").click(function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+    });
+
+    $("#welcomewindow a.start").click(function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+    });
+
+    $("#welcomewindow a.more_info").click(function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+    });
+
+    $("#welcomewindow a.know_more").click(function(ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+    });
   }
 
   function changeHash() {
