@@ -161,16 +161,25 @@
   }
 
 
-
+  var tileOverlayHolder = [];
   function refreshTiles() {
+    // nuke old overlay tiles that may not have been removed yet
+    _.each(tileOverlayHolder, function(ele,i){
+      $(ele).remove();
+      delete tileOverlayHolder[i];      
+    });
+    tileOverlayHolder = _.compact(tileOverlayHolder) 
+
+    
     $('div#peninsula div').each(function(i,ele){
       if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
-        
-        // duplicate tile and add to div below current tile
+    
+        // duplicate tile and add to div above current tile
         var old_image = $(ele).children('img');
         var new_image = old_image.clone();
         var zindex    = old_image.css('z-index') + 1
         new_image.css({'position':'absolute', 'z-index':zindex, 'top':0, 'left':0});
+        tileOverlayHolder.push(new_image);
         $(ele).prepend(new_image);
         
         // update new tile with new url
@@ -181,9 +190,10 @@
         old_image.attr('src',new_url);
 
         // when it loads the new image, fade out the old one
+        old_image.unbind("load");
         old_image.one("load",function(){
           new_image.animate({opacity:0},{ duration: 800, queue: false ,complete: function() {
-              new_image.remove();
+              $(new_image).remove();
             }
           });          
         });
