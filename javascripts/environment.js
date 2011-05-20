@@ -16,8 +16,7 @@
   }
 
 
-
-
+  //Go to IE6 page
   if (ua.msie && ua.version.slice(0,3) < '7.0') {
     window.location.href = "../ie6.html";
   }
