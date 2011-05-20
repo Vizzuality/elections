@@ -185,7 +185,7 @@
 
       if (info['data'][year]['primer_partido_name']!=undefined) {
 
-        if (this.deep_level != "autonomias") {
+        if (this.deep_level == "municipios") {
           $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
         }
 
@@ -198,7 +198,7 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        if (this.deep_level != "autonomias") {
+        if (this.deep_level == "municipios") {
           this.drawPartyBar(1, info);
           this.drawPartyBar(2, info);
           this.drawPartyBar(3, info);
@@ -290,7 +290,7 @@
 
       if (this.div_) {
 
-        if (this.deep_level == "autonomias") {
+        if (this.deep_level != "municipios") {
 
           $('div#infowindow div.summary li.partido').each(function(i,ele){
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
