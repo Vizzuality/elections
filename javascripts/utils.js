@@ -56,63 +56,63 @@ var tooltipInfo = {
     legendBottom:"Menos % de mayores de 65 años"
   },
   "% Inmigración" : {
-    content: "Desviación respecto a la media del número de inmigrantes por habitante.",
+    content: "Desviación respecto a la media del número de inmigrantes por habitante en el país.",
     left: "menos inmigr.",
     right: "más inmigr.",
     legendTop: "Más % de inmigración",
     legendBottom:"Menos % de inmigración"
   },
   "Tasa de paro" : {
-    content: "Desviación respecto a la media de la tasa de paro EPA.",
+    content: "Desviación respecto a la media nacional de la tasa de paro EPA.",
     left: "menos parados",
     right: "más parados",
     legendTop: "Más % paro",
     legendBottom:"Menos % paro"
   },
   "PIB per cápita" : {
-    content: "Desviación respecto a la media del producto interior bruto por habitante.",
+    content: "Desviación respecto a la media nacional del producto interior bruto por habitante.",
     left: "menos PIB",
     right: "más PIB",
     legendTop: "Más PIB per cápita",
     legendBottom:"Menos PIB per cápita"
   },
   "Matriculaciones" : {
-    content: "Desviación respecto a la media del número de vehículos matriculados.",
+    content: "Desviación respecto a la media nacional del número de vehículos matriculados.",
     left: "menos vehic.",
     right: "más vehic.",
     legendTop: "Más vehículos",
     legendBottom:"Menos vehículos"
   },
   "Jóvenes parados" : {
-    content: "Desviación sobre la media del porcentaje de jóvenes parados de larga duración.",
+    content: "Desviación sobre la media nacional del porcentaje de jóvenes parados de larga duración.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más jóvenes parados",
     legendBottom:"Menos jóvenes parados"
   },
   "Parados larga duración" : {
-    content: "Desviación sobre la media del porcentaje de parados de larga duración.",
+    content: "Desviación sobre la media nacional del porcentaje de parados de larga duración.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más parados",
     legendBottom:"Menos parados"
   },
   "Edad media" : {
-    content: "Desviación de la edad media respecto a la media de edad nacional.",
+    content: "Desviación de la edad media nacional respecto a la media de edad nacional.",
     right: "más mayores",
     left: "más jóvenes",
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
   "Saldo Vegetativo" : {
-    content: "Desviación respecto a la media del crecimiento de la población.",
+    content: "Desviación respecto a la media nacional del crecimiento de la población.",
     left: "crece poco",
     right: "crece mucho",
     legendTop: "Mayor crecimiento",
     legendBottom:"Menor crecimiento"
   },
   "Salario medio" : {
-    content: "Desviación respecto a la media del salario medio por habitante.",
+    content: "Desviación respecto a la media nacional del salario medio por habitante.",
     left: "sueldos + bajos",
     right: "sueldos + altos",
     legendTop: "Sueldos más altos",
@@ -126,28 +126,28 @@ var tooltipInfo = {
     legendBottom:"Menos habitantes"
   },
   "Consumo TV" : {
-    content: "Desviación respecto a la media del consumo de tv.",
+    content: "Desviación respecto a la media nacional del consumo de tv.",
     left: "menos tv",
     right: "más tv",
     legendTop: "Más consumo tv",
     legendBottom:"Menos consumo tv"
   },
   "Penetr. internet" : {
-    content: "Desviación respecto a la media del porcentaje de personas acceso a internet",
+    content: "Desviación respecto a la media nacional del porcentaje de personas con acceso a internet",
     left: "menor acceso",
     right: "mayor acceso",
     legendTop: "Más acceso a internet",
     legendBottom:"Menos acceso a internet"
   },
   "Consumo prensa" : {
-    content: "Desviación respecto a la media del consumo de prensa.",
+    content: "Desviación respecto a la media nacional del consumo de prensa.",
     left: "menos prensa",
     right: "más prensa",
     legendTop: "Más consumo prensa",
     legendBottom:"Menos consumo prensa"
   },
   "Detenidos" : {
-    content: "Desviación respecto a la media de detenidos por cada mil habitantes.",
+    content: "Desviación respecto a la media nacional de detenidos por cada mil habitantes.",
     left: "menos detenidos",
     right: "más detenidos",
     legendTop: "Más detenidos",
