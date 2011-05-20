@@ -348,20 +348,19 @@
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_total'];
 
-      if (party_id < 4) {
+      var partido = "otros";
 
-        var partido = info.data[year][positions[id] +'_partido_name'];
+      if (party_id < 4) {
+        partido = info.data[year][positions[id] +'_partido_name'];
         var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido) !== -1) {
+        if (_.indexOf(parties, partido_class) !== -1) {
           $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass(partido_class);
           this.oldPar = partido;
         } else {
           $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass('par'+party_id);
           this.oldPar = "par"+party_id;
         }
-      } else {
-        partido = "otros";
       }
 
       if (animated == true) {
