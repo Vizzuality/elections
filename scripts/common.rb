@@ -72,7 +72,9 @@ def get_provinces
 end
 
 def get_municipalities(province)
-  $cartodb.query("select ine_poly.cartodb_id, nombre as name from ine_poly, gadm2 where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}'")[:rows].compact
+  $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2
+                  from ine_poly, gadm2, municipios 
+                  where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}' and ine_poly_cartodb_id = ine_poly.cartodb_id")[:rows].compact
 end
 
 def get_variables(gadm_level)
@@ -94,6 +96,14 @@ def get_variables(gadm_level)
     end
   end
   variables.flatten.compact
+end
+
+def get_all_variables
+  result = {}
+  $cartodb.query("select codigo from variables")[:rows].each do |row|
+    result[row[:codigo]] ||= []
+  end
+  result
 end
 
 def get_y_coordinate(row, variable, max, min)
