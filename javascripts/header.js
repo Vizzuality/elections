@@ -49,6 +49,7 @@
           graphBubbleTooltip.hide();
           state = "mapa";
           drawNoDataBars();
+
           // This element belongs to body, not to graph container
           graphBubbleInfowindow.hide();
           $('div#map').css('zIndex',10);
@@ -65,6 +66,7 @@
           graphBubbleTooltip.hide();
           $("#graph").show();
           drawNoDataBars();
+
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           restartGraph(true);
