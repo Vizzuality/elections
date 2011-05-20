@@ -284,7 +284,8 @@
         } else {
 
           $('div#comparewindow div#compare_region2 div.summary').hide();
-        var bar_width;
+
+          var bar_width;
 
         // First political party
         var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
@@ -324,6 +325,7 @@
         bar_width = (info['data'][year]['otros_partido_percent']*200)/100;
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#comparewindow div#compare_region2 div.stats').show();
 
       }
         $('div#comparewindow div.bottom').removeClass('search').addClass('region');
@@ -404,36 +406,35 @@
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
-        if (this.deep_level != "municipios") {
-          $('div#comparewindow div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
+
+        $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
+        $('div#comparewindow div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
+
 
           this.drawTotalNumber(1, 1, this.firstData, true);
           this.drawTotalNumber(2, 1, this.firstData, true);
           this.drawTotalNumber(3, 1, this.firstData, true);
           this.drawTotalNumber(4, 1, this.firstData, true);
 
-          if (this.secondData['data'] !== undefined) {
             this.drawTotalNumber(1, 2, this.secondData, true);
             this.drawTotalNumber(2, 2, this.secondData, true);
             this.drawTotalNumber(3, 2, this.secondData, true);
             this.drawTotalNumber(4, 2, this.secondData, true);
-          }
-        }
-        else {
+
           this.drawBar(1,"top", this.firstData);
           this.drawBar(2,"top", this.firstData);
           this.drawBar(3,"top", this.firstData);
           this.drawBar(4,"top", this.firstData);
 
-          if (this.secondData['data'] !== undefined) {
             this.drawBar(1,"bottom", this.secondData);
             this.drawBar(2,"bottom", this.secondData);
             this.drawBar(3,"bottom", this.secondData);
             this.drawBar(4,"bottom", this.secondData);
-          }
-        }
       }
     }
 
