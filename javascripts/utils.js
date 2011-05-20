@@ -382,8 +382,8 @@ function replaceWeirdCharacters(string) {
   string = string.replace(/[ÝŸŶ]/i,         'Y');
   string = string.replace(/[ŽŻŹ]/i,         'Z');
   string = string.replace(/ /g,             '_');
-  string = string.replace(/'/g,             '"');
-  string = string.replace(/\//g,             '');
+  string = string.replace(/'/g,             '');
+  string = string.replace(/\//g,            '');
   return string.toLowerCase();
 }
 
