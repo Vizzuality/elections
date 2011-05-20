@@ -226,11 +226,17 @@
           dataType: 'json',
           url: url,
           success: function(info) {
-            fillData(info);
+            if (info!=null) {
+              fillData(info);
+              $('div#comparewindow p.refer').hide();
+            } else {
+              $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+              $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
+            }
           },
           error: function(error) {
             $('div#comparewindow div.bottom').addClass('search').removeClass('region')
-            $('div#comparewindow p.refer').text('No hemos encontrado la localidad, prueba con otra');
+            $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
           }
         });
       } else {
