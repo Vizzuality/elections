@@ -149,9 +149,9 @@ var tooltipInfo = {
 var textInfoWindow = {
   envejecimiento_normalizado : {
     before_negative: "Población con un ",
-    after_negative: "% menos respecto a la media de <strong><%= media %></strong> personas mayores de 65 años por cada 100 menos de 16 en España.",
+    after_negative: "% sobre la media <strong><%= media %></strong> el porcentaje de personas entre 16 y 65 años",
     before_positive: "Población con un ",
-    after_positive: "% más respecto a la media de <strong><%= media %></strong> personas mayores de 65 años por cada 100 menos de 16 en España."
+    after_positive: "% sobre la media <strong><%= media %></strong> el porcentaje de personas entre 16 y 65 años"
   },
   paro_epa_normalizado : {
     before_negative: "Tasa de paro EPA un ",
@@ -186,7 +186,7 @@ var textInfoWindow = {
   saldo_vegetativo_normalizado : {
     before_negative: "El crecimiento natural de la población está un ",
     after_negative: "% por debajo de la media <strong>(<%= media %>%)</strong>.",
-    before_positive: "El crecimiento de la población está un ",
+    before_positive: "El crecimiento natural de la población está un ",
     after_positive: "% por encima de la media <strong>(<%= media %>)</strong>."
   },
   salario_medio_normalizado : {
