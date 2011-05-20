@@ -197,15 +197,15 @@ var textInfoWindow = {
   },
   secundaria_acabada_normalizado: {
     before_negative: "Un ",
-    after_negative: "% menos que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados",
+    after_negative: "% menos que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados.",
     before_positive: "Un ",
-    after_positive: "% más que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados"
+    after_positive: "% más que la media nacional <strong>(<%= media %>)</strong>, tiene los estudios secundarios terminados."
   },
   penetracion_internet_normalizado: {
     before_negative: "Un ",
-    after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí",
+    after_negative: "% menos que la media <strong>(<%= media %>)</strong>, tiene acceso a internet.",
     before_positive: "Un ",
-    after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet aquí"
+    after_positive: "% más que la media <strong>(<%= media %>)</strong>, tiene acceso a internet."
   },
   audiencia_diaria_tv_normalizado : {
     before_negative: "Su población consume un ",
