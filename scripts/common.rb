@@ -72,7 +72,7 @@ def get_provinces
 end
 
 def get_municipalities(province)
-  $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2
+  $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2, ine_poly.codinemuni, ine_poly.codineprov
                   from ine_poly, gadm2, municipios
                   where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}' and ine_poly_cartodb_id = ine_poly.cartodb_id")[:rows].compact
 end
@@ -165,7 +165,7 @@ def get_radius(row)
 end
 
 def get_parties
-  @get_parties ||= $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
+  @get_parties ||= $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
 end
 
 def get_known_parties(parties)

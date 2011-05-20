@@ -367,6 +367,10 @@ div#appInfo div.explain p a {color:#8C1F74;}
 div#appInfo div.explain p.rango {padding: 0 0 10px 0; font:normal 13px Arial; color:#999999}
 
 /*GRAPH*/
+
+div#graph span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
+div#graph span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
+
 /*Legend*/
 div.graph_legend {display:none; margin: 39px 0 0 50px; }
 div.graph_legend h2 {font:normal 21px "Officina Bold"; color:#333333; text-shadow:0 1px white; line-height:21px;}
