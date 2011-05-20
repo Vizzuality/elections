@@ -354,7 +354,8 @@ div#appInfo div.options {position:relative; float:left; width:190px; height:450p
 div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.jpg') no-repeat 0 0;}
 div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
 div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
-div#appInfo div.options ul {width:100%; padding:10px 0 0 0;}
+div#appInfo div.options h4 a{color:#999999; text-decoration: none;}
+div#appInfo div.options ul {width:100%; padding:10px 0 0 0; display: none;}
 div#appInfo div.options ul li {width:100%; padding:0 0 8px;}
 div#appInfo div.options ul li a {font:normal 13px Arial; color:#8B1F73; text-decoration:none;}
 div#appInfo div.options ul li a:hover {color:#333333;}
@@ -365,6 +366,10 @@ div#appInfo div.explain h1 {padding:0 0 5px 0; font:normal 17px "Officina Bold";
 div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#666666;}
 div#appInfo div.explain p a {color:#8C1F74;}
 div#appInfo div.explain p.rango {padding: 0 0 10px 0; font:normal 13px Arial; color:#999999}
+div#appInfo div.explain img.chart {margin: 20px 0 0 0; border: 1px solid white; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#appInfo div.explain div.chartCurrentLabel {position: relative; float: right; top: -70px; width: 150px; text-align: right; margin: 0 20px 0 0;}
+div#appInfo div.explain div.chartCurrentLabel span.value {width: 100%; text-align: right; font: normal 36px "Officina Bold"; color: #363636;}
+div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align: right; font: normal 13px "Arial"; color: #363636;}
 
 /*GRAPH*/
 

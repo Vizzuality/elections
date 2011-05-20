@@ -220,10 +220,10 @@ var textInfoWindow = {
     after_positive: "<strong>%</strong> más de radio que la media nacional <strong>(<%= media %>)</strong>."
   },
   matriculaciones_normalizado : {
-    before_negative: "Hay ",
-    after_negative: " vehículos matriculados menos que la media nacional <strong>(<%= media %>)</strong>.",
+    before_negative: "Hay un ",
+    after_negative: "% menos de vehículos matriculados que la media nacional.",
     before_positive: "Hay un ",
-    after_positive: " vehículos matriculados más que la media nacional <strong>(<%= media %>)</strong>."
+    after_positive: "% más de vehículos matriculados que la media nacional."
   },
   detenidos_normalizado : {
     before_negative: "Hay un ",
@@ -247,50 +247,101 @@ var textInfoWindow = {
 
 
 var explanationContent = {
-  "Edad Media" : {
-    htmlContent: "<h1>Edad media de la población</h1><p class='rango'>Datos disponibles a nivel de municipio entre 2000 y 2010</p><p>Cálculo de la edad media de la población a partir de los grupos quinquenales de distribución de edad del Instituto Nacional de Estadística, considerando el valor medio para cada tramo.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+  "Resultados electorales" : {
+    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 2000 y 2010</p><p>X</p>",
+		graph: false,
+		sourceText: "",
+		units: ""
+  },
+  "Edad media" : {
+    htmlContent: "<h1>Edad media de la población</h1><p class='rango'>Datos disponibles a nivel de municipio entre 2000 y 2010</p><p>Cálculo de la edad media de la población a partir de los grupos quinquenales de distribución de edad del Instituto Nacional de Estadística, considerando el valor medio para cada tramo.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>",
+		units: " años"
   },
   "Envejecimiento" : {
-    htmlContent: "<h1>Envejecimiento de la población</h1><p class='rango'>Datos disponibles a nivel provincial entre 1991 y 2011</p><p>Proporción existente entre el número de personas mayores y el de niños para una población determinada. Se calcula como el número de adultos mayores de 65 años por cada 100 niños menores de 15.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=57'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Envejecimiento de la población</h1><p class='rango'>Datos disponibles a nivel provincial entre 1991 y 2011</p><p>Proporción existente entre el número de personas mayores y el de niños para una población determinada. Se calcula como el número de adultos mayores de 65 años por cada 100 niños menores de 15.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=57'>la web del Instituto Nacional de Estadística</a></p>",
+		units: ""
   },
   "Porcentaje de inmigración" : {
-    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>X.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245%2F&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>X.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245%2F&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "Saldo vegetativo" : {
-    htmlContent: "<h1>Saldo vegetativo</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1987 y 2009</p><p>Indicador demográfico básico que expresa el crecimiento natural de una población, calculado como el número de nacimientos menos el de defunciones por cada mil habitantes.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=51'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Saldo vegetativo</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1987 y 2009</p><p>Indicador demográfico básico que expresa el crecimiento natural de una población, calculado como el número de nacimientos menos el de defunciones por cada mil habitantes.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?per=12&type=db&divi=IDB&idtab=51'>la web del Instituto Nacional de Estadística</a></p>",
+		units: " por mil"
   },
   "Tasa de paro" : {
-    htmlContent: "<h1>Tasa de paro según la encuesta de población activa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2005 y 2011</p><p>Porcentaje de personas sobre la población activa que se encuentran en situación de paro.</p><p class='fuente'>Puede acceder a los datos en bruto en el <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=/t22/e308_mnu&file=inebase&N=&L=0'>Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Tasa de paro según la encuesta de población activa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2005 y 2011</p><p>Porcentaje de personas sobre la población activa que se encuentran en situación de paro.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en el <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=/t22/e308_mnu&file=inebase&N=&L=0'>Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "Parados larga duración" : {
-    htmlContent: "<h1>Parados de larga duración</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1991 y 2009</p><p>Personas desempleadas durante 12 meses o más, en porcentaje sobre la población activa.</p><p class='fuente'>Puede acceder a los datos en bruto en la <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Parados de larga duración</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1991 y 2009</p><p>Personas desempleadas durante 12 meses o más, en porcentaje sobre la población activa.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en la <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>web del Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "Jóvenes parados larga duración" : {
-    htmlContent: "<h1>Jóvenes parados de larga duración</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1991 y 2009</p><p>Población entre los 16 y los 29 años en situación de desempleo durante 12 meses o más, en porcentaje sobre la población del mismo rango de edad.</p><p class='fuente'>Puede acceder a los datos en bruto en la <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Jóvenes parados de larga duración</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1991 y 2009</p><p>Población entre los 16 y los 29 años en situación de desempleo durante 12 meses o más, en porcentaje sobre la población del mismo rango de edad.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en la <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>web del Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "PIB per cápita" : {
-    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto a precios de mercado. Los valores correspondientes a los años 2007-2010 son estimaciones.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto a precios de mercado por habitante. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>",
+		units: "€"
   },
   "Salario medio" : {
-    htmlContent: "<h1>Salario medio</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1995 y 2009</p><p>Salario medio calculado mediante la división de la remuneración total de los asalariados entre el número total de asalariados.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Salario medio</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1995 y 2009</p><p>Salario medio calculado mediante la división de la remuneración total de los asalariados entre el número total de asalariados.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>",
+		units: "€"
   },
   "Matriculaciones" : {
-    htmlContent: "<h1>Matriculaciones de turismos y motocicletas</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1997 y 2009</p><p>Matriculaciones totales de turismos y motocicletas, en número de vehículos.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.dgt.es/portal/es/seguridad_vial/estadistica/matriculaciones_definitivas/provincias_tipo_vehiculo/'>la web de la Dirección General de Tráfico</a></p>"
+    htmlContent: "<h1>Matriculaciones de turismos y motocicletas</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1997 y 2009</p><p>Matriculaciones totales de turismos y motocicletas, en número de vehículos.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.dgt.es/portal/es/seguridad_vial/estadistica/matriculaciones_definitivas/provincias_tipo_vehiculo/'>la web de la Dirección General de Tráfico</a></p>",
+		units: " vehículos"
   },
   "Estudios superiores" : {
-    htmlContent: "<h1>Población con estudios superiores</h1><p class='rango'>Datos disponibles a nivel de provincia entre 2004 y 2011</p><p>Porcentaje de la población con más de 16 años con estudios superiores.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/sociales10/educa-prov.xls'>la web del Ministerio de Educación y Ciencia</a></p>"
+    htmlContent: "<h1>Población con estudios superiores</h1><p class='rango'>Datos disponibles a nivel de provincia entre 2004 y 2011</p><p>Porcentaje de la población con más de 16 años con estudios superiores.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/sociales10/educa-prov.xls'>la web del Ministerio de Educación y Ciencia</a></p>",
+		units: "%"
   },
   "Consumo de TV" : {
-    htmlContent: "<h1>Consumo de televisión</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1997 y 2009</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40044.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Consumo de televisión</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 1997 y 2009</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p>",
+		graph: false,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40044.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "Consumo de prensa" : {
-    htmlContent: "<h1>Consumo de prensa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2000 y 2009</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40022.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Consumo de prensa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2000 y 2009</p><p>Audiencia acumulada diaria como porcentaje sobre la población mayor de 14 años. Dato proporcionado por el Instituto Nacional de Estadística a partir de un estudio de AIMC.</p>",
+		graph: false,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/tabla.do?path=/t12/a110/a01/l0/&file=o40022.px&type=pcaxis&L=0'>la web del Instituto Nacional de Estadística</a></p>",
+		units: "%"
   },
   "Penetración de internet" : {
-    htmlContent: "<h1>Penetración de internet</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2004 y 2010</p><p>Indicador de la penetración de Internet en la población española.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.aimc.es/-Audiencia-de-Internet-en-el-EGM-.html'>el Estudio General de Medios de la AIMC de Octubre / Noviembre de 2010.</a></p>"
+    htmlContent: "<h1>Penetración de internet</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2004 y 2010</p><p>Indicador de la penetración de Internet en la población española.</p>",
+		graph: false,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.aimc.es/-Audiencia-de-Internet-en-el-EGM-.html'>el Estudio General de Medios de la AIMC de Octubre / Noviembre de 2010.</a></p>",
+		units: "%"
   },
   "Detenidos" : {
-    htmlContent: "<h1>Detenidos</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1993 y 2009</p><p>Número de personas detenidas por la Guardia Civil y la Policía Nacional por cada mil habitantes.</p><p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>la web del Instituto Nacional de Estadística</a></p>"
+    htmlContent: "<h1>Detenidos</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1993 y 2009</p><p>Número de personas detenidas por la Guardia Civil y la Policía Nacional por cada mil habitantes.</p>",
+		graph: true,
+		sourceText: "<p class='fuente'>Puede acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/sociales10/cohe-prov.xls'>la web del Instituto Nacional de Estadística</a></p>",
+		units: " por mil"
   }
 };
 
