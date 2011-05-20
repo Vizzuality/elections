@@ -421,15 +421,17 @@
   }
 
   function drawNoDataBars() {
+    // First, let's reset the bars
     $('span.slider_no_data_left').hide();
     $('span.slider_no_data_right').hide();
+    $('span.slider_no_data_left').css({width:"0%"});
+    $('span.slider_no_data_right').css({width:"0%"});
 
     var deep_level;
 
     if (state == "mapa") {
       var zoom = peninsula.getZoom();
       deep_level = getDeepLevelFromZoomLevel(zoom);
-      console.log(deep_level);
     } else {
       deep_level = deep;
     }
@@ -439,13 +441,14 @@
       return false;
     }
 
-    console.log(deep_level, years_nodata, years_nodata[deep_level], years_nodata[deep_level][normalization[compare]]);
+    var comparison_var = normalization[compare];
+    //console.log(deep_level, comparison_var, years_nodata, years_nodata[deep_level], years_nodata[deep_level][comparison_var]);
 
-    if (years_nodata[deep_level][normalization[compare]]!=undefined) {
+    if (years_nodata[deep_level][comparison_var]!=undefined) {
 
-      var left_no = years_nodata[deep_level][normalization[compare]][0] - 1987;
-      var lenght_array = years_nodata[deep_level][normalization[compare]].length;
-      var right_no = 2011 - years_nodata[deep_level][normalization[compare]][lenght_array-1];
+      var left_no      = years_nodata[deep_level][comparison_var][0] - 1987;
+      var length_array = years_nodata[deep_level][comparison_var].length;
+      var right_no     = 2011 - years_nodata[deep_level][comparison_var][length_array-1];
 
       if (left_no!=0) {
         $('span.slider_no_data_left').css({width:(left_no*4.16)+"%"});
