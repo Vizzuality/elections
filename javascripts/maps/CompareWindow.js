@@ -4,6 +4,7 @@
       this.create();
       this.firstZoom = 12;
       this.position = "top";
+      this.deep_level;
       this.firstData = {};
       this.secondData = {};
       this.bar_width_multiplier = 140;
@@ -177,6 +178,7 @@
     	//Create charts
     	this.createChart(info,true);
     	this.setUpChartView();
+      this.deep_level = getDeepLevelFromZoomLevel(zoom);
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
