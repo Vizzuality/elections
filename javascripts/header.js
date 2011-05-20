@@ -351,14 +351,17 @@
 
       function getNextAvailableYear(deep_level) {
         var data = availableData[deep_level][normalization[compare]];
-        if (year > data[data.length - 1]) {
-          return data[data.length - 1];
+        if (data != undefined) {
+          if (year > data[data.length - 1]) {
+            return data[data.length - 1];
+          } else {
+            return _.detect(data, function(num){ return year < num; }); // next election year to the current year
+          }
         } else {
-          return _.detect(data, function(num){ return year < num; }); // next election year to the current year
+          return year;
         }
       }
-      
-      
+
       function goToNextYear() {
 
         if (state == "mapa") {
@@ -409,7 +412,7 @@
       animate_interval = setInterval(function(){animateSlider();},2500);
     }
   }
-  
+
   function getFirstAvailableYear(deep_level) {
     var data = availableData[deep_level][normalization[compare]];
     if (data!=undefined && data.length>0) {
@@ -487,7 +490,7 @@
       } else {
         $('span.slider_no_data_right').hide();
       }
-      
+
       if (!checkFailYear(year)) {
         failCircle.show();
       } else {
