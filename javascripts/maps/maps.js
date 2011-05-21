@@ -15,6 +15,7 @@
   var chld = "ES";
   var chd = "";
   var political_parties;
+  var custom_map_style = [{featureType:"administrative.country",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"administrative.locality",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"all",stylers:[{lightness:7},{saturation:-91}]},{featureType:"all",elementType:"all",stylers:[]}];
 
 
 
@@ -72,7 +73,7 @@
 
 
     /*Adding infowindow(over map), comparewindow(over dom) and explanationwindow(over dom) */
-    infowindow        = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
+    infowindow        = new InfoWindow(new google.maps.LatLng(0,0),peninsula);  //new google.maps.LatLng(0,0)
     comparewindow     = new CompareWindow();
     explanationwindow = new ExplanationWindow();
 
@@ -146,11 +147,12 @@
       if ($(target).closest('div.bubble').length>0) {
         if (!dragging) {
           var occ_id = $(target).closest('div.bubble').attr('id');
-          var tile_id = $(target).closest('div.tile').attr('id');
+          var tile_id = $(target).closest('div.bubble').parent().attr('id');  // closest('div.tile') doesnt work in ie7 :|
+          
           var point = hash[tile_id][occ_id];
           var height = ($(target).closest('div.bubble').height() / 2) - 5;
           var latlng = new google.maps.LatLng(point.center_latitude,point.center_longitude);
-          infowindow.setPosition(latlng,height,point); //latlng && height
+          infowindow.setPosition(latlng,height,point);
         }
 
         if (event.preventDefault) {
