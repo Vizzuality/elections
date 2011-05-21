@@ -1,4 +1,0 @@
-http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-ceuta-ceuta-ceuta-DATOS-ES.xml
-http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-ceuta-ceuta-ceuta-DATOS-ES.xml
-http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/RESULTADOS/2011-M-RESULTADOS-ceuta-melilla-melilla-DATOS-ES.xml
-http://resultados-elecciones.rtve.es/multimedia/xml/2011/ES/PARTICIPACION/2011-M-PARTICIPACION-ceuta-melilla-melilla-DATOS-ES.xml

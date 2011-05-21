@@ -65,6 +65,13 @@
       initializeApp();
       return false;
     }
+    
+    
+    if (route[4]<1987 || route[4]>2011) {
+      initializeApp();
+      return false;
+    }
+    
 
     // Check zoom
     if (route[3]>12 || route[3]<6) {
