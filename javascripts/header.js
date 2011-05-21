@@ -303,6 +303,14 @@
 
       var data_not_found = false;
 
+      $("div.fail").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (state == "mapa") {
+          hideError();
+        }
+      });
+
       $("div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
@@ -451,7 +459,7 @@
       }
     })();
 
-		// 
+		//
     $("span.aux_info a.more_info").click(function(ev) {
 			ev.stopPropagation();
       ev.preventDefault();

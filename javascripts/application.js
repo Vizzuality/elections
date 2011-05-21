@@ -43,7 +43,7 @@
     }
 
     // //Check variable of compare
-    if (!$('div.option_list ul li a.'+route[5]).length) {
+    if (!$('div.option_list ul li a.'+route[5]).length && route[5]!="ninguna") {
       initializeApp();
       return false;
     }
@@ -66,13 +66,11 @@
       return false;
     }
     
-    
-    if (route[4].length<1987 || route[4].length>2011) {
+    if (route[4]<1987 || route[4]>2011) {
       initializeApp();
       return false;
     }
     
-
     // Check zoom
     if (route[3]>12 || route[3]<6) {
       initializeApp();
