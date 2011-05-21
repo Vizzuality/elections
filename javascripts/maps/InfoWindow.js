@@ -154,6 +154,7 @@
     }
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
+    console.log(info);
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
@@ -253,7 +254,7 @@
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
       } else {
-				var msg = "";				
+				var msg = "";
 				if (compare != "ninguna") {
 					msg = 'No hay datos sobre '+ compare + ' en ';
 					var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
@@ -262,7 +263,7 @@
 					} else if (zoomLevelName == 'provincias') {
 						msg += 'esta provincia';
 					} else {
-						msg += 'este municipio';						
+						msg += 'este municipio';
 					}
 					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
 				}
@@ -426,7 +427,7 @@
           $('div#infowindow img').attr('src',statImage.url);
           $('div#infowindow div.chart').show();
         } else {
-          var msg = "";				
+          var msg = "";
   				if (compare != "ninguna") {
   					msg = 'No hay datos sobre '+ compare + ' en ';
   					var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
@@ -435,7 +436,7 @@
   					} else if (zoomLevelName == 'provincias') {
   						msg += 'esta provincia';
   					} else {
-  						msg += 'este municipio';						
+  						msg += 'este municipio';
   					}
   					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
   				}
