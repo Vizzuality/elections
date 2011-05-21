@@ -278,13 +278,13 @@ var textInfoWindow = {
     before_negative: "La penetración de Internet es ",
     after_negative: "<strong>%</strong> por debajo de la media.",
     before_positive: "La penetración de Internet es ",
-    after_positive: "<strong>%</strong> por encima de la media.",
+    after_positive: "<strong>%</strong> por encima de la media."
   },
   audiencia_diaria_tv_normalizado : {
     before_negative: "La audiencia de TV es ",
     after_negative: "<strong>%</strong> por debajo de la media.",
     before_positive: "La audiencia de TV es ",
-    after_positive: "<strong>%</strong>  por encima de la media.",
+    after_positive: "<strong>%</strong>  por encima de la media."
   },
   prensa_diaria_normalizado : {
     before_negative: "El porcentaje del número de lectores es ",
