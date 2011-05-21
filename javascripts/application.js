@@ -26,6 +26,7 @@
         $("#welcomewindow").fadeOut();
         explanationwindow.hide();
         comparewindow.hide();
+        aboutwindow.hide();
         if (state == "grafico") {
           graphBubbleInfowindow.hide();
         } else {
@@ -144,6 +145,7 @@
         ev.stopPropagation();
         ev.preventDefault();
         $("#welcomewindow").fadeOut("slow");
+        aboutwindow.show(true);
       });
     }
 
