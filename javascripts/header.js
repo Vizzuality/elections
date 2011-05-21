@@ -647,7 +647,7 @@
       $('div.wadusText').hide();
     } else {
       var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
-      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':wadus_text;
+      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':first_text;
       $('div.wadusText p').html(wadus_text+' <sup>['+year+']</sup>');
       $('div.wadusText').show();
     }
