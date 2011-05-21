@@ -20,9 +20,9 @@ parties_known  = get_known_parties(parties)
 
 query = <<-SQL
 select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
-       primer_partido_id, primer_partido_percent, tercer_partido_id, 
-       segundo_partido_id, segundo_partido_percent, tercer_partido_percent,
-       censo_total, votantes_totales, resto_partido_percent,
+       primer_partido_id, primer_partido_votos, tercer_partido_id, 
+       segundo_partido_id, segundo_partido_votos, tercer_partido_votos,
+       censo_total, votantes_totales, resto_partido_votos,
        #{variables.join(',')}
 from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia
 where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id
@@ -58,7 +58,7 @@ variables.each do |variable|
     authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
     max_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.max
     min_y = votes_per_province.map{ |h| h[variable.to_sym ].to_f }.compact.min
-    max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_percent].to_f - h[:segundo_partido_percent].to_f }.compact.max
+    max_x = votes_per_province.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_votos].to_f - h[:segundo_partido_votos].to_f }.compact.max
     json = {}
     provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
       row = votes_per_province.select{|h| h[:gadm2_cartodb_id] == province[:cartodb_id] && h[:proceso_electoral_id] == proceso_electoral_id }.first
@@ -79,10 +79,10 @@ variables.each do |variable|
       json[province_name][:children_json_url] = municipalities_path(province_name,variable)
       json[province_name][:censo_total]  = row[:censo_total]
       json[province_name][:porcentaje_participacion] = ("%.2f" % (row[:votantes_totales].to_f / row[:censo_total].to_f * 100.0)).to_f
-      json[province_name][:partido_1] = [parties[row[:primer_partido_id]], row[:primer_partido_percent].to_f]
-      json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_percent].to_f]
-      json[province_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_percent].to_f]
-      json[province_name][:resto_partidos_percent] = row[:resto_partido_percent]
+      json[province_name][:partido_1] = [parties[row[:primer_partido_id]], row[:primer_partido_votos].to_f]
+      json[province_name][:partido_2] = [parties[row[:segundo_partido_id]],row[:segundo_partido_votos].to_f]
+      json[province_name][:partido_3] = [parties[row[:tercer_partido_id]], row[:tercer_partido_votos].to_f]
+      json[province_name][:resto_partidos_percent] = row[:resto_partido_votos]
       json[province_name][:info] = ""
       json[province_name][:parent] = [autonomy_name]
       json[province_name][:parent_url] = [autonomies_path(variable)]
