@@ -134,6 +134,7 @@ end
 # AZUL:  #5AB0E9, #64B7DE, #90D7F4
 # de mas intenso a menos intenso
 def get_color(row, x, parties)
+  return ["#AAAAAA"] if row[:primer_partido_id].nil?
   primer_partido = parties[row[:primer_partido_id]]
   if primer_partido == "PSOE" || primer_partido.include?("PSOE")
     if x > -100
@@ -157,6 +158,7 @@ def get_color(row, x, parties)
 end
 
 def get_radius(row)
+  return 60
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
     row[:votantes_totales] = row[:censo_total]
