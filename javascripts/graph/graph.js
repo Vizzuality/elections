@@ -662,8 +662,9 @@ function createBubbles(url){
   $.getJSON(url, function(data) {
     if (data == null) {
       createdBubbles = false;
+      failCircle.reset();
       failCircle.show();
-      //console.log("404", url);
+      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -711,9 +712,10 @@ function updateBubbles(url){
   $.getJSON(url, function(data) {
 
     if (data == null) {
+      failCircle.reset();
       failCircle.show();
       hideGraphLoader();
-      //console.log("404", url);
+      //console.log("Update 404", url);
       return;
     }
 
