@@ -415,7 +415,7 @@
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
 
           var next_year = getNextAvailableYear(deep_level);
-          if (next_year!=year) {
+          if (next_year!=year && next_year<2012) {
             updateNewSliderValue(next_year);
             failCircle.hide();
           } else {
