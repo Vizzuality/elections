@@ -134,6 +134,7 @@ end
 # AZUL:  #5AB0E9, #64B7DE, #90D7F4
 # de mas intenso a menos intenso
 def get_color(row, x, parties)
+  return ["#AAAAAA"] if row[:primer_partido_id].nil?
   primer_partido = parties[row[:primer_partido_id]]
   if primer_partido == "PSOE" || primer_partido.include?("PSOE")
     if x > -100
