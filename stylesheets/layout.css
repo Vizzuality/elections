@@ -222,44 +222,44 @@ div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div#infowindow {position:absolute; width:252px; height:294px; cursor:default; opacity:0;}
-div#infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
-div#infowindow a.close_infowindow:hover {background-position:0 -18px;}
-div#infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
-
-div#infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
-div#infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div#infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div#infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
-div#infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
-div#infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
+div.infowindow,div#infowindow {position:absolute; width:252px; height:294px; cursor:default; opacity:0;}
+div.infowindow a.close_infowindow,div#infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
+div.infowindow a.close_infowindow:hover,div#infowindow a.close_infowindow:hover {background-position:0 -18px;}
+div.infowindow div.top,div#infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
    
-div#infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div#infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
-div#infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
-div#infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div.infowindow div.top h2,div#infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div.infowindow div.top h2 sup,div#infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div.infowindow div.top p.province,div#infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div.infowindow div.top div.stats,div#infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
+div.infowindow div.top div.stats h4,div#infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
+div.infowindow div.top div.stats div,div#infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
    
-div#infowindow div.top div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
-div#infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
-div#infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
-div#infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
-div#infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
+div.infowindow div.top div.stats div.bar,div#infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
+div.infowindow div.top div.stats div.bar span.c,div#infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
+div.infowindow div.top div.stats div.bar span.l,div#infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar span.r,div#infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
    
-div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
-div#infowindow div.bottom {display:inline-block; width:252px; padding: 17px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
-div#infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
+div.infowindow div.top div.summary h4,div#infowindow div.top div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
+div.infowindow div.top div.summary ul,div#infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
+div.infowindow div.top div.summary ul li,div#infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
+div.infowindow div.top div.summary ul li.bar,div#infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
+div.infowindow div.top div.summary ul li strong,div#infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
    
-div#infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666; margin: 0 0 4px 0;}
-div#infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
-div#infowindow div.bottom p.info a {color:#333333;}
-div#infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
-div#infowindow div.bottom div.chart {width:205px; height:35px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
-div#infowindow div.bottom div.chart img {float:right; height:22px;}
-div#infowindow div.bottom a.goTo {float:left; margin:16px 0 0 0; font:normal 13px "Officina Regular"; color:black; text-decoration:underline; text-shadow:0 1px white;}
-div#infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:10px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
-div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
-div#infowindow div.bottom a.more:hover {color:black;}
+div.infowindow div.top div.stats div p,div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
+div.infowindow div.bottom,div#infowindow div.bottom {display:inline-block; width:252px; padding: 17px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
+div.infowindow div.footer,div#infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
+   
+div.infowindow div.bottom p.info,div#infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666; margin: 0 0 4px 0;}
+div.infowindow div.bottom p.info strong,div#infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
+div.infowindow div.bottom p.info a,div#infowindow div.bottom p.info a {color:#333333;}
+div.infowindow div.bottom p.info a:hover,div#infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
+div.infowindow div.bottom div.chart,div#infowindow div.bottom div.chart {width:205px; height:35px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
+div.infowindow div.bottom div.chart img,div#infowindow div.bottom div.chart img {float:right; height:22px;}
+div.infowindow div.bottom a.goTo,div#infowindow div.bottom a.goTo {float:left; margin:16px 0 0 0; font:normal 13px "Officina Regular"; color:black; text-decoration:underline; text-shadow:0 1px white;}
+div.infowindow div.bottom a.compare,div#infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:10px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
+div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}
