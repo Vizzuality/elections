@@ -177,7 +177,7 @@ div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; he
 
 
 /*WADUS TEXT*/
-div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; }
+div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 500; }
 div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
 div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
 div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
