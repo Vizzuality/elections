@@ -451,6 +451,21 @@
       }
     })();
 
+		// 
+    $("span.aux_info a.more_info").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show(true);
+		});
+
+    $("span.aux_info a.about").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show();
+		});
+
 
     // Twitter link
     $('a.twitter').click(function(ev){
