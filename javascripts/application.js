@@ -137,7 +137,7 @@
         ev.stopPropagation();
         ev.preventDefault();
         $("#welcomewindow").fadeOut("slow");
-        explanationwindow.show();
+        explanationwindow.show(true);
       });
 
       $("#welcomewindow a.know_more").click(function(ev) {
