@@ -35,7 +35,7 @@
   					'<p>Puedes bajarte el proyecto en GitHub</p>'+
 				  '</div>'+
 				  '<div class="right">'+
-					  '<a href="http://www.github.com" alt="GitHub"></a>'+
+					  '<a target="_blank" href="http://www.github.com" alt="GitHub"></a>'+
 				  '</div>'+
 				'</div>'+
 			'</div>';

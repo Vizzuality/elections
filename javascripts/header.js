@@ -371,8 +371,14 @@
           if (state == "mapa") {
             updateContent();
             var $state = $("#map");
+            $("div.fail").css('height','auto');
           } else {
             var $state = $("#graph");
+            var graph_height = $('div#graph_container').height();
+            var tabs_height = $('div.tabs').height();
+            if (graph_height>tabs_height) {
+              $("div.fail").height(graph_height);
+            }
           }
 
           if (data_not_found != true) {

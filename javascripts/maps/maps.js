@@ -100,7 +100,7 @@
       ev.stopPropagation();
       ev.preventDefault();
       peninsula.setCenter(canary_center);
-      peninsula.setZoom(7);
+      peninsula.setZoom(6);
       changeHash();
     });
     

@@ -58,7 +58,7 @@
         $('div.canary_island').css({'background-position':'0 0'});
         $('div.canary_island a').removeClass().addClass('islas_canarias').text('Ir a las Islas Canarias');
         $('div.canary_island').css('z-index',2);
-      } else if ((z==7 || z==8) && ((x>54 && x<62 && y>50 && y<56) ||  (x>113 && x<121 && y>103 && y<109))) {
+      } else if ((z==6|| z==7 || z==8) && ((x>54 && x<62 && y>50 && y<56) ||  (x>113 && x<121 && y>103 && y<109) || (x>25 && x<33 && y>24 && y<30))) {
         $('div.canary_island').css({'background-position':'0 -160px'});
         $('div.canary_island a').removeClass().addClass('peninsula').text('Ir a la Península y Baleares');
         $('div.canary_island').css('z-index',2);
