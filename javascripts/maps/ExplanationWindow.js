@@ -103,6 +103,9 @@
   }
 
   ExplanationWindow.prototype.show = function(general) {
+	
+		aboutwindow.hide();
+		
     $(this.div).css({margin:'-237px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
 		$(this.div).find('ul').hide();
