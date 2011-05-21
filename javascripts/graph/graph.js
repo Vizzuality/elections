@@ -86,6 +86,8 @@ function initializeGraph() {
       }
 
       $(this).parent().children('.outerBubble').css("background","#333333");
+      $(this).parent().children('p.region_name').css("color","#333333");
+      $(this).parent().children('p.region_name').addClass("white_shadow");
 
       if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
         $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -94,6 +96,9 @@ function initializeGraph() {
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
         $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        $(this).parent().children('p.region_name').css("color","#fff");
+        $(this).parent().children('p.region_name').addClass("dark_shadow");
+        $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
       graphBubbleTooltip.hide();
     },
@@ -162,6 +167,7 @@ function initializeGraph() {
       function updateInfoText() {
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
+
         var sign     = (selected_value < 0) ? "negative" : "positive";
         //console.log(textInfoWindow, comparison_variable, normalization);
 
@@ -718,6 +724,7 @@ function createBubbles(url){
 
       var height_stat = $('#'+key+' p.region_name').height();
       $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+      $('#'+key+' p.region_name').addClass("dark_shadow");
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
@@ -785,6 +792,7 @@ function updateBubble (id, x, y, val, colors, party) {
 
 function updateSelect(values) {
   var options = $("select.text");
+  $("select.text").empty();
   $.each(values, function() {
     options.append($("<option />").val(replaceWeirdCharacters(this.name)).text(this.name));
   });
