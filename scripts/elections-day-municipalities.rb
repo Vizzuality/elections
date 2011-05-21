@@ -36,7 +36,10 @@ File.read("urls/urls-#{block}.log").each_line do |raw_path|
   next if !File.file?(resultados_path) || !File.file?(participation_path)
   
   url = raw_path.match(/-(([a-z\-]+){3})-/)[1]
-  next if municipalities[url].nil? || (municipalities[url][1].blank? || municipalities[url][2].blank?)
+  if municipalities[url].nil? || (municipalities[url][1].blank? || municipalities[url][2].blank?)
+    puts "Skipping #{municipalities.inspect}"
+    next 
+  end
   
   parser = XML::SaxParser.file(resultados_path)
   parser.callbacks = MunicipalityVotes.new(municipalities[url][0], municipalities[url][1], municipalities[url][2])
