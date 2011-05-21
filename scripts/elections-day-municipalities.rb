@@ -33,12 +33,10 @@ File.read("urls/urls-#{block}.log").each_line do |raw_path|
   resultados_path = "xmls/#{raw_path.split('/').last}".strip
   participation_path = resultados_path.gsub(/RESULTADOS/,'PARTICIPACION')
   puts "Parsing #{participation_path}"
-  
   next if !File.file?(resultados_path) || !File.file?(participation_path)
   
   url = raw_path.match(/-(([a-z\-]+){3})-/)[1]
-  
-  raise "Erro! url not found (#{url}) in municipio_id #{municipalities[url]}" if municipalities[url].nil?
+  next if municipalities[url].nil?
   
   parser = XML::SaxParser.file(resultados_path)
   parser.callbacks = MunicipalityVotes.new(municipalities[url], nil, nil)
