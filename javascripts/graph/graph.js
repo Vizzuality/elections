@@ -644,6 +644,7 @@ function restartGraph() {
 
 function createOrUpdateBubbles(url){
   showGraphLoader();
+  graphBubbleTooltip.hide();
   (createdBubbles == true) ?  updateBubbles(url) : createBubbles(url);
 }
 
@@ -661,8 +662,9 @@ function createBubbles(url){
   $.getJSON(url, function(data) {
     if (data == null) {
       createdBubbles = false;
+      failCircle.reset();
       failCircle.show();
-      //console.log("404", url);
+      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -691,6 +693,7 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
+      //console.log(nBubbles, " created bubble " + key);
       $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
@@ -709,9 +712,10 @@ function updateBubbles(url){
   $.getJSON(url, function(data) {
 
     if (data == null) {
+      failCircle.reset();
       failCircle.show();
       hideGraphLoader();
-      console.log("404", url);
+      //console.log("Update 404", url);
       return;
     }
 
@@ -775,6 +779,8 @@ function goDeeper(url){
   // console.log("compare", normalization[compare], normalization[compare], compare);
 
   graphLegend.hideError();
+  graphBubbleTooltip.hide();
+
   drawNoDataBars();
 
   if (name == "") {
@@ -782,7 +788,10 @@ function goDeeper(url){
   }
 
   changeHash();
+  destroyBubbles(url);
+}
 
+function destroyBubbles(url){
   for (key in valuesHash){
     destroyBubble(key, url);
   }
@@ -796,11 +805,12 @@ function destroyBubble(b, url){
     top: displacementY,
     opacity: "0"
   }, 500, function(){
-    //console.log("Removing "+b);
+    //console.log(nBubbles, " removing "+b);
     $("#"+b).remove();
-    nBubbles=nBubbles-1;
-    if(nBubbles==0){
-      //console.log("recreating");
+    nBubbles = nBubbles-1;
+
+    if(nBubbles == 0){
+      //console.log("All bubbles were removed", valuesHash, valuesHash.length);
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }

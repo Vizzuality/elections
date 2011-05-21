@@ -71,6 +71,11 @@
           $("#graph").show();
           drawNoDataBars();
 
+          // reset to the higher level
+          name = "España";
+          deep = "autonomias";
+          changeHash();
+
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           restartGraph();
@@ -267,6 +272,10 @@
             infowindow.updateValues();
           }
         } else {
+
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
@@ -628,6 +637,7 @@
 
       if(comparewindow.isVisible()){
         comparewindow.updateValues();
+        comparewindow.refreshChart();
       }
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+new_year+".json");
     }
@@ -653,7 +663,7 @@
       $('div.wadusText').hide();
     } else {
       var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
-      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':wadus_text;
+      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':first_text;
       $('div.wadusText p').html(wadus_text+' <sup>['+year+']</sup>');
       $('div.wadusText').show();
     }
