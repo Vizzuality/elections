@@ -267,6 +267,10 @@
             infowindow.updateValues();
           }
         } else {
+
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
