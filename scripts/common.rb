@@ -157,6 +157,7 @@ def get_color(row, x, parties)
 end
 
 def get_radius(row)
+  return 60
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
     row[:votantes_totales] = row[:censo_total]
