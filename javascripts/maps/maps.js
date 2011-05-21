@@ -33,24 +33,24 @@
     peninsula.setMapTypeId('rtve');
 
 
-    var mapChartOptions = {
-        getTileUrl: function(coord, zoom) {
-            var lULP = new google.maps.Point(coord.x*256,(coord.y+1)*256);
-            var lLRP = new google.maps.Point((coord.x+1)*256,coord.y*256);
-            var projectionMap = new MercatorProjection();
-            var lULg = projectionMap.fromDivPixelToLatLng(lULP, zoom);
-            var lLRg = projectionMap.fromDivPixelToLatLng(lLRP, zoom);
-            return baseUrl+"&chd="+chd+"&chco="+chco+"&chld="+chld+"&chf="+chf+"&cht=map:fixed="+
-               lULg.lat() +","+ lULg.lng() + "," + lLRg.lat() + "," + lLRg.lng();
-        },
-        tileSize: new google.maps.Size(256, 256),
-        isPng: true,
-        minZoom: 6,
-        maxZoom: 12,
-        name: "Hide rest of countries"
-    };
-    var mapChartType = new google.maps.ImageMapType(mapChartOptions);
-    peninsula.overlayMapTypes.insertAt(0, mapChartType);
+    // var mapChartOptions = {
+    //     getTileUrl: function(coord, zoom) {
+    //         var lULP = new google.maps.Point(coord.x*256,(coord.y+1)*256);
+    //         var lLRP = new google.maps.Point((coord.x+1)*256,coord.y*256);
+    //         var projectionMap = new MercatorProjection();
+    //         var lULg = projectionMap.fromDivPixelToLatLng(lULP, zoom);
+    //         var lLRg = projectionMap.fromDivPixelToLatLng(lLRP, zoom);
+    //         return baseUrl+"&chd="+chd+"&chco="+chco+"&chld="+chld+"&chf="+chf+"&cht=map:fixed="+
+    //            lULg.lat() +","+ lULg.lng() + "," + lLRg.lat() + "," + lLRg.lng();
+    //     },
+    //     tileSize: new google.maps.Size(256, 256),
+    //     isPng: true,
+    //     minZoom: 6,
+    //     maxZoom: 12,
+    //     name: "Hide rest of countries"
+    // };
+    // var mapChartType = new google.maps.ImageMapType(mapChartOptions);
+    // peninsula.overlayMapTypes.insertAt(0, mapChartType);
         
 
     //Political tiles
