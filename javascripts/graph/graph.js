@@ -632,6 +632,7 @@ function initializeGraph() {
 /*GRAPH FUNCTIONS!*/
 
 function restartGraph() {
+  createdBubbles = false;
   nBubbles = 0;
   graphLegend.hide();
   graph_bubble_index = 100;
@@ -661,7 +662,7 @@ function createBubbles(url){
     if (data == null) {
       createdBubbles = false;
       failCircle.show();
-    //  console.log("404", url);
+      console.log("404", url);
       hideGraphLoader();
       return;
     }
@@ -710,6 +711,7 @@ function updateBubbles(url){
     if (data == null) {
       failCircle.show();
       hideGraphLoader();
+      //console.log("404", url);
       return;
     }
 
