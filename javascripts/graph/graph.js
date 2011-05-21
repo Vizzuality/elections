@@ -171,8 +171,12 @@ function initializeGraph() {
         var sign     = (selected_value < 0) ? "negative" : "positive";
         //console.log(textInfoWindow, comparison_variable, normalization);
 
-        var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        var media = parseFloat(max_min_avg[normalization[compare]+'_'+year+'_avg']).toFixed(2);
+        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
+          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+        } else {
+          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+        }
         text = _.template(text)({media : media});
 
         $('div#graph_infowindow p.info').html(text);
@@ -886,7 +890,12 @@ function addNewBubble(region) {
 
         valuesHash[key] = val;
         count++;
-        $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+        $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><p class='region_name'>"+val.name+"</p><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+
+        var height_stat = $('#'+key+' p.region_name').height();
+        $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+        $('#'+key+' p.region_name').addClass("dark_shadow");
+
         $('#'+key).css("left",(offsetScreenX).toString()+"px");
         $('#'+key).css("top",(offsetScreenY).toString()+"px");
         $('#'+key).css("zIndex",graph_bubble_index);
