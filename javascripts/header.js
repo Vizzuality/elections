@@ -260,6 +260,9 @@
 
         if (state == 'mapa') {
           refreshBubbles();
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           if (infowindow.isOpen()) {
             infowindow.updateValues();
           }
