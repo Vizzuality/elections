@@ -622,6 +622,7 @@
 
       if(comparewindow.isVisible()){
         comparewindow.updateValues();
+        comparewindow.refreshChart();
       }
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+new_year+".json");
     }
