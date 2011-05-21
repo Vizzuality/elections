@@ -87,7 +87,8 @@
 						chartData = chartData.substring(0,chartData.length-1);
 					}
 					minValue = 0;
-					maxValue += 0.1*maxValue;					
+					//maxValue += 0.1*maxValue;					
+					maxValue = explanationContent[$(this).parent().text()].graphRange;
 					var urlChart = "http://chart.apis.google.com/chart?chs=480x166&cht=ls&chco=862071&chd=t:"+chartData+"&chg=5,-1,0,1&chls=3&chma=|0,3&chm=B,E6DBE4,0,0,0&chds="+minValue+","+maxValue;
         	$('div#appInfo div.explain').append("<div class='chart'><img src='"+urlChart+"' class='chart'/></div>");
         	$('div#appInfo div.explain div.chart').append("<div class='chartCurrentLabel'><span class='value'>"+max_min_avg[varName+"_"+lastYear+"_avg"]+"</span><br/><span class='year'>"+explanationContent[$(this).parent().text()].units+" en "+lastYear+"</span>")
@@ -103,6 +104,9 @@
   }
 
   ExplanationWindow.prototype.show = function(general) {
+	
+		aboutwindow.hide();
+		
     $(this.div).css({margin:'-237px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
 		$(this.div).find('ul').hide();

@@ -314,9 +314,7 @@
       $("div.fail").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        if (state == "mapa") {
-          hideError();
-        }
+        hideError();
       });
 
       $("div.fail a.why").live("click", function(ev) {
@@ -378,9 +376,15 @@
           if (state == "mapa") {
             updateContent();
             var $state = $("#map");
+            $("div.fail").css('height','auto');
           } else {
             updateContent();
             var $state = $("#graph");
+            var graph_height = $('div#graph_container').height();
+            var tabs_height = $('div.tabs').height();
+            if (graph_height>tabs_height) {
+              $("div.fail").height(graph_height);
+            }
           }
 
           if (data_not_found != true) {
@@ -503,11 +507,11 @@
       explanationwindow.show(true);
 		});
 
-    $("span.aux_info a.about").click(function(ev) {
+    $("span.aux_info a.know_more").click(function(ev) {
 			ev.stopPropagation();
       ev.preventDefault();
       $("#welcomewindow").fadeOut("slow");
-      explanationwindow.show();
+      aboutwindow.show();
 		});
 
 
