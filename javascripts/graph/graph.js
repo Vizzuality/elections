@@ -451,24 +451,24 @@ function initializeGraph() {
   graphLegend = (function() {
     // Create the element - add it to DOM
     $('div#graph_container').append('<div class="graph_legend">\
-                                    <h2>Tasa de Paro en España<sup>(2010)</sup></h2>\
-                                      <p class="autonomy"><a href="#">Castilla y León</a></p>\
-                                        <div class="stats">\
-                                          <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
-                                            <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
-                                              <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
-                                                <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
-                                                  </div>\
-                                                    <form>\
-                                                      <input class="text" type="text" value="Busca tu CCAA"/>\
-                                                        <input class="submit" type="submit" value=""/>\
-                                                          </form>\
-                                                            <div class="search_error">\
-                                                              <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
-                                                                <p>Comprueba que has escrito bien el nombre que buscabas</p>\
-                                                                  <a class="close" href="#cerrar">Cerrar</a>\
-                                                                    </div>\
-                                                                      </div>');
+       <h2>Tasa de Paro en España<sup>(2010)</sup></h2>\
+       <p class="autonomy"><a href="#">Castilla y León</a></p>\
+       <div class="stats">\
+       <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
+       <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
+       <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
+       <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
+       </div>\
+       <form>\
+       <input class="text" type="text" value="Busca tu CCAA"/>\
+       <input class="submit" type="submit" value=""/>\
+       </form>\
+       <div class="search_error">\
+       <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
+       <p>Comprueba que has escrito bien el nombre que buscabas</p>\
+       <a class="close" href="#cerrar">Cerrar</a>\
+       </div>\
+       </div>');
 
     $('div.graph_legend div.search_error a.close').click(function(ev){
       ev.preventDefault();
@@ -533,18 +533,28 @@ function initializeGraph() {
     }
 
     function drawPartyBar(party_data, party_id) {
-      var id = party_id - 1;
-      var partido = normalizePartyName(party_data["partido_"+party_id][0]);
+      var id    = party_id - 1;
+      var clase = normalizePartyName(party_data["partido_"+party_id][0]);
+      var $p    = $('div.graph_legend div.stats div.partido:eq('+id+')');
+      var name  = party_data["partido_" + party_id][0];
+      var value = party_data["partido_" + party_id][1];
 
-      if (_.indexOf(parties, partido) !== -1) {
-        $('div.graph_legend div.stats div.partido:eq('+id+')').addClass(partido);
+      if (name == null) {
+        $p.hide();
+        return;
       } else {
-        $('div.graph_legend div.stats div.partido:eq('+id+')').addClass('par' + party_id);
+        $p.show();
       }
-      bar_width = normalizeBarWidth((party_data["partido_" + party_id][1]*bar_width_multiplier)/100);
 
-      $('div.graph_legend div.stats div.partido:eq('+id+') span.c').width(bar_width);
-      $('div.graph_legend div.stats div.partido:eq('+id+') p').text(party_data["partido_" + party_id][0]+' ('+party_data["partido_"+party_id][1]+'%)');
+      if (_.indexOf(parties, clase) == -1) {
+        clase = 'par'+party_id;
+      }
+
+      $p.addClass(clase);
+      bar_width = normalizeBarWidth((value*bar_width_multiplier)/100);
+
+      $p.find('span.c').width(bar_width);
+      $p.find('p').text(name+' ('+value+'%)');
     }
 
     function changeData(results,names,parent_url) {
