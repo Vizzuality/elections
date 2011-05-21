@@ -20,29 +20,28 @@
         '</ul>'+				
         '<h4><a href="#">Datos demográficos</a></h4>'+
         '<ul>'+
-          '<li><a href="#Edad media" id="edad_media">Edad media</a></li>'+
-          '<li><a href="#Envejecimiento" id="envejecimiento">Envejecimiento</a></li>'+
-          '<li><a href="#Inmigración" id="inmigracion">Porcentaje de inmigración</a></li>'+
-          '<li><a href="#Inmigración" id="saldo_vegetativo">Saldo vegetativo</a></li>'+
+          '<li><a href="#Edad media" alt="edad media">Edad media</a></li>'+
+          '<li><a href="#Envejecimiento" alt="envejecimiento">Envejecimiento</a></li>'+
+          '<li><a href="#Inmigración" alt="inmigracion">Porcentaje de inmigración</a></li>'+
+          '<li><a href="#Inmigración" alt="saldo vegetativo">Saldo vegetativo</a></li>'+
         '</ul>'+
         '<h4><a href="#">Datos económicos</a></h4>'+
         '<ul>'+
-          '<li><a href="#Inmigración"id="paro_epa">Tasa de paro</a></li>'+
-          '<li><a href="#Inmigración" id="parados_larga_duracion">Parados larga duración</a></li>'+
-          '<li><a href="#Inmigración" id="jovenes_parados">Jóvenes parados larga duración</a></li>'+
-          '<li><a href="#Inmigración" id="pib">PIB per cápita</a></li>'+
-          '<li><a href="#Inmigración" id="salario_medio">Salario medio</a></li>'+
-          '<li><a href="#Inmigración" id="matriculaciones">Matriculaciones</a></li>'+
+          '<li><a href="#Inmigración" alt="paro">Tasa de paro</a></li>'+
+          '<li><a href="#Inmigración" alt="parados larga duracion">Parados larga duración</a></li>'+
+          '<li><a href="#Inmigración" alt="jovenes parados">Jóvenes parados larga duración</a></li>'+
+          '<li><a href="#Inmigración" alt="pib">PIB per cápita</a></li>'+
+          '<li><a href="#Inmigración" alt="salario">Salario medio</a></li>'+
+          '<li><a href="#Inmigración" alt="matriculaciones">Matriculaciones</a></li>'+
         '</ul>'+
         '<h4><a href="#">Datos sociológicos</a></h4>'+
         '<ul>'+
-          '<li><a href="#Inmigración" id="secundaria_acabada">Estudios superiores</a></li>'+
-          '<li><a href="#Inmigración" id="audiencia_diaria_tv">Consumo de TV</a></li>'+
-          '<li><a href="#Inmigración" id="prensa_diaria">Consumo de prensa</a></li>'+
-          '<li><a href="#Inmigración" id="penetracion_internet">Penetración de internet</a></li>'+
-          '<li><a href="#Inmigración" id="detenidos">Detenidos</a></li>'+
+          '<li><a href="#Inmigración" alt="secundaria acabada">Estudios superiores</a></li>'+
+          '<li><a href="#Inmigración" alt="consumo tv">Consumo de TV</a></li>'+
+          '<li><a href="#Inmigración" alt="consumo prensa">Consumo de prensa</a></li>'+
+          '<li><a href="#Inmigración" alt="lineas adsl">Penetración de internet</a></li>'+
+          '<li><a href="#Inmigración" alt="detenidos">Detenidos</a></li>'+
         '</ul>'+
-
       '</div>'+
       '<div class="explain"></div>';
 
@@ -68,13 +67,13 @@
         $('div#appInfo div.explain').append(explanationContent[$(this).parent().text()].htmlContent);
 	
 				if (explanationContent[$(this).parent().text()].graph) {					
-					var varName = $(this).attr('id');
+					var varName = normalization[$(this).attr('alt')].replace("_normalizado","");					
 					var chartData = "";
 					var maxValue = -99999999999;
 					var minValue = 99999999999;
 					var lastYear = 1981;
-					for (year=1987; year<=2011; year++) {
 					
+					for (year=1987; year<=2011; year++) {
 						var value = max_min_avg[varName+"_"+year+"_avg"];									
 						if (value == undefined) continue;
 						if (value < 0) value = 0;
@@ -87,7 +86,6 @@
 					if (chartData.charAt(chartData.length-1) == ',') {
 						chartData = chartData.substring(0,chartData.length-1);
 					}
-					// minValue -= 0.1*maxValue;
 					minValue = 0;
 					maxValue += 0.1*maxValue;					
 					var urlChart = "http://chart.apis.google.com/chart?chs=480x166&cht=ls&chco=862071&chd=t:"+chartData+"&chg=5,-1,0,1&chls=3&chma=|0,3&chm=B,E6DBE4,0,0,0&chds="+minValue+","+maxValue;
@@ -107,6 +105,9 @@
   ExplanationWindow.prototype.show = function() {
     $(this.div).css({margin:'-237px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
+		$(this.div).find('ul').hide();
+		$('[alt="'+compare+'"]').parent().parent().show();
+		$('[alt="'+compare+'"]').click();
   }
 
   ExplanationWindow.prototype.hide = function() {
