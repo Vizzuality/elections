@@ -365,6 +365,10 @@
         }
       }
 
+      function resetDataNotFound() {
+        data_not_found = false;
+      }
+
       function resetShowed() {
         showed = false;
       }
@@ -442,7 +446,8 @@
         show: showError,
         hide: hideError,
         failed: hasFailed,
-        reset: resetShowed
+        reset: resetShowed,
+        resetDataNotFound: resetDataNotFound
       }
     })();
 

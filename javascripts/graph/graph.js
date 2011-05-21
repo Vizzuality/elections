@@ -645,7 +645,12 @@ function restartGraph() {
 function createOrUpdateBubbles(url){
   showGraphLoader();
   graphBubbleTooltip.hide();
-  (createdBubbles == true) ?  updateBubbles(url) : createBubbles(url);
+
+  if (createdBubbles == true) {
+    updateBubbles(url);
+  } else {
+    createBubbles(url);
+  }
 }
 
 function createBubbles(url){
@@ -663,13 +668,13 @@ function createBubbles(url){
     if (data == null) {
       createdBubbles = false;
       failCircle.reset();
+      failCircle.resetDataNotFound();
       failCircle.show();
       //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
 
-    createdBubbles = true;
     failCircle.hide();
 
     var one = true;
@@ -678,10 +683,16 @@ function createBubbles(url){
     _.each(data, function(val, key) {
       //Check data for show legend or not
 
+      if (createdBubbles) {
+        return;
+      }
+
       if (count>19) {
+        createdBubbles = true;
         hideGraphLoader();
         return false;
       } else if (count >= _.size(possibleValues) - 1) {
+        createdBubbles = true;
         hideGraphLoader();
       }
 
@@ -693,7 +704,7 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      //console.log(nBubbles, " created bubble " + key);
+      //console.log(count, nBubbles, " created bubble " + key, createdBubbles);
       $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
@@ -713,9 +724,10 @@ function updateBubbles(url){
 
     if (data == null) {
       failCircle.reset();
+      failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      //console.log("Update 404", url);
+      console.log("Update 404", url);
       return;
     }
 
@@ -805,12 +817,12 @@ function destroyBubble(b, url){
     top: displacementY,
     opacity: "0"
   }, 500, function(){
-    //console.log(nBubbles, " removing "+b);
+    console.log(nBubbles, " removing "+b);
     $("#"+b).remove();
     nBubbles = nBubbles-1;
 
     if(nBubbles == 0){
-      //console.log("All bubbles were removed", valuesHash, valuesHash.length);
+      console.log("All bubbles were removed", valuesHash, valuesHash.length);
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }
