@@ -62,6 +62,13 @@ function initializeGraph() {
   initAvailableData("provincias");
   initAvailableData("municipios");
 
+  $('.text').live("change", function(ev) {
+    value = $(".text option:selected").val();
+    addNewBubble(value);
+  });
+
+
+
   $(".innerBubble").live({
     mouseenter: function () {
       if (failCircle.failed() === true) {
@@ -79,6 +86,8 @@ function initializeGraph() {
       }
 
       $(this).parent().children('.outerBubble').css("background","#333333");
+      $(this).parent().children('p.region_name').css("color","#333333");
+      $(this).parent().children('p.region_name').addClass("white_shadow");
 
       if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
         $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -87,6 +96,9 @@ function initializeGraph() {
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
         $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        $(this).parent().children('p.region_name').css("color","#fff");
+        $(this).parent().children('p.region_name').addClass("dark_shadow");
+        $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
       graphBubbleTooltip.hide();
     },
@@ -155,11 +167,16 @@ function initializeGraph() {
       function updateInfoText() {
         var comparison_variable = normalization[compare];
         var info_text = textInfoWindow[comparison_variable];
+
         var sign     = (selected_value < 0) ? "negative" : "positive";
         //console.log(textInfoWindow, comparison_variable, normalization);
 
-        var text     = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        var media = parseFloat(max_min_avg[normalization[compare]+'_'+year+'_avg']).toFixed(2);
+        var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
+          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+        } else {
+          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+        }
         text = _.template(text)({media : media});
 
         $('div#graph_infowindow p.info').html(text);
@@ -404,10 +421,12 @@ function initializeGraph() {
     $('div#graph_container').append('<p class="graph_bubble_tooltip">Comunidad de Madrid</p>');
 
     function hideTooltip() {
+    return;
       $('p.graph_bubble_tooltip').hide();
     }
 
     function showTooltip(left,top,text) {
+    return;
       $('p.graph_bubble_tooltip').text(text);
       var offset = $('p.graph_bubble_tooltip').width()/2;
       $('p.graph_bubble_tooltip').css('left',left-offset+10+'px');
@@ -458,8 +477,7 @@ function initializeGraph() {
        <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
        </div>\
        <form>\
-       <input class="text" type="text" value="Busca tu CCAA"/>\
-       <input class="submit" type="submit" value=""/>\
+       <select class="text"></select>\
        </form>\
        <div class="search_error">\
        <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
@@ -670,7 +688,7 @@ function createBubbles(url){
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
-      //console.log("Create 404", url);
+      console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -679,6 +697,7 @@ function createBubbles(url){
 
     var one = true;
     possibleValues = data;
+    updateSelect(data);
     count = 0;
     _.each(data, function(val, key) {
       //Check data for show legend or not
@@ -705,7 +724,11 @@ function createBubbles(url){
 
       nBubbles = nBubbles+1;
       //console.log(count, nBubbles, " created bubble " + key, createdBubbles);
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><span class="name"></span><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><p class="region_name">'+val.name+'</p><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+
+      var height_stat = $('#'+key+' p.region_name').height();
+      $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+      $('#'+key+' p.region_name').addClass("dark_shadow");
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
@@ -769,6 +792,14 @@ function updateBubble (id, x, y, val, colors, party) {
   $(id).find('.outerBubble').animate({ height: val.toString() + "px", width: val.toString() + "px", top: offset.toString() + "px", left: offset.toString() + "px" }, 1000);
   $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
+}
+
+function updateSelect(values) {
+  var options = $("select.text");
+  $("select.text").empty();
+  $.each(values, function() {
+    options.append($("<option />").val(replaceWeirdCharacters(this.name)).text(this.name));
+  });
 }
 
 function goDeeper(url){
@@ -837,11 +868,16 @@ function addNewBubble(region) {
 
     if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+
     }
     selectedBubble = region;
 
     $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
     $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
+
+      $("div#" + selectedBubble + " p.region_name").css("color","#333333");
+      $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
+
   } else {
     var count = 0;
     _.each(possibleValues,function(val,key){
@@ -854,7 +890,12 @@ function addNewBubble(region) {
 
         valuesHash[key] = val;
         count++;
-        $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+        $('#graph_container').append("<div class='bubbleContainer' id='"+key+"'><p class='region_name'>"+val.name+"</p><div class='outerBubble'></div><div class='innerBubble'></div></div>");
+
+        var height_stat = $('#'+key+' p.region_name').height();
+        $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+        $('#'+key+' p.region_name').addClass("dark_shadow");
+
         $('#'+key).css("left",(offsetScreenX).toString()+"px");
         $('#'+key).css("top",(offsetScreenY).toString()+"px");
         $('#'+key).css("zIndex",graph_bubble_index);

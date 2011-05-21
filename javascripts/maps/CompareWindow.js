@@ -196,7 +196,7 @@
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
 
-        if (this.deep_level == "municipios") {
+        if (info.provincia != null) {
           $('div#comparewindow div.top div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
         }
 
@@ -209,7 +209,7 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        if (this.deep_level == "municipios") {
+        if (info.provincia != null) {
           this.drawTopBar(1, info);
           this.drawTopBar(2, info);
           this.drawTopBar(3, info);
@@ -263,7 +263,11 @@
 
         $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
-        $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+
+
+        if (info.provincia != null) {
+          $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+        }
 
 
         // Remove previous political style bars
@@ -282,9 +286,8 @@
         } else {
           deep_level = region_name;
         }
-        //console.log("region_name", deep_level);
 
-        if (deep_level != "municipios") {
+        if (info.provincia == null) {
           me.drawTotalNumber(1, 2, me.secondData, false);
           me.drawTotalNumber(2, 2, me.secondData, false);
           me.drawTotalNumber(3, 2, me.secondData, false);
@@ -516,7 +519,7 @@
       }
 
       $('div.stats_slider').width(_.size(normalization)*298);
-      var width = 130;
+      var width = 90;
 
 
       //Add top blocks
@@ -529,6 +532,8 @@
 
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
+
+          if (bar_width > 100) bar_width = 100;
 
           if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
             $('div.stats_slider div[alt="'+i+'"].up').append(
@@ -663,10 +668,8 @@
       param = param.substring(0, param.length-1);
 
       if (second) {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x60&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',5&chma=3,'+(new_no_data*12)+',3,3';
       } else {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x60&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',5&chma=3,'+(new_no_data*12)+',3,3';
       }
     }
-
-

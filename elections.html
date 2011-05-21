@@ -25,7 +25,6 @@
 
 		<!-- ON DEPLOY DELETE ALL THESE JS ONCE COMPRESSED JS IS ACTIVE ABOVE -->
 
-
 		<script src="javascripts/max_min_avg.js" type="text/javascript" charset="utf-8"></script>
 		<script src="javascripts/environment.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/plugins/underscore.js" type="text/javascript" charset="utf-8"></script>
@@ -46,10 +45,10 @@
     <script src="javascripts/application.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- ON DEPLOY DELETE ALL THESE JS ONCE COMPRESSED JS IS ACTIVE ABOVE -->
-    <!-- <script src="javascripts/ie.js" type="text/javascript" charset="utf-8"></script>  -->
-		<!--[if lt IE 9 ]>
+		<!--[if lt IE 8 ]>    
       <script src="javascripts/ie.js" type="text/javascript" charset="utf-8"></script>
     <![endif]-->
+
 
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -138,6 +137,22 @@
     </div>
 
     <div id="header">
+      <div class="years_content">
+        <a class="action play" href="#play">Animación</a>
+        <a class="left" href="#anterior_año">Anterior</a>
+        <a class="right" href="#siguiente_año">Siguiente</a>
+        <div class="year_slider"></div>
+        <div class="slider_bkg">
+          <span class="slider_right"></span>
+          <span class="slider_no_data_left"></span>
+          <span class="slider_no_data_right"></span>
+          <span class="tick_1"></span>
+          <span class="tick_2"></span>
+          <span class="tick_3"></span>
+          <span class="tick_4"></span>
+          <span class="tick_5"></span>
+        </div>
+      </div>
       <span class="end_left"></span>
       <span class="end_right"></span>
       <h1>El microscopio del voto</h1>
@@ -171,20 +186,19 @@
   	            <a href="#" class="more">Más info.</a> <a class="close" href="#cerrar">Cerrar</a>
   	          </div>
   	          </div>
-  	          <div class="select">
-  	            <div class="outer_select chat">
+              <div class="select">
+  	            <div class="outer_select people">
   	              <span class="icon"></span>
-  	              <span class="inner_select"><a href="#Datos_sociologicos" title="Datos sociológicos">Datos sociológicos</a></span>
+  	              <span class="inner_select"><a href="#Datos_demograficos" title="Datos demográficos">Datos demográficos</a></span>
   	            </div>
-  	            <div class="option_list chat">
+  	            <div class="option_list people">
   	              <div class="top"></div>
   	              <div class="bottom">
   	                <ul>
-  	                  <li><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
-  	                  <li><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
-  	                  <li><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
-  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Acceso Internet</a></li>
-  	                  <li><a class="detenidos" href="#detenidos">Detenidos</a></li>
+  	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
+  	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
+  	                  <li><a class="inmigracion" href="#inmigracion">Inmigración</a></li>
+  	                  <li><a class="saldo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
   	                </ul>
   	              </div>
   	            </div>
@@ -209,18 +223,19 @@
   	            </div>
   	          </div>
   	          <div class="select">
-  	            <div class="outer_select people">
+  	            <div class="outer_select chat">
   	              <span class="icon"></span>
-  	              <span class="inner_select"><a href="#Datos_demograficos" title="Datos demográficos">Datos demográficos</a></span>
+  	              <span class="inner_select"><a href="#Datos_sociologicos" title="Datos sociológicos">Datos sociológicos</a></span>
   	            </div>
-  	            <div class="option_list people">
+  	            <div class="option_list chat">
   	              <div class="top"></div>
   	              <div class="bottom">
   	                <ul>
-  	                  <li><a class="edad_media" href="#edad_media">Edad media</a></li>
-  	                  <li><a class="envejecimiento" href="#envejecimiento">Envejecimiento</a></li>
-  	                  <li><a class="inmigracion" href="#inmigracion">Inmigración</a></li>
-  	                  <li><a class="saldo_vegetativo" href="#saldo_vegetativo">Saldo Vegetativo</a></li>
+  	                  <li><a class="secundaria_acabada" href="#estudios_acabados">Estudios acabados</a></li>
+  	                  <li><a class="consumo_tv" href="#consumo_tv">Consumo TV</a></li>
+  	                  <li><a class="consumo_prensa" href="#consumo_prensa">Consumo prensa</a></li>
+  	                  <li><a class="lineas_adsl" href="#penetracion_internet">Acceso Internet</a></li>
+  	                  <li><a class="detenidos" href="#detenidos">Detenidos</a></li>
   	                </ul>
   	              </div>
   	            </div>
@@ -228,35 +243,9 @@
   	        </div>
   	      </div>
 	      </div>
-      <div class="years_content">
-        <a class="action play" href="#play">Animación</a>
-        <a class="left" href="#anterior_año">Anterior</a>
-        <a class="right" href="#siguiente_año">Siguiente</a>
-        <div class="year_slider"></div>
-        <div class="slider_bkg">
-          <span class="slider_right"></span>
-          <span class="slider_no_data_left"></span>
-          <span class="slider_no_data_right"></span>
-          <span class="tick_1"></span>
-          <span class="tick_2"></span>
-          <span class="tick_3"></span>
-          <span class="tick_4"></span>
-          <span class="tick_5"></span>
-        </div>
       </div>
     </div>
     <div class="tabs">
-      <div id="welcomewindow">
-        <a class="close_info"></a>
-        <div class="header">
-          <small>Bienvenido al microscopio del voto</small>
-          <div class="nav"><a href="#" class="more_info">fuentes</a>  /  <a href="#" class="know_more">saber más</a></div>
-        </div>
-        <h1>Explora España y descubre si hay relaciones entre los resultados electorales y datos demográficos, económicos y sociológicos, municipio a municipio, desde 1987.</h1>
-        <p>Selecciona una variable para ver como podría influir en los resultados electorales, o simplemente explora los resultados desde 1987</p>
-        <a href="#" class="start">Compara el paro y los datos electorales</a>
-        <a href="#" class="explore">o explora libremente</a>
-      </div>
       <div id="tab_menu">
         <a href="#mapa" class="map selected">Mapa</a>
         <a href="#estadisticas" class="stats">Estadísticas</a>
@@ -306,6 +295,17 @@
             <p><span class="message">No hay datos para este año</span><br /><a class="next" href="#">ver siguiente año con datos</a><a href="#" class="why">¿Por qué?</a></p>
           </div>
         </div>
+      </div>
+      <div id="welcomewindow">
+        <a class="close_info"></a>
+        <div class="header">
+          <small>Bienvenido al microscopio del voto</small>
+          <div class="nav"><a href="#" class="more_info">info sobre fuentes</a>  /  <a href="#" class="know_more">saber más</a></div>
+        </div>
+        <h1>Explora España y descubre si hay relaciones entre los resultados electorales y datos demográficos, económicos y sociológicos, municipio a municipio, desde 1987.</h1>
+        <p>Selecciona una variable para ver como podría influir en los resultados electorales, o simplemente explora los resultados desde 1987</p>
+        <a href="#" class="start">Compara el paro y los datos electorales</a>
+        <a href="#" class="explore">o explora libremente</a>
       </div>
     </div>
   </body>

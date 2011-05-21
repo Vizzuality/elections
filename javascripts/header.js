@@ -84,7 +84,8 @@
         }
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
-
+        $('body').unbind('click');
+        
         $(this).addClass('selected');
         changeHash();
       }
@@ -100,6 +101,12 @@
       $(this).attr('href','#stop');
       animation = true;
       checkStartYear();
+      $('body').click(function(ev){
+        $('a.stop').removeClass('stop').addClass('play');
+        $('a.play').attr('href','#play');
+        $('body').unbind('click');
+        clearInterval(animate_interval);
+      })
     });
 
     // Stop animation process
@@ -108,6 +115,7 @@
       ev.preventDefault();
       animation = false;
       clearInterval(animate_interval);
+      $('body').unbind('click');
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
     });
@@ -303,6 +311,14 @@
 
       var data_not_found = false;
 
+      $("div.fail").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (state == "mapa") {
+          hideError();
+        }
+      });
+
       $("div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
@@ -399,18 +415,19 @@
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
 
           var next_year = getNextAvailableYear(deep_level);
-          if (next_year!=year) {
+          if (next_year!=year && next_year<2012) {
             updateNewSliderValue(next_year);
             failCircle.hide();
           } else {
             peninsula.setZoom(6);
-            var deep_level = getDeepLevelFromZoomLevel(6);
 
+            var deep_level = getDeepLevelFromZoomLevel(6);
+            
             if (years_nodata[deep_level]==undefined) {
               var count = 0;
               clearInterval(deep_interval);
               deep_interval = setInterval(function(){
-
+            
                 if (years_nodata[deep_level]==undefined) {
                   count++;
                   if (count>5) {
@@ -418,17 +435,18 @@
                   }
                 } else {
                   var next_year = getNextAvailableYear(deep_level);
-                  updateNewSliderValue(next_year);
+                  if (next_year!=year && next_year<2012) {
+                    updateNewSliderValue(next_year,year);
+                  }
                   clearInterval(deep_interval);
                 }
               },500);
             } else {
               var next_year = getNextAvailableYear(deep_level);
-              updateNewSliderValue(next_year);
+              if (next_year!=year && next_year<2012) {
+                updateNewSliderValue(next_year,year);
+              }
             }
-
-            var next_year = getNextAvailableYear(deep_level);
-            updateNewSliderValue(next_year);
           }
 
 
@@ -451,7 +469,7 @@
       }
     })();
 
-		// 
+		//
     $("span.aux_info a.more_info").click(function(ev) {
 			ev.stopPropagation();
       ev.preventDefault();
@@ -481,6 +499,7 @@
       ev.stopPropagation();
       ev.preventDefault();
       unSelectAllVariables();
+      removeDataBars();
     });
   }
 
@@ -513,6 +532,7 @@
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');
       animation = false;
+      $('body').unbind('click');
       clearInterval(animate_interval);
       return false;
     } else {
@@ -530,6 +550,11 @@
       });
       drawNoDataBars();
     });
+  }
+  
+  function removeDataBars() {
+    $('span.slider_no_data_left').css({width:"0%"});
+    $('span.slider_no_data_right').css({width:"0%"});
   }
 
   function drawNoDataBars() {

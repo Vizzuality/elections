@@ -17,32 +17,32 @@ $parties_ids = rows.inject({}){ |h, row| h[row[:siglas]] = row[:cartodb_id]; h}
 $parties = rows.inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
 $rparties = $parties.invert
 
-municipality_id = ARGV[0].to_i
+block = ARGV[0].to_i
 
-fd = File.open("inserts-#{municipality_id}.log", 'w+')
+fd = File.open("inserts-#{block}.log", 'w+')
 
-municipalities = CSV.read("elections-day/matching-with-municipalities.csv", :encoding => "".encoding).inject({}) do |h,e| 
-  h[e.first] = [e[1],e[2],e[3]]
+municipalities = CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :encoding => "".encoding).inject({}) do |h,e| 
+  h[e[6]] = [e[7],e[8],e[9]]
   h
 end
 
 puts "Starting...."
-File.read("urls/urls-#{municipality_id}.txt").each_line do |raw_path|
+File.read("urls/urls-#{block}.log").each_line do |raw_path|
   next if raw_path.include?('PARTICIPACION')
   puts "Parsing xmls/#{raw_path.split('/').last}"
   resultados_path = "xmls/#{raw_path.split('/').last}".strip
   participation_path = resultados_path.gsub(/RESULTADOS/,'PARTICIPACION')
   puts "Parsing #{participation_path}"
-  
   next if !File.file?(resultados_path) || !File.file?(participation_path)
   
-  url = raw_path.strip
-  municipio_id, codineprov, codinemuni = municipalities[url]
-  
-  raise "Erro! url not found (#{url}) in municipio_id #{municipio_id}" if municipalities[url].nil?
+  url = raw_path.match(/-(([a-z\-]+){3})-/)[1]
+  if municipalities[url].nil? || (municipalities[url][1].blank? || municipalities[url][2].blank?)
+    puts "Skipping #{municipalities.inspect}"
+    next 
+  end
   
   parser = XML::SaxParser.file(resultados_path)
-  parser.callbacks = MunicipalityVotes.new(municipio_id, codinemuni, codineprov)
+  parser.callbacks = MunicipalityVotes.new(municipalities[url][0], municipalities[url][1], municipalities[url][2])
   parser.parse
   temporal_result = parser.callbacks.result
   parser = nil
