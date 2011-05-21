@@ -5,6 +5,7 @@
   var start_zoom = 6;
   var previous_zoom = 6;  // Hack for jump 10 zoom
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
+  var peninsula_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036);
   var projection = new MercatorProjection();
   var infowindow,comparewindow;
   var dragging = false;
@@ -92,11 +93,20 @@
 
 
     /*Go to canary islands*/
-    $('a.islas_canarias').click(function(ev){
+    $('a.islas_canarias').live('click',function(ev){
       ev.stopPropagation();
       ev.preventDefault();
       peninsula.setCenter(canary_center);
-      peninsula.setZoom(8);
+      peninsula.setZoom(7);
+      changeHash();
+    });
+    
+    $('a.peninsula').live('click',function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      peninsula.setCenter(peninsula_center);
+      peninsula.setZoom(6);
+      changeHash();
     });
 
     /*zoom controls*/
@@ -207,7 +217,6 @@
 
   var loaded = false;
   function checkZoom(){
-    
     //close infowindow
     infowindow.hide();
 
@@ -238,12 +247,5 @@
       failCircle.reset();
     } else {
       loaded = true;
-    }
-    
-    //Show tiny Canarias map
-    if (peninsula.getZoom()==6) {
-      $('div.canary_island').css('z-index',2);
-    } else {
-      $('div.canary_island').css('z-index',0);
     }
   }
