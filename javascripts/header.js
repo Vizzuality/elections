@@ -477,11 +477,11 @@
       explanationwindow.show(true);
 		});
 
-    $("span.aux_info a.about").click(function(ev) {
+    $("span.aux_info a.know_more").click(function(ev) {
 			ev.stopPropagation();
       ev.preventDefault();
       $("#welcomewindow").fadeOut("slow");
-      explanationwindow.show();
+      aboutwindow.show();
 		});
 
 
