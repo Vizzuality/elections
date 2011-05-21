@@ -342,7 +342,7 @@ var explanationContent = {
 		graphRange: "150"		
   },
   "Porcentaje de inmigración" : {
-    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>X.</p>",
+    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>Número de inmigrantes residentes en el territorio por cada 100 habitantes.</p>",
 		graph: true,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245%2F&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>",
 		units: "%",
