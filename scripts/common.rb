@@ -400,6 +400,16 @@ def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
 
+  electoral_periods = {
+    1987 => [1987, 1988, 1989, 1990],
+    1991 => [1991, 1992, 1993, 1994],
+    1995 => [1995, 1996, 1997, 1998],
+    1999 => [1999, 2000, 2001, 2002],
+    2003 => [2003, 2004, 2005, 2006],
+    2007 => [2007, 2008, 2009, 2010],
+    2011 => [2011]
+  }
+
   records.sort!{|x, y| x.proceso_electoral_year <=> y.proceso_electoral_year}
 
   min_year.upto(max_year) do |year|
@@ -409,24 +419,36 @@ def create_years_hash(records, variables, max_year, min_year)
       data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{year}".to_sym]
     end
 
+    data[:censo_total]             = nil
+    data[:percen_participacion]    = nil
+    data[:primer_partido_total]    = nil
+    data[:primer_partido_percent]  = nil
+    data[:primer_partido_name]     = nil
+    data[:segundo_partido_total]   = nil
+    data[:segundo_partido_percent] = nil
+    data[:segundo_partido_name]    = nil
+    data[:tercer_partido_total]    = nil
+    data[:tercer_partido_percent]  = nil
+    data[:tercer_partido_name]     = nil
+    data[:otros_partido_total]     = nil
+    data[:otros_partido_percent]   = nil
+
     records.each do |row|
 
-      if row.proceso_electoral_year && row.proceso_electoral_year <= year
-        data[:censo_total]             = row.censo_total
-        data[:percen_participacion]    = row.percen_participacion
-        data[:primer_partido_total]  = row.primer_partido_votos
-        data[:primer_partido_percent]  = row.primer_partido_percent
-        data[:primer_partido_name]     = row.primer_partido_name
-        data[:segundo_partido_total] = row.segundo_partido_votos
-        data[:segundo_partido_percent] = row.segundo_partido_percent
-        data[:segundo_partido_name]    = row.segundo_partido_name
-        data[:tercer_partido_total]  = row.tercer_partido_votos
-        data[:tercer_partido_percent]  = row.tercer_partido_percent
-        data[:tercer_partido_name]     = row.tercer_partido_name
-        data[:otros_partido_total]   = row.otros_partido_votos
-        data[:otros_partido_percent]   = row.otros_partido_percent
-      else
-        next
+      if row.proceso_electoral_year && electoral_periods[row.proceso_electoral_year].include?(year)
+          data[:censo_total]             = row.censo_total
+          data[:percen_participacion]    = row.percen_participacion
+          data[:primer_partido_total]    = row.primer_partido_votos
+          data[:primer_partido_percent]  = row.primer_partido_percent
+          data[:primer_partido_name]     = row.primer_partido_name
+          data[:segundo_partido_total]   = row.segundo_partido_votos
+          data[:segundo_partido_percent] = row.segundo_partido_percent
+          data[:segundo_partido_name]    = row.segundo_partido_name
+          data[:tercer_partido_total]    = row.tercer_partido_votos
+          data[:tercer_partido_percent]  = row.tercer_partido_percent
+          data[:tercer_partido_name]     = row.tercer_partido_name
+          data[:otros_partido_total]     = row.otros_partido_votos
+          data[:otros_partido_percent]   = row.otros_partido_percent
       end
     end
     data.reject!{|key, value| value.nil? }
