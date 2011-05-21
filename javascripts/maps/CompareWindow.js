@@ -282,7 +282,7 @@
         } else {
           deep_level = region_name;
         }
-        console.log("region_name", deep_level);
+        //console.log("region_name", deep_level);
 
         if (deep_level != "municipios") {
           me.drawTotalNumber(1, 2, me.secondData, false);
