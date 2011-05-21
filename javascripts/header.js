@@ -365,6 +365,10 @@
         }
       }
 
+      function resetDataNotFound() {
+        data_not_found = false;
+      }
+
       function resetShowed() {
         showed = false;
       }
@@ -442,9 +446,25 @@
         show: showError,
         hide: hideError,
         failed: hasFailed,
-        reset: resetShowed
+        reset: resetShowed,
+        resetDataNotFound: resetDataNotFound
       }
     })();
+
+		// 
+    $("span.aux_info a.more_info").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show(true);
+		});
+
+    $("span.aux_info a.about").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show();
+		});
 
 
     // Twitter link

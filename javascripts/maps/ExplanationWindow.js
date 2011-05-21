@@ -16,7 +16,7 @@
         '<h3>¿DE DÓNDE SALEN LOS DATOS?</h3>'+
         '<h4><a href="#" id="electorales">Datos electorales</a></h4>'+
         '<ul>'+
-          '<li><a href="#" id="electorales">Resultados electorales</a></li>'+
+          '<li><a href="#" alt="electorales">Resultados electorales</a></li>'+
         '</ul>'+				
         '<h4><a href="#">Datos demográficos</a></h4>'+
         '<ul>'+
@@ -102,12 +102,18 @@
     $(this.div).draggable({containment: 'parent'});
   }
 
-  ExplanationWindow.prototype.show = function() {
+  ExplanationWindow.prototype.show = function(general) {
     $(this.div).css({margin:'-237px 0 0 -385px',top:'50%',left:'50%'});
     $(this.div).fadeIn();
 		$(this.div).find('ul').hide();
-		$('[alt="'+compare+'"]').parent().parent().show();
-		$('[alt="'+compare+'"]').click();
+		var variableToShow;
+		if ((general) || (compare == undefined)) {
+			 variableToShow = "electorales";
+		} else {
+			variableToShow = compare;
+		}
+		$('[alt="'+variableToShow+'"]').parent().parent().show();
+		$('[alt="'+variableToShow+'"]').click();
   }
 
   ExplanationWindow.prototype.hide = function() {
