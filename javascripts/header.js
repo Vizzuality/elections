@@ -619,7 +619,10 @@
       }
     } else {
       graphBubbleTooltip.hide();
-      comparewindow.updateValues();
+
+      if(comparewindow.isVisible()){
+        comparewindow.updateValues();
+      }
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+new_year+".json");
     }
 
