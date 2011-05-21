@@ -258,6 +258,39 @@ function initializeGraph() {
         $p.find('p').text(party_name +' ('+(value)+'%)');
       }
 
+    function renderTotalNumber($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
+      }
+    }
+
+    function drawTotalNumber(party_id, info, animated) {
+      var me        = this;
+      var id        = party_id - 1;
+      var clase     = "otros";
+      var $p = $('div#graph_infowindow div.summary li.partido:eq('+id+')');
+      var partido;
+      var percent;
+
+      if (party_id < 4) {
+        partido   = info['partido_'+party_id][0];
+        percent   = info['partido_'+party_id][1];
+
+        var partido_class = normalizePartyName(partido);
+
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
+      } else {
+        partido   = "otros";
+        percent   = info['resto_partidos_percent'];
+      }
+        renderTotalNumber($p, id, percent, partido);
+    }
+
       function changeData(left,top,data_id) {
         if ($("#graph_infowindow").attr('alt') == data_id && isOpen()) {
           return false;
@@ -307,8 +340,17 @@ function initializeGraph() {
         } else {
           $('div#graph_infowindow div.stats').hide();
           $('div#graph_infowindow div.summary').show();
-          console.log(valuesHash[data_id]);
-          //drawTotalNumber (1, info, false);
+
+          $('div#graph_infowindow div.summary li.partido').each(function(i,ele){
+            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+          });
+
+          drawTotalNumber(1, valuesHash[data_id], false);
+          drawTotalNumber(2, valuesHash[data_id], false);
+          drawTotalNumber(3, valuesHash[data_id], false);
+          drawTotalNumber(4, valuesHash[data_id], false);
+
+
         }
 
         var data = valuesHash[data_id].evolution.split(",");
@@ -577,35 +619,6 @@ function initializeGraph() {
       $('div.graph_legend div.search_error').hide();
     }
 
-    function drawTotalNumber (party_id, info, animated) {
-      var me        = this;
-      var id        = party_id - 1;
-      var positions = ["primer", "segundo", "tercer", "otros"];
-      var percent   = info.data[year][positions[id]+'_partido_total'];
-      var partido   = "otros";
-      var clase     = "otros";
-      var $p = $('div#infowindow div.summary li.partido:eq('+id+')');
-
-      if (party_id < 4) {
-        partido = info.data[year][positions[id] +'_partido_name'];
-        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
-
-        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
-        $p.addClass(clase);
-      }
-
-      if (animated == true) {
-        var old_percent = $p.find('strong').text();
-        var old_party   = $p.find('span').text();
-
-        if (old_percent != percent || (partido != null && old_party != partido)) {
-          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
-        }
-      } else {
-        this.renderTotalNumber($p, id, percent, partido);
-      }
-    }
-
     function drawPartyBar(party_data, party_id) {
       var id    = party_id - 1;
       var clase = normalizePartyName(party_data["partido_"+party_id][0]);
@@ -654,7 +667,7 @@ function initializeGraph() {
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.hide();
         });
-        
+
         if (deep=="municipios") {
           $('div.graph_legend div.stats').show();
           $('div.graph_legend div.summary').hide();
