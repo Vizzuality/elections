@@ -84,7 +84,7 @@ var normalizedRegions =  {
   'cadiz': 'Cádiz',
   'huelva': 'Huelva',
   'cordoba': 'Córdoba',
-  'jaen': 'Jaén',
+  'jaen': 'Jaén'
 }
 
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
@@ -109,8 +109,6 @@ var normalization = {
 };
 
 
-
-var custom_map_style = [{featureType:"administrative.country",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"administrative.locality",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"all",elementType:"all",stylers:[{lightness:7},{saturation:-91}]},{featureType:"all",elementType:"all",stylers:[]}];
 
 var tooltipInfo = {
   "Envejecimiento" : {
