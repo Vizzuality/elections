@@ -372,7 +372,6 @@ div#appInfo div.explain div.chartCurrentLabel span.value {width: 100%; text-alig
 div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align: right; font: normal 13px "Arial"; color: #363636;}
 
 /*GRAPH*/
-
 div#graph span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#graph span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
 
