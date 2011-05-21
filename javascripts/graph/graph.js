@@ -864,11 +864,16 @@ function addNewBubble(region) {
 
     if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+
     }
     selectedBubble = region;
 
     $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
     $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
+
+      $("div#" + selectedBubble + " p.region_name").css("color","#333333");
+      $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
+
   } else {
     var count = 0;
     _.each(possibleValues,function(val,key){
