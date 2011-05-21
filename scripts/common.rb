@@ -46,7 +46,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v10"
+$graphs_next_version = "v11"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -72,7 +72,7 @@ def get_provinces
 end
 
 def get_municipalities(province)
-  $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2
+  $cartodb.query("select ine_poly.cartodb_id, municipio_name as name, ine_poly.nombre as name2, ine_poly.codinemuni, ine_poly.codineprov
                   from ine_poly, gadm2, municipios
                   where gadm2.cc_2::integer = ine_poly.ine_prov_int and gadm2.name_2 = '#{province}' and ine_poly_cartodb_id = ine_poly.cartodb_id")[:rows].compact
 end
@@ -134,6 +134,7 @@ end
 # AZUL:  #5AB0E9, #64B7DE, #90D7F4
 # de mas intenso a menos intenso
 def get_color(row, x, parties)
+  return ["#AAAAAA"] if row[:primer_partido_id].nil?
   primer_partido = parties[row[:primer_partido_id]]
   if primer_partido == "PSOE" || primer_partido.include?("PSOE")
     if x > -100
@@ -157,6 +158,7 @@ def get_color(row, x, parties)
 end
 
 def get_radius(row)
+  return 60
   return 0 if row[:censo_total].to_f == 0
   if row[:votantes_totales] > row[:censo_total]
     row[:votantes_totales] = row[:censo_total]
@@ -165,7 +167,7 @@ def get_radius(row)
 end
 
 def get_parties
-  @get_parties ||= $cartodb.query("select cartodb_id, name from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
+  @get_parties ||= $cartodb.query("select cartodb_id, name, siglas from #{POLITICAL_PARTIES}")[:rows].inject({}){ |h, row| h[row[:cartodb_id]] = row[:name]; h}
 end
 
 def get_known_parties(parties)

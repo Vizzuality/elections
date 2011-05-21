@@ -43,7 +43,7 @@
       ev.preventDefault();
       var className = ($(this).hasClass('map'))?'map':'graph';
       if (!$(this).hasClass('selected')) {
-        infoTooltip.hide();
+        infoTooltip.hide_();
         $('div#tab_menu a').removeClass('selected');
         if (className == 'map') {
           $("#graph").hide();
@@ -71,15 +71,21 @@
           $("#graph").show();
           drawNoDataBars();
 
+          // reset to the higher level
+          name = "España";
+          deep = "autonomias";
+          changeHash();
+
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          restartGraph(true);
+          restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
         }
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
-
+        $('body').unbind('click');
+        
         $(this).addClass('selected');
         changeHash();
       }
@@ -95,6 +101,12 @@
       $(this).attr('href','#stop');
       animation = true;
       checkStartYear();
+      $('body').click(function(ev){
+        $('a.stop').removeClass('stop').addClass('play');
+        $('a.play').attr('href','#play');
+        $('body').unbind('click');
+        clearInterval(animate_interval);
+      })
     });
 
     // Stop animation process
@@ -103,6 +115,7 @@
       ev.preventDefault();
       animation = false;
       clearInterval(animate_interval);
+      $('body').unbind('click');
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
     });
@@ -188,6 +201,7 @@
             $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);
 
             $("div.info_tooltip").css("left", position-7);
+
             $("div.info_tooltip").fadeIn("slow", function() {
               $('body').click(function(event) {
                 if (!$(event.target).closest('div.info_tooltip').length) { hideTooltip(); }
@@ -205,8 +219,8 @@
       }
 
       return {
-        hide: hideTooltip,
-        show: showInfoTooltip
+        hide_: hideTooltip,
+        show_: showInfoTooltip
       };
     }());
 
@@ -222,7 +236,7 @@
       $('div.select').each(function(i,ele){$(ele).removeClass('opened');});
 
       if (!$(this).closest('div.select').hasClass('opened')) {
-        infoTooltip.hide();
+        infoTooltip.hide_();
         failCircle.reset();
         if ($(this).parent().find('li.selected').length) {
           var index = $(this).parent().find('li.selected').index();
@@ -259,10 +273,17 @@
 
         if (state == 'mapa') {
           refreshBubbles();
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           if (infowindow.isOpen()) {
             infowindow.updateValues();
           }
         } else {
+
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
@@ -273,7 +294,7 @@
         $('div.option_list ul li').each(function(i,ele){$(ele).removeClass('selected');});
         $('div.select').each(function(i,ele){$(ele).removeClass('selected');});
 
-        infoTooltip.show(value, $(this).closest('div.select').position().left);
+        infoTooltip.show_(value, $(this).closest('div.select').position().left);
 
         $(this).parent().addClass('selected');
         $(this).closest('div.select').addClass('selected').removeClass('opened');
@@ -289,6 +310,14 @@
       var showed = false;
 
       var data_not_found = false;
+
+      $("div.fail").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (state == "mapa") {
+          hideError();
+        }
+      });
 
       $("div.fail a.why").live("click", function(ev) {
         ev.stopPropagation();
@@ -317,14 +346,13 @@
           var $state = $("#graph");
           var deep_level = deep;
         }
-        
+
         if (availableData[deep_level][normalization[compare]] == undefined) {
           var isDataAvailableInDeep = false;
         } else {
           var isDataAvailableInDeep = true;
         }
 
-        
         if (isDataAvailableInDeep == true) {
           text = "No hay datos para este año";
           next_link_text = "ver siguiente año con datos";
@@ -353,19 +381,23 @@
         }
       }
 
+      function resetDataNotFound() {
+        data_not_found = false;
+      }
+
       function resetShowed() {
         showed = false;
       }
 
       function hideError() {
-        
+
         var $state = (state == "mapa") ? $("#map") : $("#graph");
         $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
       }
 
       function getNextAvailableYear(deep_level) {
         var data = availableData[deep_level][normalization[compare]];
-        
+
         if (data!=undefined) {
           if (year > data[data.length - 1]) {
             return data[data.length - 1];
@@ -381,20 +413,21 @@
 
         if (state == "mapa") {
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-          
+
           var next_year = getNextAvailableYear(deep_level);
           if (next_year!=year) {
             updateNewSliderValue(next_year);
             failCircle.hide();
           } else {
             peninsula.setZoom(6);
+
             var deep_level = getDeepLevelFromZoomLevel(6);
             
             if (years_nodata[deep_level]==undefined) {
               var count = 0;
               clearInterval(deep_interval);
               deep_interval = setInterval(function(){
-                
+            
                 if (years_nodata[deep_level]==undefined) {
                   count++;
                   if (count>5) {
@@ -402,19 +435,20 @@
                   }
                 } else {
                   var next_year = getNextAvailableYear(deep_level);
-                  updateNewSliderValue(next_year);
+                  if (next_year!=year && next_year<2012) {
+                    updateNewSliderValue(next_year,year);
+                  }
                   clearInterval(deep_interval);
                 }
               },500);
             } else {
               var next_year = getNextAvailableYear(deep_level);
-              updateNewSliderValue(next_year);
+              if (next_year!=year && next_year<2012) {
+                updateNewSliderValue(next_year,year);
+              }
             }
-            
-            var next_year = getNextAvailableYear(deep_level);
-            updateNewSliderValue(next_year);
           }
-          
+
 
         } else {
           updateNewSliderValue(getNextAvailableYear(deep));
@@ -430,9 +464,25 @@
         show: showError,
         hide: hideError,
         failed: hasFailed,
-        reset: resetShowed
+        reset: resetShowed,
+        resetDataNotFound: resetDataNotFound
       }
     })();
+
+		//
+    $("span.aux_info a.more_info").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show(true);
+		});
+
+    $("span.aux_info a.about").click(function(ev) {
+			ev.stopPropagation();
+      ev.preventDefault();
+      $("#welcomewindow").fadeOut("slow");
+      explanationwindow.show();
+		});
 
 
     // Twitter link
@@ -449,6 +499,7 @@
       ev.stopPropagation();
       ev.preventDefault();
       unSelectAllVariables();
+      removeDataBars();
     });
   }
 
@@ -481,6 +532,7 @@
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');
       animation = false;
+      $('body').unbind('click');
       clearInterval(animate_interval);
       return false;
     } else {
@@ -498,6 +550,11 @@
       });
       drawNoDataBars();
     });
+  }
+  
+  function removeDataBars() {
+    $('span.slider_no_data_left').css({width:"0%"});
+    $('span.slider_no_data_right').css({width:"0%"});
   }
 
   function drawNoDataBars() {
@@ -616,6 +673,11 @@
       }
     } else {
       graphBubbleTooltip.hide();
+
+      if(comparewindow.isVisible()){
+        comparewindow.updateValues();
+        comparewindow.refreshChart();
+      }
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+new_year+".json");
     }
 
@@ -639,7 +701,9 @@
     if (compare=="ninguna") {
       $('div.wadusText').hide();
     } else {
-      $('div.wadusText p').html($('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text()+' <sup>['+year+']</sup>');
+      var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':first_text;
+      $('div.wadusText p').html(wadus_text+' <sup>['+year+']</sup>');
       $('div.wadusText').show();
     }
   }

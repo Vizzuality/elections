@@ -14,13 +14,11 @@
     // Create the div tile
     var div = ownerDocument.createElement('div');
     div.setAttribute('class','tile');
-    //div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
-    //div.style.border = "1px solid yellow";
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
     div.style.height = this.tileSize.height + 'px';
     div.setAttribute('id',coord.x+'_'+coord.y+'_'+zoom);
-    
+
 
     // Remove hash key
     hash[coord.x+'_'+coord.y+'_'+zoom] = [];
@@ -54,8 +52,21 @@
     }
 
     if (x==undefined || ((x%1==0) && (y%1==0))) {
-      // Call service
+      // Show canary - peninsula
+      if (z==6 && x>27 && x<35 && y>21 && y<27) {
+        //Show tiny Canarias map
+        $('div.canary_island').css({'background-position':'0 0'});
+        $('div.canary_island a').removeClass().addClass('islas_canarias').text('Ir a las Islas Canarias');
+        $('div.canary_island').css('z-index',2);
+      } else if ((z==7 || z==8) && ((x>54 && x<62 && y>50 && y<56) ||  (x>113 && x<121 && y>103 && y<109))) {
+        $('div.canary_island').css({'background-position':'0 -160px'});
+        $('div.canary_island a').removeClass().addClass('peninsula').text('Ir a la Península y Baleares');
+        $('div.canary_island').css('z-index',2);
+      } else {
+        $('div.canary_island').css('z-index',0);
+      }
       
+      // Call service
       // Loading tiles spinner
       this.loading_tiles++;
       showLoader();

@@ -23,17 +23,20 @@ div#header span.end_right {position:absolute; right:0; top:0; width:10px; height
 div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.secondContainer div.left {float:left; width:320px; height:auto; margin:0; padding:0;}
-div#header div.secondContainer div.left form {display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
-div#header div.secondContainer div.left form input {float:left; width:248px; height:15px; margin:0; padding:9px 7px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
+div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
+div#header div.secondContainer div.left form input {float:left; width:218px; height:15px; margin:0; padding:9px 37px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
   color:#CCCCCC; line-height:15px;}
 div#header div.secondContainer div.left form input:focus {outline:none; color:#333333;}
-div#header div.secondContainer div.left div.searchLens { background: url('../images/lens.png') 0 0 no-repeat; width: 20px; height: 20px; position: absolute; top: 19px; right: 48px; z-index: 11; }
+div#header div.secondContainer div.left form span.searchLens { background: url('../images/lens.png') 0 0 no-repeat; width: 20px; height: 20px; position: absolute; top: 4px; right: 10px; z-index: 11; }
 div#header div.secondContainer div.left form div.pac-container {left:19px!important; top:29px!important; width:262px!important; padding:5px 0 5px; background:url('../images/autocomplete_bkg.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
 div#header div.secondContainer div.left form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
 div#header div.secondContainer div.left form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
 div#header div.secondContainer div.left form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}
 
-div#header div.share {float:right; width:300px; height:24px; margin:20px 0 0 0;}
+div#header span.aux_info {float:right; text-align: right; width:200px; height:24px; margin:22px 0 0 0; color: #FFFFFF;}
+div#header span.aux_info a{font: normal 12px "Officina Regular"; color: #FFFFFF;}
+
+div#header div.share {float:right; width:145px; height:24px; margin:20px 0 0 0;}
 div#header div.share div.outer_share {float:right; width:134px!important; height:24px; padding:0; margin:0; background:url('../images/share_bkg.png') no-repeat 0 0;}
 div#header div.share div.outer_share p {float:left; width:64px; height:19px; padding:5px 0 0 7px; font:normal 13px "Officina Bold"; color:white; text-shadow:0 1px #371530; line-height:13px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.share div.outer_share a.facebook {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat 2px 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
@@ -60,8 +63,8 @@ div#header div.secondContainer div.right div.info_tooltip div.content a.more:hov
 div#header div.secondContainer div.right div.info_tooltip div.content a.close {float:right; width:56px; height:13px; margin:7px 0 0 0; padding:9px 0 10px; background:url('../images/close_bkg.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-align:center; line-height:13px; text-decoration:none;}
 div#header div.secondContainer div.right div.info_tooltip div.content a.close:hover {background-position:0 -32px;}
 
-div#header div.secondContainer div.right div.selects {float:right; width:660px; height:50px; padding:5px 0 0 0;}
-div#header div.secondContainer div.right div.selects div.select {position:relative; float:right; display:inline;}
+div#header div.secondContainer div.right div.selects {float:right; width:655px; height:50px; padding:5px 0 0 0;}
+div#header div.secondContainer div.right div.selects div.select {position:relative; float:left;}
 div#header div.secondContainer div.right div.selects div.select div.outer_select {position:relative; float:left; width:auto; height:50px; padding:0 0 0 50px; background:url('../images/select_left.png') no-repeat 0 0;}
 div#header div.secondContainer div.right div.selects div.select.selected div.outer_select {background-position:0 -97px;}
 div#header div.secondContainer div.right div.selects div.select div.outer_select img {position:absolute; left:20px; top:18px; z-index:10;}
@@ -99,7 +102,7 @@ div#header div.secondContainer div.right div.selects div.select div.option_list.
 div#header div.secondContainer{float:left; width: 100%;}
 
 /*YEARS SLIDER*/
-div#header div.years_content {position:absolute; bottom:10px; left:15px; right:11px;  height:34px; z-index:10;}
+div#header div.years_content {position:absolute; bottom:10px; left:15px; right:11px;  height:34px; z-index:0;}
 div#header div.years_content a.action {display:inline-block; width:33px; height:34px; background:url('../images/play_stop.png') no-repeat 0 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
 div#header div.years_content a.action.play:hover {background-position:-31px 0;}
 div#header div.years_content a.action.stop {background-position:-95px 0;}
@@ -136,9 +139,9 @@ div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move
 div.tabs {position:absolute; left:0; right:0; top:223px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
-div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
-div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:url('../images/canary_bkg.png') repeat 0 0; z-index:10; text-decoration:none;}
-div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
+div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:0; background:url('../images/spain.jpg') no-repeat 0 0;}
+div.tabs div#map div.canary_island a {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:url('../images/canary_bkg.png') repeat 0 0; z-index:10; text-decoration:none;}
+div.tabs div#map div.canary_island:hover a {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 
@@ -149,9 +152,9 @@ div.tabs div#graph div#top_legend { top: 25px;}
 div.tabs div#graph div#bottom_legend {top: 510px;}
 
 /* Fail circle */
-div.tabs div.fail {display:none; position:absolute; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
+div.tabs div.fail {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; height:100%; background:url('../images/stripped_background.png'); z-index:100;}
 div.tabs div.fail div.content {position:absolute; left:50%; margin: 127px 0 0 -142px; width:300px; height:300px; background:url('../images/circle.png') no-repeat; text-align:center; z-index:1000;}
-div.tabs div.fail p {position:absolute; width:300px; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
+div.tabs div.fail p {position:absolute; left:0; width:300px; margin-top: 120px; text-align:center; font:normal 20px "Officina Regular"; line-height: 28px;}
 div.tabs div#graph div.fail p {margin-top: 130px;}
 div.tabs div.fail p small {font-size:14px!important;}
 div.tabs div.fail a {font:normal 21px "Officina Regular"; font-size:14px; color:#8C1F76}
@@ -169,12 +172,12 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.bubbleContainer span.name{display:none;}
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
+div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333); z-index:100}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 
-
 /*WADUS TEXT*/
-div.wadusText{ position:absolute; top:0 left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; }
+div.wadusText{ position:absolute; top:0; left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index:105; }
 div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
 div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
 div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
@@ -182,8 +185,7 @@ div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF;
 /*MAP CONTROLS*/
 div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#map span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
-div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('../images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
-  text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('../images/zoom_control.png') no-repeat 0 0; z-index:110; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div#zoom_control a.zoom_in {position:absolute; top:8px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat -34px 0; z-index:15;}
 div#zoom_control a.zoom_out {position:absolute; bottom:16px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat 0 0; z-index:15;}
 div#zoom_control a.zoom_in:hover {background-position:-34px -32px;}
@@ -212,51 +214,51 @@ div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 /*BUBBLE MARKER*/
 div.bubble {position:absolute; padding:0; margin:0; overflow:visible;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
-div.bubble p.stat {position:absolute; top:50%; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
-div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:60px; margin:0 0 0 -30px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
+div.bubble p.stat {position:absolute; top:50%; left:0; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
+div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:70px; margin:0 0 0 -35px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
 div.bubble:hover {cursor:pointer;}
 
 /*INFOWINDOW*/
-div.infowindow {position:absolute; width:252px; height:294px; cursor:default; opacity:0;}
-div.infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
-div.infowindow a.close_infowindow:hover {background-position:0 -18px;}
-div.infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
+div.infowindow,div#infowindow {position:absolute; width:252px; height:294px; cursor:default; opacity:0;}
+div.infowindow a.close_infowindow,div#infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
+div.infowindow a.close_infowindow:hover,div#infowindow a.close_infowindow:hover {background-position:0 -18px;}
+div.infowindow div.top,div#infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
 
-div.infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
-div.infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div.infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
-div.infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
-div.infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
-div.infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
+div.infowindow div.top h2,div#infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
+div.infowindow div.top h2 sup,div#infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div.infowindow div.top p.province,div#infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div.infowindow div.top div.stats,div#infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
+div.infowindow div.top div.stats h4,div#infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
+div.infowindow div.top div.stats div,div#infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
 
-div.infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
-div.infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
-div.infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
-div.infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar,div#infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
+div.infowindow div.top div.stats div.bar span.c,div#infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
+div.infowindow div.top div.stats div.bar span.l,div#infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
+div.infowindow div.top div.stats div.bar span.r,div#infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 
-div.infowindow div.top div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
-div.infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
-div.infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
-div.infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
-div.infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
+div.infowindow div.top div.summary h4,div#infowindow div.top div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
+div.infowindow div.top div.summary ul,div#infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
+div.infowindow div.top div.summary ul li,div#infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
+div.infowindow div.top div.summary ul li.bar,div#infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
+div.infowindow div.top div.summary ul li strong,div#infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
+div.infowindow div.top div.stats div p,div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase; color:#ADAD94;}
+div.infowindow div.bottom,div#infowindow div.bottom {display:inline-block; width:252px; padding: 17px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
+div.infowindow div.footer,div#infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
 
-div.infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
-div.infowindow div.bottom {display:inline-block; width:252px; padding: 17px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
-div.infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
+div.infowindow div.bottom p.info,div#infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666; margin: 0 0 4px 0;}
+div.infowindow div.bottom p.info strong,div#infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
+div.infowindow div.bottom p.info a,div#infowindow div.bottom p.info a {color:#333333;}
+div.infowindow div.bottom p.info a:hover,div#infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
+div.infowindow div.bottom div.chart,div#infowindow div.bottom div.chart {width:205px; height:35px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
+div.infowindow div.bottom div.chart img,div#infowindow div.bottom div.chart img {float:right; height:22px;}
+div.infowindow div.bottom a.goTo,div#infowindow div.bottom a.goTo {float:left; margin:16px 0 0 0; font:normal 13px "Officina Regular"; color:black; text-decoration:underline; text-shadow:0 1px white;}
+div.infowindow div.bottom a.compare,div#infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:10px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
+div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
+div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
+div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
 
-div.infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666; margin: 0 0 4px 0;}
-div.infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
-div.infowindow div.bottom p.info a {color:#333333;}
-div.infowindow div.bottom p.info a:hover {color:#000000; text-decoration:underline;}
-div.infowindow div.bottom div.chart {width:205px; height:35px; background:url('../images/tiny_graph_bkg.png') no-repeat 0 1px;}
-div.infowindow div.bottom div.chart img {float:right; height:22px;}
-div.infowindow div.bottom a.goTo {float:left; margin:16px 0 0 0; font:normal 13px "Officina Regular"; color:black; text-decoration:underline; text-shadow:0 1px white;}
-div.infowindow div.bottom a.compare {float:right; width:67px; height:13px; margin:10px 45px 8px 0; padding:6px 0 7px; background:url('../images/compare_button.png') no-repeat 0 0; font:normal 13px "Officina Regular"; color:#333333; text-shadow:0 1px white; text-align:center; line-height:13px; cursor:pointer;}
-div.infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
-div.infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
-div.infowindow div.bottom a.more:hover {color:black;}
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}
@@ -274,6 +276,8 @@ div#comparewindow div div.stats div.bar {position:relative; float:left; width:au
 div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
 div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div#comparewindow div.bottom div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask_bottom.png') no-repeat left bottom; width:4px; height:6px;}
+div#comparewindow div.bottom div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask_bottom.png') no-repeat right bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 
 div#comparewindow div div.summary {display:none; width:276px; height:75px; margin:8px 0 0 40px;}
@@ -321,13 +325,12 @@ div#comparewindow div.bottom.search div.region {display:none;}
 div#comparewindow div.bottom.region div.search {display:none;}
 div#comparewindow div.bottom.region div.region {display:block;}
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
-div#comparewindow div.bottom form {position:relative; width:276px; height:28px; margin:5px 0 0 40px;}
-div#comparewindow div.bottom form input#google_compare_autocomplete {width:244px; height:13px; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
+div#comparewindow div.bottom form {position:relative; float:left; width:276px; height:28px; margin:5px 0 0; padding:0 0 0 40px;}
+div#comparewindow div.bottom form input#google_compare_autocomplete {display:inline-block; width:244px; height:13px; margin:0!important; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
 div#comparewindow div.bottom form div.pac-container {left:0px!important; top:25px!important; width:276px!important; padding:5px 0 5px; background:url('../images/search_compare_google.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
 div#comparewindow div.bottom form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
 div#comparewindow div.bottom form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
 div#comparewindow div.bottom form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}
-
 div#comparewindow div.bottom form input.submit {position:absolute; top:7px; right:8px; width:13px; height:13px; display:block; border:none; background:url('../images/tiny_search_len.png') no-repeat 0 0;}
 div#comparewindow div.bottom form input.submit:hover {background-position:0 -13px; cursor:pointer;}
 div#comparewindow div.bottom p.refer {display:none; width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:right; font:normal 13px "Officina Regular"; color:#666666;}
@@ -354,7 +357,8 @@ div#appInfo div.options {position:relative; float:left; width:190px; height:450p
 div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.jpg') no-repeat 0 0;}
 div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
 div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
-div#appInfo div.options ul {width:100%; padding:10px 0 0 0;}
+div#appInfo div.options h4 a{color:#999999; text-decoration: none;}
+div#appInfo div.options ul {width:100%; padding:10px 0 0 0; display: none;}
 div#appInfo div.options ul li {width:100%; padding:0 0 8px;}
 div#appInfo div.options ul li a {font:normal 13px Arial; color:#8B1F73; text-decoration:none;}
 div#appInfo div.options ul li a:hover {color:#333333;}
@@ -365,9 +369,12 @@ div#appInfo div.explain h1 {padding:0 0 5px 0; font:normal 17px "Officina Bold";
 div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#666666;}
 div#appInfo div.explain p a {color:#8C1F74;}
 div#appInfo div.explain p.rango {padding: 0 0 10px 0; font:normal 13px Arial; color:#999999}
+div#appInfo div.explain img.chart {margin: 20px 0 0 0; border: 1px solid white; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#appInfo div.explain div.chartCurrentLabel {position: relative; float: right; top: -70px; width: 150px; text-align: right; margin: 0 20px 0 0;}
+div#appInfo div.explain div.chartCurrentLabel span.value {width: 100%; text-align: right; font: normal 36px "Officina Bold"; color: #363636;}
+div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align: right; font: normal 13px "Arial"; color: #363636;}
 
 /*GRAPH*/
-
 div#graph span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#graph span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
 
@@ -380,8 +387,9 @@ div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Offi
 div.graph_legend p.autonomy a:hover {color:#333333;}
 div.graph_legend div.partido.otros p {}
 div.graph_legend form {position:relative; width:162px; height:32px; margin:20px 0 0 0;}
-div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('../images/region_search_bkg.png') no-repeat 0 0; border:none;}
-div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('../images/tiny_lens.png') no-repeat 0 0; border:none;}
+/*div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('../images/region_search_bkg.png') no-repeat 0 0; border:none;}*/
+div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; border:none;}
+/* div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('../images/tiny_lens.png') no-repeat 0 0; border:none;} */
 div.graph_legend form input.text:focus {outline:none; color:#333333;}
 div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
 div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('../images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
@@ -402,104 +410,104 @@ div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #d
 /*psoe*/
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
 div.stats div.partido.psoe div.bar span.c {background-position:right -0px!important;}
-div.stats div.partido.psoe p, li.partido.psoe {color:red;}
+div.stats div.partido.psoe p, li.partido.psoe {color:red!important;}
 /*pp*/
 div div.stats div.partido.pp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp div.bar span.c{background-position:right -6px!important;}
-div div.stats div.partido.pp, li.partido.pp {color:#00B2EB;}
+div div.stats div.partido.pp p, li.partido.pp {color:#00B2EB!important;}
 /*iu*/
 div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.iu p, li.partido.iu {color:#54A551;}
+div div.stats div.partido.iu p, li.partido.iu {color:#54A551!important;}
 /*ap*/
 div div.stats div.partido.ap div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.ap div.bar span.c {background-position:right -6px!important}
-div div.stats div.partido.ap p, li.partido.ap {color:#00B2EB;}
+div div.stats div.partido.ap p, li.partido.ap {color:#00B2EB!important;}
 /*indep*/
 div div.stats div.partido.indep div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.indep div.bar span.c {background-position:right -24px!important}
-div div.stats div.partido.indep p, li.partido.indep {color:gray;}
+div div.stats div.partido.indep p, li.partido.indep {color:gray!important;}
 /*pa*/
 div div.stats div.partido.pa div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.pa div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.pa p, li.partido.pa {color:#54A551;}
+div div.stats div.partido.pa p, li.partido.pa {color:#54A551!important;}
 /*bng*/
 div div.stats div.partido.bng div.bar {background-position:0 0px!important;}
 div div.stats div.partido.bng div.bar span.c {background-position:right 0px!important}
-div div.stats div.partido.bng p, li.partido.bng {color:red;}
+div div.stats div.partido.bng p, li.partido.bng {color:red!important;}
 /*pdp*/
 div div.stats div.partido.pdp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pdp div.bar span.c {background-position:right -6px!important}
-div div.stats div.partido.pdp p, li.partido.pdp {color:#00B2EB;}
+div div.stats div.partido.pdp p, li.partido.pdp {color:#00B2EB!important;}
 /*erc-am*/
 div div.stats div.partido.erc_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc_am div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.erc_am p, li.partido.erc_am {color:#EC7B37;}
+div div.stats div.partido.erc_am p, li.partido.erc_am {color:#EC7B37!important;}
 /*esquerra-am*/
 div div.stats div.partido.esquerra_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.esquerra_am p, li.partido.esquerra_am {color:#EC7B37;}
+div div.stats div.partido.esquerra_am p, li.partido.esquerra_am {color:#EC7B37!important;}
 /*erc*/
 div div.stats div.partido.erc div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc div.bar span.c {background-position:right -30px!important}
-div div.stats div.partido.erc p, li.partido.erc {color:#EC7B37;}
+div div.stats div.partido.erc p, li.partido.erc {color:#EC7B37!important;}
 /*hb*/
 div div.stats div.partido.hb div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.hb div.bar span.c {background-position:right -36px!important}
-div div.stats div.partido.hb p, li.partido.hb {color:#800080;}
+div div.stats div.partido.hb p, li.partido.hb {color:#800080!important;}
 /*ciu*/
 div.innerBubble.ciu{background:url('../images/backgrounds/ciu.png'); }
 div div.stats div.partido.ciu div.bar {background-position:0 -42px!important;}
 div div.stats div.partido.ciu div.bar span.c {background-position:right -42px!important}
-div div.stats div.partido.ciu p, li.partido.ciu {color:#ec7b37;}
+div div.stats div.partido.ciu p, li.partido.ciu {color:#ec7b37!important;}
 /*cds*/
 div.innerBubble.cds{background:url('../images/backgrounds/cds.png'); }
 div div.stats div.partido.cds div.bar {background-position:0 -96px!important;}
 div div.stats div.partido.cds div.bar span.c {background-position:right -96px!important}
-div div.stats div.partido.cds p, li.partido.cds {color:#62A558;}
+div div.stats div.partido.cds p, li.partido.cds {color:#62A558!important;}
 /*par*/
 div.innerBubble.par{background:url('../images/backgrounds/par.png'); }
 div div.stats div.partido.par div.bar {background-position:0 -102px!important;}
 div div.stats div.partido.par div.bar span.c {background-position:right -102px!important}
-div div.stats div.partido.par p, li.partido.par {color:#fdb202;}
+div div.stats div.partido.par p, li.partido.par {color:#fdb202!important;}
 /*eaj-pnv*/
 div.innerBubble.eaj_pnv{background:url('../images/backgrounds/eaj_pnv.png'); }
 div div.stats div.partido.eaj_pnv div.bar {background-position:0 -54px!important;}
 div div.stats div.partido.eaj_pnv div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.eaj_pnv p, li.partido.eaj_pnv {color:#CE0E16;}
+div div.stats div.partido.eaj_pnv p, li.partido.eaj_pnv {color:#61A886!important;}
 /*ea*/
 div.innerBubble.ea{background:url('../images/backgrounds/ea.png'); }
 div div.stats div.partido.ea div.bar {background-position:0 -60px!important;}
 div div.stats div.partido.ea div.bar span.c {background-position:right -60px!important}
-div div.stats div.partido.ea p, li.partido.ea {color:#B41318;}
+div div.stats div.partido.ea p, li.partido.ea {color:#B41318!important;}
 /*prc*/
-div div.stats div.partido.prc div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.prc div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.prc p, li.partido.prc {color:#800080;}
+div div.stats div.partido.prc div.bar {background-position:0 bottom!important;}
+div div.stats div.partido.prc div.bar span.c {background-position:right bottom!important}
+div div.stats div.partido.prc p, li.partido.prc {color:#ADAD94!important;}
 /*pr*/
 div.innerBubble.pr{background:url('../images/backgrounds/pr.png'); }
-div div.stats div.partido.pr div.bar {background-position:0 -54px!important;}
-div div.stats div.partido.pr div.bar span.c {background-position:right -54px!important}
-div div.stats div.partido.pr p, li.partido.pr {color:#008140;}
+div div.stats div.partido.pr div.bar {background-position:0 bottom!important;}
+div div.stats div.partido.pr div.bar span.c {background-position:right bottom!important}
+div div.stats div.partido.pr p, li.partido.pr {color:#008140!important;}
 /*uv*/
 div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
 div div.stats div.partido.uv div.bar span.c {background-position:right -78px!important}
-div div.stats div.partido.uv p, li.partido.uv {color:#EC7B37;}
+div div.stats div.partido.uv p, li.partido.uv {color:#EC7B37!important;}
 /*otros*/
 div div.stats div.partido.otros div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.otros div.bar span.c {background-position:right -24px!important;}
-div div.stats div.partido.otros p, li.partido.otros {color:#999999;}
+div div.stats div.partido.otros p, li.partido.otros {color:#999999!important;}
 /*par1*/
-div div.stats div.partido.par1 div.bar {background-position:0 -36px!important;}
-div div.stats div.partido.par1 div.bar span.c {background-position:right -36px!important;}
-div div.stats div.partido.par1 p, li.partido.par1 {color:#990033;}
+div div.stats div.partido.par1 div.bar {background-position:0 bottom!important;}
+div div.stats div.partido.par1 div.bar span.c {background-position:right bottom!important;}
+div div.stats div.partido.par1 p, li.partido.par1 {color:#ADAD94;}
 /*par2*/
-div div.stats div.partido.par2 div.bar {background-position:0 -34px!important;}
-div div.stats div.partido.par2 div.bar span.c {background-position:right -30px!important;}
-div div.stats div.partido.par2 p, li.partido.par2 {color:orange;}
+div div.stats div.partido.par2 div.bar {background-position:0 bottom!important;}
+div div.stats div.partido.par2 div.bar span.c {background-position:right bottom!important;}
+div div.stats div.partido.par2 p, li.partido.par2 {color:#ADAD94;}
 /*par3*/
-div div.stats div.partido.par3 div.bar {background-position:0 -90px!important;}
-div div.stats div.partido.par3 div.bar span.c {background-position:right -90px!important}
-div div.stats div.partido.par3 p, li.partido.par3 {color:#666;}
+div div.stats div.partido.par3 div.bar {background-position:0 bottom!important;}
+div div.stats div.partido.par3 div.bar span.c {background-position:right bottom!important}
+div div.stats div.partido.par3 p, li.partido.par3 {color:#ADAD94;}
 /*end bars*/

@@ -43,7 +43,7 @@
     }
 
     // //Check variable of compare
-    if (!$('div.option_list ul li a.'+route[5]).length) {
+    if (!$('div.option_list ul li a.'+route[5]).length && route[5]!="ninguna") {
       initializeApp();
       return false;
     }
@@ -65,7 +65,12 @@
       initializeApp();
       return false;
     }
-
+    
+    if (route[4]<1987 || route[4]>2011) {
+      initializeApp();
+      return false;
+    }
+    
     // Check zoom
     if (route[3]>12 || route[3]<6) {
       initializeApp();
@@ -114,16 +119,11 @@
 
         $("#welcomewindow").fadeOut("slow");
 
-        var text = $("div.select div.option_list ul li a.paro").text();
-        $("div.select div.outer_select.money").parent().addClass("selected");
-        $("div.select div.outer_select.money span.inner_select a").text(text);
-        $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-        compare = "paro";
-
         if (year < 2005) { // because we don't have paro information prior 2005
           updateNewSliderValue(2005, year);
         }
-
+        
+        $("div.select div.option_list ul li a.paro").click();
         changeHash();
       });
 
@@ -137,7 +137,7 @@
         ev.stopPropagation();
         ev.preventDefault();
         $("#welcomewindow").fadeOut("slow");
-        explanationwindow.show();
+        explanationwindow.show(true);
       });
 
       $("#welcomewindow a.know_more").click(function(ev) {
