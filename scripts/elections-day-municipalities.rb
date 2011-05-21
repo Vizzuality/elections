@@ -22,7 +22,7 @@ block = ARGV[0].to_i
 fd = File.open("inserts-#{block}.log", 'w+')
 
 municipalities = CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :encoding => "".encoding).inject({}) do |h,e| 
-  h[e[6]] = e[7]
+  h[e[6]] = [e[7],e[8],e[9]]
   h
 end
 
@@ -39,7 +39,7 @@ File.read("urls/urls-#{block}.log").each_line do |raw_path|
   next if municipalities[url].nil?
   
   parser = XML::SaxParser.file(resultados_path)
-  parser.callbacks = MunicipalityVotes.new(municipalities[url], nil, nil)
+  parser.callbacks = MunicipalityVotes.new(municipalities[url][0], municipalities[url][1], municipalities[url][2])
   parser.parse
   temporal_result = parser.callbacks.result
   parser = nil
