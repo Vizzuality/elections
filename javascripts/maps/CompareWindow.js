@@ -411,6 +411,15 @@
 
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
+
+        $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
+        $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):'')+this.firstData['data'][year]['censo_total']+' habitantes');
+
+        if (this.secondData.data != undefined) {
+          $('div#comparewindow div.bottom div.stats h4').text(parseFloat(this.secondData.data[year].percen_participacion).toFixed(0)+'% de participación');
+          $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):'')+this.secondData['data'][year]['censo_total']+' habitantes');
+        }
+
         this.updateTotalNumber();
         this.updateBars();
       }
