@@ -73,7 +73,7 @@
 
           // Hide the legend if this is visible...
           graphLegend.hideFast();
-          restartGraph(true);
+          restartGraph();
           $('div#map').css('zIndex',0);
           $('div#graph').css('zIndex',10);
         }
@@ -188,7 +188,7 @@
             $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);
 
             $("div.info_tooltip").css("left", position-7);
-            
+
             $("div.info_tooltip").fadeIn("slow", function() {
               $('body').click(function(event) {
                 if (!$(event.target).closest('div.info_tooltip').length) { hideTooltip(); }
@@ -260,10 +260,17 @@
 
         if (state == 'mapa') {
           refreshBubbles();
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           if (infowindow.isOpen()) {
             infowindow.updateValues();
           }
         } else {
+
+          if (comparewindow.isVisible()) {
+            comparewindow.setUpChartView();
+          }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
 
@@ -318,14 +325,13 @@
           var $state = $("#graph");
           var deep_level = deep;
         }
-        
+
         if (availableData[deep_level][normalization[compare]] == undefined) {
           var isDataAvailableInDeep = false;
         } else {
           var isDataAvailableInDeep = true;
         }
 
-        
         if (isDataAvailableInDeep == true) {
           text = "No hay datos para este año";
           next_link_text = "ver siguiente año con datos";
@@ -359,14 +365,14 @@
       }
 
       function hideError() {
-        
+
         var $state = (state == "mapa") ? $("#map") : $("#graph");
         $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
       }
 
       function getNextAvailableYear(deep_level) {
         var data = availableData[deep_level][normalization[compare]];
-        
+
         if (data!=undefined) {
           if (year > data[data.length - 1]) {
             return data[data.length - 1];
@@ -382,7 +388,7 @@
 
         if (state == "mapa") {
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-          
+
           var next_year = getNextAvailableYear(deep_level);
           if (next_year!=year) {
             updateNewSliderValue(next_year);
@@ -390,12 +396,12 @@
           } else {
             peninsula.setZoom(6);
             var deep_level = getDeepLevelFromZoomLevel(6);
-            
+
             if (years_nodata[deep_level]==undefined) {
               var count = 0;
               clearInterval(deep_interval);
               deep_interval = setInterval(function(){
-                
+
                 if (years_nodata[deep_level]==undefined) {
                   count++;
                   if (count>5) {
@@ -411,11 +417,11 @@
               var next_year = getNextAvailableYear(deep_level);
               updateNewSliderValue(next_year);
             }
-            
+
             var next_year = getNextAvailableYear(deep_level);
             updateNewSliderValue(next_year);
           }
-          
+
 
         } else {
           updateNewSliderValue(getNextAvailableYear(deep));
@@ -617,6 +623,11 @@
       }
     } else {
       graphBubbleTooltip.hide();
+
+      if(comparewindow.isVisible()){
+        comparewindow.updateValues();
+        comparewindow.refreshChart();
+      }
       createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+new_year+".json");
     }
 
@@ -640,7 +651,9 @@
     if (compare=="ninguna") {
       $('div.wadusText').hide();
     } else {
-      $('div.wadusText p').html($('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text()+' <sup>['+year+']</sup>');
+      var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+      var wadus_text = (first_text=="Parados larga dur...")?'Parados larga duración':first_text;
+      $('div.wadusText p').html(wadus_text+' <sup>['+year+']</sup>');
       $('div.wadusText').show();
     }
   }

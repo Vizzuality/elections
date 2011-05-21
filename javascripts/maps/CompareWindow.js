@@ -258,7 +258,6 @@
 
 
       function fillData(info, region_name) {
-      console.log(region_name);
         me.secondData = info;
         me.createChart(info,false);
 
@@ -272,17 +271,18 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        $('div#comparewindow div#compare_region2 div.summary div.partido').each(function(i,ele){
+        $('div#comparewindow div#compare_region2 div.summary li.partido').each(function(i,ele){
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
         var deep_level;
 
-        if (region_name == null) {
+        if (region_name == undefined) {
           deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
         } else {
           deep_level = region_name;
         }
+        //console.log("region_name", deep_level);
 
         if (deep_level != "municipios") {
           me.drawTotalNumber(1, 2, me.secondData, false);
@@ -344,39 +344,42 @@
 
     CompareWindow.prototype.drawTotalNumber = function(party_id, region, info, animated) {
 
+      var me = this;
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_total'];
+      var clase     = "otros";
+      var partido   = "otros";
+
+      var $p = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')');
 
       if (party_id < 4) {
-
-        var partido = info.data[year][positions[id] +'_partido_name'];
+        partido = info.data[year][positions[id] +'_partido_name'];
         var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido) !== -1) {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass(partido_class);
-          this.oldPar = partido;
-        } else {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+')').addClass('par'+party_id);
-          this.oldPar = "par"+party_id;
-        }
-      } else {
-        partido = "otros";
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
       }
 
       if (animated == true) {
-        var old_percent = $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text();
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
 
-        if (old_percent != percent) {
-          $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
-            $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong, div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').fadeIn("slow");
-          });
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
         }
       } else {
-        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') strong').text(percent);
-        $('div#comparewindow div#compare_region'+region+' div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+        this.renderTotalNumber($p, id, percent, partido);
+      }
+    }
+
+    CompareWindow.prototype.renderTotalNumber = function($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
       }
     }
 
@@ -406,8 +409,24 @@
       }
     }
 
+    CompareWindow.prototype.refreshChart = function(){
+      if (this.firstData != null) {
+        this.createChart(this.firstData, true, true);
+      }
+    }
+
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
+
+
+        $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
+        $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):'')+this.firstData['data'][year]['censo_total']+' habitantes');
+
+        if (this.secondData.data != undefined) {
+          $('div#comparewindow div.bottom div.stats h4').text(parseFloat(this.secondData.data[year].percen_participacion).toFixed(0)+'% de participación');
+          $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):'')+this.secondData['data'][year]['censo_total']+' habitantes');
+        }
+
         this.updateTotalNumber();
         this.updateBars();
       }
@@ -429,9 +448,9 @@
 
     CompareWindow.prototype.updateBars = function() {
 
-        $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
-          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-        });
+      $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
+        $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+      });
 
       for (var i = 1; i <= 4; i++) {
         this.drawBar(i,"top", this.firstData);
@@ -502,7 +521,7 @@
 
       //Add top blocks
       _.each(normalization,function(ele,i){
-        if (info['data'][year][ele]!=undefined) {
+        if (info.data != undefined && info.data[year][ele]!=undefined) {
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
@@ -545,7 +564,7 @@
 
       // Add bottom blocks
       _.each(normalization,function(ele,i){
-        if (info['data'][year][ele]!=undefined) {
+        if (info.data != undefined && info.data[year][ele]!=undefined) {
           if ($('div.stats_slider div[alt="'+i+'"].down').length>0) {
             var src = createImage(info,ele,true);
 
