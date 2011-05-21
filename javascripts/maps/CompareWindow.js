@@ -520,7 +520,7 @@
       }
 
       $('div.stats_slider').width(_.size(normalization)*298);
-      var width = 130;
+      var width = 90;
 
 
       //Add top blocks
@@ -534,9 +534,7 @@
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
 
-          console.log(i, bar_width, max);
           if (bar_width > 100) bar_width = 100;
-          console.log(i, bar_width);
 
           if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
             $('div.stats_slider div[alt="'+i+'"].up').append(
@@ -671,10 +669,8 @@
       param = param.substring(0, param.length-1);
 
       if (second) {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x60&cht=ls&chco=FF6699&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,FF6699,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       } else {
-        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x80&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
+        return 'http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs='+(count*12)+'x60&cht=ls&chco=666666&chds=-'+max+','+max+'&chd=t:'+param+'&chdlp=b&chls=1&chm=o,666666,0,'+find_year+',8&chma=3,'+(new_no_data*12)+',3,3';
       }
     }
-
-
