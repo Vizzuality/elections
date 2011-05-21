@@ -14,13 +14,11 @@
     // Create the div tile
     var div = ownerDocument.createElement('div');
     div.setAttribute('class','tile');
-    //div.innerHTML= coord.x+"_"+coord.y+"_"+zoom;
-    //div.style.border = "1px solid yellow";
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
     div.style.height = this.tileSize.height + 'px';
     div.setAttribute('id',coord.x+'_'+coord.y+'_'+zoom);
-    
+
 
     // Remove hash key
     hash[coord.x+'_'+coord.y+'_'+zoom] = [];

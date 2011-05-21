@@ -61,7 +61,17 @@ else
 end
 
 # version path
+
+
+ 
 base_path     = "/mnt/www/data/tiles"
+
+#remove current as it screws up count
+begin
+FileUtils.rm "#{base_path}/current"
+rescue
+end
+#calculate version
 versions      = Dir["#{base_path}/*/"]
 v_dir         = versions.map{|x| x.split("/").last}
 v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
