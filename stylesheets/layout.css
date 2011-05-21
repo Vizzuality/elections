@@ -36,7 +36,7 @@ div#header div.secondContainer div.left form div.pac-container div.pac-selected 
 div#header span.aux_info {float:right; text-align: right; width:200px; height:24px; margin:22px 0 0 0; color: #FFFFFF;}
 div#header span.aux_info a{font: normal 12px "Officina Regular"; color: #FFFFFF;}
 
-div#header div.share {float:right; width:150px; height:24px; margin:20px 0 0 0;}
+div#header div.share {float:right; width:145px; height:24px; margin:20px 0 0 0;}
 div#header div.share div.outer_share {float:right; width:134px!important; height:24px; padding:0; margin:0; background:url('../images/share_bkg.png') no-repeat 0 0;}
 div#header div.share div.outer_share p {float:left; width:64px; height:19px; padding:5px 0 0 7px; font:normal 13px "Officina Bold"; color:white; text-shadow:0 1px #371530; line-height:13px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.share div.outer_share a.facebook {float:left; width:22px; height:22px; margin:1px 2px 0 0; background:url('../images/share_icons.png') no-repeat 2px 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0}
