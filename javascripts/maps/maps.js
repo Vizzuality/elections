@@ -71,10 +71,11 @@
 
 
 
-    /*Adding infowindow(over map), comparewindow(over dom) and explanationwindow(over dom) */
+    /*Adding infowindow(over map), comparewindow(over dom), explanationwindow(over dom) and aboutwindow(over dom)*/
     infowindow        = new InfoWindow(new google.maps.LatLng(0,0), peninsula);
     comparewindow     = new CompareWindow();
     explanationwindow = new ExplanationWindow();
+    aboutwindow 			= new AboutWindow();
 
     peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
 
