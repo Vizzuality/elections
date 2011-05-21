@@ -489,6 +489,7 @@
       ev.stopPropagation();
       ev.preventDefault();
       unSelectAllVariables();
+      removeDataBars();
     });
   }
 
@@ -538,6 +539,11 @@
       });
       drawNoDataBars();
     });
+  }
+  
+  function removeDataBars() {
+    $('span.slider_no_data_left').css({width:"0%"});
+    $('span.slider_no_data_right').css({width:"0%"});
   }
 
   function drawNoDataBars() {
