@@ -476,6 +476,15 @@ function initializeGraph() {
        <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
        <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
        </div>\
+       <div class="summary">\
+       <h4>Municipios en los que es el más votado...</h4>\
+       <ul>\
+         <li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>\
+         <li class="partido pp bar"><strong>00</strong><span>PP</span></li>\
+         <li class="partido iu bar"><strong>00</strong><span>IU</span></li>\
+         <li class="partido otros"><strong>00</strong><span>OTROS</span></li>\
+       </ul>\
+       </div>\
        <form>\
        <select class="text"></select>\
        </form>\
@@ -596,8 +605,14 @@ function initializeGraph() {
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.hide();
         });
-
-        $('div.graph_legend div.stats').show();
+        
+        if (deep=="municipios") {
+          $('div.graph_legend div.stats').show();
+          $('div.graph_legend div.summary').hide();
+        } else {
+          $('div.graph_legend div.stats').hide();
+          $('div.graph_legend div.summary').show();
+        }
 
         // Remove previous political style bars
         $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -613,11 +628,11 @@ function initializeGraph() {
 
         // Other
         bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-
         $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
         $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
         showLegend();
       } else {
+        $('div.graph_legend div.summary').show();
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
         $('div.graph_legend p.autonomy').show();
         $('div.graph_legend p.autonomy a').unbind('click');
