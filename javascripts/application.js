@@ -67,7 +67,7 @@
     }
     
     
-    if (route[4].length<1987 || route[4].length>2011) {
+    if (route[4]<1987 || route[4]>2011) {
       initializeApp();
       return false;
     }
