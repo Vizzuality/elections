@@ -274,6 +274,8 @@ div#comparewindow div div.stats div.bar {position:relative; float:left; width:au
 div#comparewindow div div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
 div#comparewindow div div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
+div#comparewindow div.bottom div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask_bottom.png') no-repeat left bottom; width:4px; height:6px;}
+div#comparewindow div.bottom div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask_bottom.png') no-repeat right bottom; width:4px; height:6px;}
 div#comparewindow div div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 
 div#comparewindow div div.summary {display:none; width:276px; height:75px; margin:8px 0 0 40px;}
