@@ -142,6 +142,15 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
       '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
       '    </div>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
       '  </div>'+
       '  <div class="bottom">'+
       '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
@@ -169,7 +178,6 @@ function initializeGraph() {
         var info_text = textInfoWindow[comparison_variable];
 
         var sign     = (selected_value < 0) ? "negative" : "positive";
-        //console.log(textInfoWindow, comparison_variable, normalization);
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
