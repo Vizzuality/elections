@@ -5,6 +5,7 @@
   var start_zoom = 6;
   var previous_zoom = 6;  // Hack for jump 10 zoom
   var canary_center = new google.maps.LatLng(28.3660940558243,-15.631496093750004);
+  var peninsula_center = new google.maps.LatLng(39.67660002390679,-3.6563984375000036);
   var projection = new MercatorProjection();
   var infowindow,comparewindow;
   var dragging = false;
@@ -20,10 +21,8 @@
   function initializeMap() {
 
     var peninsula_ops = {zoom: start_zoom,center: start_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,scrollwheel: false, minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']}};
-    var canary_ops = {zoom: 6,center: canary_center,disableDefaultUI: true,mapTypeId: google.maps.MapTypeId.ROADMAP,minZoom: 6,maxZoom: 12, mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'rtve']},draggable:false};
 
     peninsula = new google.maps.Map(document.getElementById("peninsula"),peninsula_ops);
-    canary_island = new google.maps.Map(document.getElementById("canary_island"),canary_ops);
 
 
     //Custom styled map - custom_map_style
@@ -31,8 +30,6 @@
     var rtveMapType = new google.maps.StyledMapType(custom_map_style, styledMapOptions);
     peninsula.mapTypes.set('rtve', rtveMapType);
     peninsula.setMapTypeId('rtve');
-    canary_island.mapTypes.set('rtve', rtveMapType);
-    canary_island.setMapTypeId('rtve');
 
 
     var mapChartOptions = {
@@ -71,7 +68,6 @@
        alt: ""
     });
     peninsula.overlayMapTypes.insertAt(1,political_parties);
-    canary_island.overlayMapTypes.setAt(0,political_parties);
 
 
 
@@ -97,11 +93,20 @@
 
 
     /*Go to canary islands*/
-    $('a.islas_canarias').click(function(ev){
+    $('a.islas_canarias').live('click',function(ev){
       ev.stopPropagation();
       ev.preventDefault();
       peninsula.setCenter(canary_center);
-      peninsula.setZoom(8);
+      peninsula.setZoom(7);
+      changeHash();
+    });
+    
+    $('a.peninsula').live('click',function(ev){
+      ev.stopPropagation();
+      ev.preventDefault();
+      peninsula.setCenter(peninsula_center);
+      peninsula.setZoom(6);
+      changeHash();
     });
 
     /*zoom controls*/
@@ -207,25 +212,11 @@
       }
     });
   }
-  
-  
-  // function simpleRefreshTiles() {
-  //   $('div#peninsula div').each(function(i,ele){
-  //     if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1 && $(ele).children('img').length>0) {
-  //       var old_image = $(ele).children('img');        
-  //       var old_url = old_image.attr('src');
-  //       var tm = old_url.split("/");
-  //       var old_process = tm[tm.length-2];
-  //       var new_url = old_url.replace('/'+old_process+'/','/'+procesos_electorales[year]+'/');
-  //       old_image.attr('src',new_url);
-  //     }
-  //   });
-  // }
+
 
 
   var loaded = false;
   function checkZoom(){
-    
     //close infowindow
     infowindow.hide();
 
@@ -256,12 +247,5 @@
       failCircle.reset();
     } else {
       loaded = true;
-    }
-    
-    //Show tiny Canarias map
-    if (peninsula.getZoom()==6) {
-      $('div.canary_island').css('z-index',2);
-    } else {
-      $('div.canary_island').css('z-index',0);
     }
   }

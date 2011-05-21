@@ -136,9 +136,9 @@ div#header div.years_content .ui-slider-horizontal .ui-state-active {cursor:move
 div.tabs {position:absolute; left:0; right:0; top:223px; bottom:0; width:100%;}
 div.tabs div#map {position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background:#9ab5cc; z-index:10;}
 div.tabs div#map div#peninsula {float:left; width:100%; height:100%; z-index:1;}
-div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:2;}
-div.tabs div#map div.canary_island a.islas_canarias {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:url('../images/canary_bkg.png') repeat 0 0; z-index:10; text-decoration:none;}
-div.tabs div#map div.canary_island:hover a.islas_canarias {display:block;}
+div.tabs div#map div.canary_island {position:absolute; right:0; bottom:0; width:300px; height:160px; border-top:1px solid black; border-left:1px solid black; border-right:none; z-index:0; background:url('../images/spain.jpg') no-repeat 0 0;}
+div.tabs div#map div.canary_island a {position:absolute; top:0; left:0; right:0; bottom:0; display:none; padding:72px 0 0 0; text-align:center; font:bold 16px Arial; color:white; background:url('../images/canary_bkg.png') repeat 0 0; z-index:10; text-decoration:none;}
+div.tabs div#map div.canary_island:hover a {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 
@@ -354,7 +354,8 @@ div#appInfo div.options {position:relative; float:left; width:190px; height:450p
 div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.jpg') no-repeat 0 0;}
 div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
 div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
-div#appInfo div.options ul {width:100%; padding:10px 0 0 0;}
+div#appInfo div.options h4 a{color:#999999; text-decoration: none;}
+div#appInfo div.options ul {width:100%; padding:10px 0 0 0; display: none;}
 div#appInfo div.options ul li {width:100%; padding:0 0 8px;}
 div#appInfo div.options ul li a {font:normal 13px Arial; color:#8B1F73; text-decoration:none;}
 div#appInfo div.options ul li a:hover {color:#333333;}
@@ -365,9 +366,12 @@ div#appInfo div.explain h1 {padding:0 0 5px 0; font:normal 17px "Officina Bold";
 div#appInfo div.explain p {padding:10px 0 0 0; font:normal 13px Arial; color:#666666;}
 div#appInfo div.explain p a {color:#8C1F74;}
 div#appInfo div.explain p.rango {padding: 0 0 10px 0; font:normal 13px Arial; color:#999999}
+div#appInfo div.explain img.chart {margin: 20px 0 0 0; border: 1px solid white; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#appInfo div.explain div.chartCurrentLabel {position: relative; float: right; top: -70px; width: 150px; text-align: right; margin: 0 20px 0 0;}
+div#appInfo div.explain div.chartCurrentLabel span.value {width: 100%; text-align: right; font: normal 36px "Officina Bold"; color: #363636;}
+div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align: right; font: normal 13px "Arial"; color: #363636;}
 
 /*GRAPH*/
-
 div#graph span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#graph span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
 
