@@ -245,7 +245,7 @@ var textInfoWindow = {
   },
   edad_media_normalizado : {
     before_negative: "Su población es ",
-    after_negative: " años más jóven que la media nacional <strong>(<%= media %> años)</strong>.",
+    after_negative: " años más joven que la media nacional <strong>(<%= media %> años)</strong>.",
     before_positive: "Su población es ",
     after_positive: " años más mayor que la media nacional <strong>(<%= media %> años)</strong>."
   },
@@ -277,13 +277,13 @@ var textInfoWindow = {
     before_negative: "Un ",
     after_negative: "<strong>%</strong> de la población de aquí, tiene acceso a internet.",
     before_positive: "Un ",
-    after_positive: "<strong>%</strong> de la población de aquí, tiene acceso a internet.",
+    after_positive: "<strong>%</strong> de la población de aquí, tiene acceso a internet."
   },
   audiencia_diaria_tv_normalizado : {
     before_negative: "Un ",
     after_negative: "<strong>%</strong> de los habitantes de aquí, ve la TV.",
     before_positive: "Un ",
-    after_positive: "<strong>%</strong> de los habitantes de aquí, ve la TV.",
+    after_positive: "<strong>%</strong> de los habitantes de aquí, ve la TV."
   },
   prensa_diaria_normalizado : {
     before_negative: "Un ",
