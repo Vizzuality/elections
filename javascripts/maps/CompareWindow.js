@@ -196,7 +196,7 @@
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
 
-        if (this.deep_level == "municipios") {
+        if (info.provincia != null) {
           $('div#comparewindow div.top div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
         }
 
@@ -209,7 +209,7 @@
           $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
         });
 
-        if (this.deep_level == "municipios") {
+        if (info.provincia != null) {
           this.drawTopBar(1, info);
           this.drawTopBar(2, info);
           this.drawTopBar(3, info);
@@ -263,7 +263,11 @@
 
         $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
-        $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+
+
+        if (info.provincia != null) {
+          $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
+        }
 
 
         // Remove previous political style bars
@@ -284,7 +288,7 @@
         }
         //console.log("region_name", deep_level);
 
-        if (deep_level != "municipios") {
+        if (info.provincia == null) {
           me.drawTotalNumber(1, 2, me.secondData, false);
           me.drawTotalNumber(2, 2, me.secondData, false);
           me.drawTotalNumber(3, 2, me.secondData, false);
