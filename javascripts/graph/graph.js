@@ -767,14 +767,14 @@ function goDeeper(url){
 
   var url_split_length = url_split.length-1;
   var compare_var      = compare.replace(/ /g,'_');
-  var length           = url_split[url_split_length].split(compare_var)[0].length;
+  var length           = url_split[url_split_length].split(normalization[compare])[0].length;
 
-  name = url_split[url_split_length].split(compare_var)[0].substring(0, length-1);
+  name = url_split[url_split_length].split(normalization[compare])[0].substring(0, length-1);
 
   // console.log("url_split", url_split);
   // console.log("deep", deep);
   // console.log("name", name);
-  // console.log("compare", compare);
+  // console.log("compare", normalization[compare], normalization[compare], compare);
 
   graphLegend.hideError();
   drawNoDataBars();
@@ -791,7 +791,6 @@ function goDeeper(url){
 }
 
 function destroyBubble(b, url){
-  console.log('destroyingBubble', b, url);
   (parseInt($("#"+b).css("left")) < offsetScreenX) ? displacementX = "-=30px" : displacementX = "+=30px";
   (parseInt($("#"+b).css("top")) < offsetScreenY) ? displacementY = "-=30px" : displacementY = "+=30px";
   $("#"+key).animate({
