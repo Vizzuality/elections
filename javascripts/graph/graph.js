@@ -467,7 +467,6 @@ function initializeGraph() {
        <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
        </div>\
        <form>\
-       <select class="text"></select>\
        </form>\
        <div class="search_error">\
        <h5>Ops! No hemos podido encontrar lo que buscas</h5>\
