@@ -559,12 +559,12 @@ function initializeGraph() {
 
       if (names.length > 0) {
         if (names.length == 1) {
-          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[0].replace(/_/g,' ')).show();
+          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + normalizeRegionName(names[0])).show();
           $('div.graph_legend p.autonomy a').text('Volver a España')
           $('div.graph_legend p.autonomy a').attr('href','#ver_España');
         } else {
-          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + names[1].replace(/_/g,' ')).show();
-          $('div.graph_legend p.autonomy a').text('Volver a ' + names[0].replace(/_/g,' '));
+          $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' ' + normalizeRegionName(names[1])).show();
+          $('div.graph_legend p.autonomy a').text('Volver a ' + normalizeRegionName(names[0]));
           $('div.graph_legend p.autonomy a').attr('href','#ver_'+names[0].replace(/_/g,' '));
         }
 
@@ -662,7 +662,7 @@ function createBubbles(url){
     if (data == null) {
       createdBubbles = false;
       failCircle.show();
-      console.log("404", url);
+      //console.log("404", url);
       hideGraphLoader();
       return;
     }
@@ -711,7 +711,7 @@ function updateBubbles(url){
     if (data == null) {
       failCircle.show();
       hideGraphLoader();
-      //console.log("404", url);
+      console.log("404", url);
       return;
     }
 
