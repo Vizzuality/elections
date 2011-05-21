@@ -35,7 +35,7 @@ var normalizedRegions =  {
   'comunidad_valenciana': 'Comunidad Valenciana',
   'alicante': 'Alicante',
   'valencia': 'Valencia',
-  'castellón': 'Castellón',
+  'castellon': 'Castellón',
   'galicia': 'Galicia',
   'a_coruna': 'A Coruña',
   'pontevedra': 'Pontevedra',
