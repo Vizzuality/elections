@@ -6,3 +6,5 @@ do
 	echo $id
 	ruby elections-day-municipalities.rb $id
 done
+cat inserts*.log > laviniadata.sql
+rm inserts*.log

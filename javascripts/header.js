@@ -84,7 +84,8 @@
         }
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
-
+        $('body').unbind('click');
+        
         $(this).addClass('selected');
         changeHash();
       }
@@ -100,6 +101,12 @@
       $(this).attr('href','#stop');
       animation = true;
       checkStartYear();
+      $('body').click(function(ev){
+        $('a.stop').removeClass('stop').addClass('play');
+        $('a.play').attr('href','#play');
+        $('body').unbind('click');
+        clearInterval(animate_interval);
+      })
     });
 
     // Stop animation process
@@ -108,6 +115,7 @@
       ev.preventDefault();
       animation = false;
       clearInterval(animate_interval);
+      $('body').unbind('click');
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
     });
@@ -524,6 +532,7 @@
       $('a.action').removeClass('stop').addClass('play');
       $('a.action.play').attr('href','#play');
       animation = false;
+      $('body').unbind('click');
       clearInterval(animate_interval);
       return false;
     } else {

@@ -1,6 +1,6 @@
 #encoding: UTF-8
 require "rubygems"
-require "ruby-debug"
+#require "ruby-debug"
 require "bundler/setup"
 require "csv"
 require "cartodb-rb-client"
