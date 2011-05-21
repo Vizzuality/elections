@@ -1,5 +1,5 @@
 function normalizePartyName(name) {
-  if (name === undefined) {
+  if (name === null) {
     return;
   }
   var slashPos = name.indexOf("/");
