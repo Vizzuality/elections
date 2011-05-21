@@ -521,7 +521,7 @@
 
       //Add top blocks
       _.each(normalization,function(ele,i){
-        if (info['data'][year][ele]!=undefined) {
+        if (info.data != undefined && info.data[year][ele]!=undefined) {
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
@@ -564,7 +564,7 @@
 
       // Add bottom blocks
       _.each(normalization,function(ele,i){
-        if (info['data'][year][ele]!=undefined) {
+        if (info.data != undefined && info.data[year][ele]!=undefined) {
           if ($('div.stats_slider div[alt="'+i+'"].down').length>0) {
             var src = createImage(info,ele,true);
 
