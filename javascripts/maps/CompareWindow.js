@@ -409,8 +409,15 @@
       }
     }
 
+    CompareWindow.prototype.refreshChart = function(){
+      if (this.firstData != null) {
+        this.createChart(this.firstData, true, true);
+      }
+    }
+
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
+
 
         $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
         $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):'')+this.firstData['data'][year]['censo_total']+' habitantes');
@@ -441,9 +448,9 @@
 
     CompareWindow.prototype.updateBars = function() {
 
-        $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
-          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-        });
+      $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
+        $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+      });
 
       for (var i = 1; i <= 4; i++) {
         this.drawBar(i,"top", this.firstData);
