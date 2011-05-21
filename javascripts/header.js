@@ -71,6 +71,11 @@
           $("#graph").show();
           drawNoDataBars();
 
+          // reset to the higher level
+          name = "España";
+          deep = "autonomias";
+          changeHash();
+
           // Hide the legend if this is visible...
           graphLegend.hideFast();
           restartGraph();
