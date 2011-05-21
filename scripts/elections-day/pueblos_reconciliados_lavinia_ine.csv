@@ -1596,7 +1596,7 @@ Principado de Asturias,Asturias,Yernes y Tameza,false,false,yernes-y-tameza,astu
 Illes balears,,,true,false,illes-balears,illes-balears,,,
 Illes balears,Illes Balears,,false,true,illes-balears,illes-balears-illes-balears,,,
 Illes balears,Illes Balears,Alaró,false,false,alaro,illes-balears-illes-balears-alaro,144,1,7
-Illes balears,Illes Balears,Alaior,false,false,alaior,illes-balears-illes-balears-alaior,,,
+Illes balears,Illes Balears,Alaior,false,false,alaior,illes-balears-illes-balears-alaior,8178,2,7
 Illes balears,Illes Balears,Alcúdia,false,false,alcudia,illes-balears-illes-balears-alcudia,290,3,7
 Illes balears,Illes Balears,Algaida,false,false,algaida,illes-balears-illes-balears-algaida,389,4,7
 Illes balears,Illes Balears,Andratx,false,false,andratx,illes-balears-illes-balears-andratx,588,5,7
@@ -1617,7 +1617,7 @@ Illes balears,Illes Balears,Escorca,false,false,escorca,illes-balears-illes-bale
 Illes balears,Illes Balears,Esporles,false,false,esporles,illes-balears-illes-balears-esporles,2696,20,7
 Illes balears,Illes Balears,Estellencs,false,false,estellencs,illes-balears-illes-balears-estellencs,2708,21,7
 Illes balears,Illes Balears,Felanitx,false,false,felanitx,illes-balears-illes-balears-felanitx,2762,22,7
-Illes balears,Illes Balears,Ferreries,false,false,ferreries,illes-balears-illes-balears-ferreries,,,
+Illes balears,Illes Balears,Ferreries,false,false,ferreries,illes-balears-illes-balears-ferreries,8179,23,7
 Illes balears,Illes Balears,Formentera,false,false,formentera,illes-balears-illes-balears-formentera,2837,24,7
 Illes balears,Illes Balears,Fornalutx,false,false,fornalutx,illes-balears-illes-balears-fornalutx,2840,25,7
 Illes balears,Illes Balears,Eivissa,false,false,eivissa,illes-balears-illes-balears-eivissa,2574,26,7
@@ -1626,12 +1626,12 @@ Illes balears,Illes Balears,Lloret de Vistalegre,false,false,lloret-de-vistalegr
 Illes balears,Illes Balears,Lloseta,false,false,lloseta,illes-balears-illes-balears-lloseta,3838,29,7
 Illes balears,Illes Balears,Llubí,false,false,llubi,illes-balears-illes-balears-llubi,3840,30,7
 Illes balears,Illes Balears,Llucmajor,false,false,llucmajor,illes-balears-illes-balears-llucmajor,3842,31,7
-Illes balears,Illes Balears,Maó,false,false,mao,illes-balears-illes-balears-mao,,,
+Illes balears,Illes Balears,Maó,false,false,mao,illes-balears-illes-balears-mao,8180,32,7
 Illes balears,Illes Balears,Manacor,false,false,manacor,illes-balears-illes-balears-manacor,4000,33,7
 Illes balears,Illes Balears,Mancor de la Vall,false,false,mancor-de-la-vall,illes-balears-illes-balears-mancor-de-la-vall,4008,34,7
 Illes balears,Illes Balears,Maria de la Salut,false,false,maria-de-la-salut,illes-balears-illes-balears-maria-de-la-salut,4059,35,7
 Illes balears,Illes Balears,Marratxí,false,false,marratxi,illes-balears-illes-balears-marratxi,4071,36,7
-Illes balears,Illes Balears,Mercadal (Es),false,false,mercadal-es,illes-balears-illes-balears-mercadal-es,,,
+Illes balears,Illes Balears,Mercadal (Es),false,false,mercadal-es,illes-balears-illes-balears-mercadal-es,8175,37,7
 Illes balears,Illes Balears,Montuïri,false,false,montuiri,illes-balears-illes-balears-montuiri,4444,38,7
 Illes balears,Illes Balears,Muro,false,false,muro,illes-balears-illes-balears-muro,4564,39,7
 Illes balears,Illes Balears,Palma,false,false,palma,illes-balears-illes-balears-palma,4992,40,7
@@ -1646,7 +1646,7 @@ Illes balears,Illes Balears,Sant Josep de sa Talaia,false,false,sant-josep-de-sa
 Illes balears,Illes Balears,Sant Joan,false,false,sant-joan,illes-balears-illes-balears-sant-joan,6372,49,7
 Illes balears,Illes Balears,Sant Joan de Labritja,false,false,sant-joan-de-labritja,illes-balears-illes-balears-sant-joan-de-labritja,6374,50,7
 Illes balears,Illes Balears,Sant Llorenç des Cardassar,false,false,sant-llorenc-des-cardassar,illes-balears-illes-balears-sant-llorenc-des-cardassar,6391,51,7
-Illes balears,Illes Balears,Sant Lluís,false,false,sant-lluis,illes-balears-illes-balears-sant-lluis,,,
+Illes balears,Illes Balears,Sant Lluís,false,false,sant-lluis,illes-balears-illes-balears-sant-lluis,8177,52,7
 Illes balears,Illes Balears,Santa Eugènia,false,false,santa-eugenia,illes-balears-illes-balears-santa-eugenia,6226,53,7
 Illes balears,Illes Balears,Santa Eulalia del Río,false,false,santa-eulalia-del-rio,illes-balears-illes-balears-santa-eulalia-del-rio,6231,54,7
 Illes balears,Illes Balears,Santa Margalida,false,false,santa-margalida,illes-balears-illes-balears-santa-margalida,6245,55,7
@@ -1658,10 +1658,10 @@ Illes balears,Illes Balears,Sineu,false,false,sineu,illes-balears-illes-balears-
 Illes balears,Illes Balears,Sóller,false,false,soller,illes-balears-illes-balears-soller,6627,61,7
 Illes balears,Illes Balears,Son Servera,false,false,son-servera,illes-balears-illes-balears-son-servera,6639,62,7
 Illes balears,Illes Balears,Valldemossa,false,false,valldemossa,illes-balears-illes-balears-valldemossa,7333,63,7
-Illes balears,Illes Balears,Castell (Es),false,false,castell-es,illes-balears-illes-balears-castell-es,,,
+Illes balears,Illes Balears,Castell (Es),false,false,castell-es,illes-balears-illes-balears-castell-es,8181,64,7
 Illes balears,Illes Balears,Vilafranca de Bonany,false,false,vilafranca-de-bonany,illes-balears-illes-balears-vilafranca-de-bonany,7544,65,7
 Illes balears,Illes Balears,Ariany,false,false,ariany,illes-balears-illes-balears-ariany,735,901,7
-Illes balears,Illes Balears,Migjorn Gran (Es),false,false,migjorn-gran-es,illes-balears-illes-balears-migjorn-gran-es,,,
+Illes balears,Illes Balears,Migjorn Gran (Es),false,false,migjorn-gran-es,illes-balears-illes-balears-migjorn-gran-es,8176,902,7
 Canarias,,,true,false,canarias,canarias,,,
 Canarias,Las Palmas,,false,true,las-palmas,canarias-las-palmas,,,
 Canarias,Las Palmas,Agaete,false,false,agaete,canarias-las-palmas-agaete,64,1,35
