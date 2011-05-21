@@ -412,13 +412,14 @@
             failCircle.hide();
           } else {
             peninsula.setZoom(6);
-            var deep_level = getDeepLevelFromZoomLevel(6);
 
+            var deep_level = getDeepLevelFromZoomLevel(6);
+            
             if (years_nodata[deep_level]==undefined) {
               var count = 0;
               clearInterval(deep_interval);
               deep_interval = setInterval(function(){
-
+            
                 if (years_nodata[deep_level]==undefined) {
                   count++;
                   if (count>5) {
@@ -426,17 +427,18 @@
                   }
                 } else {
                   var next_year = getNextAvailableYear(deep_level);
-                  updateNewSliderValue(next_year);
+                  if (next_year!=year && next_year<2012) {
+                    updateNewSliderValue(next_year,year);
+                  }
                   clearInterval(deep_interval);
                 }
               },500);
             } else {
               var next_year = getNextAvailableYear(deep_level);
-              updateNewSliderValue(next_year);
+              if (next_year!=year && next_year<2012) {
+                updateNewSliderValue(next_year,year);
+              }
             }
-
-            var next_year = getNextAvailableYear(deep_level);
-            updateNewSliderValue(next_year);
           }
 
 
