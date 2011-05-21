@@ -177,7 +177,7 @@ div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; he
 
 
 /*WADUS TEXT*/
-div.wadusText{ position:absolute; top:0; left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index: 9; }
+div.wadusText{ position:absolute; top:0; left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index:105; }
 div.wadusText p.title{font:normal 25px "Officina Bold"; color:#FFF; margin: 12px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
 div.wadusText p.title sup{font:normal 11px "Officina Bold"; color:#FFF;}
 div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF; text-decoration: underline; margin: 2px 0 0 75px; text-shadow: #000000 0px 0px 7px;}
@@ -185,8 +185,7 @@ div.wadusText a {display:block; font:normal 13px "Officina Regular"; color:#FFF;
 /*MAP CONTROLS*/
 div#map span.loader {position:absolute; top:10px; left:50%; width:113px; height:32px; margin:0 0 0 -56px; background:url('../images/loading_bkg.png') no-repeat 0 0; z-index:10;}
 div#map span.loader p {margin:8px 0 0 9px; padding:0 0 0 22px; background:url('../images/ajax-loader.gif') no-repeat 0 0; font:normal 15px "Officina Regular"; color:#000000;}
-div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('../images/zoom_control.png') no-repeat 0 0; z-index:10; overflow: hidden;
-  text-indent:-9999%; font-size:0; display:block; line-height:0;}
+div#zoom_control {position:absolute; top:10px; left:9px; width:58px; height:259px; background:url('../images/zoom_control.png') no-repeat 0 0; z-index:110; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div#zoom_control a.zoom_in {position:absolute; top:8px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat -34px 0; z-index:15;}
 div#zoom_control a.zoom_out {position:absolute; bottom:16px; left:12px; width:34px; height:32px; background:url('../images/zooms.png') no-repeat 0 0; z-index:15;}
 div#zoom_control a.zoom_in:hover {background-position:-34px -32px;}
@@ -260,6 +259,7 @@ div.infowindow div.bottom a.compare,div#infowindow div.bottom a.compare {float:r
 div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:hover {background-position:0 -26px; color:black; cursor:pointer;}
 div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
+
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}
