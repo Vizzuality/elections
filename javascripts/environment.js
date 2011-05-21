@@ -21,7 +21,7 @@
   //Go to IE6 page
   if (ua.msie) {
     if (ua.version.slice(0,3) < '7.0') {
-      window.location.href = "../ie6.html";
+      window.location.href = "http://cartodb.com/";
     } else {
       ie_ = true;
     }
