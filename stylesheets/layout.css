@@ -168,12 +168,12 @@ div.tabs div.message p small {color: #666666; font-size:15px!important;}
 div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 
 /*graph*/
-div.bubbleContainer{position:absolute;background:transparent;height:70px;width:70px;top:100px;left:100px; overflow:visible;}
+div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:0px;left:0px;-moz-border-radius:50px;-webkit-border-radius:50px;}
-div.innerBubble{position:absolute;background:#000000;border:none;height:10px;width:10px;top:20px;left:20px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
-div.bubbleContainer p.region_name {position:absolute; display:block; top:15px; left:0; width:70px; margin:0 0 0 0; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; 
-  filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333); z-index:100; background:red;}
+div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
+div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
+div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; text-align:center; z-index:100
+  filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333); z-index:100;}
 .dark_shadow{text-shadow:0 1px white; text-shadow:black 1px 1px 3px,black -1px -1px 3px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
 .white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
@@ -320,7 +320,7 @@ div.compare_graph div.stats_slider div.block span.name.second {bottom:10px; back
 div.compare_graph div.stats_slider div.block span.error {position:absolute; left:118px; font:normal 12px "Officina Regular"; color:#999999;}
 div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}
-div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:10px; margin:-40px 0 0 -140px; z-index:0;}
+div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; right:10px; margin:-30px 0 0 -140px; z-index:0;}
 /*end compare slider*/
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('../images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}
