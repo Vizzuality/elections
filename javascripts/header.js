@@ -85,7 +85,7 @@
         // Stop the slider animation if it is playing
         clearInterval(animate_interval);
         $('body').unbind('click');
-        
+
         $(this).addClass('selected');
         changeHash();
       }
@@ -314,9 +314,7 @@
       $("div.fail").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        if (state == "mapa") {
-          hideError();
-        }
+        hideError();
       });
 
       $("div.fail a.why").live("click", function(ev) {
@@ -345,6 +343,7 @@
         } else {
           var $state = $("#graph");
           var deep_level = deep;
+          var isDataAvailableInDeep = true;
         }
 
         if (availableData[deep_level][normalization[compare]] == undefined) {
@@ -357,8 +356,13 @@
           text = "No hay datos para este año";
           next_link_text = "ver siguiente año con datos";
         } else {
-          text = "No hay datos a este nivel de zoom";
-          next_link_text = "ver siguiente nivel con datos";
+          if (state == "mapa") {
+            text = "No hay datos a este nivel de zoom";
+            next_link_text = "ver siguiente nivel con datos";
+          } else {
+            text = "No hay datos a este nivel de zoom";
+            next_link_text = "ir al nivel superior";
+          }
         }
 
         $state.find('div.content span.message').html(text);
@@ -368,11 +372,13 @@
       function showError() {
         if (!showed) {
           showed = true;
+
           if (state == "mapa") {
             updateContent();
             var $state = $("#map");
             $("div.fail").css('height','auto');
           } else {
+            updateContent();
             var $state = $("#graph");
             var graph_height = $('div#graph_container').height();
             var tabs_height = $('div.tabs').height();
@@ -416,8 +422,33 @@
       }
 
       function goToNextYear() {
+        if (state == "grafico") {
+          var next_year;
 
-        if (state == "mapa") {
+          if (availableData[deep][normalization[compare]]) { // if there's data in the current level, pick that year
+            next_year = getNextAvailableYear(deep);
+          } else { // ... if not, go to the higher level
+            name = "España";
+            deep = "autonomias";
+            var data = availableData[deep][normalization[compare]];
+
+            if (data != undefined) { // if there's data in the upper level, let's find out where
+              next_year = _.detect(data, function(num){ return year <= num; });
+
+              if (next_year == undefined) {
+                next_year = _.detect(data, function(num){ return 2010 >= num; });
+              }
+            } else {
+              next_year = getNextAvailableYear(deep);
+            }
+          }
+
+          changeHash();
+          updateNewSliderValue(next_year, year);
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+next_year+".json");
+          drawNoDataBars();
+
+        } else if (state == "mapa") {
           var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
 
           var next_year = getNextAvailableYear(deep_level);
@@ -428,12 +459,12 @@
             peninsula.setZoom(6);
 
             var deep_level = getDeepLevelFromZoomLevel(6);
-            
+
             if (years_nodata[deep_level]==undefined) {
               var count = 0;
               clearInterval(deep_interval);
               deep_interval = setInterval(function(){
-            
+
                 if (years_nodata[deep_level]==undefined) {
                   count++;
                   if (count>5) {
@@ -454,11 +485,6 @@
               }
             }
           }
-
-
-        } else {
-          updateNewSliderValue(getNextAvailableYear(deep));
-          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
       }
 
@@ -557,7 +583,7 @@
       drawNoDataBars();
     });
   }
-  
+
   function removeDataBars() {
     $('span.slider_no_data_left').css({width:"0%"});
     $('span.slider_no_data_right').css({width:"0%"});

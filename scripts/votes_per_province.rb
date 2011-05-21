@@ -136,7 +136,7 @@ module VotesPerProvinceImporter
     end
 
     puts 'Updating votaciones_por_provincia...'
-    # CartoDB::Connection.query sql.join(';')
+    CartoDB::Connection.query sql.join(';')
     puts '... done!'
   end
 
