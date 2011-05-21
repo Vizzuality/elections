@@ -142,6 +142,15 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
       '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
       '    </div>'+
+            '<div class="summary">'+
+            '<h4>Municipios en los que es el más votado...</h4>'+
+            '<ul>'+
+              '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
+            '</ul>'+
+            '</div>'+
       '  </div>'+
       '  <div class="bottom">'+
       '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
@@ -169,7 +178,6 @@ function initializeGraph() {
         var info_text = textInfoWindow[comparison_variable];
 
         var sign     = (selected_value < 0) ? "negative" : "positive";
-        //console.log(textInfoWindow, comparison_variable, normalization);
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
@@ -250,6 +258,39 @@ function initializeGraph() {
         $p.find('p').text(party_name +' ('+(value)+'%)');
       }
 
+    function renderTotalNumber($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
+      }
+    }
+
+    function drawTotalNumber(party_id, info, animated) {
+      var me        = this;
+      var id        = party_id - 1;
+      var clase     = "otros";
+      var $p = $('div#graph_infowindow div.summary li.partido:eq('+id+')');
+      var partido;
+      var percent;
+
+      if (party_id < 4) {
+        partido   = info['partido_'+party_id][0];
+        percent   = info['partido_'+party_id][1];
+
+        var partido_class = normalizePartyName(partido);
+
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
+      } else {
+        partido   = "otros";
+        percent   = info['resto_partidos_percent'];
+      }
+        renderTotalNumber($p, id, percent, partido);
+    }
+
       function changeData(left,top,data_id) {
         if ($("#graph_infowindow").attr('alt') == data_id && isOpen()) {
           return false;
@@ -282,14 +323,35 @@ function initializeGraph() {
         $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
         $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
-        for (var i = 1; i <= 3; i++) {
-          drawPartyBar(data_id, i);
-        }
+        if (deep == "municipios") {
 
-        // Other political party
-        bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-        $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-        $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats').show();
+          $('div#graph_infowindow div.summary').hide();
+
+          for (var i = 1; i <= 3; i++) {
+            drawPartyBar(data_id, i);
+          }
+
+          // Other political party
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
+          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
+          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+
+        } else {
+          $('div#graph_infowindow div.stats').hide();
+          $('div#graph_infowindow div.summary').show();
+
+          $('div#graph_infowindow div.summary li.partido').each(function(i,ele){
+            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+          });
+
+          drawTotalNumber(1, valuesHash[data_id], false);
+          drawTotalNumber(2, valuesHash[data_id], false);
+          drawTotalNumber(3, valuesHash[data_id], false);
+          drawTotalNumber(4, valuesHash[data_id], false);
+
+
+        }
 
         var data = valuesHash[data_id].evolution.split(",");
         var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -476,6 +538,15 @@ function initializeGraph() {
        <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
        <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
        </div>\
+       <div class="summary">\
+       <h4>Municipios en los que es el más votado...</h4>\
+       <ul>\
+         <li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>\
+         <li class="partido pp bar"><strong>00</strong><span>PP</span></li>\
+         <li class="partido iu bar"><strong>00</strong><span>IU</span></li>\
+         <li class="partido otros"><strong>00</strong><span>OTROS</span></li>\
+       </ul>\
+       </div>\
        <form>\
        <select class="text"></select>\
        </form>\
@@ -597,7 +668,13 @@ function initializeGraph() {
           graphBubbleInfowindow.hide();
         });
 
-        $('div.graph_legend div.stats').show();
+        if (deep=="municipios") {
+          $('div.graph_legend div.stats').show();
+          $('div.graph_legend div.summary').hide();
+        } else {
+          $('div.graph_legend div.stats').hide();
+          $('div.graph_legend div.summary').show();
+        }
 
         // Remove previous political style bars
         $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -613,11 +690,11 @@ function initializeGraph() {
 
         // Other
         bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-
         $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
         $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
         showLegend();
       } else {
+        $('div.graph_legend div.summary').show();
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
         $('div.graph_legend p.autonomy').show();
         $('div.graph_legend p.autonomy a').unbind('click');
