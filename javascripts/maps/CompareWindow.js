@@ -534,6 +534,10 @@
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
 
+          console.log(i, bar_width, max);
+          if (bar_width > 100) bar_width = 100;
+          console.log(i, bar_width);
+
           if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
             $('div.stats_slider div[alt="'+i+'"].up').append(
               '<span style="width:'+bar_width+'px" class="bar '+((info['data'][year][ele]>0)?'positive':'negative')+' second"></span>'+
