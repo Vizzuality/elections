@@ -47,10 +47,10 @@
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
             '<ul>'+
-              '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
-              '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
-              '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
+              '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
+              '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
+              '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
+              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
             '</ul>'+
             '</div>'+
           '</div>'+
@@ -115,38 +115,41 @@
     };
 
     InfoWindow.prototype.drawTotalNumber = function(party_id, info, animated) {
-
+      var me        = this;
       var id        = party_id - 1;
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_total'];
+      var partido   = "otros";
+      var clase     = "otros";
+      var $p = $('div#infowindow div.summary li.partido:eq('+id+')');
 
       if (party_id < 4) {
-        var partido = info.data[year][positions[id] +'_partido_name'];
+        partido = info.data[year][positions[id] +'_partido_name'];
         var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido) !== -1) {
-          $('div#infowindow div.summary li.partido:eq('+id+')').addClass(partido_class);
-        } else {
-          $('div#infowindow div.summary li.partido:eq('+id+')').addClass('par'+party_id);
-        }
-      } else {
-        partido = "otros";
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
       }
 
       if (animated == true) {
-        var old_percent = $('div#infowindow div.summary li.partido:eq('+id+') strong').text();
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
 
-      if (old_percent != percent) {
-        $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeOut("slow", function() {
-          $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
-          console.log("Partido", partido);
-          $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
-          $('div#infowindow div.summary li.partido:eq('+id+') strong, div#infowindow div.summary li.partido:eq('+id+') span').fadeIn("slow");
-        });
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
         }
       } else {
-        $('div#infowindow div.summary li.partido:eq('+id+') strong').text(percent);
-        $('div#infowindow div.summary li.partido:eq('+id+') span').text(partido.toUpperCase());
+        this.renderTotalNumber($p, id, percent, partido);
+      }
+    }
+
+    InfoWindow.prototype.renderTotalNumber = function($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
       }
     }
 
@@ -154,17 +157,16 @@
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
+      var partido = "otros";
 
       if (party_id < 4) {
-        var partido = info['data'][year][positions[id] +'_partido_name'];
+        partido = info['data'][year][positions[id] +'_partido_name'];
         var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido) !== -1) {
+        if (_.indexOf(parties, partido_class) !== -1) {
           $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido_class);
-          this.oldPar = partido;
         } else {
           $('div#infowindow div.stats div.partido:eq('+id+')').addClass('par'+party_id);
-          this.oldPar = "par"+party_id;
         }
         bar_width = normalizeBarWidth((info['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
@@ -208,18 +210,19 @@
         });
 
         if (this.deep_level == "municipios") {
-          this.drawPartyBar(1, info);
-          this.drawPartyBar(2, info);
-          this.drawPartyBar(3, info);
-          this.drawPartyBar(4, info);
+
+          for (var i = 1; i <= 4; i++) {
+            this.drawPartyBar(i, info);
+          }
+
           $('div#infowindow div.stats').show();
           $('div#infowindow div.summary').hide();
         }
         else {
-          this.drawTotalNumber(1, info);
-          this.drawTotalNumber(2, info);
-          this.drawTotalNumber(3, info);
-          this.drawTotalNumber(4, info);
+          for (var i = 1; i <= 4; i++) {
+            this.drawTotalNumber(i, info);
+          }
+
           $('div#infowindow div.summary').show();
           $('div#infowindow div.stats').hide();
         }
@@ -240,7 +243,6 @@
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
 
-        console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
           var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
@@ -313,7 +315,7 @@
             opacity: 1
           }, 250, 'swing');
         }
-        
+
 
       }
     }
