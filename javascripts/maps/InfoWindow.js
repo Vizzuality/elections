@@ -243,7 +243,6 @@
         var info_text = textInfoWindow[comparison_variable];
         var sign = (selected_value < 0) ? "negative" : "positive";
 
-        console.log(info_text, normalization, compare, normalization[compare]);
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
           var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);

@@ -632,7 +632,6 @@ function initializeGraph() {
 /*GRAPH FUNCTIONS!*/
 
 function restartGraph() {
-  console.log("restartgraph");
   nBubbles = 0;
   graphLegend.hide();
   graph_bubble_index = 100;
@@ -648,7 +647,7 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-  console.log("Create bubbles", url);
+  //console.log("Create bubbles", url);
 
   if (compare === "ninguna") {
     hideGraphLoader();
@@ -659,11 +658,10 @@ function createBubbles(url){
   }
 
   $.getJSON(url, function(data) {
-    console.log(data);
     if (data == null) {
       createdBubbles = false;
       failCircle.show();
-      console.log("404", url);
+    //  console.log("404", url);
       hideGraphLoader();
       return;
     }
@@ -705,7 +703,7 @@ function createBubbles(url){
 }
 
 function updateBubbles(url){
-  console.log("Update bubbles", url);
+  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
@@ -724,7 +722,7 @@ function updateBubbles(url){
         one = false;
       }
 
-      console.log(data, data.length);
+      //console.log(data, data.length);
 
       if (count >= _.size(possibleValues) - 1) {
         hideGraphLoader();
@@ -751,12 +749,7 @@ function updateBubble (id, x, y, val, colors, party) {
   // Bubbles animations
   $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
   $(id).find('.outerBubble').animate({ height: val.toString() + "px", width: val.toString() + "px", top: offset.toString() + "px", left: offset.toString() + "px" }, 1000);
-  $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000, function() {
-
-
-    console.log("fin");
-
-  });
+  $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
 
@@ -805,7 +798,7 @@ function destroyBubble(b, url){
     $("#"+b).remove();
     nBubbles=nBubbles-1;
     if(nBubbles==0){
-      console.log("recreating");
+      //console.log("recreating");
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }
