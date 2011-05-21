@@ -172,9 +172,9 @@ div.bubbleContainer{position:absolute;background:transparent;height:20px;width:2
 div.bubbleContainer span.name{display:none;}
 div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
+div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333); z-index:100}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
-
 
 /*WADUS TEXT*/
 div.wadusText{ position:absolute; top:0; left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index:105; }
@@ -225,29 +225,29 @@ div.infowindow,div#infowindow {position:absolute; width:252px; height:294px; cur
 div.infowindow a.close_infowindow,div#infowindow a.close_infowindow {position:absolute; right:2px; top:0px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div.infowindow a.close_infowindow:hover,div#infowindow a.close_infowindow:hover {background-position:0 -18px;}
 div.infowindow div.top,div#infowindow div.top {display:inline-block; width:252px; height:124px; padding:19px 0 0 24px; background:url('../images/infowindow_top.png') 0 0 no-repeat;}
-   
+
 div.infowindow div.top h2,div#infowindow div.top h2 {font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
 div.infowindow div.top h2 sup,div#infowindow div.top h2 sup {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top p.province,div#infowindow div.top p.province {font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div.infowindow div.top div.stats,div#infowindow div.top div.stats {display:inline-block; width:205px; height:70px; margin:7px 0 0 0;}
 div.infowindow div.top div.stats h4,div#infowindow div.top div.stats h4 {display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 2px 0 3px 1px;}
 div.infowindow div.top div.stats div,div#infowindow div.top div.stats div {width:100%; height:10px; margin:2px 0 0 0;}
-   
+
 div.infowindow div.top div.stats div.bar,div#infowindow div.top div.stats div.bar {position:relative; float:left; width:auto; height:6px!important; margin:2px 5px 0 0;}
 div.infowindow div.top div.stats div.bar span.c,div#infowindow div.top div.stats div.bar span.c{float:left; width:20px; height:6px!important; margin:0; background:url('../images/right_bars.png') no-repeat right bottom;}
 div.infowindow div.top div.stats div.bar span.l,div#infowindow div.top div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/left_bar_mask.png') no-repeat left bottom; width:4px; height:6px;}
 div.infowindow div.top div.stats div.bar span.r,div#infowindow div.top div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
-   
+
 div.infowindow div.top div.summary h4,div#infowindow div.top div.summary h4 {display:none; display:inline-block; width:100%; font:normal 12px "Officina Regular"; color:#333333; margin: 10px 0 8px 1px;}
 div.infowindow div.top div.summary ul,div#infowindow div.top div.summary ul {clear:both; overflow:hidden; width:215px; margin-left:-4px;}
 div.infowindow div.top div.summary ul li,div#infowindow div.top div.summary ul li {display:block; float:left; font:normal 11px "Officina Regular"; margin-right:5px; text-align:center; width:45px; }
 div.infowindow div.top div.summary ul li.bar,div#infowindow div.top div.summary ul li.bar { padding-right:5px; background:url('../images/infowindow_separation_bar.png') no-repeat right center; }
 div.infowindow div.top div.summary ul li strong,div#infowindow div.top div.summary ul li strong {display:block; font:bold 21px "Officina Regular"; }
-   
+
 div.infowindow div.top div.stats div p,div#infowindow div.top div.stats div p {padding:0 0 0 5px; font:normal 9px Arial; text-shadow:0 1px white; text-transform:uppercase;}
 div.infowindow div.bottom,div#infowindow div.bottom {display:inline-block; width:252px; padding: 17px 0 0 24px; margin-left:1px; background:url('../images/infowindow_body.png') 0 0 repeat-y;}
 div.infowindow div.footer,div#infowindow div.footer {display:inline-block; width:252px; height: 22px; padding: 19px 0 0 24px; margin-left:1px; background:url('../images/infowindow_bottom.png') 0 0 no-repeat;}
-   
+
 div.infowindow div.bottom p.info,div#infowindow div.bottom p.info {width:200px; font:normal 12px "Arial"; color:#666666; margin: 0 0 4px 0;}
 div.infowindow div.bottom p.info strong,div#infowindow div.bottom p.info strong {font-weight:bold; color:#8B1F72;}
 div.infowindow div.bottom p.info a,div#infowindow div.bottom p.info a {color:#333333;}
@@ -388,8 +388,9 @@ div.graph_legend p.autonomy a {text-decoration:underline; font:normal 15px "Offi
 div.graph_legend p.autonomy a:hover {color:#333333;}
 div.graph_legend div.partido.otros p {}
 div.graph_legend form {position:relative; width:162px; height:32px; margin:20px 0 0 0;}
-div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('../images/region_search_bkg.png') no-repeat 0 0; border:none;}
-div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('../images/tiny_lens.png') no-repeat 0 0; border:none;}
+/*div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; background:url('../images/region_search_bkg.png') no-repeat 0 0; border:none;}*/
+div.graph_legend form input.text {width:125px; height:15px; padding:9px 30px 8px 7px; margin: 0 0 0 -2px; font:normal 15px "Officina Regular"; line-height:15px; color:#999999; border:none;}
+/* div.graph_legend form input.submit {position:absolute; top:9px; right:9px; width:15px; height:15px; background:url('../images/tiny_lens.png') no-repeat 0 0; border:none;} */
 div.graph_legend form input.text:focus {outline:none; color:#333333;}
 div.graph_legend form input.submit:hover {background-position:0 -15px; cursor:pointer;}
 div.graph_legend div.search_error {position:absolute; display:none; top:185px; left:19px; width:182px; height:114px; padding:35px 35px 20px 25px; background:url('../images/error_tooltip_bkg.png') no-repeat 0 0; z-index:50;}
