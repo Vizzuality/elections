@@ -121,7 +121,11 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
   if known_parties.keys.include?(row[:primer_partido_id])
-    x_coordinate = ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    x_coordinate = if row[:primer_partido_percent]
+      ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+    elsif row[:primer_partido_votos]
+      ((row[:primer_partido_votos] - row[:segundo_partido_votos]).to_f * 260.0) / max
+    end
     x_coordinate += 50.0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
