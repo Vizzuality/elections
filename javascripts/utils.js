@@ -12,6 +12,80 @@ function normalizeBarWidth(bar_width) {
   return (bar_width < bar_min_size) ? bar_min_size : bar_width;
 }
 
+function normalizeRegionName(name) {
+  if (normalizedRegions[name] != null) {
+    return normalizedRegions[name];
+  } else {
+    return name;
+  }
+}
+
+var normalizedRegions =  {
+  'islas_canarias': 'Islas Canarias',
+  'las_palmas': 'Las Palmas',
+  'santa_cruz_de_tenerife': 'Santa Cruz de Tenerife',
+  'andalucia': 'Andalucía',
+  'comunidad_de_madrid': 'Comunidad de Madrid',
+  'madrid': 'Madrid',
+  'cataluna': 'Cataluña',
+  'barcelona': 'Barcelona',
+  'girona': 'Girona',
+  'tarragona': 'Tarragona',
+  'lleida': 'Lleida',
+  'comunidad_valenciana': 'Comunidad Valenciana',
+  'alicante': 'Alicante',
+  'valencia': 'Valencia',
+  'castellón': 'Castellón',
+  'galicia': 'Galicia',
+  'a_coruna': 'A Coruña',
+  'pontevedra': 'Pontevedra',
+  'ourense': 'Ourense',
+  'lugo': 'Lugo',
+  'islas_baleares': 'Islas Baleares',
+  'baleares': 'Baleares',
+  'region_de_murcia': 'Región de Murcia',
+  'murcia': 'Murcia',
+  'castilla_y_leon': 'Castilla y León',
+  'leon': 'León',
+  'palencia': 'Palencia',
+  'burgos': 'Burgos',
+  'soria': 'Soria',
+  'zamora': 'Zamora',
+  'valladolid': 'Valladolid',
+  'segovia': 'Segovia',
+  'salamanca': 'Salamanca',
+  'avila': 'Ávila',
+  'valladolid': 'Valladolid',
+  'pais_vasco': 'País Vasco',
+  'guipuzcua': 'Guipúzcoa',
+  'alava': 'Álava',
+  'vizcaya': 'Vizcaya',
+  'comunidad_foral_de_navarra': 'Comunidad Foral de Navarra',
+  'navarra': 'Navarra',
+  'aragon': 'Aragón',
+  'huesca': 'Huesca',
+  'teruel': 'Teruel',
+  'zaragoza': 'Zaragoza',
+  'la_rioja': 'La Rioja',
+  'ceuta_y_melilla': 'Ceuta y Meilla',
+  'extremadura': 'Extremadura',
+  'principado_de_asturias': 'Principado de Asturias',
+  'asturias': 'Asturias',
+  'castilla-la_mancha': 'Castilla-La Mancha',
+  'toledo': 'Toledo',
+  'ciudadd_real': 'Ciudad Real',
+  'albacete': 'Albacete',
+  'guadalajara': 'Guadalajara',
+  'cuenca': 'Cuenca',
+  'malaga': 'Málaga',
+  'almeria': 'Almería',
+  'sevilla': 'Sevilla',
+  'granada': 'Granada',
+  'cadiz': 'Cádiz',
+  'huelva': 'Huelva',
+  'cordoba': 'Córdoba',
+  'jaen': 'Jaén',
+}
 
 var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
 
