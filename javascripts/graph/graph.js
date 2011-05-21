@@ -290,14 +290,26 @@ function initializeGraph() {
         $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
         $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
-        for (var i = 1; i <= 3; i++) {
-          drawPartyBar(data_id, i);
-        }
+        if (deep == "municipios") {
 
-        // Other political party
-        bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-        $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-        $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats').show();
+          $('div#graph_infowindow div.summary').hide();
+
+          for (var i = 1; i <= 3; i++) {
+            drawPartyBar(data_id, i);
+          }
+
+          // Other political party
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
+          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
+          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+
+        } else {
+          $('div#graph_infowindow div.stats').hide();
+          $('div#graph_infowindow div.summary').show();
+          console.log(valuesHash[data_id]);
+          //drawTotalNumber (1, info, false);
+        }
 
         var data = valuesHash[data_id].evolution.split(",");
         var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
@@ -554,6 +566,35 @@ function initializeGraph() {
     function hideFast() {
       $('div.graph_legend').hide();
       $('div.graph_legend div.search_error').hide();
+    }
+
+    function drawTotalNumber (party_id, info, animated) {
+      var me        = this;
+      var id        = party_id - 1;
+      var positions = ["primer", "segundo", "tercer", "otros"];
+      var percent   = info.data[year][positions[id]+'_partido_total'];
+      var partido   = "otros";
+      var clase     = "otros";
+      var $p = $('div#infowindow div.summary li.partido:eq('+id+')');
+
+      if (party_id < 4) {
+        partido = info.data[year][positions[id] +'_partido_name'];
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
+      }
+
+      if (animated == true) {
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
+
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { me.renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
+        }
+      } else {
+        this.renderTotalNumber($p, id, percent, partido);
+      }
     }
 
     function drawPartyBar(party_data, party_id) {
