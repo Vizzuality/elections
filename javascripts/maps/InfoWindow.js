@@ -268,7 +268,6 @@
 				}
         $('div#infowindow p.info').html(msg);
         $('div#infowindow div.chart').hide();
-
       }
 
       if (this.deep_level=="municipios") {
@@ -427,7 +426,20 @@
           $('div#infowindow img').attr('src',statImage.url);
           $('div#infowindow div.chart').show();
         } else {
-          var text = 'No hay datos sobre '+ compare + ' en este municipio. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+          var msg = "";				
+  				if (compare != "ninguna") {
+  					msg = 'No hay datos sobre '+ compare + ' en ';
+  					var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
+  					if (zoomLevelName == 'autonomias') {
+  						msg += 'esta autonomía';
+  					} else if (zoomLevelName == 'provincias') {
+  						msg += 'esta provincia';
+  					} else {
+  						msg += 'este municipio';						
+  					}
+  					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+  				}
+          $('div#infowindow p.info').html(msg);
           $('div#infowindow div.chart').hide();
         }
 
