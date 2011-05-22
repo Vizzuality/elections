@@ -188,7 +188,6 @@ function initializeGraph() {
 
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
-
         $('div#graph_infowindow p.info').html(text);
       }
 
@@ -217,6 +216,7 @@ function initializeGraph() {
 
         if (data == undefined || data[normalization[compare]] == null || _.indexOf(data[normalization[compare]], year) == -1) {
          // console.log("no hay datos");
+          $("div#graph_infowindow a.more").css("color", "#ccc");
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
 
           $('div#graph_infowindow a.more').mouseenter(function(ev){
@@ -228,6 +228,7 @@ function initializeGraph() {
           });
         } else {
 
+          $("div#graph_infowindow a.more").css("color", "#333");
           $('div#graph_infowindow a.more').click(function(ev){
             ev.stopPropagation();
             ev.preventDefault();
