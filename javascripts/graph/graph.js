@@ -337,8 +337,8 @@ function initializeGraph() {
           bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
           $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-          //$('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+sanitizeRTVE(valuesHash[data_id].autonomia)+'/provincias/'+sanitizeRTVE(valuesHash[data_id].provincia)+'/municipios/'+sanitizeRTVE(valuesHash[data_id].name)+'/');
-
+          var lavinia = (valuesHash[data_id].lavinia_url).split('|');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
         } else {
           $('div#graph_infowindow div.stats').hide();
           $('div#graph_infowindow div.summary').show();

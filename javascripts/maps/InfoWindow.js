@@ -178,7 +178,8 @@
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        var lavinia = (info.lavinia_url).split('|');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
         $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
@@ -248,11 +249,23 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+        
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
-          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         } else {
-          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         }
+
+          
+
         
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
@@ -424,11 +437,22 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+          
+          
           if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
-            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+            if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
+              var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+            } else {
+              var media = parseFloat(max_min_avg[(normalization[compare])+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+            }
           } else {
-            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+            if (max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']!=undefined) {
+              var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+            } else {
+              var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+            }
           }
+          
           var last_year = lastAvailableYear();
           text = _.template(text)({media : media, yearSim: (last_year<year)?last_year:year});
           // Change image url
