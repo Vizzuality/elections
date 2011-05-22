@@ -339,7 +339,7 @@ var textInfoWindow = {
 
 var explanationContent = {
   "Resultados electorales" : {
-    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, número de municipios con mayor número de votantes de los diferentes partidos políticos. <br /><br />A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos. datos en bruto en</p>",
+    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, se muestra el número de municipios con mayor número de votantes a los diferentes partidos políticos. <br /><br />A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos.</p>",
 		graph: false,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en <a href='http://www.infoelectoral.mir.es/min/areaDescarga.html'>la web del Ministerio de Interior</a></p>",
 		units: "",
@@ -360,7 +360,7 @@ var explanationContent = {
 		graphRange: "150"
   },
   "Porcentaje de inmigración" : {
-    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>Número de inmigrantes residentes en el territorio por cada 100 habitantes.</p>",
+    htmlContent: "<h1>Porcentaje de inmigración</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1999 y 2010</p><p>Número de inmigrantes residentes en el municipio, provincia o CCAA (según proceda) por cada 100 habitantes.</p>",
 		graph: true,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en bruto en <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fe245%2F&file=inebase&L=0'>la web del Instituto Nacional de Estadística</a></p>",
 		units: "%",
@@ -374,10 +374,10 @@ var explanationContent = {
 		graphRange: "20"
   },
   "Tasa de paro" : {
-    htmlContent: "<h1>Tasa de paro según la encuesta de población activa</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2005 y 2011</p><p>Porcentaje de personas sobre la población activa que se encuentran en situación de paro.</p>",
+    htmlContent: "<h1>Tasa de paro según la encuesta de población activa (EPA)</h1><p class='rango'>Datos disponibles a nivel de comunidad autónoma entre 2005 y el primer trimestre de 2011</p><p>Porcentaje de personas sobre la población activa que se encuentran en situación de desempleo.</p>",
 		graph: true,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en bruto en el <a href='http://www.ine.es/jaxi/menu.do?type=pcaxis&path=/t22/e308_mnu&file=inebase&N=&L=0'>Instituto Nacional de Estadística</a></p>",
-		units: "%",
+		units: "% en el primer trimestre",
 		graphRange: "100"
   },
   "Parados larga duración" : {
@@ -395,7 +395,7 @@ var explanationContent = {
 		graphRange: "100"
   },
   "PIB per cápita" : {
-    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto en miles de Euros a precios de mercado por habitante. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
+    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2010</p><p>Producto Interior Bruto en miles de euros a precios de mercado por habitante. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
 		graph: true,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>",
 		units: "Mil €",
