@@ -435,7 +435,7 @@ function initializeGraph() {
           }
         });
 
-        console.log(deep, var_resolutions);
+        //console.log(deep, var_resolutions);
 
         $('div#graph_infowindow a.more').unbind('mouseenter');
         $('div#graph_infowindow a.more').unbind('mouseleave');
@@ -828,7 +828,7 @@ function createBubbles(url){
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
-      console.log("Create 404", url);
+      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
