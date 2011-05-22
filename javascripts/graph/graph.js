@@ -961,11 +961,11 @@ function updateBubbles(url){
 function updateBubble (id, x, y, val, colors, party) {
   var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
-  var backgroundColor = ((colors != null) ? dominantColor : "purple");
+  var backgroundColor = ((colors != null) ? dominantColor : "#FF9820");
 
-  // if the party we're paiting is not on the main parties list, let's paint it purple
+  // if the party we're paiting is not on the main parties list, let's paint it #FF9820
   if (party != undefined && _.indexOf(parties, normalizePartyName(party)) == -1)  {
-    backgroundColor = "purple";
+    backgroundColor = "#FF9820";
   }
 
   // Bubbles animations
