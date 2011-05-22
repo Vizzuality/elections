@@ -19,13 +19,13 @@ parties        = get_parties
 parties_known  = get_known_parties(parties)
 
 query = <<-SQL
-select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, 
+select votantes_totales, censo_total, #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, lavinia_url,
        primer_partido_id, primer_partido_votos, tercer_partido_id, 
        segundo_partido_id, segundo_partido_votos, tercer_partido_votos,
        censo_total, votantes_totales, resto_partido_votos,
        #{variables.join(',')}
-from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia
-where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id
+from #{PROVINCES_VOTATIONS}, vars_socioeco_x_provincia, gadm2
+where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = vars_socioeco_x_provincia.gadm2_cartodb_id and #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = gadm2.cartodb_id
 SQL
 votes_per_province = cartodb.query(query)[:rows]
 
@@ -34,12 +34,12 @@ votes_per_province = cartodb.query(query)[:rows]
 #############
 puts
 evolution = {}
-variables_json = {}
+# variables_json = {}
 variables.each do |variable|
   year = nil
   puts
   custom_variable_name = variable.gsub(/_\d+$/,'')
-  variables_json[custom_variable_name] ||= []
+  # variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_provinces_variable_evolution(custom_variable_name)
   unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
@@ -52,7 +52,7 @@ variables.each do |variable|
   next if year == 1974
   year ||= variable.match(/\d+$/)[0].to_i
   puts "Variable: #{variable} - #{year}"
-  variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
+  # variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
   autonomies.each do |autonomy_hash|
     autonomy_name = autonomy_hash[:name_1].normalize
     authonomy_results = get_authonomy_results(autonomy_name, year, autonomy_hash[:name_1], proceso_electoral_id)
@@ -87,6 +87,7 @@ variables.each do |variable|
       json[province_name][:parent] = [autonomy_name]
       json[province_name][:parent_url] = [autonomies_path(variable)]
       json[province_name][:parent_results] = authonomy_results
+      json[province_name][:lavinia_url] = province[:lavinia_url]
       json[province_name][:evolution] = evolution[custom_variable_name][province[:name_2]].join(',')
     end
     fd = File.open('../' + provinces_path(autonomy_name,variable),'w+')
@@ -95,9 +96,9 @@ variables.each do |variable|
   end
 end
 
-variables_json.each do |k,v|
-  variables_json[k] = v.compact.uniq.sort
-end
-fd = File.open('../graphs/meta/provincias.json','w+')
-fd.write(Yajl::Encoder.encode(variables_json))
-fd.close
+# variables_json.each do |k,v|
+#   variables_json[k] = v.compact.uniq.sort
+# end
+# fd = File.open('../graphs/meta/provincias.json','w+')
+# fd.write(Yajl::Encoder.encode(variables_json))
+# fd.close

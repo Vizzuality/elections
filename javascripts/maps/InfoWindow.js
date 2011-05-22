@@ -114,6 +114,7 @@
       }
     };
 
+
     InfoWindow.prototype.drawTotalNumber = function(party_id, info, animated) {
       var me        = this;
       var id        = party_id - 1;
@@ -143,6 +144,7 @@
       }
     }
 
+
     InfoWindow.prototype.renderTotalNumber = function($div, id, value, name) {
       if (name != null) {
         $div.show();
@@ -152,6 +154,7 @@
         $div.hide();
       }
     }
+
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
       var id = party_id - 1;
@@ -179,6 +182,7 @@
         $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
+
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
       var me = this;
@@ -250,7 +254,11 @@
         } else {
           var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         }
-        text = _.template(text)({media : media});
+        
+        var last_year = lastAvailableYear();
+        text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
+
+
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
       } else {
@@ -419,7 +427,8 @@
           } else {
             var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
           }
-          text = _.template(text)({media : media});
+          var last_year = lastAvailableYear();
+          text = _.template(text)({media : media, yearSim: (last_year<year)?last_year:year});
           // Change image url
           var statImage = this.generateStatImage();
           $('div#infowindow img').attr('src',statImage.url);
@@ -485,6 +494,7 @@
 
       this.map_.panBy(left,top);
     }
+    
 
 
     InfoWindow.prototype.generateStatImage = function() {

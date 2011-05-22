@@ -22,7 +22,7 @@ block = ARGV[0].to_i
 fd = File.open("inserts-#{block}.log", 'w+')
 
 municipalities = CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :encoding => "".encoding).inject({}) do |h,e| 
-  h[e[6]] = [e[7],e[8],e[9]]
+  h[e[9]] = [e[10],e[11],e[12]]
   h
 end
 

@@ -3,7 +3,7 @@
 require "rubygems"
 require "bundler/setup"
 require "cartodb-rb-client"
-# require "ruby-debug"
+require "ruby-debug"
 require "yajl"
 require "net/https"
 require 'uri'
@@ -46,7 +46,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v12"
+$graphs_next_version = "v13"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -209,8 +209,8 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
     # votes per autonomy
     query = <<-SQL
     select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id,
-           primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-           tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
+           primer_partido_id, primer_partido_votos, segundo_partido_id, segundo_partido_votos,
+           tercer_partido_id, tercer_partido_votos, censo_total, votantes_totales, resto_partido_votos
     from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
     where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND
           gadm1.name_1 = '#{raw_autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
@@ -219,10 +219,10 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
     parties = get_parties
     if row = $cartodb.query(query)[:rows].first
       return {
-        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-        :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_votos] ],
+        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_votos]],
+        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_votos] ],
+        :otros     => ["Otros",                           row[:resto_partido_votos]  ]
       }
     else
       return {}
@@ -400,6 +400,16 @@ def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
 
+  vars_socioeco_periods = {
+    1987 => [1987, 1988, 1989, 1990],
+    1991 => [1991, 1992, 1993, 1994],
+    1995 => [1995, 1996, 1997, 1998],
+    1999 => [1999, 2000, 2001, 2002],
+    2003 => [2003, 2004, 2005, 2006],
+    2007 => [2007, 2008, 2009, 2010, 2011],
+    2011 => []
+  }
+
   electoral_periods = {
     1987 => [1987, 1988, 1989, 1990],
     1991 => [1991, 1992, 1993, 1994],
@@ -412,11 +422,16 @@ def create_years_hash(records, variables, max_year, min_year)
 
   records.sort!{|x, y| x.proceso_electoral_year <=> y.proceso_electoral_year}
 
-  min_year.upto(max_year) do |year|
+  min_year.upto(2011) do |year|
     data = years[year] || {}
 
     variables.each do |variable|
-      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{year}".to_sym]
+      variable_year = year
+      # debugger
+      while records.first["#{variable.codigo}_#{variable_year}".to_sym].nil? && variable_year >= min_year do
+        variable_year -= 1
+      end
+      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{variable_year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{variable_year}".to_sym]
     end
 
     data[:censo_total]             = nil
