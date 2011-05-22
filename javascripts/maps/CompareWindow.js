@@ -424,11 +424,10 @@
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
 
-
         $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
         $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):'')+this.firstData['data'][year]['censo_total']+' habitantes');
 
-        if (this.secondData.data != undefined) {
+        if (!_.isEmpty(this.secondData)) {
           $('div#comparewindow div.bottom div.stats h4').text(parseFloat(this.secondData.data[year].percen_participacion).toFixed(0)+'% de participación');
           $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):'')+this.secondData['data'][year]['censo_total']+' habitantes');
         }
@@ -452,6 +451,7 @@
         }
     }
 
+
     CompareWindow.prototype.updateBars = function() {
 
       $('div#comparewindow div.top div.stats div.partido').each(function(i,ele){
@@ -461,11 +461,12 @@
       for (var i = 1; i <= 4; i++) {
         this.drawBar(i,"top", this.firstData);
 
-        if (this.secondData.data != undefined) {
+        if (!_.isEmpty(this.secondData)) {
           this.drawBar(i,"bottom", this.secondData);
         }
       }
     }
+
 
     CompareWindow.prototype.resetSearch = function() {
       $('div#comparewindow div.bottom input.text').val('Introduce una ubicación');
@@ -521,13 +522,13 @@
         $('div#comparewindow div.stats_slider').empty();
       }
 
-      $('div.stats_slider').width(_.size(normalization)*298);
       var width = 90;
-
+      var count = 0;
 
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info.data != undefined && info.data[year][ele]!=undefined) {
+          count ++;
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
@@ -553,22 +554,10 @@
               '</div>'
             );
           }
-        } else {
-          if ($('div.stats_slider div[alt="'+i+'"].up').length==0) {
-            $('div.stats_slider').append(
-              '<div alt="'+i+'" class="up block">'+
-                '<h3>% '+i+'</h3>'+
-                '<a class="evolucion" href="#ver_evolucion">ver evolución</a>'+
-                '<span class="error first">No hay datos</span>'+
-              '</div>'
-            );
-          } else {
-            $('div.stats_slider div[alt="'+i+'"].up').append(
-              '<span class="error second">No hay datos</span>'
-            );
-          }
         }
       });
+      
+      $('div.stats_slider').width(count*298);
 
       // Add bottom blocks
       _.each(normalization,function(ele,i){
@@ -591,32 +580,16 @@
               '</div>'
             );
           }
-
-        } else {
-          if ($('div.stats_slider div[alt="'+i+'"].down').length==0) {
-            $('div.stats_slider').append(
-              '<div alt="'+i+'" class="down block">'+
-                '<h3>% '+i+'</h3>'+
-                '<span class="error first">No hay datos</span>'+
-                '<span class="name first">'+info.name+'</span>'+
-                '<a class="resumen" href="#ver_resumen">ver resumen</a>'+
-              '</div>'
-            );
-          } else {
-            $('div.stats_slider div[alt="'+i+'"].down').append(
-              '<span class="error second">No hay datos</span>'+
-              '<span class="name second">'+info.name+'</span>'
-            );
-          }
         }
       });
 
-      if (refresh && this.secondData) {
+      if (refresh && !_.isEmpty(this.secondData)) {
         this.createChart(this.secondData,false,false)
       }
 
     }
-
+    
+    
 
     CompareWindow.prototype.setUpChartView = function() {
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
@@ -637,6 +610,7 @@
       });
       this.refreshBottom();
     }
+    
     
     CompareWindow.prototype.refreshBottom = function() {
       if (!$('div#comparewindow div.bottom').hasClass('region')) {
