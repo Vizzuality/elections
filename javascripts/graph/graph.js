@@ -647,6 +647,45 @@ function initializeGraph() {
       $p.find('p').text(name+' ('+value+'%)');
     }
 
+    function drawTotalNumber(party_data, party_id, animated) {
+      var me = this;
+      var id        = party_id - 1;
+      var name  = party_data["partido_" + party_id][0];
+      var value = party_data["partido_" + party_id][1];
+
+      var clase     = "otros";
+
+      var $p = $('div.graph_legend div.summary li.partido:eq('+id+')');
+
+      if (party_id < 4) {
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
+      }
+
+      if (animated == true) {
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
+
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
+        }
+      } else {
+        renderTotalNumber($p, id, percent, partido);
+      }
+    }
+
+    function renderTotalNumber($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
+      }
+    }
+
     function changeData(results,names,parent_url) {
 
       if (names.length > 0) {
@@ -690,17 +729,20 @@ function initializeGraph() {
         drawPartyBar(results,2);
         drawPartyBar(results,3);
 
-
         // Other
         bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
         $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
         $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
         showLegend();
       } else {
+
         $('div.graph_legend div.summary').show();
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
         $('div.graph_legend p.autonomy').show();
         $('div.graph_legend p.autonomy a').unbind('click');
+
+        //drawTotalNumber(results, 1, false);
+
         showSearch();
       }
     }
@@ -830,7 +872,7 @@ function updateBubbles(url){
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      console.log("Update 404", url);
+      //console.log("Update 404", url);
       return;
     }
 
@@ -909,10 +951,10 @@ function goDeeper(url){
 
   name = url_split[url_split_length].split(normalization[compare])[0].substring(0, length-1);
 
-  // console.log("url_split", url_split);
-  // console.log("deep", deep);
-  // console.log("name", name);
-  // console.log("compare", normalization[compare], normalization[compare], compare);
+  //console.log("url_split", url_split);
+  //console.log("deep", deep);
+  //console.log("name", name);
+  //console.log("compare", normalization[compare], compare);
 
   graphLegend.hideError();
   graphBubbleTooltip.hide();
@@ -961,15 +1003,14 @@ function addNewBubble(region) {
 
     if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
-
     }
+
     selectedBubble = region;
 
     $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
     $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
-
-      $("div#" + selectedBubble + " p.region_name").css("color","#333333");
-      $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
+    $("div#" + selectedBubble + " p.region_name").css("color","#333333");
+    $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
 
   } else {
     var count = 0;
