@@ -42,7 +42,7 @@ end
 # Get OAuth token from cartodb client, because we are goint to
 # fetch API via net/http library (because of the threads we use)
 puts 
-variables_json = {}
+# variables_json = {}
 autonomies.each do |autonomy_hash|
   autonomy_name = autonomy_hash[:name_1].normalize
   provinces.select{ |p| p[:id_1] == autonomy_hash[:id_1] }.each do |province|
@@ -64,7 +64,7 @@ SQL
     response = http.request(request)
     variables.each do |variable|
       custom_variable_name = variable.gsub(/_\d+$/,'')
-      variables_json[custom_variable_name] ||= []
+      # variables_json[custom_variable_name] ||= []
       unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
         year = variable.match(/\d+$/)[0].to_i
         while proceso_electoral_id.nil? && year > 1975
@@ -74,7 +74,7 @@ SQL
       end
       next if year == 1974
       year ||= variable.match(/\d+$/)[0].to_i
-      variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
+      # variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
       json = {}
       votes_per_municipality = Yajl::Parser.new.parse(response.body)["rows"]
       next if votes_per_municipality.nil?
@@ -112,7 +112,7 @@ SQL
           end
         else
           # raise "Province results not found for province_name #{province_name} in proceso_electoral_id #{proceso_electoral_id}"
-		nil
+		      nil
         end
         json[municipality_name][:evolution] = if evolution[custom_variable_name][municipality[:cartodb_id].to_s]
           evolution[custom_variable_name][municipality[:cartodb_id].to_s].join(',')
@@ -130,9 +130,9 @@ SQL
   end
 end
 
-variables_json.each do |k,v|
-  variables_json[k] = v.compact.uniq.sort
-end
-fd = File.open('../graphs/meta/municipios.json','w+')
-fd.write(Yajl::Encoder.encode(variables_json))
-fd.close
+# variables_json.each do |k,v|
+#   variables_json[k] = v.compact.uniq.sort
+# end
+# fd = File.open('../graphs/meta/municipios.json','w+')
+# fd.write(Yajl::Encoder.encode(variables_json))
+# fd.close
