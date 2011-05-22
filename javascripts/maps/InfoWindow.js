@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -180,7 +180,7 @@
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
         var lavinia = (info.lavinia_url).split('|');
         $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
 
@@ -264,9 +264,6 @@
           }
         }
 
-          
-
-        
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
@@ -424,7 +421,7 @@
 
             bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
             $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS DATOS ('+this.information['data'][year]['otros_partido_percent']+'%)');
             $('div#infowindow div.stats').show();
           } else {
             $('div#infowindow div.stats').hide();
