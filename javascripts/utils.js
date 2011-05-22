@@ -174,7 +174,7 @@ var tooltipInfo = {
     legendBottom:"Menos jóvenes parados"
   },
   "Parados larga dur..." : {
-    content: "Desviación respecto la media del porcentaje de parados por mas de 12 meses.",
+    content: "Desviación respecto a la media del porcentaje de parados durante más de 12 meses.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más parados",
@@ -209,14 +209,14 @@ var tooltipInfo = {
       legendBottom:"Menos habitantes"
     },
     "Consumo TV" : {
-      content: "Desviación respecto a la media nacional de consumo de tv.",
+      content: "Desviación respecto a la media de consumo de tv.",
       left: "menos tv",
       right: "más tv",
       legendTop: "Más consumo tv",
       legendBottom:"Menos consumo tv"
     },
     "Acceso Internet" : {
-      content: "Desviación respecto a la media nacional del porcentaje de personas con acceso a internet",
+      content: "Desviación respecto a la media del porcentaje de personas con acceso a internet",
       left: "menor acceso",
       right: "mayor acceso",
       legendTop: "Más acceso a internet",
@@ -240,103 +240,102 @@ var tooltipInfo = {
 
 var textInfoWindow = {
   envejecimiento_normalizado : {
-    before_negative: "El índice de envejecimiento está un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional <strong><%= media %>%</strong> en <%= yearSim %>.",
-    before_positive: "Índice de envejecimiento un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong><%= media %>%</strong> en <%= yearSim %>."
+    before_negative: "Su índice de envejecimiento está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong><%= media %>%</strong> en <%= yearSim %>.",
+    before_positive: "Su índice de envejecimiento está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong><%= media %>%</strong> en <%= yearSim %>."
   },
   paro_epa_normalizado : {
-    before_negative: "Tasa de paro EPA con un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "Tasa de paro EPA con un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "La tasa de paro EPA está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "La tasa de paro EPA está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   },
   paro_normalizado : {
-    before_negative: "La tasa de paro se encuentra a un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "La tasa de paro se encuentra a un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "La tasa de paro está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "La tasa de paro está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   },
   pib_normalizado : {
-    before_negative: "PIB per cápita un ",
-    after_negative: "<strong>%</strong> por debajo que la media nacional <strong>(<%= media %>Mil)</strong> en <%= yearSim %>.",
-    before_positive: "PIB per cápita un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong>(<%= media %>Mil)</strong> en <%= yearSim %>."
+    before_negative: "El PIB per cápita está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %> mil)</strong> en <%= yearSim %>.",
+    before_positive: "El PIB per cápita está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %> mil)</strong> en <%= yearSim %>."
   },
   edad_media_normalizado : {
-    before_negative: "Población ",
-    after_negative: " años más jóven que la media nacional <strong>(<%= media %> años)</strong> en <%= yearSim %>.",
-    before_positive: "Población ",
-    after_positive: " años mayor que la media nacional <strong>(<%= media %> años)</strong> en <%= yearSim %>."
+    before_negative: "Su población es ",
+    after_negative: " años más jóven que la media <strong>(<%= media %> años)</strong> en <%= yearSim %>.",
+    before_positive: "Su población es ",
+    after_positive: " años mayor que la media <strong>(<%= media %> años)</strong> en <%= yearSim %>."
   },
   inmigracion_normalizado : {
-    before_negative: "Porcentaje de inmigración ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "Porcentaje de inmigración ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "El porcentaje de inmigración está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "El porcentaje de inmigración está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   },
   saldo_vegetativo_normalizado : {
-    before_negative: "Crecimiento natural de la población un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional en <%= yearSim %>.",
-    before_positive: "Crecimiento natural de la población un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional en <%= yearSim %>."
+    before_negative: "El crecimiento natural está un ",
+    after_negative: "<strong>%</strong> por debajo de la media en <%= yearSim %>.",
+    before_positive: "El crecimiento natural está un ",
+    after_positive: "<strong>%</strong> por encima de la media en <%= yearSim %>."
   },
   salario_medio_normalizado : {
-    before_negative: "Salario medio un ",
-    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>€)</strong> en <%= yearSim %>.",
-    before_positive: "Salario medio un ",
-    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>€)</strong> en <%= yearSim %>."
+    before_negative: "El salario medio está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>€)</strong> en <%= yearSim %>.",
+    before_positive: "El salario medio está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>€)</strong> en <%= yearSim %>."
   },
   secundaria_acabada_normalizado: {
-    before_negative: "Porcentaje de habitantes con estudios secundarios un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "Porcentaje de habitantes con estudios secundarios un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "% de hab. con estudios secundarios está un ",
+    after_negative: "<strong>%</strong> por debajo de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "% de hab. con estudios secundarios está un ",
+    after_positive: "<strong>%</strong> por encima de la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   },
   penetracion_internet_normalizado: {
-    before_negative: "Penetración de Internet un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional en <%= yearSim %>.",
-    before_positive: "Penetración de Internet un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional en <%= yearSim %>."
+    before_negative: "La penetración de Internet está un ",
+    after_negative: "<strong>%</strong> por debajo de la media en <%= yearSim %>.",
+    before_positive: "La penetración de Internet está un ",
+    after_positive: "<strong>%</strong> por encima de la media en <%= yearSim %>."
   },
   audiencia_diaria_tv_normalizado : {
-    before_negative: "Audiencia de TV un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional en <%= yearSim %>.",
-    before_positive: "Audiencia de TV un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional en <%= yearSim %>."
+    before_negative: "La audiencia de TV está un ",
+    after_negative: "<strong>%</strong> por debajo de la media en <%= yearSim %>.",
+    before_positive: "La audiencia de TV está un ",
+    after_positive: "<strong>%</strong> por encima de la media en <%= yearSim %>."
   },
   prensa_diaria_normalizado : {
-    before_negative: "Porcentaje de número de lectores un ",
-    after_negative: "<strong>%</strong> por debajo de la media nacional en <%= yearSim %>.",
-    before_positive: "Porcentaje de número de lectores un ",
-    after_positive: "<strong>%</strong> por encima de la media nacional en <%= yearSim %>."
+    before_negative: "El número de lectores de prensa está un ",
+    after_negative: "<strong>%</strong> por debajo de la media en <%= yearSim %>.",
+    before_positive: "El número de lectores de prensa está un ",
+    after_positive: "<strong>%</strong> por encima de la media en <%= yearSim %>."
   },
   matriculaciones_normalizado : {
-    before_negative: "Un ",
-    after_negative: "% menos, de vehículos matriculados que la media nacional <strong>(<%= media %> vehíc.)</strong> en <%= yearSim %>.",
-    before_positive: "Un ",
-    after_positive: "% más, de vehículos matriculados que la media nacional <strong>(<%= media %> vehíc.)</strong> en <%= yearSim %>."
+    before_negative: "Hay un ",
+    after_negative: "% menos de vehículos matriculados que la media <strong>(<%= media %> vehíc.)</strong> en <%= yearSim %>.",
+    before_positive: "Hay un ",
+    after_positive: "% más de vehículos matriculados que la media <strong>(<%= media %> vehíc.)</strong> en <%= yearSim %>."
   },
   detenidos_normalizado : {
-    before_negative: "Un ",
-    after_negative: "<strong>%</strong> menos de detenidos que la media nacional <strong>(<%= media %> por cada mil hab.)</strong> en <%= yearSim %>.",
-    before_positive: "Un ",
-    after_positive: "<strong>%</strong> más de detenidos que la media nacional <strong>(<%= media %> por cada mil hab.)</strong> en <%= yearSim %>."
+    before_negative: "Hay un ",
+    after_negative: "<strong>%</strong> menos de detenidos que la media <strong>(<%= media %> por cada mil hab.)</strong> en <%= yearSim %>.",
+    before_positive: "Hay un ",
+    after_positive: "<strong>%</strong> más de detenidos que la media <strong>(<%= media %> por cada mil hab.)</strong> en <%= yearSim %>."
   },
   jovenes_parados_normalizado: {
-    before_negative: "Un",
-    after_negative: "<strong>%</strong> menos de jóvenes parados que la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "Un",
-    after_positive: "<strong>%</strong> mas de jóvenes parados que la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "Hay un",
+    after_negative: "<strong>%</strong> menos de jóvenes parados que la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "Hay un",
+    after_positive: "<strong>%</strong> mas de jóvenes parados que la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   },
   parados_larga_duracion_normalizado: {
-    before_negative: "Un ",
-    after_negative: "<strong>%</strong> menos de parados de larga duración que la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
-    before_positive: "Un ",
-    after_positive: "<strong>%</strong> mas de parados de larga duración que la media nacional <strong>(<%= media %>%)</strong> en <%= yearSim %>."
+    before_negative: "Hay un ",
+    after_negative: "<strong>%</strong> menos de parados de larga duración que la media <strong>(<%= media %>%)</strong> en <%= yearSim %>.",
+    before_positive: "Hay un ",
+    after_positive: "<strong>%</strong> mas de parados de larga duración que la media <strong>(<%= media %>%)</strong> en <%= yearSim %>."
   }
 };
-
 
 var explanationContent = {
   "Resultados electorales" : {
