@@ -314,7 +314,10 @@
       $("div.fail").live("click", function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        hideError();
+
+        if (state == "mapa") {
+          hideError();
+        }
       });
 
       $("div.fail a.why").live("click", function(ev) {
