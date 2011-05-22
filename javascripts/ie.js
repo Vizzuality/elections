@@ -2,7 +2,7 @@
 
     $(document).ready(function(){
       
-      $("div.bubbleContainer").corner();
+      // $("div.bubbleContainer").corner();
       
       resizeMap();
       $(window).resize(function(){
