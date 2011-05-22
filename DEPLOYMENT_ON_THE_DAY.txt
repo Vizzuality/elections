@@ -1,0 +1,48 @@
+El DIA D
+
+-----------
+
+-1) Rename elections.html to index.html
+
+0) Delete everything on proceso_electoral = 76
+    DELETE FROM votaciones_por_autonomia WHERE proceso_electoral_id = 76;
+    DELETE FROM votaciones_por_municipio WHERE proceso_electoral_id = 76;
+    DELETE FROM votaciones_por_provincia WHERE proceso_electoral_id = 76;
+    
+    
+1) Descargarse los XML
+    ./elections-day-download-urls.sh   (guarda en la carpeta xmls)
+    
+2) run-elections-day-municipalities.sh (procesa los XML y genera laviniadata.sql)    
+
+3) psql -h10.211.14.63 -Upostgres -dcartodb_user_123_db -f laviniadata.sql > /dev/null
+
+4) ruby votes_per_province.rb
+
+5) ruby votes_per_autonomy.rb
+
+    6) nohup ruby bubbles.rb 6 7 11 > nohup_bubbles.out &
+        cd /mnt/www/data/bubbles
+        rm current 
+        ln -s /mnt/www/data/bubbles/22 current
+        cd /home/ubuntu/elections/scripts
+    
+    7) (editar el common.rb, cambiar var version y lo ejecutamos) nohup ./run_graphs.sh > nohup_graphs.out &
+    8) nohup ruby googlenamescache_generator.rb > nohup_ooglenames.out &
+        cd /mnt/www/data/google_names_cache
+        rm current 
+        ln -s /mnt/www/data/google_names_cache/22 current
+        cd /home/ubuntu/elections/scripts
+        
+    9) nohup ./run_maps.sh > nohup_run_maps.out & 
+    
+    10) //compress the HTML LOCALLY --> Looking at the html
+    
+    11) //Go TO server cd /home/ubuntu/elections/deploy
+        nohup ./vector_data.sh > nohup_vector_data.out &
+        ./app.sh
+        nohup ./tile_data.sh > nohup_tile_data.out &
+            
+    
+10) Pre-seed the Akamai caches
+
