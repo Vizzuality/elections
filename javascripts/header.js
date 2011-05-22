@@ -73,16 +73,22 @@
         } else {
           var isDataAvailableInDeep = true;
         }
+        
+        var selected_dataset = $("div.select.selected .option_list li.selected a").text().toLowerCase();
+
+        if (selected_dataset == "parados larga dur...") {
+          selected_dataset = "parados de larga duración";
+        }
 
         if (isDataAvailableInDeep == true) {
-          text = "No hay datos para este año";
+          text = "No hay datos de "+ selected_dataset +" para este año";
           next_link_text = "ver siguiente año con datos";
         } else {
           if (state == "mapa") {
-            text = "No hay datos a este nivel de zoom";
+            text = "No hay datos de " + selected_dataset +  " a este nivel de zoom";
             next_link_text = "ver siguiente nivel con datos";
           } else {
-            text = "No hay datos a este nivel de zoom";
+            text = "No hay datos de " + selected_dataset + " a este nivel de zoom";
             next_link_text = "ir al nivel superior";
           }
         }
