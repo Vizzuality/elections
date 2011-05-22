@@ -350,12 +350,9 @@ function initializeGraph() {
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
           });
 
-          drawTotalNumber(1, valuesHash[data_id], false);
-          drawTotalNumber(2, valuesHash[data_id], false);
-          drawTotalNumber(3, valuesHash[data_id], false);
-          drawTotalNumber(4, valuesHash[data_id], false);
-
-
+          for (var i = 1; i <= 4; i++) {
+            drawTotalNumber(i, valuesHash[data_id], false);
+          }
         }
 
         var data = valuesHash[data_id].evolution.split(",");
@@ -444,6 +441,8 @@ function initializeGraph() {
         $('div#graph_infowindow a.more').click(function(ev){
           ev.stopPropagation();
           ev.preventDefault();
+
+          console.log(availableData);
 
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.hide();
@@ -625,6 +624,7 @@ function initializeGraph() {
     }
 
     function drawPartyBar(party_data, party_id) {
+
       var id    = party_id - 1;
       var clase = normalizePartyName(party_data["partido_"+party_id][0]);
       var $p    = $('div.graph_legend div.stats div.partido:eq('+id+')');
