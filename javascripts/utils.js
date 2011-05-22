@@ -21,7 +21,7 @@ function normalizeRegionName(name) {
 }
 
 function sanitizeRTVE(localidad) {
-  return replaceWeirdCharacters(localidad.toLowerCase(/\(/g,'').replace(/\)/g,'').replace(/'/g,'').replace(/"/g,'').replace(/ /g,'-'));
+  return replaceWeirdCharacters(localidad.toLowerCase().replace(/\(/g,'').replace(/\)/g,'').replace(/'/g,'').replace(/"/g,'').replace(/ /g,'-'));
 }
 
 var normalizedRegions =  {

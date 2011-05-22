@@ -140,7 +140,7 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
+      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (11%)</a></p></div>'+
       '    </div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -256,6 +256,7 @@ function initializeGraph() {
 
         $p.find('span').width(bar_width);
         $p.find('p').text(party_name +' ('+(value)+'%)');
+
       }
 
     function renderTotalNumber($div, id, value, name) {
@@ -288,7 +289,7 @@ function initializeGraph() {
         partido   = "otros";
         percent   = info['resto_partidos_percent'];
       }
-        renderTotalNumber($p, id, percent, partido);
+      renderTotalNumber($p, id, percent, partido);
     }
 
       function changeData(left,top,data_id) {
@@ -335,7 +336,8 @@ function initializeGraph() {
           // Other political party
           bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          //$('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+sanitizeRTVE(valuesHash[data_id].autonomia)+'/provincias/'+sanitizeRTVE(valuesHash[data_id].provincia)+'/municipios/'+sanitizeRTVE(valuesHash[data_id].name)+'/');
 
         } else {
           $('div#graph_infowindow div.stats').hide();

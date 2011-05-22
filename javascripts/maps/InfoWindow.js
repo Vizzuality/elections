@@ -175,7 +175,7 @@
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
         $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
