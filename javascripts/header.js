@@ -172,6 +172,10 @@
             }
           }
 
+          if (!next_year) {
+           next_year = year;
+          }
+
           changeHash();
           updateNewSliderValue(next_year, year);
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+next_year+".json");
