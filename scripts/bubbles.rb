@@ -81,6 +81,7 @@ def queries_by_zoom(x, y, z)
           i.cartodb_id AS id,
           i.nombre AS name,
           i.provincia_name AS provincia,
+          i.lavinia_url,
           g2.name_1 AS autonomia,
           pe.anyo AS proceso_electoral_year,
           censo_total,
@@ -191,8 +192,9 @@ zoom_levels.each do |z|
             :center_longitude => records.first.center_longitude,
             :center_latitude => records.first.center_latitude
           }
-          data[:provincia] = records.first.provincia if records.first[:provincia]
-          data[:autonomia] = records.first.autonomia if records.first[:autonomia]
+          data[:provincia] = records.first.provincia     if records.first[:provincia]
+          data[:autonomia] = records.first.autonomia     if records.first[:autonomia]
+          data[:lavinia_url] = records.first.lavinia_url if records.first[:lavinia_url]
           data[:data] = create_years_hash(records, variables, max_year, min_year)
           json << data
         end
