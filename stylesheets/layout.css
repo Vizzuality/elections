@@ -98,7 +98,6 @@ div#header div.secondContainer div.right div.selects div.select div.option_list.
 div#header div.secondContainer div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -64px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 0px;}
 
-
 div#header div.secondContainer{float:left; width: 100%;}
 
 /*YEARS SLIDER*/
@@ -348,7 +347,8 @@ div#welcomewindow div.header {clear:both; overflow:hidden; margin-bottom: 31px; 
 div#welcomewindow div.header small {float:left; font:normal 12px "Officina Regular"; color:#ccc;}
 div#welcomewindow div.header div.nav {float:right; font:normal 12px "Officina Regular"; color:#333;}
 div#welcomewindow div.header div.nav a {font:normal 12px "Officina Regular"; color:#333;}
-div#welcomewindow a.start{display:block; width: 331px; height:22px; font:bold 16px "Officina Bold"; color: #8B1F74; margin:0 auto 3px auto; padding: 15px 0; text-align:center; background:url('../images/button_bkg.png') no-repeat; text-decoration:none;}
+div#welcomewindow a.start{display:block; width: 460px; height:22px; font:bold 16px "Officina Bold"; color: #8B1F74; margin:0 auto 3px auto; padding: 15px 0; text-align:center; background:url('../images/button_bkg.png') no-repeat; text-decoration:none;}
+div#welcomewindow a.start:hover{color: #5E154E;}
 div#welcomewindow a.explore {display:block; margin:auto; font:normal 15px "Officina Regular"; color:#666; text-align:center;}
 
 /*START WINDOW*/

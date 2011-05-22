@@ -6,7 +6,6 @@
   AboutWindow.prototype = {};
 
   AboutWindow.prototype.create = function() {
-		console.log("Creando about window!");
     var me = this;
     this.div = document.createElement('div');
     this.div.setAttribute('id','aboutwindow');

@@ -1,6 +1,6 @@
 
   var global_url      = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data";
-  var tiles_pngs_url  = "http://rtvedata{n}.ipq.co/data/tiles/";
+  var tiles_pngs_url  = "http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
   var proxy_url       = "proxy.php";
   var tiles_version   = "current"; //"current"; //3;
   var bubbles_version = "current"; //10;
