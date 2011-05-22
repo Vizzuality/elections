@@ -26,17 +26,21 @@ chooseMessage = (function() {
     ev.stopPropagation();
     ev.preventDefault();
     hideError();
-    var text = $("div.select div.option_list ul li a.paro").text();
-    $("div.select div.outer_select.money").parent().addClass("selected");
-    $("div.select div.outer_select.money span.inner_select a").text(text);
-    $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-    compare = "paro";
+
+
+
+    var text = $("div.select div.option_list ul li a.envejecimiento").text();
+    $("div.select div.outer_select.people").parent().addClass("selected");
+    $("div.select div.outer_select.people span.inner_select a").text(text);
+    $("div.select div.option_list ul li a.envejecimiento").parent().addClass("selected");
+    compare = "envejecimiento";
 
     if (year < 2005) { // because we don't have paro information prior 2005
       updateNewSliderValue(2005, year);
     } else {
       restartGraph();
     }
+    drawNoDataBars();
   });
 
   function showError() {
@@ -140,7 +144,7 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>'+
+      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (11%)</a></p></div>'+
       '    </div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -256,6 +260,7 @@ function initializeGraph() {
 
         $p.find('span').width(bar_width);
         $p.find('p').text(party_name +' ('+(value)+'%)');
+
       }
 
     function renderTotalNumber($div, id, value, name) {
@@ -288,7 +293,7 @@ function initializeGraph() {
         partido   = "otros";
         percent   = info['resto_partidos_percent'];
       }
-        renderTotalNumber($p, id, percent, partido);
+      renderTotalNumber($p, id, percent, partido);
     }
 
       function changeData(left,top,data_id) {
@@ -335,7 +340,8 @@ function initializeGraph() {
           // Other political party
           bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
           $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          //$('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+sanitizeRTVE(valuesHash[data_id].autonomia)+'/provincias/'+sanitizeRTVE(valuesHash[data_id].provincia)+'/municipios/'+sanitizeRTVE(valuesHash[data_id].name)+'/');
 
         } else {
           $('div#graph_infowindow div.stats').hide();
@@ -345,12 +351,9 @@ function initializeGraph() {
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
           });
 
-          drawTotalNumber(1, valuesHash[data_id], false);
-          drawTotalNumber(2, valuesHash[data_id], false);
-          drawTotalNumber(3, valuesHash[data_id], false);
-          drawTotalNumber(4, valuesHash[data_id], false);
-
-
+          for (var i = 1; i <= 4; i++) {
+            drawTotalNumber(i, valuesHash[data_id], false);
+          }
         }
 
         var data = valuesHash[data_id].evolution.split(",");
@@ -439,6 +442,8 @@ function initializeGraph() {
         $('div#graph_infowindow a.more').click(function(ev){
           ev.stopPropagation();
           ev.preventDefault();
+
+          console.log(availableData);
 
           graphBubbleTooltip.hide();
           graphBubbleInfowindow.hide();
@@ -620,6 +625,7 @@ function initializeGraph() {
     }
 
     function drawPartyBar(party_data, party_id) {
+
       var id    = party_id - 1;
       var clase = normalizePartyName(party_data["partido_"+party_id][0]);
       var $p    = $('div.graph_legend div.stats div.partido:eq('+id+')');
@@ -642,6 +648,45 @@ function initializeGraph() {
 
       $p.find('span.c').width(bar_width);
       $p.find('p').text(name+' ('+value+'%)');
+    }
+
+    function drawTotalNumber(party_data, party_id, animated) {
+      var me = this;
+      var id        = party_id - 1;
+      var name  = party_data["partido_" + party_id][0];
+      var value = party_data["partido_" + party_id][1];
+
+      var clase     = "otros";
+
+      var $p = $('div.graph_legend div.summary li.partido:eq('+id+')');
+
+      if (party_id < 4) {
+        var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
+
+        if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
+        $p.addClass(clase);
+      }
+
+      if (animated == true) {
+        var old_percent = $p.find('strong').text();
+        var old_party   = $p.find('span').text();
+
+        if (old_percent != percent || (partido != null && old_party != partido)) {
+          $p.find('> *').fadeOut("slow", function() { renderTotalNumber($p, id, percent, partido); $p.find('> *').fadeIn("slow"); });
+        }
+      } else {
+        renderTotalNumber($p, id, percent, partido);
+      }
+    }
+
+    function renderTotalNumber($div, id, value, name) {
+      if (name != null) {
+        $div.show();
+        $div.find('strong').text(value);
+        $div.find('span').text(name.toUpperCase());
+      } else {
+        $div.hide();
+      }
     }
 
     function changeData(results,names,parent_url) {
@@ -687,17 +732,20 @@ function initializeGraph() {
         drawPartyBar(results,2);
         drawPartyBar(results,3);
 
-
         // Other
         bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
         $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
         $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
         showLegend();
       } else {
+
         $('div.graph_legend div.summary').show();
         $('div.graph_legend h2').html($('div.select.selected span.inner_select a').text() + ' España'  + '<sup>('+year+')</sup>').show();
         $('div.graph_legend p.autonomy').show();
         $('div.graph_legend p.autonomy a').unbind('click');
+
+        //drawTotalNumber(results, 1, false);
+
         showSearch();
       }
     }
@@ -827,7 +875,7 @@ function updateBubbles(url){
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      console.log("Update 404", url);
+      //console.log("Update 404", url);
       return;
     }
 
@@ -906,10 +954,10 @@ function goDeeper(url){
 
   name = url_split[url_split_length].split(normalization[compare])[0].substring(0, length-1);
 
-  // console.log("url_split", url_split);
-  // console.log("deep", deep);
-  // console.log("name", name);
-  // console.log("compare", normalization[compare], normalization[compare], compare);
+  //console.log("url_split", url_split);
+  //console.log("deep", deep);
+  //console.log("name", name);
+  //console.log("compare", normalization[compare], compare);
 
   graphLegend.hideError();
   graphBubbleTooltip.hide();
@@ -958,15 +1006,14 @@ function addNewBubble(region) {
 
     if (selectedBubble !== undefined) {
       $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
-
     }
+
     selectedBubble = region;
 
     $('div.bubbleContainer[id="'+region+'"]').css({'z-index':graph_bubble_index});
     $('div.bubbleContainer[id="'+region+'"] div.outerBubble').css("background", "#333333");
-
-      $("div#" + selectedBubble + " p.region_name").css("color","#333333");
-      $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
+    $("div#" + selectedBubble + " p.region_name").css("color","#333333");
+    $("div#" + selectedBubble + " p.region_name").addClass("white_shadow");
 
   } else {
     var count = 0;
