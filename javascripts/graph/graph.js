@@ -185,7 +185,9 @@ function initializeGraph() {
         } else {
           var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         }
-        text = _.template(text)({media : media});
+
+        var last_year = lastAvailableYear();
+        text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
         $('div#graph_infowindow p.info').html(text);
       }
