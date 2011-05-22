@@ -26,6 +26,8 @@ chooseMessage = (function() {
     ev.stopPropagation();
     ev.preventDefault();
     hideError();
+
+
     var text = $("div.select div.option_list ul li a.paro").text();
     $("div.select div.outer_select.money").parent().addClass("selected");
     $("div.select div.outer_select.money span.inner_select a").text(text);
@@ -37,6 +39,7 @@ chooseMessage = (function() {
     } else {
       restartGraph();
     }
+    drawNoDataBars();
   });
 
   function showError() {
