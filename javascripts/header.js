@@ -195,7 +195,11 @@
           var info = tooltipInfo[title];
 
           if (info !== undefined) {
-            $("div.info_tooltip h5").text(title);
+            if (title=="Parados larga dur...") {
+              $("div.info_tooltip h5").text('Parados larga duración');
+            } else {
+              $("div.info_tooltip h5").text(title);
+            }
             $("div.info_tooltip p").text(info.content);
             $("div.info_tooltip ul li.left").html("<span>-25</span>" + info.left);
             $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);

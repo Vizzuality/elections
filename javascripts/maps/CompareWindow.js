@@ -29,8 +29,7 @@
             '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
             '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
             '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
-          '</div>'+
+            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+          '</div>'+
           '<div class="summary">'+
           '<h4>Municipios en los que es el más votado...</h4>'+
           '<ul>'+
@@ -49,6 +48,9 @@
           '</div>'+
         '</div>'+
         '<div id="compare_region2" class="bottom search">'+
+          '<div class="province">'+
+            '<p>Elije una provincia para comparar</p>'+
+          '</div>'+
           '<div class="search">'+
             '<h4>Selecciona otro lugar para comparar...</h4>'+
             '<form class="search_compare">'+
@@ -65,8 +67,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
-            '</div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+            '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
             '<ul>'+
@@ -185,6 +186,7 @@
       $('div.stats_slider').empty();
     	//Reset
     	this.resetSearch();
+    	this.refreshBottom();
     	// Move slider to the start
     	$('div.outer_stats_slider').scrollTo({top:'0',left:'0'}, 1);
     	//Create charts
@@ -337,7 +339,8 @@
         // Other
         bar_width = (info['data'][year]['otros_partido_percent']*200)/100;
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        // $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+sanitizeRTVE(info.autonomia)+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
         $('div#comparewindow div#compare_region2 div.stats').show();
 
       }
@@ -407,8 +410,8 @@
 
         bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p').text('OTROS ('+data['data'][year]['otros_partido_percent']+'%)');
-
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p a').text('OTROS ('+data['data'][year]['otros_partido_percent']+'%)');
+        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
       }
     }
 
@@ -493,10 +496,9 @@
       // Si hay los dos y cierras el de abajo -> Muestras buscador abajo
       if (from=="region") {
         // Clean graph second
+        $('div#comparewindow div.bottom').removeClass('region');
         this.cleanSecondRegion();
-
         this.resetSearch();
-        $('div#comparewindow div.bottom').addClass('search').removeClass('region');
         return false;
       }
 
@@ -506,7 +508,8 @@
         this.secondData = {};
         this.compareFirstRegion(this.firstData);
         this.resetSearch();
-        $('div#comparewindow div.bottom').addClass('search').removeClass('region');
+        $('div#comparewindow div.bottom').removeClass('region');
+        this.refreshBottom();
         return false;
       }
     }
@@ -632,6 +635,23 @@
       $('div.stats_slider div.block').each(function(i,ele){
         $(ele).find('.second').remove();
       });
+      this.refreshBottom();
+    }
+    
+    CompareWindow.prototype.refreshBottom = function() {
+      if (!$('div#comparewindow div.bottom').hasClass('region')) {
+        $('div#comparewindow div.bottom').removeClass('search province')
+        var zoom = peninsula.getZoom();
+        if (zoom==6) {
+          $('div#comparewindow div.bottom div.province p').text('Selecciona otra autonomía en el mapa');
+          $('div#comparewindow div.bottom').addClass('province');
+        } else if (zoom>6 && zoom<9) {
+          $('div#comparewindow div.bottom div.province p').text('Selecciona otra provincia en el mapa');
+          $('div#comparewindow div.bottom').addClass('province');
+        } else {
+          $('div#comparewindow div.bottom').addClass('search');
+        }      
+      }
     }
 
 

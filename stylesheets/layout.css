@@ -323,8 +323,14 @@ div.compare_graph div.stats_slider div.block img {position:absolute; top:50%; ri
 div#comparewindow div.bottom {display:inline-block; width:356px; padding:15px 0 28px 0; background:url('../images/compare_bottom_bkg.png') no-repeat 0 bottom;}
 div#comparewindow div.bottom.search div.search {display:block;}
 div#comparewindow div.bottom.search div.region {display:none;}
+div#comparewindow div.bottom.search div.province {display:none;}
 div#comparewindow div.bottom.region div.search {display:none;}
 div#comparewindow div.bottom.region div.region {display:block;}
+div#comparewindow div.bottom.region div.province {display:none;}
+div#comparewindow div.bottom.province div.search {display:none;}
+div#comparewindow div.bottom.province div.region {display:none;}
+div#comparewindow div.bottom.province div.province {display:block;}
+div#comparewindow div.bottom.province div.province {width:277px; margin:0 0 0 40px; padding:4px 0 3px 0; text-align:left; font:normal 13px "Officina Regular"; color:#666666;}
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div.bottom form {position:relative; float:left; width:276px; height:28px; margin:5px 0 0; padding:0 0 0 40px;}
 div#comparewindow div.bottom form input#google_compare_autocomplete {display:inline-block; width:244px; height:13px; margin:0!important; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
