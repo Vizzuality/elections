@@ -441,13 +441,13 @@ function initializeGraph() {
         var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
 
 
-        $('div#graph_infowindow a.more').mouseenter(function(ev){
-          $("div#graph_infowindow div.bottom div.warning").fadeIn();
-        });
+       // $('div#graph_infowindow a.more').mouseenter(function(ev){
+       //   $("div#graph_infowindow div.bottom div.warning").fadeIn();
+       // });
 
-        $('div#graph_infowindow a.more').mouseleave(function(ev){
-          $("div#graph_infowindow div.bottom div.warning").fadeOut();
-        });
+       // $('div#graph_infowindow a.more').mouseleave(function(ev){
+       //   $("div#graph_infowindow div.bottom div.warning").fadeOut();
+       // });
 
         $('div#graph_infowindow a.more').click(function(ev){
           ev.stopPropagation();
@@ -910,6 +910,8 @@ function updateBubbles(url){
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
         if (deep != "municipios") {
+          //$('div.graph_legend div.summary h4').text(deep + " en los que es el más votado");
+
           $('div.graph_legend div.summary li.partido').each(function(i,ele){
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
           });
