@@ -46,7 +46,7 @@ div#header div.share div.outer_share a.twitter:hover {background-position:right 
 div#header div.share div.outer_share p.total {float:left; width:23px; margin:0; padding:6px 0 0 0; text-align:center; font:bold 11px Arial; color:#A5A5A5; text-shadow:0 1px white; line-height:11px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 
 div#header div.secondContainer div.right {float:right; width:650px; margin:0 7px 0 0; padding:0;}
-div#header div.secondContainer div.right div.info_tooltip{position:absolute; display:none; top:125px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
+div#header div.secondContainer div.right div.info_tooltip{position:absolute; display:none; top:128px; width:231px; height:211px; background:url('../images/info_tooltip_bottom.png') no-repeat 0 100%; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.top{position:relative; top:-25px; float:right; width:231px; height:27px; background:url('../images/info_tooltip_top.png') no-repeat 0 0; z-index:50; }
 div#header div.secondContainer div.right div.info_tooltip div.content {width:180px; position:relative; top: -15px; margin-left: 27px;}
 div#header div.secondContainer div.right div.info_tooltip div.content h5 {margin-bottom: 10px; font:normal 15px "Officina Regular"; color:#000000; line-height: 15px; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
