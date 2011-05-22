@@ -76,6 +76,7 @@
         dataType: 'json',
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
+
           me.loading_tiles--;
           if (me.loading_tiles == 0) {
             hideLoader();

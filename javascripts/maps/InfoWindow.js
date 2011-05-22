@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/la-rioja/provincias/la-rioja/municipios/arenzana-de-arriba/" target="_blank">OTROS (61%)</a></p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -114,6 +114,7 @@
       }
     };
 
+
     InfoWindow.prototype.drawTotalNumber = function(party_id, info, animated) {
       var me        = this;
       var id        = party_id - 1;
@@ -143,6 +144,7 @@
       }
     }
 
+
     InfoWindow.prototype.renderTotalNumber = function($div, id, value, name) {
       if (name != null) {
         $div.show();
@@ -152,6 +154,7 @@
         $div.hide();
       }
     }
+
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
       var id = party_id - 1;
@@ -175,10 +178,11 @@
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
         $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
+
 
     InfoWindow.prototype.setPosition = function(latlng,occ_offset,info) {
       var me = this;
@@ -192,7 +196,7 @@
       $('div#infowindow div.chart img').hide();
 
       $('div#infowindow h2').html(info.name);
-      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
+      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
 
 
       if (info['data'][year]['primer_partido_name']!=undefined) {
@@ -250,7 +254,11 @@
         } else {
           var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         }
-        text = _.template(text)({media : media});
+        
+        var last_year = lastAvailableYear();
+        text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
+
+
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
       } else {
@@ -419,7 +427,8 @@
           } else {
             var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
           }
-          text = _.template(text)({media : media});
+          var last_year = lastAvailableYear();
+          text = _.template(text)({media : media, yearSim: (last_year<year)?last_year:year});
           // Change image url
           var statImage = this.generateStatImage();
           $('div#infowindow img').attr('src',statImage.url);
@@ -485,6 +494,7 @@
 
       this.map_.panBy(left,top);
     }
+    
 
 
     InfoWindow.prototype.generateStatImage = function() {

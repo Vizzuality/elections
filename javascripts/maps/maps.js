@@ -68,7 +68,7 @@
        name: "Political parties tiles",
        alt: ""
     });
-    peninsula.overlayMapTypes.insertAt(1,political_parties);
+    peninsula.overlayMapTypes.insertAt(0,political_parties);
 
 
 
@@ -79,7 +79,7 @@
     explanationwindow = new ExplanationWindow();
     aboutwindow 			= new AboutWindow();
 
-    peninsula.overlayMapTypes.setAt(2, new CoordMapType(new google.maps.Size(256, 256)));
+    peninsula.overlayMapTypes.setAt(1, new CoordMapType(new google.maps.Size(256, 256)));
 
 
     /* initialize search component */
@@ -259,6 +259,10 @@
     }
     previous_zoom = peninsula.getZoom();
     drawNoDataBars();
+    
+    if (comparewindow.isVisible()) {
+      comparewindow.refreshBottom();
+    }
 
     if (loaded) {
       failCircle.reset();
