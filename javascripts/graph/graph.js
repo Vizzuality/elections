@@ -24,7 +24,6 @@ chooseMessage = (function() {
     hideError();
 
 
-
     var text = $("div.select div.option_list ul li a.envejecimiento").text();
     $("div.select div.outer_select.people").parent().addClass("selected");
     $("div.select div.outer_select.people span.inner_select a").text(text);
@@ -92,7 +91,11 @@ function initializeGraph() {
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
         $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
-        $(this).parent().children('p.region_name').css("color","#fff");
+        if (ie_) {
+          $(this).parent().children('p.region_name').css("color","black");
+        } else {
+          $(this).parent().children('p.region_name').css("color","#fff");
+        }
         $(this).parent().children('p.region_name').addClass("dark_shadow");
         $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
@@ -153,7 +156,7 @@ function initializeGraph() {
       '    <div class="chart">'+
       '      <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
       '    </div>'+
-      '    <div class="warning">No hay datos de paro a nivel de provincia</div>' +
+      '    <div class="warning"><span>No hay datos de paro a nivel de provincia</span><div class="tip"></div></div>' +
       '    <a class="more">Ver más</a>'+
       '    <a class="compare">Comparar</a>'+
       '  </div>'+
@@ -182,7 +185,9 @@ function initializeGraph() {
         } else {
           var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
         }
-        text = _.template(text)({media : media});
+
+        var last_year = lastAvailableYear();
+        text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
         $('div#graph_infowindow p.info').html(text);
       }
@@ -194,6 +199,53 @@ function initializeGraph() {
         } else {
           $('div#graph_infowindow a.compare').show();
         }
+
+        $('div#graph_infowindow a.more').unbind('click');
+        $('div#graph_infowindow a.more').unbind('mouseenter').unbind('mouseleave');
+
+        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
+
+        if (deep == "provincias"){
+          deep_level = "municipios";
+        } else if (deep == "autonomias"){
+          deep_level = "provincias";
+        }
+
+        var data = var_resolutions[deep_level];
+        //console.log(data, deep_level);
+
+        if (data == undefined || data[normalization[compare]] == null || _.indexOf(data[normalization[compare]], year) == -1) {
+         // console.log("no hay datos");
+          $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
+
+          $('div#graph_infowindow a.more').mouseenter(function(ev){
+            $("div#graph_infowindow div.bottom div.warning").show();
+          });
+
+          $('div#graph_infowindow a.more').mouseleave(function(ev){
+            $("div#graph_infowindow div.bottom div.warning").hide();
+          });
+        } else {
+
+          $('div#graph_infowindow a.more').click(function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            graphBubbleTooltip.hide();
+            graphBubbleInfowindow.hide();
+
+            var $selectedBubble = $("div#" + selectedBubble);
+            var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
+            if (url === null) {
+              return false;
+            } else {
+              goDeeper(global_url + "/" + url);
+            }
+          });
+
+        }
+
 
         if ( $.browser.msie ) {
           $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
@@ -429,39 +481,6 @@ function initializeGraph() {
               }
             });
 
-          }
-        });
-
-        console.log(deep, var_resolutions);
-
-        $('div#graph_infowindow a.more').unbind('mouseenter');
-        $('div#graph_infowindow a.more').unbind('mouseleave');
-
-        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
-        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
-
-
-       // $('div#graph_infowindow a.more').mouseenter(function(ev){
-       //   $("div#graph_infowindow div.bottom div.warning").fadeIn();
-       // });
-
-       // $('div#graph_infowindow a.more').mouseleave(function(ev){
-       //   $("div#graph_infowindow div.bottom div.warning").fadeOut();
-       // });
-
-        $('div#graph_infowindow a.more').click(function(ev){
-          ev.stopPropagation();
-          ev.preventDefault();
-
-          graphBubbleTooltip.hide();
-          graphBubbleInfowindow.hide();
-
-          var $selectedBubble = $("div#" + selectedBubble);
-          var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
-          if (url === null) {
-            return false;
-          } else {
-            goDeeper(global_url + "/" + url);
           }
         });
 
@@ -825,7 +844,7 @@ function createBubbles(url){
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
-      console.log("Create 404", url);
+      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -942,11 +961,11 @@ function updateBubbles(url){
 function updateBubble (id, x, y, val, colors, party) {
   var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
-  var backgroundColor = ((colors != null) ? dominantColor : "purple");
+  var backgroundColor = ((colors != null) ? dominantColor : "#FF9820");
 
-  // if the party we're paiting is not on the main parties list, let's paint it purple
+  // if the party we're paiting is not on the main parties list, let's paint it #FF9820
   if (party != undefined && _.indexOf(parties, normalizePartyName(party)) == -1)  {
-    backgroundColor = "purple";
+    backgroundColor = "#FF9820";
   }
 
   // Bubbles animations

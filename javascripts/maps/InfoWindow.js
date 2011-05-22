@@ -222,8 +222,7 @@
 
           $('div#infowindow div.stats').show();
           $('div#infowindow div.summary').hide();
-        }
-        else {
+        } else {
           for (var i = 1; i <= 4; i++) {
             this.drawTotalNumber(i, info);
           }
@@ -274,11 +273,14 @@
 						msg += 'este municipio';
 					}
 					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+				} else {
+				  msg = "Selecciona una variable en la zona superior para compararla con los datos electorales";
 				}
         $('div#infowindow p.info').html(msg);
         $('div#infowindow div.chart').hide();
       }
-
+      
+      
       if (this.deep_level=="municipios") {
         $('div.infowindow a.goTo').hide();
       } else if (this.deep_level=="provincias") {
@@ -446,6 +448,8 @@
   						msg += 'este municipio';
   					}
   					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+  				} else {
+  				  msg = "Selecciona una variable en la zona superior para compararla con los datos electorales";
   				}
           $('div#infowindow p.info').html(msg);
           $('div#infowindow div.chart').hide();
