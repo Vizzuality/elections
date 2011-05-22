@@ -47,6 +47,7 @@ def queries_by_zoom(x, y, z)
          SELECT
           id_2 AS id,
           name_2 AS name,
+          name_1 AS autonomia,
           pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
@@ -80,6 +81,7 @@ def queries_by_zoom(x, y, z)
           i.cartodb_id AS id,
           i.nombre AS name,
           i.provincia_name AS provincia,
+          g2.name_1 AS autonomia,
           pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
@@ -94,17 +96,18 @@ def queries_by_zoom(x, y, z)
           pp3.name AS tercer_partido_name,
           resto_partido_votos AS otros_partido_votos,
           resto_partido_percent AS otros_partido_percent,
-          center_longitude,
-          center_latitude,
+          i.center_longitude,
+          i.center_latitude,
           #{vars_sql_select(4)}
          FROM ine_poly AS i
+         INNER JOIN gadm2 g2 ON g2.cc_2 = i.codineprov
          LEFT JOIN votaciones_por_municipio AS v ON i.ine_prov_int = v.codineprov AND i.ine_muni_int = v.codinemuni
          LEFT JOIN procesos_electorales AS pe ON pe.cartodb_id = v.proceso_electoral_id
          LEFT JOIN vars_socioeco_x_municipio AS vsm ON vsm.gadm4_cartodb_id = i.cartodb_id
          LEFT JOIN partidos_politicos AS pp1 ON pp1.cartodb_id = v.primer_partido_id
          LEFT JOIN partidos_politicos AS pp2 ON pp2.cartodb_id = v.segundo_partido_id
          LEFT JOIN partidos_politicos AS pp3 ON pp3.cartodb_id = v.tercer_partido_id
-         WHERE v_get_tile(#{x},#{y},#{z}) && centre_geom_webmercator
+         WHERE v_get_tile(#{x},#{y},#{z}) && i.centre_geom_webmercator
         SQL
       )
   }
@@ -189,6 +192,7 @@ zoom_levels.each do |z|
             :center_latitude => records.first.center_latitude
           }
           data[:provincia] = records.first.provincia if records.first[:provincia]
+          data[:autonomia] = records.first.autonomia if records.first[:autonomia]
           data[:data] = create_years_hash(records, variables, max_year, min_year)
           json << data
         end
