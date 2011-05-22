@@ -35,12 +35,12 @@ votes_per_autonomy = cartodb.query(query)[:rows]
 #############
 evolution = {}
 puts
-variables_json = {}
+# variables_json = {}
 parties_results = {}
 
 variables.each do |variable|
   custom_variable_name = variable.gsub(/_\d+$/,'')
-  variables_json[custom_variable_name] ||= []
+  # variables_json[custom_variable_name] ||= []
   evolution[custom_variable_name] ||= {} 
   all_evolutions = get_autonomies_variable_evolution(variable)
   unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
@@ -57,10 +57,6 @@ variables.each do |variable|
     cartodb.query(query).rows.each do |row|
       parties_results[proceso_electoral_id][row[:primer_partido_id]] ||= 0
       parties_results[proceso_electoral_id][row[:primer_partido_id]] += 1
-      # parties_results[proceso_electoral_id][row[:segundo_partido_id]] ||= 0
-      # parties_results[proceso_electoral_id][row[:segundo_partido_id]] += 1
-      # parties_results[proceso_electoral_id][row[:tercer_partido_id]] ||= 0
-      # parties_results[proceso_electoral_id][row[:tercer_partido_id]] += 1
       parties_results[proceso_electoral_id]["Otros"] ||= 0
       parties_results[proceso_electoral_id]["Otros"] += 1
     end
@@ -91,7 +87,7 @@ variables.each do |variable|
     end
   end
   
-  variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
+  # variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
   max_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.max
   min_y = votes_per_autonomy.map{ |h| h[variable.to_sym ].to_f }.compact.min
   max_x = votes_per_autonomy.select{|h| h[:proceso_electoral_id] == proceso_electoral_id }.map{|h| h[:primer_partido_votos].to_f - h[:segundo_partido_votos].to_f }.compact.max
@@ -138,11 +134,11 @@ variables.each do |variable|
   fd.close
 end
 
-puts 
-
-variables_json.each do |k,v|
-  variables_json[k] = v.compact.uniq.sort
-end
-fd = File.open('../graphs/meta/autonomias.json','w+')
-fd.write(Yajl::Encoder.encode(variables_json))
-fd.close
+# puts 
+# 
+# variables_json.each do |k,v|
+#   variables_json[k] = v.compact.uniq.sort
+# end
+# fd = File.open('../graphs/meta/autonomias.json','w+')
+# fd.write(Yajl::Encoder.encode(variables_json))
+# fd.close
