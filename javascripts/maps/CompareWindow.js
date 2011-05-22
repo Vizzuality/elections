@@ -533,8 +533,6 @@
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
           var min_ = max_min_avg[ele+'_'+year+'_min'];
-          console.log(max_,min_);
-          
 
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
