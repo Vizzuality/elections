@@ -299,7 +299,7 @@ div.compare_graph div.stats_slider {width:298px; height:220px;} /* each block 29
 div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; padding:0!important; margin:0!important; overflow:hidden;}
 div.compare_graph div.stats_slider div.up {background:url('../images/compare_graph_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.down {background:url('../images/graph_compare_evolution_bkg.png') no-repeat center center;}
-div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:10px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
+div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block h3 {position:absolute; top:5px; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
 div.compare_graph div.stats_slider div.block span.bar {position:absolute; width:10px; height:6px; background-image:url('../images/compare_graph_bars.png');}
@@ -313,8 +313,8 @@ div.compare_graph div.stats_slider div.block span.data.negative {color:#666666; 
 div.compare_graph div.stats_slider div.block span.data.first {top:23px;}
 div.compare_graph div.stats_slider div.block span.data.second {top:71px;}
 div.compare_graph div.stats_slider div.block span.name {position:absolute; left:15px; background:url('../images/graph_evolution_name_bkg.png') no-repeat 0 5px; padding:0 0 0 10px; font:normal 13px "Officina Regular"; color:#999999;}
-div.compare_graph div.stats_slider div.block span.name.first {top:10px;}
-div.compare_graph div.stats_slider div.block span.name.second {bottom:10px; background-position:0 -25px;}
+div.compare_graph div.stats_slider div.block span.name.first {top:5px;}
+div.compare_graph div.stats_slider div.block span.name.second {bottom:5px; background-position:0 -25px;}
 div.compare_graph div.stats_slider div.block span.error {position:absolute; left:118px; font:normal 12px "Officina Regular"; color:#999999;}
 div.compare_graph div.stats_slider div.block span.error.first {top:30px;}
 div.compare_graph div.stats_slider div.block span.error.second {bottom:30px;}

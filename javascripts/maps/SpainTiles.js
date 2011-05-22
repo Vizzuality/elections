@@ -13,6 +13,8 @@
 
     // Create the div tile
     var div = ownerDocument.createElement('div');
+    // div.style.border = "1px solid red";
+    // div.innerHTML = coord.x+'_'+coord.y+'_'+zoom;
     div.setAttribute('class','tile');
     div.style.zIndex = 0;
     div.style.width = this.tileSize.width + 'px';
@@ -76,6 +78,7 @@
         dataType: 'json',
         url: global_url + me.json_tile_url + bubbles_version +"/" +z+'_'+x+'_'+y+'.json',
         success: function(points) {
+
           me.loading_tiles--;
           if (me.loading_tiles == 0) {
             hideLoader();
