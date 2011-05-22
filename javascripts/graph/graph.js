@@ -153,7 +153,7 @@ function initializeGraph() {
       '    <div class="chart">'+
       '      <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
       '    </div>'+
-      '    <div class="warning">No hay datos de paro a nivel de provincia<div class="tip"></div></div>' +
+      '    <div class="warning"><span>No hay datos de paro a nivel de provincia</span><div class="tip"></div></div>' +
       '    <a class="more">Ver más</a>'+
       '    <a class="compare">Comparar</a>'+
       '  </div>'+
@@ -194,6 +194,53 @@ function initializeGraph() {
         } else {
           $('div#graph_infowindow a.compare').show();
         }
+
+        $('div#graph_infowindow a.more').unbind('click');
+        $('div#graph_infowindow a.more').unbind('mouseenter').unbind('mouseleave');
+
+        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
+
+        if (deep == "provincias"){
+          deep_level = "municipios";
+        } else if (deep == "autonomias"){
+          deep_level = "provincias";
+        }
+
+        var data = var_resolutions[deep_level];
+        //console.log(data, deep_level);
+
+        if (data == undefined || data[normalization[compare]] == null || _.indexOf(data[normalization[compare]], year) == -1) {
+         // console.log("no hay datos");
+          $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
+
+          $('div#graph_infowindow a.more').mouseenter(function(ev){
+            $("div#graph_infowindow div.bottom div.warning").show();
+          });
+
+          $('div#graph_infowindow a.more').mouseleave(function(ev){
+            $("div#graph_infowindow div.bottom div.warning").hide();
+          });
+        } else {
+
+          $('div#graph_infowindow a.more').click(function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            graphBubbleTooltip.hide();
+            graphBubbleInfowindow.hide();
+
+            var $selectedBubble = $("div#" + selectedBubble);
+            var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
+            if (url === null) {
+              return false;
+            } else {
+              goDeeper(global_url + "/" + url);
+            }
+          });
+
+        }
+
 
         if ( $.browser.msie ) {
           $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
@@ -432,38 +479,6 @@ function initializeGraph() {
           }
         });
 
-        console.log(deep, var_resolutions);
-
-        $('div#graph_infowindow a.more').unbind('mouseenter');
-        $('div#graph_infowindow a.more').unbind('mouseleave');
-
-        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
-        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
-
-
-        $('div#graph_infowindow a.more').mouseenter(function(ev){
-          $("div#graph_infowindow div.bottom div.warning").fadeIn();
-        });
-
-        $('div#graph_infowindow a.more').mouseleave(function(ev){
-          $("div#graph_infowindow div.bottom div.warning").fadeOut();
-        });
-
-        $('div#graph_infowindow a.more').click(function(ev){
-          ev.stopPropagation();
-          ev.preventDefault();
-
-          graphBubbleTooltip.hide();
-          graphBubbleInfowindow.hide();
-
-          var $selectedBubble = $("div#" + selectedBubble);
-          var url = valuesHash[$selectedBubble.attr('id')].children_json_url;
-          if (url === null) {
-            return false;
-          } else {
-            goDeeper(global_url + "/" + url);
-          }
-        });
 
         $('div#graph_infowindow a.close_infowindow').click(function(ev){
           ev.stopPropagation();
