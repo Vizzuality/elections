@@ -3,7 +3,7 @@
 require "rubygems"
 require "bundler/setup"
 require "cartodb-rb-client"
-# require "ruby-debug"
+require "ruby-debug"
 require "yajl"
 require "net/https"
 require 'uri'
@@ -410,6 +410,16 @@ def create_years_hash(records, variables, max_year, min_year)
 
   years = {}
 
+  vars_socioeco_periods = {
+    1987 => [1987, 1988, 1989, 1990],
+    1991 => [1991, 1992, 1993, 1994],
+    1995 => [1995, 1996, 1997, 1998],
+    1999 => [1999, 2000, 2001, 2002],
+    2003 => [2003, 2004, 2005, 2006],
+    2007 => [2007, 2008, 2009, 2010, 2011],
+    2011 => []
+  }
+
   electoral_periods = {
     1987 => [1987, 1988, 1989, 1990],
     1991 => [1991, 1992, 1993, 1994],
@@ -422,11 +432,16 @@ def create_years_hash(records, variables, max_year, min_year)
 
   records.sort!{|x, y| x.proceso_electoral_year <=> y.proceso_electoral_year}
 
-  min_year.upto(max_year) do |year|
+  min_year.upto(2011) do |year|
     data = years[year] || {}
 
     variables.each do |variable|
-      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{year}".to_sym]
+      variable_year = year
+      # debugger
+      while records.first["#{variable.codigo}_#{variable_year}".to_sym].nil? && variable_year >= min_year do
+        variable_year -= 1
+      end
+      data[variable.codigo.to_sym] = records.first["#{variable.codigo}_#{variable_year}".to_sym].to_f.round(2) if records.first["#{variable.codigo}_#{variable_year}".to_sym]
     end
 
     data[:censo_total]             = nil
