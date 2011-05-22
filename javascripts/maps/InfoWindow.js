@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (61%)</p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/la-rioja/provincias/la-rioja/municipios/arenzana-de-arriba/" target="_blank">OTROS (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -154,7 +154,6 @@
     }
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
-    console.log(info);
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
@@ -176,7 +175,8 @@
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq('+id+') p').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
 
@@ -283,8 +283,6 @@
         $('div.infowindow a.goTo').show('Ver provincias');
       }
 
-
-      //'<a href="#ver_provincias" class="goTo">Ver provincias</a>'+
 
       var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
       me.offsetVertical_ = - $('div#infowindow div.bottom').height() - $('div#infowindow div.footer').height() - $('div#infowindow div.top').height() - 10;

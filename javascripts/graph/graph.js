@@ -64,10 +64,10 @@ function initializeGraph() {
 
   $('.text').live("change", function(ev) {
     value = $(".text option:selected").val();
-    addNewBubble(value);
+    if (value) {
+      addNewBubble(value);
+    }
   });
-
-
 
   $(".innerBubble").live({
     mouseenter: function () {
@@ -873,10 +873,23 @@ function updateBubble (id, x, y, val, colors, party) {
 
 function updateSelect(values) {
   var options = $("select.text");
-  $("select.text").empty();
-  $.each(values, function() {
-    options.append($("<option />").val(replaceWeirdCharacters(this.name)).text(this.name));
-  });
+
+  if (options) {
+    $("select.text").empty();
+
+    var region = { municipios : "un muncipio", provincias : "una provincia", autonomias: "una autonomía"}
+    options.append($("<option />").val("").text("Busca " + region[deep]));
+
+    $.each(values, function() {
+
+      // Let's get rid of parenthesis
+      var option_name = this.name.replace("(", "");
+      option_name = option_name.replace(")", "");
+      option_name = replaceWeirdCharacters(option_name);
+
+      options.append($("<option />").val(option_name).text(this.name));
+    });
+  }
 }
 
 function goDeeper(url){
@@ -925,12 +938,12 @@ function destroyBubble(b, url){
     top: displacementY,
     opacity: "0"
   }, 500, function(){
-    console.log(nBubbles, " removing "+b);
+    //console.log(nBubbles, " removing "+b);
     $("#"+b).remove();
     nBubbles = nBubbles-1;
 
     if(nBubbles == 0){
-      console.log("All bubbles were removed", valuesHash, valuesHash.length);
+      //console.log("All bubbles were removed", valuesHash, valuesHash.length);
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }
