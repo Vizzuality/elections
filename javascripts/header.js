@@ -5,10 +5,9 @@
   var animate_interval;
   var animation = false;
   var previous_year;
-  var failCircle;
+  var failCircle,noyear_slider;
   var deep_interval;
 
-  var years_nodata = {};
 
   function getDeepLevelFromZoomLevel(zoom_level) {
     if (zoom_level == 6) {
@@ -23,10 +22,231 @@
   function initializeHeader() {
     var deep_level = getDeepLevelFromZoomLevel(start_zoom);
 
-    /* Receive all the vars without data */
-    getUnavailableData(deep_level);
-
     updateWadusText();
+    
+    /* No year data */
+    noyear_slider = (function(){
+      
+      function show() {
+        $('div#year_nodata_tooltip').stop(true).fadeTo('500',1);
+      }
+    
+      function hide() {
+        $('div#year_nodata_tooltip').stop(true).fadeTo('500',0);
+      }
+    
+      function refreshYear() {
+        if (compare!="ninguna") {
+          var last_year = lastAvailableYear();
+          if (last_year!=0 && last_year<year) {
+            $('div#year_nodata_tooltip p.nodata').text('No hay datos para '+year);
+            $('div#year_nodata_tooltip p.show').text('Te mostramos los datos del '+last_year);
+            show();
+          } else {
+            hide();
+          }
+        } else {
+          hide();
+        }
+      }
+
+      return {
+        show: show,
+        hide: hide,
+        refresh: refreshYear
+      }
+    })();
+    
+
+    /*failCircle*/
+    failCircle = (function() {
+      var showed = false;
+
+      var data_not_found = false;
+
+      $("div.fail").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        if (state == "mapa") {
+          hideError();
+        }
+      });
+
+      $("div.fail a.why").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        explanationwindow.show();
+      });
+
+      $("div.fail a.next").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        goToNextYear();
+      });
+
+      $("div.fail a.continue").live("click", function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        hideError();
+      });
+
+      function updateContent() {
+        if (state == "mapa") {
+          var $state = $("#map");
+          var deep_level = getDeepLevelFromZoomLevel((peninsula!=null)?peninsula.getZoom():start_zoom);
+          var isDataAvailableInDeep = true;
+        } else {
+          var $state = $("#graph");
+          var deep_level = deep;
+          var isDataAvailableInDeep = true;
+        }
+
+        if (var_resolutions[deep_level][normalization[compare]] == undefined) {
+          var isDataAvailableInDeep = false;
+        } else {
+          var isDataAvailableInDeep = true;
+        }
+
+        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
+
+        if (isDataAvailableInDeep == true) {
+          text = "No hay datos de "+ selected_dataset +" para este año";
+          next_link_text = "ver siguiente año con datos";
+        } else {
+          if (state == "mapa") {
+            text = "No hay datos de " + selected_dataset +  " a este nivel de zoom";
+            next_link_text = "ver siguiente nivel con datos";
+          } else {
+            text = "No hay datos de " + selected_dataset + " a este nivel de zoom";
+            next_link_text = "ir al nivel superior";
+          }
+        }
+
+        $state.find('div.content span.message').html(text);
+        $state.find('div.content a.next').html(next_link_text);
+      }
+
+      function showError() {
+        if (!showed) {
+          showed = true;
+
+          if (state == "mapa") {
+            updateContent();
+            var $state = $("#map");
+            $("div.fail").css('height','auto');
+          } else {
+            updateContent();
+            var $state = $("#graph");
+            var graph_height = $('div#graph_container').height();
+            var tabs_height = $('div.tabs').height();
+            if (graph_height>tabs_height) {
+              $("div.fail").height(graph_height);
+            }
+          }
+
+          if (data_not_found != true) {
+            $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
+          }
+        }
+      }
+
+      function resetDataNotFound() {
+        data_not_found = false;
+      }
+
+      function resetShowed() {
+        showed = false;
+      }
+
+      function hideError() {
+
+        var $state = (state == "mapa") ? $("#map") : $("#graph");
+        $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
+      }
+
+      function getNextAvailableYear(deep_level) {
+        var data = var_resolutions[deep_level][normalization[compare]];
+
+        if (data!=undefined) {
+          if (year > data[data.length - 1]) {
+            return data[data.length - 1];
+          } else {
+            return _.detect(data, function(num){ return year <= num; }); // next election year to the current year
+          }
+        } else {
+          return year;
+        }
+      }
+
+      function goToNextYear() {
+        if (state == "grafico") {
+          var next_year;
+          var data = var_resolutions[deep][normalization[compare]];
+
+          if (_.indexOf(data, year) != -1) { // let's check the current level
+            if (year > data[data.length - 1]) { // if the current year is bigger than the last year, go to the last year
+              next_year = data[data.length - 1];
+            } else if (year < data[0]) { // if it's smaller, go to the first year
+              next_year = data[0];
+            }
+          } else { // ... if not, go to the higher level
+            name = "España";
+            deep = "autonomias";
+
+            var data = var_resolutions[deep][normalization[compare]];
+
+            if (_.indexOf(data, year) != -1) { // if there's data in the same year, go to that year
+              next_year = year;
+            } else if (year > data[data.length - 1]) { // if the current year is bigger than the last year, go to the last year
+              next_year = data[data.length - 1];
+            } else if (year < data[0]) { // if it's smaller, go to the first year
+              next_year = data[0];
+            }
+          }
+
+          if (!next_year) {
+           next_year = year;
+          }
+
+          changeHash();
+          updateNewSliderValue(next_year, year);
+          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+next_year+".json");
+          drawNoDataBars();
+
+        } else if (state == "mapa") {
+          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
+
+          var next_year = getNextAvailableYear(deep_level);
+          if (next_year!=year && next_year<2012) {
+            updateNewSliderValue(next_year);
+            failCircle.hide();
+          } else {
+            peninsula.setZoom(6);
+            var next_year = getNextAvailableYear('autonomias');
+            if (next_year!=year && next_year<2012) {
+              updateNewSliderValue(next_year,year);
+            }
+          }
+        }
+      }
+
+      function hasFailed() {
+        return data_not_found;
+      }
+
+      return {
+        show: showError,
+        hide: hideError,
+        failed: hasFailed,
+        reset: resetShowed,
+        resetDataNotFound: resetDataNotFound
+      }
+    })();
+
+    drawNoDataBars();
+    noyear_slider.refresh();
 
     // Graph - Map
     if (state == "grafico") {
@@ -102,9 +322,12 @@
       animation = true;
       checkStartYear();
       $('body').click(function(ev){
+        ev.stopPropagation();
+        ev.preventDefault();
         $('a.stop').removeClass('stop').addClass('play');
         $('a.play').attr('href','#play');
         $('body').unbind('click');
+        animation = false;
         clearInterval(animate_interval);
       })
     });
@@ -114,7 +337,6 @@
       ev.stopPropagation();
       ev.preventDefault();
       animation = false;
-      clearInterval(animate_interval);
       $('body').unbind('click');
       $(this).removeClass('stop').addClass('play');
       $(this).attr('href','#play');
@@ -195,7 +417,11 @@
           var info = tooltipInfo[title];
 
           if (info !== undefined) {
-            $("div.info_tooltip h5").text(title);
+            if (title=="Parados larga dur...") {
+              $("div.info_tooltip h5").text('Parados larga duración');
+            } else {
+              $("div.info_tooltip h5").text(title);
+            }
             $("div.info_tooltip p").text(info.content);
             $("div.info_tooltip ul li.left").html("<span>-25</span>" + info.left);
             $("div.info_tooltip ul li.right").html("<span>+25</span>" + info.right);
@@ -223,7 +449,10 @@
         show_: showInfoTooltip
       };
     }());
+    
+    
 
+    
 
     /*SELECTS*/
     /*Select event*/
@@ -305,204 +534,6 @@
       }
     });
 
-    /*failCircle*/
-    failCircle = (function() {
-      var showed = false;
-
-      var data_not_found = false;
-
-      $("div.fail").live("click", function(ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-
-        if (state == "mapa") {
-          hideError();
-        }
-      });
-
-      $("div.fail a.why").live("click", function(ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        explanationwindow.show();
-      });
-
-      $("div.fail a.next").live("click", function(ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        goToNextYear();
-      });
-
-      $("div.fail a.continue").live("click", function(ev) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        hideError();
-      });
-
-      function updateContent() {
-        if (state == "mapa") {
-          var $state = $("#map");
-          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-          var isDataAvailableInDeep = true;
-        } else {
-          var $state = $("#graph");
-          var deep_level = deep;
-          var isDataAvailableInDeep = true;
-        }
-
-        if (availableData[deep_level][normalization[compare]] == undefined) {
-          var isDataAvailableInDeep = false;
-        } else {
-          var isDataAvailableInDeep = true;
-        }
-
-        if (isDataAvailableInDeep == true) {
-          text = "No hay datos para este año";
-          next_link_text = "ver siguiente año con datos";
-        } else {
-          if (state == "mapa") {
-            text = "No hay datos a este nivel de zoom";
-            next_link_text = "ver siguiente nivel con datos";
-          } else {
-            text = "No hay datos a este nivel de zoom";
-            next_link_text = "ir al nivel superior";
-          }
-        }
-
-        $state.find('div.content span.message').html(text);
-        $state.find('div.content a.next').html(next_link_text);
-      }
-
-      function showError() {
-        if (!showed) {
-          showed = true;
-
-          if (state == "mapa") {
-            updateContent();
-            var $state = $("#map");
-            $("div.fail").css('height','auto');
-          } else {
-            updateContent();
-            var $state = $("#graph");
-            var graph_height = $('div#graph_container').height();
-            var tabs_height = $('div.tabs').height();
-            if (graph_height>tabs_height) {
-              $("div.fail").height(graph_height);
-            }
-          }
-
-          if (data_not_found != true) {
-            $state.find('div.fail').fadeIn("slow", function() { data_not_found = true; });
-          }
-        }
-      }
-
-      function resetDataNotFound() {
-        data_not_found = false;
-      }
-
-      function resetShowed() {
-        showed = false;
-      }
-
-      function hideError() {
-
-        var $state = (state == "mapa") ? $("#map") : $("#graph");
-        $state.find('div.fail').fadeOut("slow", function() { data_not_found = undefined; })
-      }
-
-      function getNextAvailableYear(deep_level) {
-        var data = availableData[deep_level][normalization[compare]];
-
-        if (data!=undefined) {
-          if (year > data[data.length - 1]) {
-            return data[data.length - 1];
-          } else {
-            return _.detect(data, function(num){ return year < num; }); // next election year to the current year
-          }
-        } else {
-          return year;
-        }
-      }
-
-      function goToNextYear() {
-        if (state == "grafico") {
-          var next_year;
-
-          if (availableData[deep][normalization[compare]]) { // if there's data in the current level, pick that year
-            next_year = getNextAvailableYear(deep);
-          } else { // ... if not, go to the higher level
-            name = "España";
-            deep = "autonomias";
-            var data = availableData[deep][normalization[compare]];
-
-            if (data != undefined) { // if there's data in the upper level, let's find out where
-              next_year = _.detect(data, function(num){ return year <= num; });
-
-              if (next_year == undefined) {
-                next_year = _.detect(data, function(num){ return 2010 >= num; });
-              }
-            } else {
-              next_year = getNextAvailableYear(deep);
-            }
-          }
-
-          changeHash();
-          updateNewSliderValue(next_year, year);
-          createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+next_year+".json");
-          drawNoDataBars();
-
-        } else if (state == "mapa") {
-          var deep_level = getDeepLevelFromZoomLevel(peninsula.getZoom());
-
-          var next_year = getNextAvailableYear(deep_level);
-          if (next_year!=year && next_year<2012) {
-            updateNewSliderValue(next_year);
-            failCircle.hide();
-          } else {
-            peninsula.setZoom(6);
-
-            var deep_level = getDeepLevelFromZoomLevel(6);
-
-            if (years_nodata[deep_level]==undefined) {
-              var count = 0;
-              clearInterval(deep_interval);
-              deep_interval = setInterval(function(){
-
-                if (years_nodata[deep_level]==undefined) {
-                  count++;
-                  if (count>5) {
-                    clearInterval(deep_interval);
-                  }
-                } else {
-                  var next_year = getNextAvailableYear(deep_level);
-                  if (next_year!=year && next_year<2012) {
-                    updateNewSliderValue(next_year,year);
-                  }
-                  clearInterval(deep_interval);
-                }
-              },500);
-            } else {
-              var next_year = getNextAvailableYear(deep_level);
-              if (next_year!=year && next_year<2012) {
-                updateNewSliderValue(next_year,year);
-              }
-            }
-          }
-        }
-      }
-
-      function hasFailed() {
-        return data_not_found;
-      }
-
-      return {
-        show: showError,
-        hide: hideError,
-        failed: hasFailed,
-        reset: resetShowed,
-        resetDataNotFound: resetDataNotFound
-      }
-    })();
 
 		//
     $("span.aux_info a.more_info").click(function(ev) {
@@ -553,7 +584,7 @@
   }
 
   function getFirstAvailableYear(deep_level) {
-    var data = availableData[deep_level][normalization[compare]];
+    var data = var_resolutions[deep_level][normalization[compare]];
     if (data!=undefined && data.length>0) {
       return data[0];
     } else {
@@ -576,63 +607,39 @@
     }
   }
 
-  function getUnavailableData(deep) {
-    $.getJSON(global_url + "/graphs/meta/" + deep + ".json", function(data) {
-      years_nodata[deep] = new Object();
-      _.each(data,function(ele,i){
-        years_nodata[deep][i] = new Array();
-        years_nodata[deep][i] = ele;
-      });
-      drawNoDataBars();
-    });
-  }
 
   function removeDataBars() {
     $('span.slider_no_data_left').css({width:"0%"});
-    $('span.slider_no_data_right').css({width:"0%"});
   }
 
   function drawNoDataBars() {
     // First, let's reset the bars
     $('span.slider_no_data_left').hide();
-    $('span.slider_no_data_right').hide();
     $('span.slider_no_data_left').css({width:"0%"});
-    $('span.slider_no_data_right').css({width:"0%"});
 
     var deep_level;
 
     if (state == "mapa") {
-      var zoom = peninsula.getZoom();
+      var zoom = (peninsula!=null)?peninsula.getZoom():start_zoom;
       deep_level = getDeepLevelFromZoomLevel(zoom);
     } else {
       deep_level = deep;
     }
 
-    if (years_nodata[deep_level]==undefined) {
-      getUnavailableData(deep_level);
-      return false;
-    }
+
 
     var comparison_var = normalization[compare];
 
-    if (years_nodata[deep_level][comparison_var]!=undefined) {
+    if (var_resolutions[deep_level][comparison_var]!=undefined) {
 
-      var left_no      = years_nodata[deep_level][comparison_var][0] - 1987;
-      var length_array = years_nodata[deep_level][comparison_var].length;
-      var right_no     = 2011 - years_nodata[deep_level][comparison_var][length_array-1];
+      var left_no      = var_resolutions[deep_level][comparison_var][0] - 1987;
+      var length_array = var_resolutions[deep_level][comparison_var].length;
 
       if (left_no!=0) {
         $('span.slider_no_data_left').css({width:(left_no*4.16)+"%"});
         $('span.slider_no_data_left').show();
       } else {
         $('span.slider_no_data_left').hide();
-      }
-
-      if (right_no!=0) {
-        $('span.slider_no_data_right').css({width:(right_no*4.16)+"%"});
-        $('span.slider_no_data_right').show();
-      } else {
-        $('span.slider_no_data_right').hide();
       }
 
       if (!checkFailYear(year)) {
@@ -643,10 +650,7 @@
     } else {
       if (compare!="ninguna") {
         $('span.slider_no_data_left').css({width:"100%"});
-        $('span.slider_no_data_right').css({width:"0%"});
-
         $('span.slider_no_data_left').show();
-        $('span.slider_no_data_right').show();
         failCircle.show();
         return;
       }
@@ -662,19 +666,20 @@
   }
 
   function checkFailYearForMap(year) {
-    var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-    if (years_nodata[region_type]!=undefined && years_nodata[region_type][normalization[compare]]!=undefined) {
-      var length_array = years_nodata[region_type][normalization[compare]].length;
-      return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
+    var region_type = getDeepLevelFromZoomLevel((peninsula!=null)?peninsula.getZoom():start_zoom);
+    if (var_resolutions[region_type]!=undefined && var_resolutions[region_type][normalization[compare]]!=undefined) {
+      var length_array = var_resolutions[region_type][normalization[compare]].length;
+      return (year>=var_resolutions[region_type][normalization[compare]][0]);
     } else {
       return true;
     }
   }
+  
   function checkFailYearForGraph(year) {
     var region_type = deep;
-    if (years_nodata[region_type][normalization[compare]]!=undefined) {
-      var length_array = years_nodata[region_type][normalization[compare]].length;
-      return (year>=years_nodata[region_type][normalization[compare]][0]) && (year<=years_nodata[region_type][normalization[compare]][length_array-1]);
+    if (var_resolutions[region_type][normalization[compare]]!=undefined) {
+      var length_array = var_resolutions[region_type][normalization[compare]].length;
+      return (year>=var_resolutions[region_type][normalization[compare]][0]);
     } else {
       return true;
     }
@@ -682,6 +687,7 @@
 
   function updateNewSliderValue(new_year,previous_year) {
     $("div.year_slider").slider('value', new_year);
+    noyear_slider.refresh();
     if (state == 'mapa') {
       if (previous_year!=undefined) {
         if (graph_hack_year[previous_year] != graph_hack_year[new_year]) {
