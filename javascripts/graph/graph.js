@@ -856,6 +856,9 @@ function createBubbles(url){
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
         if (deep != "municipios") {
+
+          $('div.graph_legend div.summary h4').text(toTitleCase(deep) + " en los que es el más votado");
+
           $('div.graph_legend div.summary li.partido').each(function(i,ele){
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
           });
@@ -910,7 +913,7 @@ function updateBubbles(url){
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
         if (deep != "municipios") {
-          //$('div.graph_legend div.summary h4').text(deep + " en los que es el más votado");
+          $('div.graph_legend div.summary h4').text(toTitleCase(deep) + " en los que es el más votado");
 
           $('div.graph_legend div.summary li.partido').each(function(i,ele){
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
