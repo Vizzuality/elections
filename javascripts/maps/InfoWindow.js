@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/la-rioja/provincias/la-rioja/municipios/arenzana-de-arriba/" target="_blank">OTROS (61%)</a></p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -192,7 +192,7 @@
       $('div#infowindow div.chart img').hide();
 
       $('div#infowindow h2').html(info.name);
-      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
+      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
 
 
       if (info['data'][year]['primer_partido_name']!=undefined) {
