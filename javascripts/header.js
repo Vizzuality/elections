@@ -431,22 +431,26 @@
       function goToNextYear() {
         if (state == "grafico") {
           var next_year;
+          var data = availableData[deep][normalization[compare]];
 
-          if (availableData[deep][normalization[compare]]) { // if there's data in the current level, pick that year
-            next_year = getNextAvailableYear(deep);
+          if (_.indexOf(data, year) != -1) { // let's check the current level
+            if (year > data[data.length - 1]) { // if the current year is bigger than the last year, go to the last year
+              next_year = data[data.length - 1];
+            } else if (year < data[0]) { // if it's smaller, go to the first year
+              next_year = data[0];
+            }
           } else { // ... if not, go to the higher level
             name = "España";
             deep = "autonomias";
+
             var data = availableData[deep][normalization[compare]];
 
-            if (data != undefined) { // if there's data in the upper level, let's find out where
-              next_year = _.detect(data, function(num){ return year <= num; });
-
-              if (next_year == undefined) {
-                next_year = _.detect(data, function(num){ return 2010 >= num; });
-              }
-            } else {
-              next_year = getNextAvailableYear(deep);
+            if (_.indexOf(data, year) != -1) { // if there's data in the same year, go to that year
+              next_year = year;
+            } else if (year > data[data.length - 1]) { // if the current year is bigger than the last year, go to the last year
+              next_year = data[data.length - 1];
+            } else if (year < data[0]) { // if it's smaller, go to the first year
+              next_year = data[0];
             }
           }
 

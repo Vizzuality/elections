@@ -117,105 +117,105 @@ var normalization = {
 
 var tooltipInfo = {
   "Envejecimiento" : {
-    content: "Desviación a nivel provincial respecto a la media nacional del índice de envejecimiento.",
+    content: "Desviación respecto a la media nacional del índice de envejecimiento a nivel provincial.",
     right: "más envej.",
     left: "menos envejec.",
     legendTop: "Más % de mayores de 65 años",
     legendBottom:"Menos % de mayores de 65 años"
   },
   "Inmigración" : {
-    content: "Desviación a nivel municipal respecto a la media nacional del número de inmigrantes por habitante.",
+    content: "Desviación respecto a la media nacional del número de inmigrantes por habitante a nivel municipal .",
     left: "menos inmigr.",
     right: "más inmigr.",
     legendTop: "Más % de inmigración",
     legendBottom:"Menos % de inmigración"
   },
   "Tasa de paro" : {
-    content: "Desviación a nivel de CCAA respecto a la media nacional de la tasa de paro EPA.",
+    content: "Desviación respecto a la media nacional de la tasa de paro EPA a nivel de autonomía.",
     left: "menos parados",
     right: "más parados",
     legendTop: "Más % paro",
     legendBottom:"Menos % paro"
   },
   "PIB per cápita" : {
-    content: "Desviación a nivel provincial respecto a la media nacional del PIB por habitante.",
+    content: "Desviación respecto a la media nacional del PIB por habitante a nivel provincial.",
     left: "menos PIB",
     right: "más PIB",
     legendTop: "Más PIB per cápita",
     legendBottom:"Menos PIB per cápita"
   },
   "Matriculaciones" : {
-    content: "Desviación a nivel provincial respecto a la media nacional del número de vehículos matriculados.",
+    content: "Desviación respecto a la media nacional del número de vehículos matriculados a nivel provincial.",
     left: "menos vehic.",
     right: "más vehic.",
     legendTop: "Más vehículos",
     legendBottom:"Menos vehículos"
   },
   "Jóvenes parados" : {
-    content: "Desviación a nivel autonómico respecto la media nacional del porcentaje de jóvenes parados de larga duración.",
+    content: "Desviación respecto la media nacional del porcentaje de jóvenes parados de larga duración a nivel autonómico .",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más jóvenes parados",
     legendBottom:"Menos jóvenes parados"
   },
   "Parados larga dur..." : {
-    content: "Desviación a nivel de CCAA respecto la media nacional del porcentaje de parados por mas de 12 meses",
+    content: "Desviación respecto la media nacional del porcentaje de parados por mas de 12 meses a nivel de autonomía",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más parados",
     legendBottom:"Menos parados"
   },
   "Edad media" : {
-    content: "Desviación a nivel municipal respecto la edad media nacional en años.",
+    content: "Desviación respecto la edad media nacional en años a nivel municipal.",
     right: "más mayores",
     left: "más jóvenes",
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
   "Saldo Vegetativo" : {
-    content: "Desviación a nivel provincial respecto a la media nacional del saldo vegetativo.",
+    content: "Desviación respecto a la media nacional del saldo vegetativo a nivel provincial.",
     left: "crece poco",
     right: "crece mucho",
     legendTop: "Mayor crecimiento",
     legendBottom:"Menor crecimiento"
   },
   "Salario medio" : {
-    content: "Desviación a nivel de CCAA respecto a la media nacional del salario medio.",
+    content: "Desviación respecto a la media nacional del salario medio a nivel de CCAA.",
     left: "sueldos + bajos",
     right: "sueldos + altos",
     legendTop: "Sueldos más altos",
     legendBottom:"Sueldos más bajos"
   },
   "Estudios acabados" : {
-    content: "Desviación a nivel provincial respecto a la media del porcentaje de personas con estudios secundarios acabados.",
+    content: "Desviación respecto a la media del porcentaje de personas con estudios secundarios acabados a nivel provincial .",
     left: "menos habit.",
     right: "más habit.",
     legendTop: "Más habitantes",
     legendBottom:"Menos habitantes"
   },
   "Consumo TV" : {
-    content: "Desviación a nivel de CCAA respecto a la media nacional del consumo de tv.",
+    content: "Desviación respecto a la media nacional del consumo de tv a nivel de autonomía.",
     left: "menos tv",
     right: "más tv",
     legendTop: "Más consumo tv",
     legendBottom:"Menos consumo tv"
   },
   "Acceso Internet" : {
-    content: "Desviación a nivel de CCAA respecto a la media nacional del porcentaje de personas con acceso a internet",
+    content: "Desviación respecto a la media nacional del porcentaje de personas con acceso a internet a nivel de autonomía",
     left: "menor acceso",
     right: "mayor acceso",
     legendTop: "Más acceso a internet",
     legendBottom:"Menos acceso a internet"
   },
   "Consumo prensa" : {
-    content: "Desviación a nivel de atuonomía respecto a la media nacional del consumo de prensa.",
+    content: "Desviación respecto a la media nacional del consumo de prensa a nivel de autonomía.",
     left: "menos prensa",
     right: "más prensa",
     legendTop: "Más consumo prensa",
     legendBottom:"Menos consumo prensa"
   },
   "Detenidos" : {
-    content: "Desviación a nivel provincial respecto a la media nacional de detenidos por cada mil habitantes.",
+    content: "Desviación respecto a la media nacional de detenidos por cada mil habitantes a nivel provincial .",
     left: "menos detenidos",
     right: "más detenidos",
     legendTop: "Más detenidos",
