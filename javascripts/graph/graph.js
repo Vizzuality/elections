@@ -28,7 +28,6 @@ chooseMessage = (function() {
     hideError();
 
 
-
     var text = $("div.select div.option_list ul li a.envejecimiento").text();
     $("div.select div.outer_select.people").parent().addClass("selected");
     $("div.select div.outer_select.people span.inner_select a").text(text);
@@ -100,7 +99,11 @@ function initializeGraph() {
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
         $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
-        $(this).parent().children('p.region_name').css("color","#fff");
+        if (ie_) {
+          $(this).parent().children('p.region_name').css("color","black");
+        } else {
+          $(this).parent().children('p.region_name').css("color","#fff");
+        }
         $(this).parent().children('p.region_name').addClass("dark_shadow");
         $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
