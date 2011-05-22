@@ -20,6 +20,10 @@ function normalizeRegionName(name) {
   }
 }
 
+function sanitizeRTVE(localidad) {
+  return replaceWeirdCharacters(localidad.toLowerCase(/\(/g,'').replace(/\)/g,'').replace(/'/g,'').replace(/"/g,'').replace(/ /g,'-'));
+}
+
 var normalizedRegions =  {
   'islas_canarias': 'Islas Canarias',
   'las_palmas': 'Las Palmas',
