@@ -12,6 +12,7 @@ class MunicipalityVotes
     @party_name = nil
     @result = {}
     @name = false
+    @anteriores = false
   end
   
   def on_start_element(element, attributes)
@@ -25,9 +26,11 @@ class MunicipalityVotes
     elsif element == 'SIGLAS'
       @almost_party_name = true
     elsif element == 'PORCENTAJE'
-      @almost_percentage = true
+      @almost_percentage = true if !@anteriores
     elsif element == 'VOTOS'
       @almost_votes = true
+    elsif element == 'ANTERIORES'
+      @anteriores = true
     elsif element == 'NOMBRE'
       unless @in_party
         @name = true
@@ -39,6 +42,9 @@ class MunicipalityVotes
     case element
       when 'PARTIDO'
         @in_party = false
+        @almost_percentage = false
+        @party_name = nil
+        @almost_party_name = false
       when'PORCENTAJE'
         @almost_percentage = false
       when 'VOTOS'
@@ -49,6 +55,8 @@ class MunicipalityVotes
         @name = false
       when 'ID'
         @almost_party_id = false
+      when 'ANTERIORES'
+        @anteriores = false
     end
   end
   
@@ -148,7 +156,7 @@ class MunicipalityVotes
     else
       nil
     end
-        
+    
     @final_result = {
       :municipio_id => @municipio_id, :proceso_electoral_id => 76, 
       :mesas_electorales => nil, :censo_total=>nil, :votantes_totales=>nil, :votos_validos=>nil, :votos_en_blanco=>nil, :votos_nulos=>nil, 

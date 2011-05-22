@@ -3,7 +3,7 @@
 require "rubygems"
 require "bundler/setup"
 require "cartodb-rb-client"
-require "ruby-debug"
+# require "ruby-debug"
 require "yajl"
 require "net/https"
 require 'uri'
