@@ -395,7 +395,7 @@ var explanationContent = {
 		graphRange: "100"
   },
   "PIB per cápita" : {
-    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2010</p><p>Producto Interior Bruto en miles de euros a precios de mercado por habitante. Los valores correspondientes a los años 2007-2010 son estimaciones.</p>",
+    htmlContent: "<h1>PIB per cápita</h1><p class='rango'>Datos disponibles a nivel de provincia entre 1999 y 2008</p><p>Producto Interior Bruto en miles de euros a precios de mercado por habitante. Los valores correspondientes a los años 2007 y 2008 son estimaciones.</p>",
 		graph: true,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en bruto en <a href='http://www.ine.es/daco/daco42/cre00/serieh/cre00_sh.htm'>la web del Instituto Nacional de Estadística</a></p>",
 		units: "Mil €",
