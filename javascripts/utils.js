@@ -24,6 +24,16 @@ function sanitizeRTVE(localidad) {
   return replaceWeirdCharacters(localidad.toLowerCase().replace(/\(/g,'').replace(/\)/g,'').replace(/'/g,'').replace(/"/g,'').replace(/ /g,'-'));
 }
 
+function lastAvailableYear() {
+  var deep_level = getDeepLevelFromZoomLevel((peninsula!=null)?peninsula.getZoom():start_zoom);
+  if (var_resolutions[deep_level][normalization[compare]]!=undefined) {
+    var length_ = var_resolutions[deep_level][normalization[compare]].length;
+    return var_resolutions[deep_level][normalization[compare]][length_-1];
+  } else {
+    return 0;
+  }
+}
+
 var normalizedRegions =  {
   'islas_canarias': 'Islas Canarias',
   'las_palmas': 'Las Palmas',
