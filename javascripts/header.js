@@ -23,7 +23,7 @@
     var deep_level = getDeepLevelFromZoomLevel(start_zoom);
 
     updateWadusText();
-    
+
     /*failCircle*/
     failCircle = (function() {
       var showed = false;
@@ -73,12 +73,9 @@
         } else {
           var isDataAvailableInDeep = true;
         }
-        
-        var selected_dataset = $("div.select.selected .option_list li.selected a").text().toLowerCase();
 
-        if (selected_dataset == "parados larga dur...") {
-          selected_dataset = "parados de larga duración";
-        }
+        var first_text = $('div.select div.option_list li a.'+compare.replace(/ /g,'_')).text();
+        var selected_dataset = (first_text == "Parados larga dur...")?'parados larga duración':first_text.toLowerCase();
 
         if (isDataAvailableInDeep == true) {
           text = "No hay datos de "+ selected_dataset +" para este año";
@@ -209,7 +206,7 @@
         resetDataNotFound: resetDataNotFound
       }
     })();
-    
+
     drawNoDataBars();
 
     // Graph - Map
@@ -590,7 +587,7 @@
       deep_level = deep;
     }
 
-      
+
 
     var comparison_var = normalization[compare];
 
