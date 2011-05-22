@@ -16,6 +16,7 @@ def municipalities_data_sql
     g2.name_2 AS provincia,
     g2.name_1 AS autonomia,
     i.google_maps_name,
+    i.lavinia_url,
     pe.anyo proceso_electoral_year,
     censo_total,
     ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
@@ -81,9 +82,10 @@ municipalities_data.each do |google_maps_name, records|
     :center_longitude => records.first.center_longitude,
     :center_latitude => records.first.center_latitude
   }
-  json[:provincia] = records.first.provincia
-  json[:autonomia] = records.first.autonomia
-  json[:data] = create_years_hash(records, variables, max_year, min_year)
+  json[:provincia]   = records.first.provincia
+  json[:autonomia]   = records.first.autonomia
+  json[:lavinia_url] = records.first.lavinia_url
+  json[:data]        = create_years_hash(records, variables, max_year, min_year)
 
   unless json.nil? || json.empty?
     fd = File.open("#{json_folder+google_maps_name.normalize}.json",'w+')
