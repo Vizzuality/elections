@@ -15,6 +15,7 @@ def queries_by_zoom(x, y, z)
          SELECT
           id_1 AS id,
           name_1 AS name,
+          lavinia_url,
           pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
@@ -48,6 +49,7 @@ def queries_by_zoom(x, y, z)
           id_2 AS id,
           name_2 AS name,
           name_1 AS autonomia,
+          lavinia_url,
           pe.anyo AS proceso_electoral_year,
           censo_total,
           ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
