@@ -117,105 +117,105 @@ var normalization = {
 
 var tooltipInfo = {
   "Envejecimiento" : {
-    content: "Desviación respecto a la media nacional del índice de envejecimiento.",
+    content: "Desviación a nivel provincial respecto a la media nacional del índice de envejecimiento.",
     right: "más envej.",
     left: "menos envejec.",
     legendTop: "Más % de mayores de 65 años",
     legendBottom:"Menos % de mayores de 65 años"
   },
   "Inmigración" : {
-    content: "Desviación respecto a la media nacional del número de inmigrantes por habitante.",
+    content: "Desviación a nivel municipal respecto a la media nacional del número de inmigrantes por habitante.",
     left: "menos inmigr.",
     right: "más inmigr.",
     legendTop: "Más % de inmigración",
     legendBottom:"Menos % de inmigración"
   },
   "Tasa de paro" : {
-    content: "Desviación respecto a la media nacional de la tasa de paro EPA.",
+    content: "Desviación a nivel de CCAA respecto a la media nacional de la tasa de paro EPA.",
     left: "menos parados",
     right: "más parados",
     legendTop: "Más % paro",
     legendBottom:"Menos % paro"
   },
   "PIB per cápita" : {
-    content: "Desviación respecto a la media nacional del PIB por habitante.",
+    content: "Desviación a nivel provincial respecto a la media nacional del PIB por habitante.",
     left: "menos PIB",
     right: "más PIB",
     legendTop: "Más PIB per cápita",
     legendBottom:"Menos PIB per cápita"
   },
   "Matriculaciones" : {
-    content: "Desviación respecto a la media nacional del número de vehículos matriculados.",
+    content: "Desviación a nivel provincial respecto a la media nacional del número de vehículos matriculados.",
     left: "menos vehic.",
     right: "más vehic.",
     legendTop: "Más vehículos",
     legendBottom:"Menos vehículos"
   },
   "Jóvenes parados" : {
-    content: "Desviación respecto la media nacional del porcentaje de jóvenes parados de larga duración.",
+    content: "Desviación a nivel autonómico respecto la media nacional del porcentaje de jóvenes parados de larga duración.",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más jóvenes parados",
     legendBottom:"Menos jóvenes parados"
   },
-  "Parados larga duración" : {
-    content: "Desviación respecto la media nacional del porcentaje de parados de larga duración.",
+  "Parados larga dur..." : {
+    content: "Desviación a nivel de CCAA respecto la media nacional del porcentaje de parados por mas de 12 meses",
     left: "menos paro",
     right: "más paro",
     legendTop: "Más parados",
     legendBottom:"Menos parados"
   },
   "Edad media" : {
-    content: "Desviación respecto la edad media nacional en años.",
+    content: "Desviación a nivel municipal respecto la edad media nacional en años.",
     right: "más mayores",
     left: "más jóvenes",
     legendTop: "Más edad",
     legendBottom:"Menos edad"
   },
   "Saldo Vegetativo" : {
-    content: "Desviación respecto a la media nacional del saldo vegetativo.",
+    content: "Desviación a nivel provincial respecto a la media nacional del saldo vegetativo.",
     left: "crece poco",
     right: "crece mucho",
     legendTop: "Mayor crecimiento",
     legendBottom:"Menor crecimiento"
   },
   "Salario medio" : {
-    content: "Desviación respecto a la media nacional del salario medio.",
+    content: "Desviación a nivel de CCAA respecto a la media nacional del salario medio.",
     left: "sueldos + bajos",
     right: "sueldos + altos",
     legendTop: "Sueldos más altos",
     legendBottom:"Sueldos más bajos"
   },
   "Estudios acabados" : {
-    content: "Desviación respecto a la media del porcentaje de personas con estudios secundarios acabados.",
+    content: "Desviación a nivel provincial respecto a la media del porcentaje de personas con estudios secundarios acabados.",
     left: "menos habit.",
     right: "más habit.",
     legendTop: "Más habitantes",
     legendBottom:"Menos habitantes"
   },
   "Consumo TV" : {
-    content: "Desviación respecto a la media nacional del consumo de tv.",
+    content: "Desviación a nivel de CCAA respecto a la media nacional del consumo de tv.",
     left: "menos tv",
     right: "más tv",
     legendTop: "Más consumo tv",
     legendBottom:"Menos consumo tv"
   },
   "Acceso Internet" : {
-    content: "Desviación respecto a la media nacional del porcentaje de personas con acceso a internet",
+    content: "Desviación a nivel de CCAA respecto a la media nacional del porcentaje de personas con acceso a internet",
     left: "menor acceso",
     right: "mayor acceso",
     legendTop: "Más acceso a internet",
     legendBottom:"Menos acceso a internet"
   },
   "Consumo prensa" : {
-    content: "Desviación respecto a la media nacional del consumo de prensa.",
+    content: "Desviación a nivel de atuonomía respecto a la media nacional del consumo de prensa.",
     left: "menos prensa",
     right: "más prensa",
     legendTop: "Más consumo prensa",
     legendBottom:"Menos consumo prensa"
   },
   "Detenidos" : {
-    content: "Desviación respecto a la media nacional de detenidos por cada mil habitantes.",
+    content: "Desviación a nivel provincial respecto a la media nacional de detenidos por cada mil habitantes.",
     left: "menos detenidos",
     right: "más detenidos",
     legendTop: "Más detenidos",
@@ -325,7 +325,7 @@ var textInfoWindow = {
 
 var explanationContent = {
   "Resultados electorales" : {
-    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, número de municipios con mayor número de votantes de los diferentes partidos políticos. <br /><br />A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos. Puede acceder a los datos en bruto en</p>",
+    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, número de municipios con mayor número de votantes de los diferentes partidos políticos. <br /><br />A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos. datos en bruto en</p>",
 		graph: false,
 		sourceText: "<p class='fuente'>Puedes acceder a los datos en <a href='http://www.infoelectoral.mir.es/min/areaDescarga.html'>la web del Ministerio de Interior</a></p>",
 		units: "",
