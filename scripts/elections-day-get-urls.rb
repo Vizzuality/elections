@@ -10,8 +10,8 @@ i = 1
 fd = File.open("urls/urls-#{i}.log",'w+')
 CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :encoding => "".encoding).each do |row|
   next if row[3] == 'true' || row[4] == 'true'
-  url1 = base_url1.gsub(/<union_url>/,row[6])
-  url2 = base_url2.gsub(/<union_url>/,row[6])
+  url1 = base_url1.gsub(/<union_url>/,row[9])
+  url2 = base_url2.gsub(/<union_url>/,row[9])
   fd.write(url1+"\n"+url2+"\n")
   i+=1
   if(i%1000 == 0)

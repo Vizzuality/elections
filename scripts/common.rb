@@ -209,8 +209,8 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
     # votes per autonomy
     query = <<-SQL
     select votantes_totales, censo_total, #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id, proceso_electoral_id,
-           primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
-           tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent
+           primer_partido_id, primer_partido_votos, segundo_partido_id, segundo_partido_votos,
+           tercer_partido_id, tercer_partido_votos, censo_total, votantes_totales, resto_partido_votos
     from #{AUTONOMIAS_VOTATIONS}, vars_socioeco_x_autonomia, gadm1
     where #{AUTONOMIAS_VOTATIONS}.gadm1_cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id AND
           gadm1.name_1 = '#{raw_autonomy_name}' AND gadm1.cartodb_id = vars_socioeco_x_autonomia.gadm1_cartodb_id
@@ -219,10 +219,10 @@ def get_authonomy_results(autonomy_name, year, raw_autonomy_name, proceso_electo
     parties = get_parties
     if row = $cartodb.query(query)[:rows].first
       return {
-        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-        :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+        :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_votos] ],
+        :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_votos]],
+        :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_votos] ],
+        :otros     => ["Otros",                           row[:resto_partido_votos]  ]
       }
     else
       return {}

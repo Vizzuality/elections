@@ -49,7 +49,7 @@ autonomies.each do |autonomy_hash|
     province_name = province[:name_2].normalize
     province_id = province[:id_2]
     query = <<-SQL
-select nombre, votantes_totales, censo_total, ine_poly.cartodb_id,
+select nombre, votantes_totales, censo_total, ine_poly.cartodb_id, lavinia_url,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
    tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent, ine_poly.google_maps_name,
    #{variables.join(',')}
@@ -103,6 +103,7 @@ SQL
         json[municipality_name][:info] = ""
         json[municipality_name][:parent] = [autonomy_name,province_name]
         json[municipality_name][:parent_url] = [autonomies_path(variable), provinces_path(autonomy_name, variable)]
+        json[municipality_name][:lavinia_url] = municipality[:lavinia_url]
         json[municipality_name][:parent_results] = if province_results[province_name]
           if province_results[province_name][proceso_electoral_id.to_s]
             province_results[province_name][proceso_electoral_id.to_s]
