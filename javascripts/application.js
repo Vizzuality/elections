@@ -1,5 +1,5 @@
   /*Application global vars*/
-  var year           = 2003;
+  var year           = 2009;
   var compare        = 'ninguna';
   var state          = "mapa";
 
@@ -121,10 +121,10 @@
         $("#welcomewindow").fadeOut("slow");
 
         if (year < 2005) { // because we don't have paro information prior 2005
-          updateNewSliderValue(2005, year);
+          updateNewSliderValue(2000, year);
         }
         
-        $("div.select div.option_list ul li a.paro").click();
+        $("div.select div.option_list ul li a.envejecimiento").click();
         changeHash();
       });
 
