@@ -141,8 +141,15 @@
     
       if (normalization[compare]!=undefined && point['data'][year][normalization[compare]]!=undefined) {
         var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-        var max = max_min_avg[normalization[compare]+'_'+year+'_max'];
-        var min = max_min_avg[normalization[compare]+'_'+year+'_min'];
+        
+        if (max_min_avg[normalization[compare]+'_'+year+'_max']!=undefined) {
+          var max = max_min_avg[normalization[compare]+'_'+year+'_max'];
+          var min = max_min_avg[normalization[compare]+'_'+year+'_min'];
+        } else {
+          var max = max_min_avg[normalization[compare]+'_'+lastAvailableYear()+'_max'];
+          var min = max_min_avg[normalization[compare]+'_'+lastAvailableYear()+'_min'];
+        }
+        
 
         var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
 
@@ -221,8 +228,14 @@
         if (ele['data'][year]!=undefined) {
           if (normalization[compare]!=undefined && ele['data'][year][normalization[compare]]!=undefined) {
             var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
-            var max = max_min_avg[normalization[compare]+'_'+year+'_max'];
-            var min = max_min_avg[normalization[compare]+'_'+year+'_min'];
+            
+            if (max_min_avg[normalization[compare]+'_'+year+'_max']!=undefined) {
+              var max = max_min_avg[normalization[compare]+'_'+year+'_max'];
+              var min = max_min_avg[normalization[compare]+'_'+year+'_min'];
+            } else {
+              var max = max_min_avg[normalization[compare]+'_'+lastAvailableYear()+'_max'];
+              var min = max_min_avg[normalization[compare]+'_'+lastAvailableYear()+'_min'];
+            }
 
             var desv = Math.max(Math.ceil(Math.abs(min)),Math.ceil(Math.abs(max)))/5;
             var value = Math.round(Math.abs(ele['data'][year][normalization[compare]]));
