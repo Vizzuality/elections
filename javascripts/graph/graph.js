@@ -28,11 +28,12 @@ chooseMessage = (function() {
     hideError();
 
 
-    var text = $("div.select div.option_list ul li a.paro").text();
-    $("div.select div.outer_select.money").parent().addClass("selected");
-    $("div.select div.outer_select.money span.inner_select a").text(text);
-    $("div.select div.option_list ul li a.paro").parent().addClass("selected");
-    compare = "paro";
+
+    var text = $("div.select div.option_list ul li a.envejecimiento").text();
+    $("div.select div.outer_select.people").parent().addClass("selected");
+    $("div.select div.outer_select.people span.inner_select a").text(text);
+    $("div.select div.option_list ul li a.envejecimiento").parent().addClass("selected");
+    compare = "envejecimiento";
 
     if (year < 2005) { // because we don't have paro information prior 2005
       updateNewSliderValue(2005, year);
