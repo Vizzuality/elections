@@ -64,10 +64,10 @@ function initializeGraph() {
 
   $('.text').live("change", function(ev) {
     value = $(".text option:selected").val();
-    addNewBubble(value);
+    if (value) {
+      addNewBubble(value);
+    }
   });
-
-
 
   $(".innerBubble").live({
     mouseenter: function () {
