@@ -169,6 +169,7 @@
         }
         bar_width = (percent*this.bar_width_multiplier)/100;
       } else {
+        bar_width = (percent*this.bar_width_multiplier)/100;
         partido = "OTROS DATOS";
       }
       
