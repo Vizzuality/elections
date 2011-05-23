@@ -415,19 +415,19 @@ function initializeGraph() {
         $("#graph_infowindow").find(".top").find(".stats").find("h4").empty();
         $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
-       // if (deep == "municipios") {
-       //   $('div#graph_infowindow div.stats').show();
-       //   $('div#graph_infowindow div.summary').hide();
-       //   for (var i = 1; i <= 3; i++) {
-       //     drawPartyBar(data_id, i);
-       //   }
-       //   // Other political party
-       //   bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-       //   $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-       //   $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
-       //   var lavinia = (valuesHash[data_id].lavinia_url).split('|');
-       //   $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-       // } else {
+        if (deep == "municipios") {
+          $('div#graph_infowindow div.stats').show();
+          $('div#graph_infowindow div.summary').hide();
+          for (var i = 1; i <= 3; i++) {
+            drawPartyBar(data_id, i);
+          }
+          // Other political party
+          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
+          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          var lavinia = (valuesHash[data_id].lavinia_url).split('|');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+        } else {
 
           $('div#graph_infowindow div.stats').hide();
           $('div#graph_infowindow div.summary').show();
@@ -439,7 +439,7 @@ function initializeGraph() {
           for (var i = 1; i <= 4; i++) {
             drawTotalNumber(i, valuesHash[data_id], false);
           }
-        //}
+        }
 
         var data = valuesHash[data_id].evolution.split(",");
         var max = 0; var count = 0; var find = false; var find_year; var chartDataString = "";
