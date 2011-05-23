@@ -44,6 +44,9 @@ require 'nokogiri'
 require 'open-uri'
 require 'csv'
 
+# Introduction
+puts "Downloading all Spanish municipal election results for 2011"
+
 # Setup
 base_url     = "http://resultados2011.mir.es/99MU/"
 overall_page = "DMU11159PR_L1.htm?e=0"
