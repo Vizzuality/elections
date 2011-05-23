@@ -8,6 +8,7 @@ class MunicipalityParticipation
     @votos_en_blanco = nil
     @votos_nulos = nil
     @abstencion = nil
+    @anteriores = false
   end
   
   def on_start_element(element, attributes)
@@ -20,6 +21,15 @@ class MunicipalityParticipation
         @in_element = element
       when 'ABSTENCION_ABSOLUTO'
         @in_element = element
+      when 'ANTERIORES'
+        @anteriores = true        
+    end
+  end
+  
+  def on_end_element(element)
+    case element
+      when 'ANTERIORES'
+        @anteriores = false
     end
   end
   
@@ -28,6 +38,7 @@ class MunicipalityParticipation
   end
   
   def on_characters(chars)
+    return if @anteriores
     chars = chars.force_encoding('UTF-8').encode
     case @in_element
       when 'NULOS_ABSOLUTO'

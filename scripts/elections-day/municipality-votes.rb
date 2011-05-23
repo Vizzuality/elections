@@ -28,7 +28,7 @@ class MunicipalityVotes
     elsif element == 'PORCENTAJE'
       @almost_percentage = true if !@anteriores
     elsif element == 'VOTOS'
-      @almost_votes = true
+      @almost_votes = true if !@anteriores
     elsif element == 'ANTERIORES'
       @anteriores = true
     elsif element == 'NOMBRE'
