@@ -76,7 +76,7 @@ function initializeGraph() {
       var text = valuesHash[$(this).parent().attr("id")].name;
       graphBubbleTooltip.show(left,top,text);
 
-      if (!$.browser.msie ) {
+      if (!ie_) {
         $(this).parent().css('zIndex',graph_bubble_index++);
       }
 
@@ -246,7 +246,7 @@ function initializeGraph() {
 
         if (data == undefined || data[normalization[compare]] == null) {
 
-          var top = $("div#graph_infowindow a.more").position().top;
+          //var top = $("div#graph_infowindow a.more").position().top;
 
           $("div#graph_infowindow a.more").css("color", "#ccc");
           $("div#graph_infowindow div.bottom div.warning").css("top", top - 40);
@@ -282,7 +282,7 @@ function initializeGraph() {
         }
 
 
-        if ( $.browser.msie ) {
+        if (ie_) {
           $('div#graph_infowindow').css({visibility:'visible',left:left+'px',top:top+'px'});
           $('div#graph_infowindow').show();
           open = true;
@@ -296,7 +296,7 @@ function initializeGraph() {
 
       function hideInfowindow() {
         if (isOpen()) {
-          if ( $.browser.msie ) {
+          if (ie_) {
 
             $('div#graph_infowindow').hide();
             open = false;
