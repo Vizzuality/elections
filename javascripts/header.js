@@ -515,7 +515,9 @@
           }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
-
+        
+        
+        noyear_slider.refresh();
         drawNoDataBars();
         changeHash();
 
