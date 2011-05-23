@@ -28,11 +28,11 @@
     noyear_slider = (function(){
       
       function show() {
-        $('div#year_nodata_tooltip').stop(true).fadeTo('500',1);
+        $('div#year_nodata_tooltip').fadeIn();
       }
     
       function hide() {
-        $('div#year_nodata_tooltip').stop(true).fadeTo('500',0);
+        $('div#year_nodata_tooltip').fadeOut();
       }
     
       function refreshYear() {
