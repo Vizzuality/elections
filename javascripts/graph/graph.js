@@ -353,6 +353,10 @@ function initializeGraph() {
 
         var partido_class = normalizePartyName(partido);
 
+        if (partido.length > 16) {
+          partido= partido.substr(0,13) + "...";
+        }
+
         if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
         $p.addClass(clase);
       } else {
