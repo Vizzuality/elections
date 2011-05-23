@@ -241,10 +241,7 @@ function initializeGraph() {
 
         if (data == undefined || data[normalization[compare]] == null) {
 
-          //var top = $("div#graph_infowindow a.more").position().top;
-
           $("div#graph_infowindow a.more").css("color", "#ccc");
-          $("div#graph_infowindow div.bottom div.warning").css("top", top - 40);
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
 
 
