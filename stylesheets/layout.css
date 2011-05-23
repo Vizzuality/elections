@@ -633,6 +633,10 @@ div div.stats div.partido.upn div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.upn div.bar span.c {background-position:right -36px!important}
 div div.stats div.partido.upn p, li.partido.upn{color:#AD5DCC!important;}
 
+div div.stats div.partido.psc_pm div.bar {background-position:0 -36px!important;}
+div div.stats div.partido.psc_pm div.bar span.c {background-position:right -36px!important}
+div div.stats div.partido.psc_pm p, li.partido.psc_pm{color:#ad5dcc!important;}
+
 div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.bildu div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.bildu p, li.partido.bildu{color:#000!important;}
