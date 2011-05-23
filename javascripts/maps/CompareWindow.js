@@ -666,16 +666,23 @@
 
 
     CompareWindow.prototype.refreshBottom = function() {
-      if (!$('div#comparewindow div.bottom').hasClass('region')) {
-        $('div#comparewindow div.bottom').removeClass('search province')
-        var zoom = peninsula.getZoom();
-        if (zoom==6) {
-          $('div#comparewindow div.bottom div.province p').text('Selecciona otra autonomía en el mapa');
-          $('div#comparewindow div.bottom').addClass('province');
-        } else if (zoom>6 && zoom<9) {
-          $('div#comparewindow div.bottom div.province p').text('Selecciona otra provincia en el mapa');
-          $('div#comparewindow div.bottom').addClass('province');
-        } else {
+      if (state=="mapa") {
+        if (!$('div#comparewindow div.bottom').hasClass('region')) {
+          $('div#comparewindow div.bottom').removeClass('search province')
+          var zoom = peninsula.getZoom();
+          if (zoom==6) {
+            $('div#comparewindow div.bottom div.province p').text('Selecciona otra autonomía en el mapa');
+            $('div#comparewindow div.bottom').addClass('province');
+          } else if (zoom>6 && zoom<9) {
+            $('div#comparewindow div.bottom div.province p').text('Selecciona otra provincia en el mapa');
+            $('div#comparewindow div.bottom').addClass('province');
+          } else {
+            $('div#comparewindow div.bottom').addClass('search');
+          }
+        }
+      } else {
+        if (!$('div#comparewindow div.bottom').hasClass('region')) {
+          $('div#comparewindow div.bottom').removeClass('province')
           $('div#comparewindow div.bottom').addClass('search');
         }
       }

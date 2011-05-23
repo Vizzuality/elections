@@ -47,7 +47,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v15"
+$graphs_next_version = "v16"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -256,8 +256,8 @@ def get_province_results
   results = {}
   query = <<-SQL
   select #{PROVINCES_VOTATIONS}.gadm2_cartodb_id, proceso_electoral_id, gadm2.name_2,
-         primer_partido_id, primer_partido_percent, tercer_partido_id,
-         segundo_partido_id, segundo_partido_percent, tercer_partido_percent, resto_partido_percent
+         primer_partido_id, primer_partido_votos, tercer_partido_id,
+         segundo_partido_id, segundo_partido_votos, tercer_partido_votos, resto_partido_votos
   from #{PROVINCES_VOTATIONS}, gadm2
   where #{PROVINCES_VOTATIONS}.gadm2_cartodb_id = gadm2.cartodb_id
 SQL
@@ -265,10 +265,10 @@ SQL
   $cartodb.query(query)[:rows].each do |row|
     results[row[:name_2].normalize] ||= {}
     results[row[:name_2].normalize][row[:proceso_electoral_id].to_s] ||= {
-      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_percent] ],
-      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_percent]],
-      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_percent] ],
-      :otros     => ["Otros",                           row[:resto_partido_percent]  ]
+      :partido_1 => [parties[row[:primer_partido_id]],  row[:primer_partido_votos] ],
+      :partido_2 => [parties[row[:segundo_partido_id]], row[:segundo_partido_votos]],
+      :partido_3 => [parties[row[:tercer_partido_id]],  row[:tercer_partido_votos] ],
+      :otros     => ["Otros",                           row[:resto_partido_votos]  ]
     }
   end
   fd = File.open(file_path,'w+')
