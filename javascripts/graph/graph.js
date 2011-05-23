@@ -152,7 +152,7 @@ function initializeGraph() {
             '</div>'+
       '  </div>'+
       '  <div class="bottom">'+
-      '  <div class="tooltip"><span>Test</span><div class="tip"></div></div>'+
+      '  <div class="tooltip"><span></span><div class="tip"></div></div>'+
       '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
       '    <div class="chart">'+
       '      <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
@@ -191,7 +191,6 @@ function initializeGraph() {
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
         text = text + "<sup class='help'>1</sup>";
-
 
         $('div#graph_infowindow p.info').html(text);
 

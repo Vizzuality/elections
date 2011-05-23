@@ -55,6 +55,7 @@
             '</div>'+
           '</div>'+
           '<div class="bottom">'+
+          '  <div class="tooltip"><span></span><div class="tip"></div></div>'+
             '<p class="info">La region tiene <strong></strong> de la media en España.</p>'+
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
@@ -249,7 +250,7 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-        
+
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
           if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
             var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
@@ -268,8 +269,40 @@
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
 
+
+
+
+        text = text + "<sup class='help'>1</sup>";
+
+
+
+
+
+
+
+
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
+
+        $('div#infowindow p.info').html(text);
+
+        $('div#infowindow p.info sup.help').unbind('mouseenter').unbind('mouseleave');
+        $('div#infowindow p.info sup.help').mouseenter(function(ev){
+
+          var top = $('div#infowindow p.info sup.help').position().top;
+          var left = $('div#infowindow p.info sup.help').position().left;
+          var deep_text = {autonomias:"las autonomías", provincias:"las provincias", municipios:"los municipios"}
+
+					var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          $('div#infowindow div.tooltip').css("top", top - 60);
+          $('div#infowindow div.tooltip').css("left", left - 70);
+          $('div#infowindow div.tooltip span').text("Desviación respecto a la media de " + deep_text[zoomLevelName]);
+          $('div#infowindow div.tooltip').show();
+        });
+        $('div#infowindow p.info sup.help').mouseleave(function(ev){
+          $('div#infowindow div.tooltip').hide();
+        });
+
       } else {
 				var msg = "";
 				if (compare != "ninguna") {
@@ -289,8 +322,8 @@
         $('div#infowindow p.info').html(msg);
         $('div#infowindow div.chart').hide();
       }
-      
-      
+
+
       if (this.deep_level=="municipios") {
         $('div.infowindow a.goTo').hide();
       } else if (this.deep_level=="provincias") {
@@ -434,8 +467,8 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
-          
-          
+
+
           if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
             if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
               var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
@@ -449,7 +482,7 @@
               var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
             }
           }
-          
+
           var last_year = lastAvailableYear();
           text = _.template(text)({media : media, yearSim: (last_year<year)?last_year:year});
           // Change image url
@@ -519,7 +552,7 @@
 
       this.map_.panBy(left,top);
     }
-    
+
 
 
     InfoWindow.prototype.generateStatImage = function() {
