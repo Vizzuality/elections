@@ -412,9 +412,9 @@ div#aboutwindow div.last {margin: 20px 0 0 0;}
 div#aboutwindow div.blocks a.image_container {display: inline-block; width: 163px; height: 82px; vertical-align: middle; text-align: center; margin: 5px 0 0 0; background: #FFFFFF; border: 1px solid #999999;}
 div#aboutwindow div.blocks a.image_container img#rtvelogo {margin: 20px 0 0 0}
 div#aboutwindow div.blocks a.image_container img#vizzlogo {margin: 12px 0 0 0}
-div#aboutwindow div.blocks ul{margin: 5px 0 0 0;}
-div#aboutwindow div.blocks ul li a{font: normal 13px "Arial"; color: #993984}
-div#aboutwindow div.blocks ul li a.disabled {color:#666666;}
+div#aboutwindow div.blocks p {margin: 2px 0 0 0; font: normal 13px "Arial"; line-height: 17px}
+div#aboutwindow div.blocks p a{color: #993984}
+div#aboutwindow div.blocks p a.disabled {color:#666666;}
 div#aboutwindow div.lower_content {float:left; width: 100%; margin:35px 0 0 0;}
 div#aboutwindow div.lower_content div.left {float:left; width:300px;}
 div#aboutwindow div.lower_content div.right {float:right; width:111px;}
