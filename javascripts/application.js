@@ -1,5 +1,5 @@
   /*Application global vars*/
-  var year           = 2009;
+  var year           = 2011;
   var compare        = 'ninguna';
   var state          = "mapa";
 
