@@ -168,8 +168,8 @@
         if (info['data'][year][positions[id] +'_partido_name']!=undefined) {
           partido = info['data'][year][positions[id] +'_partido_name'];
 
-          if (partido && partido.length) {
-            partido= partido.substr(0,13) + "...";
+          if (partido.length>13) {
+            partido= partido.substr(0,10) + "...";
           }
 
           var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
@@ -570,7 +570,6 @@
 
       this.map_.panBy(left,top);
     }
-
 
 
     InfoWindow.prototype.generateStatImage = function() {
