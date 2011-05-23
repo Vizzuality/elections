@@ -911,7 +911,7 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
-console.log(data[key].parent_results);
+//console.log(data[key].parent_results);
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
