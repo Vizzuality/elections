@@ -249,11 +249,10 @@ function initializeGraph() {
           // console.log("no hay datos");
           //console.log(top);
 
-          var p = $("div#graph_infowindow a.more").position().top;
-          console.log(p);
+          var top = $("div#graph_infowindow a.more").position().top;
 
           $("div#graph_infowindow a.more").css("color", "#ccc");
-          $("div#graph_infowindow div.bottom div.warning").css("top", p - 40);
+          $("div#graph_infowindow div.bottom div.warning").css("top", top - 40);
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
 
 
