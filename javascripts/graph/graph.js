@@ -911,25 +911,10 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
-//console.log(data[key].parent_results);
+      //console.log(data);
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-
-        //if (deep != "municipios") {
-
-          var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
-
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
-
-          $('div.graph_legend div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
-
-          for (var i = 1; i <= 4; i++) {
-            drawTotalNumber(data[key].parent_results, i, true);
-          }
-        //}
-
+        updateLegend(data[key].parent_results);
         one = false;
       }
 
@@ -953,6 +938,17 @@ function createBubbles(url){
   })
 }
 
+function updateLegend(data) {
+  var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
+  $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
+  $('div.graph_legend div.summary li.partido').each(function(i,ele){
+    $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+  });
+  for (var i = 1; i <= 4; i++) {
+    drawTotalNumber(data, i, true);
+  }
+}
+
 function updateBubbles(url){
   //console.log("Update bubbles", url);
 
@@ -973,19 +969,7 @@ function updateBubbles(url){
     _.each(data, function(v,key) {
       if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-
-        if (deep != "municipios") {
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep) + " en los que es el más votado");
-
-          $('div.graph_legend div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
-
-          for (var i = 1; i <= 4; i++) {
-            drawTotalNumber(data[key].parent_results, i, true);
-          }
-        }
-
+        updateLegend(data[key].parent_results);
         one = false;
       }
 
