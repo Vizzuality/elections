@@ -19,7 +19,11 @@ def municipalities_data_sql
     i.lavinia_url,
     pe.anyo proceso_electoral_year,
     censo_total,
-    ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER AS percen_participacion,
+    CASE WHEN censo_total >0 THEN
+      ((votantes_totales::NUMERIC / censo_total::NUMERIC) * 100)::INTEGER 
+    ELSE
+      0
+    END AS percen_participacion,
     primer_partido_votos,
     primer_partido_percent,
     pp1.name AS primer_partido_name,
