@@ -29,8 +29,8 @@
             '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
             '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
             '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+ 
-            '</div>'+
+            '<div class="partido otros"><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+ 
+          '</div>'+
           '<div class="summary">'+
           '<h4>Municipios en los que es el más votado...</h4>'+
           '<ul>'+
@@ -68,7 +68,8 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+            '</div>'+
+              '<div class="partido otros"><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS</a></p></div>'+            
+            '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
             '<ul>'+
@@ -177,8 +178,7 @@
         $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(partido+' ('+percent+'%)');
       } else {
-        $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.top div.stats div.partido:eq('+id+') p a').text(partido+' ('+percent+'%)');
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') p a').text(partido);
         var lavinia = (info.lavinia_url).split('|');
         $('div#comparewindow div.top div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
       }
@@ -360,9 +360,7 @@
             $('div#comparewindow div.bottom div.region div.stats div.partido:eq(2) p').text(info['data'][year]['tercer_partido_name']+' ('+info['data'][year]['tercer_partido_percent']+'%)');
 
             // Other
-            bar_width = (info['data'][year]['otros_partido_percent']*200)/100;
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) a').text('OTROS DATOS ('+info['data'][year]['otros_partido_percent']+'%)');
+            $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) a').text('OTROS DATOS');
             var lavinia = (info.lavinia_url).split('|');
             $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
             $('div#comparewindow div#compare_region2 div.stats').show();
