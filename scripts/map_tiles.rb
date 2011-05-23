@@ -116,7 +116,7 @@ election_ids.each do |election_id|
     WHEN (v.primer_partido_percent >= 50) AND (v.primer_partido_percent < 75)  THEN 'blue_M' 
     WHEN (v.primer_partido_percent >= 0) AND (v.primer_partido_percent < 50)  THEN 'blue_L'
     END 
-  WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BNG', 'PDP', 'ERC-AM', 'ESQUERRA-AM', 'ERC', 'EA', 'HB', 'PRC', 'PR', 'UV', 'EAJ-PNV/EA', 'EH', 'EAJ-ONV', 'PNV', 'EH-A', 'BILDU') THEN
+  WHEN pp1.name IN ('CIU', 'AP', 'IU', 'INDEP', 'CDS', 'PAR', 'EAJ-PNV', 'PA', 'BNG', 'PDP', 'ERC-AM', 'ESQUERRA-AM', 'ERC', 'EA', 'HB', 'PRC', 'PR', 'UV', 'EAJ-PNV/EA', 'EH', 'EAJ-ONV', 'PNV', 'EH-A', 'BILDU', 'PSC-PM', 'PSDEG-PSOE', 'PP-EU', 'IU-V-SIEX', 'PSOE DE ANDALUCÍA', 'IULV-CA', 'PSN-PSOE', 'PSE-EE(PSOE)', 'IUCYL', 'IU-LOS VERDES') THEN
     pp1.name
   ELSE 'unknown' 
   END as color  
