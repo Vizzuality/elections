@@ -249,7 +249,6 @@ function initializeGraph() {
           $("div#graph_infowindow a.more").css("color", "#ccc");
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
 
-
           $('div#graph_infowindow a.more').mouseenter(function(ev){
             $("div#graph_infowindow div.bottom div.warning").show();
           });
@@ -1010,6 +1009,45 @@ function updateSelect(values) {
 
       options.append($("<option />").val(option_name).text(this.name));
     });
+
+    // Let's order the select
+    var $dd = $('select.text');
+    if ($dd.length > 0) { // make sure we found the select we were looking for
+
+      // save the selected value
+      var selectedVal = $dd.val();
+
+      // get the options and loop through them
+      var $options = $('option', $dd);
+      var arrVals = [];
+      $options.each(function(){
+        // push each option value and text into an array
+        arrVals.push({
+          val: $(this).val(),
+          text: $(this).text()
+        });
+      });
+
+      // sort the array by the value (change val to text to sort by text instead)
+      arrVals.sort(function(a, b){
+        if(a.val>b.val){
+          return 1;
+        }
+        else if (a.val==b.val){
+          return 0;
+        }
+        else {
+          return -1;
+        }
+      });
+
+      // loop through the sorted array and set the text/values to the options
+      for (var i = 0, l = arrVals.length; i < l; i++) {
+        $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
+      }
+      // set the selected value back
+      $dd.val(selectedVal);
+    }
   }
 }
 
