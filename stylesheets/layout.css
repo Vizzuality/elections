@@ -541,6 +541,11 @@ div.innerBubble.pr{background:url('../images/backgrounds/pr.png'); }
 div div.stats div.partido.pr div.bar {background-position:0 bottom!important;}
 div div.stats div.partido.pr div.bar span.c {background-position:right bottom!important}
 div div.stats div.partido.pr p, li.partido.pr {color:#008140!important;}
+/*bildu*/
+div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.bildu div.bar span.c {background-position:right -90px!important}
+div div.stats div.partido.bildu p, li.partido.bildu {color:#000000!important;}
 /*uv*/
 div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
