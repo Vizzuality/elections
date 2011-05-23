@@ -1,6 +1,6 @@
 
   var global_url      = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
-  var tiles_pngs_url  = "http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
+  var tiles_pngs_url  = "http://datos{n}.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
   var proxy_url       = "proxy.php";
   var tiles_version   = "live"; //"current"; //3;
   var bubbles_version = "current"; //10;
