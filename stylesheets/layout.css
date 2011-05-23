@@ -169,11 +169,12 @@ div.tabs div.message p small {color: #666666; font-size:15px!important;}
 div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 
 /*graph*/
-div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
+div.bubbleContainer{position:absolute;background:transparent;height:60px;width:60px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:absolute;background:#ddd; border:none; height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
-div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
-div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:0;}
+div.outerBubble{position:relative;background:#ddd; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
+div.innerBubble{position:absolute;background:#000000;border:none;height:40px;width:40px;top:10px;left:10px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px; cursor:pointer; z-index:1;}
+div.bubbleContainer p.region_name {position:absolute; top:0px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:5;}
+div.bubbleContainer p.region_name {position:relative\8; width:60px\8;}
 div.bubbleContainer p.dark_shadow{text-shadow:0 1px white; text-shadow:black 1px 1px 3px,black -1px -1px 3px;}
 div.bubbleContainer p.white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px;}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
