@@ -172,7 +172,7 @@
         bar_width = (percent*this.bar_width_multiplier)/100;
         partido = "OTROS DATOS";
       }
-      
+
       if (party_id!=4) {
         $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
         $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(partido+' ('+percent+'%)');
@@ -284,7 +284,7 @@
         me.secondData = info;
         me.createChart(info,false);
         $('div#comparewindow div.bottom').removeClass('search province').addClass('region');
-        
+
 
         $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
@@ -390,6 +390,11 @@
 
       if (party_id < 4) {
         partido = info.data[year][positions[id] +'_partido_name'];
+
+        if (partido.length > 16) {
+          partido= partido.substr(0,13) + "...";
+        }
+
         var partido_class = normalizePartyName(info.data[year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido_class) !== -1) { clase = partido_class; } else { clase = 'par'+party_id; }
@@ -426,6 +431,11 @@
 
       if (party_id < 4) {
         var partido = normalizePartyName(data['data'][year][positions[id] + '_partido_name']);
+
+        if (partido.length > 16) {
+          partido= partido.substr(0,13) + "...";
+        }
+
         $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').removeClass(parties.join(" ") + ' par1 par2 par3');
         if (_.indexOf(parties, partido) !== -1) {
           $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+')').addClass(partido);
@@ -436,7 +446,7 @@
         $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') span.c').animate({
           width: bar_width.toString() +"px"
         }, 500, 'easeOutCubic');
-        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(partido+ ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
       } else {
         bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
@@ -587,7 +597,7 @@
           }
         }
       });
-      
+
       $('div.stats_slider').width(count*298);
 
       // Add bottom blocks
@@ -619,7 +629,7 @@
       }
 
     }
-    
+
 
     CompareWindow.prototype.setUpChartView = function() {
       if ($('div.stats_slider div[alt="'+compare+'"].up').length) {
@@ -640,8 +650,8 @@
       });
       this.refreshBottom();
     }
-    
-    
+
+
     CompareWindow.prototype.refreshBottom = function() {
       if (!$('div#comparewindow div.bottom').hasClass('region')) {
         $('div#comparewindow div.bottom').removeClass('search province')
@@ -654,7 +664,7 @@
           $('div#comparewindow div.bottom').addClass('province');
         } else {
           $('div#comparewindow div.bottom').addClass('search');
-        }      
+        }
       }
     }
 

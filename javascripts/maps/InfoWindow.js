@@ -165,6 +165,11 @@
 
       if (party_id < 4) {
         partido = info['data'][year][positions[id] +'_partido_name'];
+
+        if (partido.length > 16) {
+          partido= partido.substr(0,13) + "...";
+        }
+
         var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
 
         if (_.indexOf(parties, partido_class) !== -1) {
@@ -174,7 +179,7 @@
         }
         bar_width = normalizeBarWidth((info['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq('+id+') p').text(info['data'][year][positions[id] + '_partido_name']+' ('+info['data'][year][positions[id]+'_partido_percent']+'%)');
+        $('div#infowindow div.stats div.partido:eq('+id+') p').text(partido+' ('+info['data'][year][positions[id]+'_partido_percent']+'%)');
       } else {
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
