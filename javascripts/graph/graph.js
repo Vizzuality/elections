@@ -71,21 +71,27 @@ function initializeGraph() {
       var text = valuesHash[$(this).parent().attr("id")].name;
       graphBubbleTooltip.show(left,top,text);
 
-      if (!ie_) {
-        $(this).parent().css('zIndex',graph_bubble_index++);
-      }
+      $(this).parent().css('zIndex',graph_bubble_index++);
 
       $(this).parent().children('.outerBubble').css("background","#333333");
       $(this).parent().children('p.region_name').css("color","#333333");
       $(this).parent().children('p.region_name').addClass("white_shadow");
 
       if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
-        $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+        if (!ie_) {
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+        } else {
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "black");
+        }
       }
     },
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
-        $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        if (!ie_) {
+          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        } else {
+          $(this).parent().children('.outerBubble').css("background","#dddddd");
+        }
         if (ie_) {
           $(this).parent().children('p.region_name').css("color","black");
         } else {
@@ -103,7 +109,7 @@ function initializeGraph() {
 
       var radius = $(this).height()/2;
       var top  = $(this).parent().offset().top - 274;
-      var left = $(this).parent().offset().left - 117;
+      var left = $(this).parent().offset().left - 96;
 
       if (selectedBubble !== $(this).parent().attr("id")) {
         $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -900,10 +906,18 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><p class="region_name">'+val.name+'</p><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
-      $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+      if (!ie_) {
+        $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+      } else {
+        if ($.browser.version.slice(0,3) >= '8.0') {
+          $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+        } else {
+          $('#'+key+' p.region_name').css({width:'60px',margin:'10px 0 0 -30px'});
+        }
+      }
       $('#'+key+' p.region_name').addClass("dark_shadow");
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");

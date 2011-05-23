@@ -115,14 +115,14 @@ class MunicipalityVotes
     else
       nil
     end
-    raise "Segundo partido NULL #{array[1].inspect}" if segundo_partido_id.nil?
+    # raise "Segundo partido NULL #{array[1].inspect}" if segundo_partido_id.nil?
     
     tercer_partido_id = if array[2] && array[2][0]
       $rparties[array[2][0]] || $parties_ids[array[2][3]]
     else
       nil
     end        
-    raise "Tercer partido NULL #{array[2].inspect}" if tercer_partido_id.nil?
+    # raise "Tercer partido NULL #{array[2].inspect}" if tercer_partido_id.nil?
     
     primer_partido_votos = if array[0] && array[0][1]
       array[0][1]
