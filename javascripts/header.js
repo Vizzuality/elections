@@ -572,14 +572,14 @@
   function checkStartYear() {
     if (year!=2011) {
       if (checkFailYear(year)) {
-        animate_interval = setInterval(function(){animateSlider();},2500);
+        animate_interval = setInterval(function(){animateSlider();},1500);
       } else {
         updateNewSliderValue(getFirstAvailableYear(getDeepLevelFromZoomLevel(peninsula.getZoom())),year);
-        animate_interval = setInterval(function(){animateSlider();},2500);
+        animate_interval = setInterval(function(){animateSlider();},1500);
       }
     } else {
       updateNewSliderValue(1987,2011);
-      animate_interval = setInterval(function(){animateSlider();},2500);
+      animate_interval = setInterval(function(){animateSlider();},1500);
     }
   }
 

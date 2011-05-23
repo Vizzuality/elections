@@ -92,8 +92,8 @@ div#header div.secondContainer div.right div.selects div.select div.option_list 
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 1px;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#bbbbbb!important;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#bbbbbb!important; cursor:default;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#CCCCCC!important;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#CCCCCC!important; cursor:default;}
 div#header div.secondContainer div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -32px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -64px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 0px;}
@@ -378,7 +378,7 @@ div#appInfo a.close_info {position:absolute; right:3px; top:1px; width:18px; hei
 div#appInfo a.close_info:hover {background-position:0 -18px;}
 div#appInfo div.options {position:relative; float:left; width:190px; height:450px; margin:8px 0 0 12px; padding:20px 22px 20px 21px;}
 div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.png') no-repeat 0 0;}
-div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
+div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#CCCCCC; text-transform:uppercase;}
 div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
 div#appInfo div.options h4 a{color:#999999; text-decoration: none;}
 div#appInfo div.options ul {width:100%; padding:10px 0 0 0; display: none;}
@@ -404,6 +404,7 @@ div#aboutwindow a.close_info {position:absolute; right:3px; top:1px; width:18px;
 div#aboutwindow h3 {font: normal 23px "Officina Bold"; color: #333333;}
 div#aboutwindow h4 {font: normal 13px "Officina Regular"; color: #CCCCCC;}
 div#aboutwindow p {margin: 10px 0 0 0; font:normal 17px "Officina Regular"; color:#666;}
+div#aboutwindow p a{color: #993984;}
 div#aboutwindow div.blocks {float:left; display:inline; width:165px; vertical-align:top; margin:20px 20px 0 0;}
 div#aboutwindow div.last {margin: 20px 0 0 0;}
 div#aboutwindow div.blocks a.image_container {display: inline-block; width: 163px; height: 82px; vertical-align: middle; text-align: center; margin: 5px 0 0 0; background: #FFFFFF; border: 1px solid #CCCCCC;}
