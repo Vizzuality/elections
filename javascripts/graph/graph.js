@@ -914,6 +914,7 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
+
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         updateLegend(data[key].parent_results);
