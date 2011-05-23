@@ -268,18 +268,7 @@
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
-
-
-
-
         text = text + "<sup class='help'>1</sup>";
-
-
-
-
-
-
-
 
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
@@ -293,7 +282,7 @@
           var left = $('div#infowindow p.info sup.help').position().left;
           var deep_text = {autonomias:"las autonomías", provincias:"las provincias", municipios:"los municipios"}
 
-					var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
           $('div#infowindow div.tooltip').css("top", top - 60);
           $('div#infowindow div.tooltip').css("left", left - 70);
           $('div#infowindow div.tooltip span').text("Desviación respecto a la media de " + deep_text[zoomLevelName]);
