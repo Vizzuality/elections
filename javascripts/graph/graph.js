@@ -93,7 +93,7 @@ function initializeGraph() {
         $(this).parent().children('p.region_name').css("color","#333333");
         $(this).parent().children('p.region_name').addClass("white_shadow");
       } else {
-        $(this).parent().children('.outerBubble').css("background-position","0 -60px");
+        $(this).parent().children('.outerBubble').css("background","#333333");
         $(this).parent().children('p.region_name').css("color","#333333");
       }
 
@@ -102,8 +102,7 @@ function initializeGraph() {
         if (!ie_) {
           $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
         } else {
-          $("div#" + selectedBubble + " div.outerBubble").css("background-position", "0 -60px");
-          // $("div#" + selectedBubble + " div.outerBubble").css("background", "black");
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "black");
         }
       }
     },
@@ -112,7 +111,7 @@ function initializeGraph() {
         if (ie_) {
           $(this).parent().children('p.region_name').css("color","black");
           $(this).parent().children('.outerBubble').css("background-position", "0 -60px");
-          // $(this).parent().children('.outerBubble').css("background","#dddddd");
+          $(this).parent().children('.outerBubble').css("background","#dddddd");
         } else {
           $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
           $(this).parent().children('p.region_name').addClass("dark_shadow");
@@ -925,11 +924,7 @@ function createBubbles(url){
       nBubbles = nBubbles+1;
       
       
-      if (!ie_) {
-        $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
-      } else {
-        $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble '+val.partido_1[0].toLowerCase()+'"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
-      }
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
       if (!ie_) {
@@ -1013,18 +1008,9 @@ function updateBubble (id, x, y, val, colors, party) {
   }
 
   // Bubbles animations
-  if (!ie_) {
-    $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
-  } else {
-    $(id).css('opacity',1);
-    $(id).animate({ left: x.toString() + "px", top: y.toString() + "px"}, 1000);
-  }
+  $(id).animate({ left: x.toString() + "px", top: y.toString() + "px", opacity: 1 }, 1000);
   $(id).find('.outerBubble').animate({ height: val.toString() + "px", width: val.toString() + "px", top: offset.toString() + "px", left: offset.toString() + "px" }, 1000);
-  if (!ie_) {
-    $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
-  } else {
-    $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px"}, 1000);
-  }
+  $(id).find('.innerBubble').animate({ height: (val-10).toString() + "px", width: (val-10).toString() + "px", top: (offset + 5).toString() + "px", left: (offset + 5).toString() + "px", backgroundColor: backgroundColor }, 1000);
   $(id).find('.innerBubble').addClass(normalizePartyName(party));
 }
 
