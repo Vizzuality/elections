@@ -573,3 +573,53 @@ div div.stats div.partido.par3 div.bar {background-position:0 bottom!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right bottom!important}
 div div.stats div.partido.par3 p, li.partido.par3 {color:#ADAD94;}
 /*end bars*/
+
+
+
+div div.stats div.partido.psn_psoe div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psn_psoe div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psn_psoe p, li.partido.psn_psoe{color:#ff002b!important;}
+
+div div.stats div.partido.psoe_andalucia div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psoe_andalucia div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psoe_andalucia p, li.partido.psoe_andalucia{color:#ff002b!important;}
+
+div div.stats div.partido.pp_eu div.bar {background-position:0 -6px!important;}
+div div.stats div.partido.pp_eu div.bar span.c {background-position:right -6px!important}
+div div.stats div.partido.pp_eu p, li.partido.pp_eu{color:#00b4eb!important;}
+
+div div.stats div.partido.psdeg_psoe div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psdeg_psoe div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psdeg_psoe p, li.partido.psdeg_psoe{color:#ff002b!important;}
+
+div div.stats div.partido.iu_los_verdes div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iu_los_verdes div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iu_los_verdes p, li.partido.iu_los_verdes{color:#54a551!important;}
+
+div div.stats div.partido.iu_lv_rm div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iu_lv_rm div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iu_lv_rm p, li.partido.iu_lv_rm{color:#54a551!important;}
+
+div div.stats div.partido.iulv div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iulv div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iulv p, li.partido.iulv{color:#54a551!important;}
+
+div div.stats div.partido.iu_lv div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iu_lv div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iu_lv p, li.partido.iu_lv{color:#54a551!important;}
+
+div div.stats div.partido.iu_lvcyl div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iu_lvcyl div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iu_lvcyl p, li.partido.iu_lvcyl{color:#54a551!important;}
+
+div div.stats div.partido.iulv_ca div.bar {background-position:0 -12px!important;}
+div div.stats div.partido.iulv_ca div.bar span.c {background-position:right -12px!important}
+div div.stats div.partido.iulv_ca p, li.partido.iulv_cal{color:#54a551!important;}
+
+div div.stats div.partido.upn div.bar {background-position:0 -36px!important;}
+div div.stats div.partido.upn div.bar span.c {background-position:right -36px!important}
+div div.stats div.partido.upn p, li.partido.upn{color:#AD5DCC!important;}
+
+div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.bildu div.bar span.c {background-position:right -90px!important}
+div div.stats div.partido.bildu p, li.partido.bildu{color:#000!important;}

@@ -76,7 +76,7 @@ versions      = Dir["#{base_path}/*/"]
 v_dir         = versions.map{|x| x.split("/").last}
 v_next        = v_dir.size == 0 ? 0 : v_dir.max.to_i+1
 version_path  = "#{base_path}/#{v_next}" 
-current_path  = "#{base_path}/current" 
+current_path  = "#{base_path}/live" 
 all_time_start  = Time.now
 total_tile_count = 0
 
