@@ -11,3 +11,4 @@ graphs/
 graphs
 nginx.conf
 scripts/output.log
+tile_data.sh
