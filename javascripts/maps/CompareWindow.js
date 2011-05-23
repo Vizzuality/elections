@@ -29,7 +29,7 @@
             '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
             '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
             '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+ 
+            '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+
             '</div>'+
           '<div class="summary">'+
           '<h4>Municipios en los que es el más votado...</h4>'+
@@ -229,7 +229,7 @@
             this.drawTopBar(2, info);
             this.drawTopBar(3, info);
             this.drawTopBar(4, info);
-            
+
             $('div#comparewindow div.stats').css({'opacity':1,'display':"block"});
             $('div#comparewindow div#compare_region1 div.summary').hide();
           } else {
@@ -280,7 +280,7 @@
 
 
       function fillData(info, region_name) {
-        
+
         me.secondData = info;
         me.createChart(info,false);
         $('div#comparewindow div.bottom').removeClass('search province').addClass('region');
@@ -323,7 +323,7 @@
           $('div#comparewindow div#compare_region2 div.summary').hide();
 
           var bar_width;
-          
+
           if (info['data'][year]['primer_partido_name']!=undefined) {
             // First political party
             var partido_1 = info['data'][year]['primer_partido_name'].toLowerCase().replace("-", "_");
@@ -391,7 +391,7 @@
       if (party_id < 4) {
         partido = info.data[year][positions[id] +'_partido_name'];
 
-        if (partido.length > 16) {
+        if (partido && partido.length > 16) {
           partido= partido.substr(0,13) + "...";
         }
 
@@ -432,7 +432,7 @@
       if (party_id < 4) {
         var partido = normalizePartyName(data['data'][year][positions[id] + '_partido_name']);
 
-        if (partido.length > 16) {
+        if (partido && partido.length > 16) {
           partido= partido.substr(0,13) + "...";
         }
 

@@ -158,6 +158,7 @@
 
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
+    //console.log(party_id, info);
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
@@ -166,7 +167,7 @@
       if (party_id < 4) {
         partido = info['data'][year][positions[id] +'_partido_name'];
 
-        if (partido.length > 16) {
+        if (partido && partido.length > 16) {
           partido= partido.substr(0,13) + "...";
         }
 
