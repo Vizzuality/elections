@@ -171,7 +171,7 @@ div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:60px;width:60px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:relative;background:#ddd; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
+div.outerBubble{position:relative; background:#ddd; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:40px;width:40px;top:10px;left:10px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px; cursor:pointer; z-index:1;}
 div.bubbleContainer p.region_name {position:absolute; top:0px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:5;}
 div.bubbleContainer p.region_name {position:relative\8; width:60px\8;}
@@ -179,6 +179,7 @@ div.bubbleContainer p.dark_shadow{text-shadow:0 1px white; text-shadow:black 1px
 div.bubbleContainer p.white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px;}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+
 
 
 /*WADUS TEXT*/
@@ -270,7 +271,7 @@ div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:ho
 div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
 
-div#graph_infowindow div.warning {display:none; position:absolute;  bottom:40px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#graph_infowindow div.warning {display:none; position:absolute; bottom:40px; left:17px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
 div#graph_infowindow div.warning div.tip {position:absolute; bottom: -6px; left: 68px; width: 13px; height:6px; background: url('../images/tip.png') no-repeat bottom; }
 
 div#graph_infowindow div.tooltip {display:none; position:absolute; width:137px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
@@ -413,9 +414,9 @@ div#aboutwindow div.last {margin: 20px 0 0 0;}
 div#aboutwindow div.blocks a.image_container {display: inline-block; width: 163px; height: 82px; vertical-align: middle; text-align: center; margin: 5px 0 0 0; background: #FFFFFF; border: 1px solid #999999;}
 div#aboutwindow div.blocks a.image_container img#rtvelogo {margin: 20px 0 0 0}
 div#aboutwindow div.blocks a.image_container img#vizzlogo {margin: 12px 0 0 0}
-div#aboutwindow div.blocks ul{margin: 5px 0 0 0;}
-div#aboutwindow div.blocks ul li a{font: normal 13px "Arial"; color: #993984}
-div#aboutwindow div.blocks ul li a.disabled {color:#666666;}
+div#aboutwindow div.blocks p {margin: 2px 0 0 0; font: normal 13px "Arial"; line-height: 17px}
+div#aboutwindow div.blocks p a{color: #993984}
+div#aboutwindow div.blocks p a.disabled {color:#666666;}
 div#aboutwindow div.lower_content {float:left; width: 100%; margin:35px 0 0 0;}
 div#aboutwindow div.lower_content div.left {float:left; width:300px;}
 div#aboutwindow div.lower_content div.right {float:right; width:111px;}
@@ -575,8 +576,6 @@ div div.stats div.partido.par3 div.bar span.c {background-position:right bottom!
 div div.stats div.partido.par3 p, li.partido.par3 {color:#ADAD94;}
 /*end bars*/
 
-
-
 div div.stats div.partido.psn_psoe div.bar {background-position:0 -0px!important;}
 div div.stats div.partido.psn_psoe div.bar span.c {background-position:right -0px!important}
 div div.stats div.partido.psn_psoe p, li.partido.psn_psoe{color:#ff002b!important;}
@@ -584,6 +583,14 @@ div div.stats div.partido.psn_psoe p, li.partido.psn_psoe{color:#ff002b!importan
 div div.stats div.partido.psoe_andalucia div.bar {background-position:0 -0px!important;}
 div div.stats div.partido.psoe_andalucia div.bar span.c {background-position:right -0px!important}
 div div.stats div.partido.psoe_andalucia p, li.partido.psoe_andalucia{color:#ff002b!important;}
+
+div div.stats div.partido.psoe_de_andalucia div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psoe_de_andalucia div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psoe_de_andalucia p, li.partido.psoe_de_andalucia{color:#ff002b!important;}
+
+div div.stats div.partido.psoe_de div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psoe_de div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psoe_de p, li.partido.psoe_de {color:#ff002b!important;}
 
 div div.stats div.partido.pp_eu div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp_eu div.bar span.c {background-position:right -6px!important}

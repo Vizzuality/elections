@@ -58,9 +58,21 @@ function initializeGraph() {
       addNewBubble(value);
     }
   });
+  
+  if (ie_) {
+    $(".bubbleContainer p.region_name").live({
+      mouseover: function(){
+        $(this).parent().children('.innerBubble').mouseover();
+      },
+      mouseout: function(){
+        $(this).parent().children('.innerBubble').mouseout();
+      }
+    });
+  }
+
 
   $(".innerBubble").live({
-    mouseenter: function () {
+    mouseover: function () {
       if (failCircle.failed() === true) {
         return;
       }
@@ -69,13 +81,22 @@ function initializeGraph() {
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
       var text = valuesHash[$(this).parent().attr("id")].name;
-      graphBubbleTooltip.show(left,top,text);
 
-      $(this).parent().css('zIndex',graph_bubble_index++);
+      if (ie_) {
+        $(this).parent().css('zIndex',graph_bubble_index++);
+      } else {
+        $(this).parent().css('zIndex',graph_bubble_index++);
+      }
 
-      $(this).parent().children('.outerBubble').css("background","#333333");
-      $(this).parent().children('p.region_name').css("color","#333333");
-      $(this).parent().children('p.region_name').addClass("white_shadow");
+      if (!ie_) {
+        $(this).parent().children('.outerBubble').css("background","#333333");
+        $(this).parent().children('p.region_name').css("color","#333333");
+        $(this).parent().children('p.region_name').addClass("white_shadow");
+      } else {
+        $(this).parent().children('.outerBubble').css("background","#333333");
+        $(this).parent().children('p.region_name').css("color","#333333");
+      }
+
 
       if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
         if (!ie_) {
@@ -85,22 +106,19 @@ function initializeGraph() {
         }
       }
     },
-    mouseleave: function () {
+    mouseout: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
-        if (!ie_) {
-          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
-        } else {
-          $(this).parent().children('.outerBubble').css("background","#dddddd");
-        }
         if (ie_) {
           $(this).parent().children('p.region_name').css("color","black");
+          $(this).parent().children('.outerBubble').css("background-position", "0 -60px");
+          $(this).parent().children('.outerBubble').css("background","#dddddd");
         } else {
+          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+          $(this).parent().children('p.region_name').addClass("dark_shadow");
+          $(this).parent().children('p.region_name').removeClass("white_shadow");
           $(this).parent().children('p.region_name').css("color","#fff");
         }
-        $(this).parent().children('p.region_name').addClass("dark_shadow");
-        $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
-      graphBubbleTooltip.hide();
     },
     click: function() {
       if (failCircle.failed() === true) {
@@ -896,7 +914,6 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
-      //console.log(data);
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
         updateLegend(data[key].parent_results);
@@ -904,8 +921,9 @@ function createBubbles(url){
       }
 
       valuesHash[key] = val;
-
       nBubbles = nBubbles+1;
+      
+      
       $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
@@ -922,7 +940,11 @@ function createBubbles(url){
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
       $('#'+key).css("opacity","0");
-      $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
+      if (!ie_) {
+        $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
+      } else {
+        $('#'+key).find('.innerBubble').css("background","none");
+      }
 
       updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
       count ++;
