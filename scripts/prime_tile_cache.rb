@@ -29,7 +29,7 @@ end
 
 # set app settings and boot
 setup      = {:development => {:host => 'localhost'},
-              :production  => {:host => 'datos.rtve.es', :base_url => 'http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/current', :data_url => 'http://datos.rtve.es/elecciones/autonomicas-municipales/data/bubbles/current' }}           
+              :production  => {:host => 'datos.rtve.es', :base_url => 'http://datos.rtve.es/elecciones/autonomicas-municipales/data/tiles/live', :data_url => 'http://datos.rtve.es/elecciones/autonomicas-municipales/data/bubbles/live' }}           
 settings   = setup[ENVR.to_sym]           
 
 # spinner
