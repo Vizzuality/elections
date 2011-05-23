@@ -197,7 +197,7 @@ election_ids.each do |election_id|
 end
 
 # symboliclink
-FileUtils.ln_s version_path, current_path, :force => true
+#FileUtils.ln_s version_path, current_path, :force => true
 
 all_time_end = Time.now  
 secs = all_time_end - all_time_start

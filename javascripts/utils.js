@@ -1,6 +1,6 @@
 function toTitleCase(str)
 {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 function normalizePartyName(name) {
@@ -9,7 +9,7 @@ function normalizePartyName(name) {
   }
   var slashPos = name.indexOf("/");
   var pos = (slashPos == -1) ? name.length : slashPos;
-  return name.toLowerCase().replace("-", "_").substring(0, pos);
+  return name.toLowerCase().replace("+", "_").replace(" ", "_").replace(")", "_").replace("(", "").replace("-", "_").substring(0, pos);
 }
 
 function normalizeBarWidth(bar_width) {
@@ -107,7 +107,7 @@ var normalizedRegions =  {
   'jaen': 'Jaén'
 }
 
-var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv"];
+var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv", "iu_lv_rm", "iu_los_verdes", "psn_psoe", "psoe_andalucia", "pp_eu", "iu_lv", "psdeg_psoe", "iulv", "iulv_ca", "iu_lvcyl", "upn", "bildu", "psoe_de_andalucia", "psoe_de"];
 
 
 var normalization = {
