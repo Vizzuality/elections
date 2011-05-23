@@ -139,7 +139,7 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (11%)</a></p></div>'+
+      '      <div class="partido otros"><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS</a></p></div>'+
       '    </div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -181,10 +181,19 @@ function initializeGraph() {
         var sign     = (selected_value < 0) ? "negative" : "positive";
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
-          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         } else {
-          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         }
 
         var last_year = lastAvailableYear();
@@ -229,15 +238,20 @@ function initializeGraph() {
           deep_level = "municipios";
         } else if (deep == "autonomias"){
           deep_level = "provincias";
+        } else {
+         deep_level = "municipios";
         }
 
         var data = var_resolutions[deep_level];
-        //console.log(data, deep_level);
 
-        if (data == undefined || data[normalization[compare]] == null || _.indexOf(data[normalization[compare]], year) == -1) {
-         // console.log("no hay datos");
+        if (data == undefined || data[normalization[compare]] == null) {
+
+          var top = $("div#graph_infowindow a.more").position().top;
+
           $("div#graph_infowindow a.more").css("color", "#ccc");
+          $("div#graph_infowindow div.bottom div.warning").css("top", top - 40);
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
+
 
           $('div#graph_infowindow a.more').mouseenter(function(ev){
             $("div#graph_infowindow div.bottom div.warning").show();
@@ -399,21 +413,17 @@ function initializeGraph() {
         $("#graph_infowindow").find(".top").find(".stats").find("h4").append(porcentaje_participacion + "% de participación");
 
         if (deep == "municipios") {
-
           $('div#graph_infowindow div.stats').show();
           $('div#graph_infowindow div.summary').hide();
-
           for (var i = 1; i <= 3; i++) {
             drawPartyBar(data_id, i);
           }
-
           // Other political party
-          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS');
           var lavinia = (valuesHash[data_id].lavinia_url).split('|');
           $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
         } else {
+
           $('div#graph_infowindow div.stats').hide();
           $('div#graph_infowindow div.summary').show();
 
@@ -432,7 +442,11 @@ function initializeGraph() {
 
         var electionYears = [1987,1991,1995,1999,2003,2007,2011];
 
-        selected_value = parseFloat(data[36 - (maxYear - year)]);
+        if (data[36 -(maxYear - year)] == 0) {
+          selected_value = parseFloat(data[36 - (maxYear - lastAvailableYear())]);
+        } else {
+          selected_value = parseFloat(data[36 - (maxYear - year)]);
+        }
 
         var availableYears = var_resolutions[deep][normalization[compare]];
 
@@ -447,9 +461,6 @@ function initializeGraph() {
         var lastYearIndex  = 36 - (maxYear- lastYear);
         var currentYearIndex = 36 - (maxYear- year);
         var marginRight = 36 - lastYearIndex;
-
-        //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
-        //console.log(data, data[firstYearIndex]);
 
         for (var i = firstYearIndex; i < lastYearIndex + 1; i++) {
           if (!find) {
@@ -593,7 +604,7 @@ function initializeGraph() {
        <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
        <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
        <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
-       <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
+       <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS</p></div>\
        </div>\
        <div class="summary">\
        <h4>Municipios en los que es el más votado...</h4>\
@@ -726,13 +737,9 @@ function initializeGraph() {
           graphBubbleInfowindow.hide();
         });
 
-        if (deep=="municipios") {
-          $('div.graph_legend div.stats').show();
-          $('div.graph_legend div.summary').hide();
-        } else {
-          $('div.graph_legend div.stats').hide();
-          $('div.graph_legend div.summary').show();
-        }
+        $('div.graph_legend div.stats').hide();
+        $('div.graph_legend div.summary').show();
+
 
         // Remove previous political style bars
         $('div.graph_legend div.stats div.partido').each(function(i,ele){
@@ -746,9 +753,7 @@ function initializeGraph() {
         drawPartyBar(results,3);
 
         // Other
-        bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-        $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
-        $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
+        $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS');
         showLegend();
       } else {
 
@@ -853,7 +858,6 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-  //console.log("Create bubbles", url);
 
   if (compare === "ninguna") {
     hideGraphLoader();
@@ -869,7 +873,6 @@ function createBubbles(url){
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
-      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -899,19 +902,17 @@ function createBubbles(url){
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
-        if (deep != "municipios") {
 
-          var deep_text = {autonomias:"autonomías", provincias:"municipios"}
+        var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
 
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
+        $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
 
-          $('div.graph_legend div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
+        $('div.graph_legend div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
 
-          for (var i = 1; i <= 4; i++) {
-            drawTotalNumber(data[key].parent_results, i, true);
-          }
+        for (var i = 1; i <= 4; i++) {
+          drawTotalNumber(data[key].parent_results, i, true);
         }
 
         one = false;
@@ -920,7 +921,6 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      //console.log(count, nBubbles, " created bubble " + key, createdBubbles);
       $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><p class="region_name">'+val.name+'</p><div class="outerBubble"></div><div class="innerBubble"></div></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
@@ -938,7 +938,6 @@ function createBubbles(url){
 }
 
 function updateBubbles(url){
-  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
@@ -947,7 +946,6 @@ function updateBubbles(url){
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      //console.log("Update 404", url);
       return;
     }
 
@@ -1037,10 +1035,6 @@ function goDeeper(url){
 
   name = url_split[url_split_length].split(normalization[compare])[0].substring(0, length-1);
 
-  //console.log("url_split", url_split);
-  //console.log("deep", deep);
-  //console.log("name", name);
-  //console.log("compare", normalization[compare], compare);
 
   graphLegend.hideError();
   graphBubbleTooltip.hide();
@@ -1069,12 +1063,10 @@ function destroyBubble(b, url){
     top: displacementY,
     opacity: "0"
   }, 500, function(){
-    //console.log(nBubbles, " removing "+b);
     $("#"+b).remove();
     nBubbles = nBubbles-1;
 
     if(nBubbles == 0){
-      //console.log("All bubbles were removed", valuesHash, valuesHash.length);
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }
