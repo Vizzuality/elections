@@ -158,6 +158,7 @@
 
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
+    //console.log(party_id, info);
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
@@ -167,9 +168,15 @@
         if (info['data'][year][positions[id] +'_partido_name']!=undefined) {
           partido = info['data'][year][positions[id] +'_partido_name'];
 
+<<<<<<< HEAD
           if (partido.length > 16) {
             partido= partido.substr(0,13) + "...";
           }
+=======
+        if (partido && partido.length > 16) {
+          partido= partido.substr(0,13) + "...";
+        }
+>>>>>>> 0ca1739e1f9d8a51a707e23fbd31a0b34e8fc20e
 
           var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
 
