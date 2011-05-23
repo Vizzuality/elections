@@ -158,7 +158,6 @@
 
 
     InfoWindow.prototype.drawPartyBar = function(party_id, info) {
-    //console.log(party_id, info);
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;

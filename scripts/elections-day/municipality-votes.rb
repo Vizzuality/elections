@@ -103,23 +103,26 @@ class MunicipalityVotes
       end
     end
     
-    primer_partido_id = if array[0] && array[0][0] && $rparties[array[0][0]]
-      $rparties[array[0][0]]
+    primer_partido_id = if array[0] && array[0][0]
+      $rparties[array[0][0]] || $parties_ids[array[0][3]]
     else
       nil
     end
+    raise "Primer partido NULL #{array[0].inspect}" if primer_partido_id.nil?
 
-    segundo_partido_id = if array[1] && array[1][0] && $rparties[array[1][0]]
-      $rparties[array[1][0]]
+    segundo_partido_id = if array[1] && array[1][0]
+      $rparties[array[1][0]] || $parties_ids[array[1][3]]
     else
       nil
     end
+    raise "Segundo partido NULL #{array[1].inspect}" if segundo_partido_id.nil?
     
-    tercer_partido_id = if array[2] && array[2][0] && $rparties[array[2][0]]
-      $rparties[array[2][0]]
+    tercer_partido_id = if array[2] && array[2][0]
+      $rparties[array[2][0]] || $parties_ids[array[2][3]]
     else
       nil
     end        
+    raise "Tercer partido NULL #{array[2].inspect}" if tercer_partido_id.nil?
     
     primer_partido_votos = if array[0] && array[0][1]
       array[0][1]
