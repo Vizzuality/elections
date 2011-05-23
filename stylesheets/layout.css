@@ -169,13 +169,14 @@ div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:20px;width:20px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:absolute;background:#ddd; background:rgba(255,255,255,0.5);border:none;height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
+div.outerBubble{position:absolute;background:#ddd; border:none; height:40px;width:40px;top:-10px;left:-10px;-moz-border-radius:50px;-webkit-border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:30px;width:30px;top:-5px;left:-5px;-moz-border-radius:50px;-webkit-border-radius:50px;cursor:pointer}
-div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; text-align:center; z-index:100 filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333); z-index:100;}
-div.bubbleContainer p.dark_shadow{text-shadow:0 1px white; text-shadow:black 1px 1px 3px,black -1px -1px 3px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
-div.bubbleContainer p.white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
+div.bubbleContainer p.region_name {position:absolute; top:-35px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:0;}
+div.bubbleContainer p.dark_shadow{text-shadow:0 1px white; text-shadow:black 1px 1px 3px,black -1px -1px 3px;}
+div.bubbleContainer p.white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px;}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+
 
 /*WADUS TEXT*/
 div.wadusText{ position:absolute; top:0; left:0; background:url('../images/bkgGradientWadus.png') no-repeat 0 0; width:378px; height: 75px; z-index:105; }
@@ -221,7 +222,7 @@ div#year_nodata_tooltip p.show {font:normal 13px Arial; color:white;}
 /*BUBBLE MARKER*/
 div.bubble {position:absolute; padding:0; margin:0; overflow:visible;}
 div.bubble img {width:100%; height:100%; padding:0; margin:0;}
-div.bubble p.stat {position:absolute; top:50%; left:0; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:10; font:normal 11px 'Officina Bold'; color:#666666;}
+div.bubble p.stat {position:absolute; top:50%; left:0; width:100%; padding:0; margin:-6px 0 0 0; text-align:center; z-index:0; font:normal 11px 'Officina Bold'; color:#666666;}
 div.bubble p.region_name {position:absolute; top:-15px; left:50%; width:70px; margin:0 0 0 -35px; text-shadow:black 1px 1px 3px,black -1px -1px 3px; font:normal 11px Arial; color:white; text-align:center; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#333333);}
 div.bubble p.yellow {color:#FFAB38;}
 div.bubble p.red {color:red;}
@@ -266,9 +267,14 @@ div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:ho
 div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
 
-div#graph_infowindow div.warning {display:none; position:absolute; bottom: 55px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px; }
+div#graph_infowindow div.warning {display:none; position:absolute; bottom: 40px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#graph_infowindow div.warning div.tip {position:absolute; bottom: -6px; left: 68px; width: 13px; height:6px; background: url('../images/tip.png') no-repeat bottom; }
 
+div#graph_infowindow div.tooltip {display:none; position:absolute; width:137px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#graph_infowindow div.tooltip div.tip {position:absolute; bottom: -6px; left: 68px; width: 13px; height:6px; background: url('../images/tip.png') no-repeat bottom; }
 
+div#infowindow div.tooltip {display:none; position:absolute; width:137px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#infowindow div.tooltip div.tip {position:absolute; bottom: -6px; left: 68px; width: 13px; height:6px; background: url('../images/tip.png') no-repeat bottom; }
 
 /*COMPAREWINDOW*/
 div#comparewindow {position:absolute; display:none; top:50%; left:50%; margin:-200px 0 0 -178px; width:356px; cursor:default; z-index:100; cursor:move;}
@@ -343,7 +349,7 @@ div#comparewindow div.bottom.province div.province {width:277px; margin:0 0 0 40
 div#comparewindow div.bottom div.search h4 {margin:0 0 0 40px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div.bottom form {position:relative; float:left; width:276px; height:28px; margin:5px 0 0; padding:0 0 0 40px;}
 div#comparewindow div.bottom form input#google_compare_autocomplete {display:inline-block; width:244px; height:13px; margin:0!important; padding:8px 27px 7px 7px; background:url('../images/compare_search_bkg.png') no-repeat 0 0; border:none; font:normal 13px "Officina Regular"; line-height:13px;}
-div#comparewindow div.bottom form div.pac-container {left:0px!important; top:25px!important; width:276px!important; padding:5px 0 5px; background:url('../images/search_compare_google.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
+div#comparewindow div.bottom form div.pac-container {left:40px!important; top:25px!important; width:276px!important; padding:5px 0 5px; background:url('../images/search_compare_google.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
 div#comparewindow div.bottom form div.pac-container div.pac-unselected {padding:2px 10px; font:normal 14px "Officina Regular"; color:#666666;}
 div#comparewindow div.bottom form div.pac-container div.pac-unselected:hover {background:none; color:black; cursor:pointer;}
 div#comparewindow div.bottom form div.pac-container div.pac-selected {padding:2px 10px; font:normal 14px "Officina Regular"; color:black!important; background:none;}

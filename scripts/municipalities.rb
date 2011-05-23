@@ -15,6 +15,7 @@ processes      = get_processes
 autonomies     = get_autonomies
 provinces      = get_provinces
 real_variables, fake_variables = get_variables(4)
+
 parties        = get_parties
 parties_known  = get_known_parties(parties)
 puts "Starting evolution...."
@@ -49,7 +50,7 @@ autonomies.each do |autonomy_hash|
     province_name = province[:name_2].normalize
     province_id = province[:id_2]
     query = <<-SQL
-select nombre, votantes_totales, censo_total, ine_poly.cartodb_id, lavinia_url,
+select nombre, votantes_totales, censo_total, ine_poly.cartodb_id, ine_poly.lavinia_url,
    proceso_electoral_id, primer_partido_id, primer_partido_percent, segundo_partido_id, segundo_partido_percent,
    tercer_partido_id, tercer_partido_percent, censo_total, votantes_totales, resto_partido_percent, ine_poly.google_maps_name,
    #{real_variables.join(',')}
@@ -77,6 +78,7 @@ SQL
         real_variable = variable
       end
       
+      year = nil
       # variables_json[custom_variable_name] ||= []
       unless proceso_electoral_id = processes[variable.match(/\d+$/)[0].to_i]  
         year = variable.match(/\d+$/)[0].to_i
@@ -85,6 +87,7 @@ SQL
           proceso_electoral_id = processes[year]
         end
       end
+      
       next if year == 1974 || proceso_electoral_id.nil?
       year ||= variable.match(/\d+$/)[0].to_i
       # variables_json[custom_variable_name] << variable.match(/\d+$/)[0].to_i
