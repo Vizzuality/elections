@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+
+              '<div class="partido otros"><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -163,32 +163,37 @@
       var positions = ["primer", "segundo", "tercer"];
       var bar_width;
       var partido = "otros";
-
+      
       if (party_id < 4) {
-        partido = info['data'][year][positions[id] +'_partido_name'];
+        if (info['data'][year][positions[id] +'_partido_name']!=undefined) {
+          partido = info['data'][year][positions[id] +'_partido_name'];
 
-        if (partido && partido.length > 16) {
-          partido= partido.substr(0,13) + "...";
-        }
+          if (partido.length>13) {
+            partido= partido.substr(0,10) + "...";
+          }
 
-        var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
+          var partido_class = normalizePartyName(info['data'][year][positions[id] +'_partido_name']);
 
-        if (_.indexOf(parties, partido_class) !== -1) {
-          $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido_class);
+          if (_.indexOf(parties, partido_class) !== -1) {
+            $('div#infowindow div.stats div.partido:eq('+id+')').addClass(partido_class);
+          } else {
+            $('div#infowindow div.stats div.partido:eq('+id+')').addClass('par'+party_id);
+          }
+          bar_width = normalizeBarWidth((info['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
+          $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+          $('div#infowindow div.stats div.partido:eq('+id+') p').text(partido+' ('+info['data'][year][positions[id]+'_partido_percent']+'%)');
+          $('div#infowindow div.stats div.partido:eq('+id+')').show();
         } else {
-          $('div#infowindow div.stats div.partido:eq('+id+')').addClass('par'+party_id);
+          $('div#infowindow div.stats div.partido:eq('+id+')').hide();
         }
-        bar_width = normalizeBarWidth((info['data'][year][positions[id] + '_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        $('div#infowindow div.stats div.partido:eq('+id+') p').text(partido+' ('+info['data'][year][positions[id]+'_partido_percent']+'%)');
+
       } else {
-        // Other
-        bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
-        $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
         var lavinia = (info.lavinia_url).split('|');
         $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS ('+info['data'][year]['otros_partido_percent']+'%)');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS');
+        $('div#infowindow div.stats div.partido:eq('+id+')').show();
       }
+
     }
 
 
@@ -408,50 +413,66 @@
           if (this.information['data'][year]['primer_partido_name']!=undefined) {
             $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
 
-            var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
-            $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
-            if (_.indexOf(parties, partido_1) !== -1) {
-              $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
-            } else if(this.oldPar1 != partido_1) {
-              $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+            if (this.information['data'][year]['primer_partido_name']!=undefined) {
+              var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
+              $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
+              if (_.indexOf(parties, partido_1) !== -1) {
+                $('div#infowindow div.stats div.partido:eq(0)').addClass(partido_1);
+              } else if(this.oldPar1 != partido_1) {
+                $('div#infowindow div.stats div.partido:eq(0)').addClass('par1');
+              }
+              bar_width = normalizeBarWidth((this.information['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100);
+              $('div#infowindow div.stats div.partido:eq(0) span.c').animate({
+                width: bar_width.toString() +"px"
+              }, 500, 'easeOutCubic');
+              $('div#infowindow div.stats div.partido:eq(0) p').text(this.information['data'][year]['primer_partido_name']+' ('+this.information['data'][year]['primer_partido_percent']+'%)');
+              $('div#infowindow div.stats div.partido:eq(0)').show();
+            } else {
+              $('div#infowindow div.stats div.partido:eq(0)').hide();
+            }            
+            
+            
+            if (this.information['data'][year]['segundo_partido_name']!=undefined) {
+              var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
+              $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
+              if (_.indexOf(parties, partido_2) !== -1) {
+                $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
+              } else if(this.oldPar2 != partido_2) {
+                $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+              }
+              bar_width = normalizeBarWidth((this.information['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100);
+              $('div#infowindow div.stats div.partido:eq(1) span.c').animate({
+                width: bar_width.toString() +"px"
+              }, 500, 'easeOutCubic');
+              $('div#infowindow div.stats div.partido:eq(1) p').text(this.information['data'][year]['segundo_partido_name']+' ('+this.information['data'][year]['segundo_partido_percent']+'%)');
+              $('div#infowindow div.stats div.partido:eq(1)').show();
+            } else {
+              $('div#infowindow div.stats div.partido:eq(1)').hide();
             }
-            bar_width = normalizeBarWidth((this.information['data'][year]['primer_partido_percent']*this.bar_width_multiplier)/100);
-            $('div#infowindow div.stats div.partido:eq(0) span.c').animate({
-              width: bar_width.toString() +"px"
-            }, 500, 'easeOutCubic');
-            $('div#infowindow div.stats div.partido:eq(0) p').text(this.information['data'][year]['primer_partido_name']+' ('+this.information['data'][year]['primer_partido_percent']+'%)');
 
-            var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
-            $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
-            if (_.indexOf(parties, partido_2) !== -1) {
-              $('div#infowindow div.stats div.partido:eq(1)').addClass(partido_2);
-            } else if(this.oldPar2 != partido_2) {
-              $('div#infowindow div.stats div.partido:eq(1)').addClass('par2');
+
+            if (this.information['data'][year]['tercer_partido_name']!=undefined) {
+              var partido_3 = normalizePartyName(this.information['data'][year]['tercer_partido_name']);
+              $('div#infowindow div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
+              if (_.indexOf(parties, partido_3) !== -1) {
+                $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
+              } else if(this.oldPar3 != partido_3) {
+                $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
+              }
+              bar_width = normalizeBarWidth((this.information['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100);
+              $('div#infowindow div.stats div.partido:eq(2) span.c').animate({
+                width: bar_width.toString() +"px"
+              }, 500, 'easeOutCubic');
+              $('div#infowindow div.stats div.partido:eq(2) p').text(this.information['data'][year]['tercer_partido_name']+' ('+this.information['data'][year]['tercer_partido_percent']+'%)');
+              $('div#infowindow div.stats div.partido:eq(2)').show();
+            } else {
+              $('div#infowindow div.stats div.partido:eq(2)').hide();
             }
-            bar_width = normalizeBarWidth((this.information['data'][year]['segundo_partido_percent']*this.bar_width_multiplier)/100);
-            $('div#infowindow div.stats div.partido:eq(1) span.c').animate({
-              width: bar_width.toString() +"px"
-            }, 500, 'easeOutCubic');
-            $('div#infowindow div.stats div.partido:eq(1) p').text(this.information['data'][year]['segundo_partido_name']+' ('+this.information['data'][year]['segundo_partido_percent']+'%)');
 
-            var partido_3 = normalizePartyName(this.information['data'][year]['tercer_partido_name']);
-            $('div#infowindow div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
-            if (_.indexOf(parties, partido_3) !== -1) {
-              $('div#infowindow div.stats div.partido:eq(2)').addClass(partido_3);
-            } else if(this.oldPar3 != partido_3) {
-              $('div#infowindow div.stats div.partido:eq(2)').addClass('par3');
-            }
-            bar_width = normalizeBarWidth((this.information['data'][year]['tercer_partido_percent']*this.bar_width_multiplier)/100);
-            $('div#infowindow div.stats div.partido:eq(2) span.c').animate({
-              width: bar_width.toString() +"px"
-            }, 500, 'easeOutCubic');
-            $('div#infowindow div.stats div.partido:eq(2) p').text(this.information['data'][year]['tercer_partido_name']+' ('+this.information['data'][year]['tercer_partido_percent']+'%)');
 
-            bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
-            $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
             var lavinia = (this.information.lavinia_url).split('|');
             $('div#infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-            $('div#infowindow div.stats div.partido:eq(3) p a').text('OTROS DATOS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+            $('div#infowindow div.stats div.partido:eq(3) p a').text('OTROS DATOS');
             $('div#infowindow div.stats').show();
           } else {
             $('div#infowindow div.stats').hide();
@@ -549,7 +570,6 @@
 
       this.map_.panBy(left,top);
     }
-
 
 
     InfoWindow.prototype.generateStatImage = function() {

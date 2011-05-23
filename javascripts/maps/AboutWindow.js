@@ -15,7 +15,7 @@
       	'<div class="upper_content">'+
         	'<span class="arrow"></span>'+
         	'<h3>Acerca del Microscopio del Voto</h3>'+
-        	'<p>El Microscopio del Voto es la primera de una serie de iniciativas de RTVE apostando por la visualización de datos y las nuevas tecnologías de Internet.</p>'+
+        	'<p>El Microscopio del Voto es la primera de una serie de iniciativas de <a href="http://rtve.es" alt="ir a rtve.es">RTVE.es</a> apostando por la visualización de datos y por los datos abiertos.</p>'+
         	'<div class="blocks"><h4>UN PROYECTO DE</h4><a href="http://www.rtve.es" class="image_container" ><img src="images/logo_rtve.jpg" id="rtvelogo" alt="RTVE" title=""/></a></div>'+
         	'<div class="blocks"><h4>DESARROLLADO POR</h4><a href="http://www.vizzuality.com" class="image_container"><img src="images/logo_vizz.jpg" id="vizzlogo" alt="Vizzuality" title=""/></a></div>'+
         	'<div class="blocks last"><div><h4>AGRADECIMIENTOS</h4>'+

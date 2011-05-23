@@ -25,7 +25,7 @@ div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15p
 div#header div.secondContainer div.left {float:left; width:320px; height:auto; margin:0; padding:0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
 div#header div.secondContainer div.left form input {float:left; width:218px; height:15px; margin:0; padding:9px 37px 8px 7px; background:url('../images/search_bkg.png') no-repeat 0 0; border:none; font:normal 15px "Officina Regular";
-  color:#CCCCCC; line-height:15px;}
+  color:#999999; line-height:15px;}
 div#header div.secondContainer div.left form input:focus {outline:none; color:#333333;}
 div#header div.secondContainer div.left form span.searchLens { background: url('../images/lens.png') 0 0 no-repeat; width: 20px; height: 20px; position: absolute; top: 4px; right: 10px; z-index: 11; }
 div#header div.secondContainer div.left form div.pac-container {left:19px!important; top:29px!important; width:262px!important; padding:5px 0 5px; background:url('../images/autocomplete_bkg.png') no-repeat 0 bottom; border:none; border-top:1px solid #999999;}
@@ -91,12 +91,12 @@ div#header div.secondContainer div.right div.selects div.select div.option_list 
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected {background:url('../images/selected_arrows.png') no-repeat 195px 4px;}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a {padding:0 0 0 45px; font:normal 15px "Officina Regular"; color:#666666; text-shadow:0 1px white; text-decoration:none; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li a:hover {color:#333333;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 1px;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#bbbbbb!important;}
-div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#bbbbbb!important; cursor:default;}
-div#header div.secondContainer div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -32px;}
-div#header div.secondContainer div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px -64px;}
-div#header div.secondContainer div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#CCCCCC; background:url('../images/grey_select_icons.png') no-repeat 6px 0px;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.selected a {color:#999999; background:url('../images/grey_select_icons.png') no-repeat 6px 1px;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled a {color:#999999!important;}
+div#header div.secondContainer div.right div.selects div.select div.option_list div.bottom ul li.disabled:hover a {color:#999999!important; cursor:default;}
+div#header div.secondContainer div.right div.selects div.select div.option_list.money div.bottom ul li.selected a {color:#999999; background:url('../images/grey_select_icons.png') no-repeat 6px -32px;}
+div#header div.secondContainer div.right div.selects div.select div.option_list.chat div.bottom ul li.selected a {color:#999999; background:url('../images/grey_select_icons.png') no-repeat 6px -64px;}
+div#header div.secondContainer div.right div.selects div.select div.option_list.people div.bottom ul li.selected a {color:#999999; background:url('../images/grey_select_icons.png') no-repeat 6px 0px;}
 
 div#header div.secondContainer{float:left; width: 100%;}
 
@@ -144,7 +144,7 @@ div.tabs div#map div.canary_island:hover a {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 
-div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #cccccc; z-index:0;}
+div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #999999; z-index:0;}
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:0; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {display:none; position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 div.tabs div#graph div#top_legend { top: 25px;}
@@ -214,7 +214,7 @@ div#tab_menu a.selected {background-position: -1px -31px;}
 div#tab_menu a.selected:hover {cursor:default; background-position:-1px -31px;}
 
 /*TOOLTIP YEAR ERROR*/
-div#year_nodata_tooltip {position:absolute; display:none; right:65px; top:17px; width:205px; height:44px; padding:11px 0 0 52px; background:url('../images/year_error_bkg.png') no-repeat 0 0; z-index:40;}
+div#year_nodata_tooltip {position:absolute; display:none; right:65px; top:17px; width:265px; height:44px; padding:11px 0 0 52px; background:url('../images/year_error_bkg.png') no-repeat 0 0; z-index:40;}
 div#year_nodata_tooltip p.nodata {font:normal 15px "Officina Bold"; color:white;}
 div#year_nodata_tooltip p.show {font:normal 13px Arial; color:white;}
 
@@ -309,11 +309,11 @@ div.compare_graph a.left {position:absolute; top:44px; left:10px; width:24px; he
 div.compare_graph a.left:hover {background-position:0 -24px;}
 div.compare_graph a.right {position:absolute; top:44px; right:9px; width:24px; height:24px; background:url('../images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.right:hover {background-position:right -24px;}
-div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden;}
-div.compare_graph div.stats_slider {width:298px; height:220px;} /* each block 299px x 110px */
-div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; padding:0!important; margin:0!important; overflow:hidden;}
-div.compare_graph div.stats_slider div.up {background:url('../images/compare_graph_bkg.png') no-repeat center center;}
-div.compare_graph div.stats_slider div.down {background:url('../images/graph_compare_evolution_bkg.png') no-repeat center center;}
+div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden; background:url('../images/window_nodata.jpg') no-repeat center center;}
+div.compare_graph div.stats_slider {width:298px; height:220px; } /* each block 299px x 110px */
+div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; padding:0!important; margin:0!important; overflow:hidden;;}
+div.compare_graph div.stats_slider div.up {background:url('../images/compare_graph_bkg.png') no-repeat center center white;}
+div.compare_graph div.stats_slider div.down {background:url('../images/graph_compare_evolution_bkg.png') no-repeat center center white;}
 div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block a.evolucion {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
 div.compare_graph div.stats_slider div.block h3 {position:absolute; top:5px; right:10px; font:normal 13px "Officina Regular"; color:#333333;}
@@ -365,7 +365,7 @@ div#welcomewindow a.close_info {position:absolute; right:3px; top:1px; width:18p
 div#welcomewindow h1 {margin-bottom: 15px; font:normal 22px "Officina Bold"; color:#333;}
 div#welcomewindow p {font:normal 15px "Officina Regular"; color:#666; margin-bottom:31px;}
 div#welcomewindow div.header {clear:both; overflow:hidden; margin-bottom: 31px; font:normal 26px "Officina Regular"; color:#333;}
-div#welcomewindow div.header small {float:left; font:normal 12px "Officina Regular"; color:#ccc;}
+div#welcomewindow div.header small {float:left; font:normal 12px "Officina Regular"; color:#999999;}
 div#welcomewindow div.header div.nav {float:right; font:normal 12px "Officina Regular"; color:#333;}
 div#welcomewindow div.header div.nav a {font:normal 12px "Officina Regular"; color:#333;}
 div#welcomewindow a.start{display:block; width: 480px; height:22px; font:normal 16px "Officina Bold"; color: #8B1F74; margin:0 auto 3px auto; padding: 15px 0; text-align:center; background:url('../images/button_bkg.png') no-repeat; text-decoration:none;}
@@ -378,8 +378,8 @@ div#appInfo a.close_info {position:absolute; right:3px; top:1px; width:18px; hei
 div#appInfo a.close_info:hover {background-position:0 -18px;}
 div#appInfo div.options {position:relative; float:left; width:190px; height:450px; margin:8px 0 0 12px; padding:20px 22px 20px 21px;}
 div#appInfo div.options span.arrow {position:absolute; right:0; top:89px; width:9px; height:17px; background:url('../images/welcome_arrow.png') no-repeat 0 0;}
-div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#BBBBBB; text-transform:uppercase;}
-div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #CCCCCC;}
+div#appInfo div.options h3 {font:normal 13px "Officina Regular"; color:#999999; text-transform:uppercase;}
+div#appInfo div.options h4 {width:100%; margin:15px 0 0 0; padding:0 0 7px 0; font:normal 17px "Officina Regular"; color:#999999; border-bottom:1px solid #999999;}
 div#appInfo div.options h4 a{color:#999999; text-decoration: none;}
 div#appInfo div.options ul {width:100%; padding:10px 0 0 0; display: none;}
 div#appInfo div.options ul li {width:100%; padding:0 0 8px;}
@@ -402,11 +402,12 @@ div#appInfo div.explain div.chartCurrentLabel span.year {width: 100%; text-align
 div#aboutwindow {position:absolute; display:none; width:535px; height:354px; padding: 30px; left:50%; top:50%; margin:-177px 0 0 -267px; background:url('../images/about_bkg.png') no-repeat; z-index:100;}
 div#aboutwindow a.close_info {position:absolute; right:3px; top:1px; width:18px; height:18px; cursor:pointer; background:url('../images/close_infowindow.png') no-repeat 0 0;}
 div#aboutwindow h3 {font: normal 23px "Officina Bold"; color: #333333;}
-div#aboutwindow h4 {font: normal 13px "Officina Regular"; color: #CCCCCC;}
+div#aboutwindow h4 {font: normal 13px "Officina Regular"; color: #999999;}
 div#aboutwindow p {margin: 10px 0 0 0; font:normal 17px "Officina Regular"; color:#666;}
+div#aboutwindow p a{color: #993984;}
 div#aboutwindow div.blocks {float:left; display:inline; width:165px; vertical-align:top; margin:20px 20px 0 0;}
 div#aboutwindow div.last {margin: 20px 0 0 0;}
-div#aboutwindow div.blocks a.image_container {display: inline-block; width: 163px; height: 82px; vertical-align: middle; text-align: center; margin: 5px 0 0 0; background: #FFFFFF; border: 1px solid #CCCCCC;}
+div#aboutwindow div.blocks a.image_container {display: inline-block; width: 163px; height: 82px; vertical-align: middle; text-align: center; margin: 5px 0 0 0; background: #FFFFFF; border: 1px solid #999999;}
 div#aboutwindow div.blocks a.image_container img#rtvelogo {margin: 20px 0 0 0}
 div#aboutwindow div.blocks a.image_container img#vizzlogo {margin: 12px 0 0 0}
 div#aboutwindow div.blocks ul{margin: 5px 0 0 0;}
