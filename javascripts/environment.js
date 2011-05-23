@@ -22,7 +22,7 @@
   if (ua.msie) {
     if (ua.version.slice(0,3) < '7.0') {
       window.location.href = "http://cartodb.com/";
-    } else {
+    } else if (ua.version.slice(0,3) < '9.0') {
       ie_ = true;
     }
   }
