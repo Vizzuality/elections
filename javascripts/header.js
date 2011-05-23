@@ -39,7 +39,7 @@
         if (compare!="ninguna") {
           var last_year = lastAvailableYear();
           if (last_year!=0 && last_year<year) {
-            $('div#year_nodata_tooltip p.nodata').text('No hay datos para '+year);
+            $('div#year_nodata_tooltip p.nodata').text('No hay datos para esta variable en '+year);
             $('div#year_nodata_tooltip p.show').text('Te mostramos los datos del '+last_year);
             show();
           } else {
@@ -515,7 +515,9 @@
           }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
-
+        
+        
+        noyear_slider.refresh();
         drawNoDataBars();
         changeHash();
 
@@ -572,14 +574,14 @@
   function checkStartYear() {
     if (year!=2011) {
       if (checkFailYear(year)) {
-        animate_interval = setInterval(function(){animateSlider();},2500);
+        animate_interval = setInterval(function(){animateSlider();},1500);
       } else {
         updateNewSliderValue(getFirstAvailableYear(getDeepLevelFromZoomLevel(peninsula.getZoom())),year);
-        animate_interval = setInterval(function(){animateSlider();},2500);
+        animate_interval = setInterval(function(){animateSlider();},1500);
       }
     } else {
       updateNewSliderValue(1987,2011);
-      animate_interval = setInterval(function(){animateSlider();},2500);
+      animate_interval = setInterval(function(){animateSlider();},1500);
     }
   }
 
