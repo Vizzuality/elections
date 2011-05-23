@@ -171,7 +171,7 @@ div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:60px;width:60px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:relative;background:#ddd; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
+div.outerBubble{position:relative; background:#ddd; background:url('../images/balls_sprite.png') no-repeat 0 0\9; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:40px;width:40px;top:10px;left:10px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px; cursor:pointer; z-index:1;}
 div.bubbleContainer p.region_name {position:absolute; top:0px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:5;}
 div.bubbleContainer p.region_name {position:relative\8; width:60px\8;}
@@ -179,6 +179,7 @@ div.bubbleContainer p.dark_shadow{text-shadow:0 1px white; text-shadow:black 1px
 div.bubbleContainer p.white_shadow {text-shadow:0 1px white; text-shadow:#fff 1px 1px 3px,black -1px -1px 3px;}
 p.graph_bubble_tooltip {position:absolute; display:none; width:auto; padding:0 0 12px; background:url('../images/graph_tooltip_bkg.png') no-repeat center bottom; font:normal 13px Arial; color:#333333; z-index:100; text-shadow:0 1px white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#FFFFFF);}
 div#graph a.vizzuality {position:absolute; left:10px; bottom:4px; width:82px; height:43px; background:url('../images/vizzuality_white_shadow.png') no-repeat 0 0; z-index:10; overflow:hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
+
 
 
 /*WADUS TEXT*/
@@ -464,46 +465,57 @@ div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/
 div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #dddddd; text-transform:uppercase;}
 /*psoe*/
+div.outerBubble.psoe{background:url('../images/balls_sprite.png') no-repeat 0 0\9;}
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
 div.stats div.partido.psoe div.bar span.c {background-position:right -0px!important;}
 div.stats div.partido.psoe p, li.partido.psoe {color:red!important;}
 /*pp*/
+div.outerBubble.pp{background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.pp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp div.bar span.c{background-position:right -6px!important;}
 div div.stats div.partido.pp p, li.partido.pp {color:#00B2EB!important;}
 /*iu*/
+div.outerBubble.iu{background:url('../images/balls_sprite.png') no-repeat -120px 0\9;}
 div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.iu p, li.partido.iu {color:#54A551!important;}
 /*ap*/
+div.outerBubble.ap{background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.ap div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.ap div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.ap p, li.partido.ap {color:#00B2EB!important;}
 /*indep*/
+div.outerBubble.indep {background:url('../images/balls_sprite.png') no-repeat -180px 0\9;}
 div div.stats div.partido.indep div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.indep div.bar span.c {background-position:right -24px!important}
 div div.stats div.partido.indep p, li.partido.indep {color:gray!important;}
 /*pa*/
+div.outerBubble.pa {background:url('../images/balls_sprite.png') no-repeat -120px 0\9;}
 div div.stats div.partido.pa div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.pa div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.pa p, li.partido.pa {color:#54A551!important;}
 /*bng*/
+div.outerBubble.bng {background:url('../images/balls_sprite.png') no-repeat 0 0\9;}
 div div.stats div.partido.bng div.bar {background-position:0 0px!important;}
 div div.stats div.partido.bng div.bar span.c {background-position:right 0px!important}
 div div.stats div.partido.bng p, li.partido.bng {color:red!important;}
 /*pdp*/
+div.outerBubble.pdp {background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.pdp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pdp div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.pdp p, li.partido.pdp {color:#00B2EB!important;}
 /*erc-am*/
+div.outerBubble.erc_am {background:url('../images/balls_sprite.png') no-repeat -240px 0\9;}
 div div.stats div.partido.erc_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc_am p, li.partido.erc_am {color:#EC7B37!important;}
 /*esquerra-am*/
+div.outerBubble.esquerra_am {background:url('../images/balls_sprite.png') no-repeat -240px 0\9;}
 div div.stats div.partido.esquerra_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.esquerra_am p, li.partido.esquerra_am {color:#EC7B37!important;}
 /*erc*/
+
 div div.stats div.partido.erc div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc p, li.partido.erc {color:#EC7B37!important;}
@@ -574,8 +586,6 @@ div div.stats div.partido.par3 div.bar {background-position:0 bottom!important;}
 div div.stats div.partido.par3 div.bar span.c {background-position:right bottom!important}
 div div.stats div.partido.par3 p, li.partido.par3 {color:#ADAD94;}
 /*end bars*/
-
-
 
 div div.stats div.partido.psn_psoe div.bar {background-position:0 -0px!important;}
 div div.stats div.partido.psn_psoe div.bar span.c {background-position:right -0px!important}
