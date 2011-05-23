@@ -448,7 +448,9 @@
 
             bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
             $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS DATOS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+            var lavinia = (this.information.lavinia_url).split('|');
+            $('div#infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+            $('div#infowindow div.stats div.partido:eq(3) p a').text('OTROS DATOS ('+this.information['data'][year]['otros_partido_percent']+'%)');
             $('div#infowindow div.stats').show();
           } else {
             $('div#infowindow div.stats').hide();
