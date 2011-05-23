@@ -79,12 +79,15 @@
         $('div#infowindow').delegate('.goTo','click',function(ev){
           ev.preventDefault();
           try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};
-          var zoom = peninsula.getZoom();
-          if (zoom==6) {
-            peninsula.setZoom(7);
-          } else if (zoom==7 || zoom==8) {
-            peninsula.setZoom(11);
-          }
+          peninsula.panTo(me.latlng_);
+          setTimeout(function(){
+            var zoom = peninsula.getZoom();
+            if (zoom==6) {
+              peninsula.setZoom(7);
+            } else if (zoom==7 || zoom==8) {
+              peninsula.setZoom(11);
+            }
+          },500);
         });
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
