@@ -310,8 +310,8 @@ div.compare_graph a.left:hover {background-position:0 -24px;}
 div.compare_graph a.right {position:absolute; top:44px; right:9px; width:24px; height:24px; background:url('../images/compare_arrows.png') no-repeat right 0; overflow: hidden; text-indent:-9999%; font-size:0; display:block; line-height:0;}
 div.compare_graph a.right:hover {background-position:right -24px;}
 div.compare_graph div.outer_stats_slider {position:absolute; top:0; right:29px; left:29px; bottom:0; overflow:hidden;}
-div.compare_graph div.stats_slider {width:298px; height:220px;} /* each block 299px x 110px */
-div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; padding:0!important; margin:0!important; overflow:hidden;}
+div.compare_graph div.stats_slider {width:298px; height:220px; background:url('../images/window_nodata.jpg') no-repeat 0 0;} /* each block 299px x 110px */
+div.compare_graph div.stats_slider div.block {position:relative; float:left; width:298px!important; height:110px; padding:0!important; margin:0!important; overflow:hidden; background:white;}
 div.compare_graph div.stats_slider div.up {background:url('../images/compare_graph_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.down {background:url('../images/graph_compare_evolution_bkg.png') no-repeat center center;}
 div.compare_graph div.stats_slider div.block a.resumen {position:absolute; bottom:5px; right:10px; font:normal 12px "Officina Regular"; color:#8C1F76; text-decoration:underline; z-index:10;}
