@@ -735,6 +735,10 @@
 
     changeHash();
     refreshBubbles();
+    
+    if (infowindow.isOpen()) {
+      infowindow.updateValues();
+    }
   }
 
 
