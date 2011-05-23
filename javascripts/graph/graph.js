@@ -901,7 +901,9 @@ function createBubbles(url){
 
         if (deep != "municipios") {
 
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep) + " en los que es el más votado");
+          var deep_text = {autonomias:"autonomías", provincias:"municipios"}
+
+          $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
 
           $('div.graph_legend div.summary li.partido').each(function(i,ele){
             $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
