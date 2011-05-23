@@ -60,7 +60,7 @@ function initializeGraph() {
   });
 
   $(".innerBubble").live({
-    mouseenter: function () {
+    mouseover: function () {
       if (failCircle.failed() === true) {
         return;
       }
@@ -69,9 +69,12 @@ function initializeGraph() {
       var top = $(this).parent().css('top').replace('px','') - radius - 21;
       var left = $(this).parent().css('left').replace('px','');
       var text = valuesHash[$(this).parent().attr("id")].name;
-      graphBubbleTooltip.show(left,top,text);
 
-      $(this).parent().css('zIndex',graph_bubble_index++);
+      if (ie_) {
+        $(this).parent().css('zIndex',graph_bubble_index++);
+      } else {
+        $(this).parent().css('zIndex',graph_bubble_index++);
+      }
 
       $(this).parent().children('.outerBubble').css("background","#333333");
       $(this).parent().children('p.region_name').css("color","#333333");
@@ -85,22 +88,18 @@ function initializeGraph() {
         }
       }
     },
-    mouseleave: function () {
+    mouseout: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
-        if (!ie_) {
-          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
-        } else {
-          $(this).parent().children('.outerBubble').css("background","#dddddd");
-        }
         if (ie_) {
           $(this).parent().children('p.region_name').css("color","black");
+          $(this).parent().children('.outerBubble').css("background","#dddddd");
         } else {
+          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+          $(this).parent().children('p.region_name').addClass("dark_shadow");
+          $(this).parent().children('p.region_name').removeClass("white_shadow");
           $(this).parent().children('p.region_name').css("color","#fff");
         }
-        $(this).parent().children('p.region_name').addClass("dark_shadow");
-        $(this).parent().children('p.region_name').removeClass("white_shadow");
       }
-      graphBubbleTooltip.hide();
     },
     click: function() {
       if (failCircle.failed() === true) {
