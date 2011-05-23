@@ -585,6 +585,10 @@ div div.stats div.partido.psoe_andalucia div.bar {background-position:0 -0px!imp
 div div.stats div.partido.psoe_andalucia div.bar span.c {background-position:right -0px!important}
 div div.stats div.partido.psoe_andalucia p, li.partido.psoe_andalucia{color:#ff002b!important;}
 
+div div.stats div.partido.psoe_de_andalucia div.bar {background-position:0 -0px!important;}
+div div.stats div.partido.psoe_de_andalucia div.bar span.c {background-position:right -0px!important}
+div div.stats div.partido.psoe_de_andalucia p, li.partido.psoe_andalucia{color:#ff002b!important;}
+
 div div.stats div.partido.pp_eu div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp_eu div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.pp_eu p, li.partido.pp_eu{color:#00b4eb!important;}
