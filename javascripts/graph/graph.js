@@ -152,6 +152,7 @@ function initializeGraph() {
             '</div>'+
       '  </div>'+
       '  <div class="bottom">'+
+      '  <div class="tooltip"><span>Test</span><div class="tip"></div></div>'+
       '    <p class="info">Su población es <strong>8 años mas jóven</strong> que la media de edad nacional</p>'+
       '    <div class="chart">'+
       '      <img src="http://chart.apis.google.com/chart?chf=bg,s,FFFFFF00&chs=205x22&cht=ls&chco=8B1F72&chds=-80,97.828&chd=t:97.277,-48.793,58.405,97.828,94.565&chdlp=b&chls=1&chm=o,8B1F72,0,5,6&chma=3,3,3,3" class="sparklines" />'+
@@ -188,7 +189,27 @@ function initializeGraph() {
 
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
+
+        text = text + "<sup class='help'>1</sup>";
+
+
         $('div#graph_infowindow p.info').html(text);
+
+        $('div#graph_infowindow p.info sup.help').unbind('mouseenter').unbind('mouseleave');
+        $('div#graph_infowindow p.info sup.help').mouseenter(function(ev){
+
+          var top = $('div#graph_infowindow p.info sup.help').position().top;
+          var left = $('div#graph_infowindow p.info sup.help').position().left;
+          var deep_text = {autonomias:"las autonomías", provincias:"las provincias", municipios:"los municipios"}
+
+          $('div#graph_infowindow div.tooltip').css("top", top - 60);
+          $('div#graph_infowindow div.tooltip').css("left", left - 70);
+          $('div#graph_infowindow div.tooltip span').text("Desviación respecto a la media de " + deep_text[deep]);
+          $('div#graph_infowindow div.tooltip').show();
+        });
+        $('div#graph_infowindow p.info sup.help').mouseleave(function(ev){
+          $('div#graph_infowindow div.tooltip').hide();
+        });
       }
 
       function showInfowindow(left, top) {
@@ -962,11 +983,11 @@ function updateBubbles(url){
 function updateBubble (id, x, y, val, colors, party) {
   var offset = Math.abs(parseInt($(id).find('.outerBubble').css('top')) + (parseInt($(id).find('.outerBubble').css('height')) - val) / 2)*-1;
   var dominantColor = (colors.length == 1) ? colors[0].toString() : colors[0].toString();
-  var backgroundColor = ((colors != null) ? dominantColor : "#FF9820");
+  var backgroundColor = ((colors != null) ? dominantColor : "#c9cbae");
 
   // if the party we're paiting is not on the main parties list, let's paint it #FF9820
   if (party != undefined && _.indexOf(parties, normalizePartyName(party)) == -1)  {
-    backgroundColor = "#FF9820";
+    backgroundColor = "#c9cbae";
   }
 
   // Bubbles animations
