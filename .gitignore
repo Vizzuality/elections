@@ -11,5 +11,8 @@ graphs/
 graphs
 nginx.conf
 scripts/output.log
+<<<<<<< HEAD
+=======
 tile_data.sh
 vector_data.sh
+>>>>>>> 0aa519d65b82a057f85f51170cc07f7358ed6f33

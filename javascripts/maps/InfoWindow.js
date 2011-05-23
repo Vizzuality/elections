@@ -79,12 +79,15 @@
         $('div#infowindow').delegate('.goTo','click',function(ev){
           ev.preventDefault();
           try{ev.stopPropagation();}catch(e){event.cancelBubble=true;};
-          var zoom = peninsula.getZoom();
-          if (zoom==6) {
-            peninsula.setZoom(7);
-          } else if (zoom==7 || zoom==8) {
-            peninsula.setZoom(11);
-          }
+          peninsula.panTo(me.latlng_);
+          setTimeout(function(){
+            var zoom = peninsula.getZoom();
+            if (zoom==6) {
+              peninsula.setZoom(7);
+            } else if (zoom==7 || zoom==8) {
+              peninsula.setZoom(11);
+            }
+          },500);
         });
 
         google.maps.event.addDomListener(div,'mousedown',function(ev){
@@ -187,10 +190,18 @@
         }
 
       } else {
-        var lavinia = (info.lavinia_url).split('|');
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS');
-        $('div#infowindow div.stats div.partido:eq('+id+')').show();
+        if (year>2006) {
+          if (info.lavinia_url!=undefined) {
+            var lavinia = (info.lavinia_url).split('|');
+            $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+          } else {
+            $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/');
+          }
+          $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS');
+          $('div#infowindow div.stats div.partido:eq('+id+')').show();
+        } else {
+          $('div#infowindow div.stats div.partido:eq('+id+')').hide();
+        }
       }
 
     }
@@ -468,10 +479,19 @@
               $('div#infowindow div.stats div.partido:eq(2)').hide();
             }
 
+            if (year>2006) {
+              if (this.information.lavinia_url!=undefined) {
+                var lavinia = (this.information.lavinia_url).split('|');
+                $('div#infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+              } else {
+                $('div#infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/');
+              }
+              $('div#infowindow div.stats div.partido:eq(3) p a').text('OTROS DATOS');
+              $('div#infowindow div.stats div.partido:eq(3)').show();
+            } else {
+              $('div#infowindow div.stats div.partido:eq(3)').hide();
+            }
 
-            var lavinia = (this.information.lavinia_url).split('|');
-            $('div#infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
-            $('div#infowindow div.stats div.partido:eq(3) p a').text('OTROS DATOS');
             $('div#infowindow div.stats').show();
           } else {
             $('div#infowindow div.stats').hide();
