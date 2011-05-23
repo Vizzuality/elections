@@ -23,18 +23,18 @@
     var deep_level = getDeepLevelFromZoomLevel(start_zoom);
 
     updateWadusText();
-    
+
     /* No year data */
     noyear_slider = (function(){
-      
+
       function show() {
         $('div#year_nodata_tooltip').fadeIn();
       }
-    
+
       function hide() {
         $('div#year_nodata_tooltip').fadeOut();
       }
-    
+
       function refreshYear() {
         if (compare!="ninguna") {
           var last_year = lastAvailableYear();
@@ -56,7 +56,7 @@
         refresh: refreshYear
       }
     })();
-    
+
 
     /*failCircle*/
     failCircle = (function() {
@@ -185,7 +185,7 @@
           var next_year;
           var data = var_resolutions[deep][normalization[compare]];
 
-          if (_.indexOf(data, year) != -1) { // let's check the current level
+          if (data) { // let's check the current level
             if (year > data[data.length - 1]) { // if the current year is bigger than the last year, go to the last year
               next_year = data[data.length - 1];
             } else if (year < data[0]) { // if it's smaller, go to the first year
@@ -449,10 +449,10 @@
         show_: showInfoTooltip
       };
     }());
-    
-    
 
-    
+
+
+
 
     /*SELECTS*/
     /*Select event*/
@@ -515,8 +515,8 @@
           }
           createOrUpdateBubbles(global_url + "/graphs/"+deep+"/"+graph_version+"/"+((name=="España")?'':name+'_')+normalization[compare]+"_"+year+".json");
         }
-        
-        
+
+
         noyear_slider.refresh();
         drawNoDataBars();
         changeHash();
@@ -675,7 +675,7 @@
       return true;
     }
   }
-  
+
   function checkFailYearForGraph(year) {
     var region_type = deep;
     if (var_resolutions[region_type][normalization[compare]]!=undefined) {
@@ -736,7 +736,7 @@
 
     changeHash();
     refreshBubbles();
-    
+
     if (infowindow.isOpen()) {
       infowindow.updateValues();
     }
