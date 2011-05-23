@@ -666,7 +666,7 @@
 
 
     CompareWindow.prototype.refreshBottom = function() {
-      if (state=="map") {
+      if (state=="mapa") {
         if (!$('div#comparewindow div.bottom').hasClass('region')) {
           $('div#comparewindow div.bottom').removeClass('search province')
           var zoom = peninsula.getZoom();
