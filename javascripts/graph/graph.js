@@ -23,12 +23,7 @@ chooseMessage = (function() {
     ev.preventDefault();
     hideError();
 
-
-    var text = $("div.select div.option_list ul li a.envejecimiento").text();
-    $("div.select div.outer_select.people").parent().addClass("selected");
-    $("div.select div.outer_select.people span.inner_select a").text(text);
-    $("div.select div.option_list ul li a.envejecimiento").parent().addClass("selected");
-    compare = "envejecimiento";
+    $("div.select div.option_list ul li a.envejecimiento").click();
 
     if (year < 2005) { // because we don't have paro information prior 2005
       updateNewSliderValue(2005, year);
@@ -76,21 +71,27 @@ function initializeGraph() {
       var text = valuesHash[$(this).parent().attr("id")].name;
       graphBubbleTooltip.show(left,top,text);
 
-      if (!ie_) {
-        $(this).parent().css('zIndex',graph_bubble_index++);
-      }
+      $(this).parent().css('zIndex',graph_bubble_index++);
 
       $(this).parent().children('.outerBubble').css("background","#333333");
       $(this).parent().children('p.region_name').css("color","#333333");
       $(this).parent().children('p.region_name').addClass("white_shadow");
 
       if (!graphBubbleInfowindow.isOpen() && selectedBubble !== $(this).parent().attr("id")) {
-        $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+        if (!ie_) {
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
+        } else {
+          $("div#" + selectedBubble + " div.outerBubble").css("background", "black");
+        }
       }
     },
     mouseleave: function () {
       if (selectedBubble !== $(this).parent().attr("id")) {
-        $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        if (!ie_) {
+          $(this).parent().children('.outerBubble').css("background","rgba(255,255,255,0.5)");
+        } else {
+          $(this).parent().children('.outerBubble').css("background","#dddddd");
+        }
         if (ie_) {
           $(this).parent().children('p.region_name').css("color","black");
         } else {
@@ -108,7 +109,7 @@ function initializeGraph() {
 
       var radius = $(this).height()/2;
       var top  = $(this).parent().offset().top - 274;
-      var left = $(this).parent().offset().left - 117;
+      var left = $(this).parent().offset().left - 96;
 
       if (selectedBubble !== $(this).parent().attr("id")) {
         $("div#" + selectedBubble + " div.outerBubble").css("background", "rgba(255,255,255,0.5)");
@@ -246,12 +247,8 @@ function initializeGraph() {
 
         if (data == undefined || data[normalization[compare]] == null) {
 
-          //var top = $("div#graph_infowindow a.more").position().top;
-
           $("div#graph_infowindow a.more").css("color", "#ccc");
-          $("div#graph_infowindow div.bottom div.warning").css("top", top - 40);
           $("div#graph_infowindow div.bottom div.warning span").text("No hay datos de " + selected_dataset + " a nivel de " + deep_level);
-
 
           $('div#graph_infowindow a.more').mouseenter(function(ev){
             $("div#graph_infowindow div.bottom div.warning").show();
@@ -899,32 +896,28 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
+      //console.log(data);
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-
-
-        var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
-
-        $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
-
-        $('div.graph_legend div.summary li.partido').each(function(i,ele){
-          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-        });
-
-        for (var i = 1; i <= 4; i++) {
-          drawTotalNumber(data[key].parent_results, i, true);
-        }
-
+        updateLegend(data[key].parent_results);
         one = false;
       }
 
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><p class="region_name">'+val.name+'</p><div class="outerBubble"></div><div class="innerBubble"></div></div>');
+      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
-      $('#'+key+' p.region_name').css({top:'-'+(height_stat+25)+'px'});
+      if (!ie_) {
+        $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+      } else {
+        if ($.browser.version.slice(0,3) >= '8.0') {
+          $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+        } else {
+          $('#'+key+' p.region_name').css({width:'60px',margin:'10px 0 0 -30px'});
+        }
+      }
       $('#'+key+' p.region_name').addClass("dark_shadow");
       $('#'+key).css("left",(offsetScreenX).toString()+"px");
       $('#'+key).css("top",(offsetScreenY).toString()+"px");
@@ -935,6 +928,17 @@ function createBubbles(url){
       count ++;
     });
   })
+}
+
+function updateLegend(data) {
+  var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
+  $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
+  $('div.graph_legend div.summary li.partido').each(function(i,ele){
+    $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+  });
+  for (var i = 1; i <= 4; i++) {
+    drawTotalNumber(data, i, true);
+  }
 }
 
 function updateBubbles(url){
@@ -955,19 +959,7 @@ function updateBubbles(url){
     _.each(data, function(v,key) {
       if (one) { //Check data for show legend or not
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-
-        if (deep != "municipios") {
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep) + " en los que es el más votado");
-
-          $('div.graph_legend div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
-
-          for (var i = 1; i <= 4; i++) {
-            drawTotalNumber(data[key].parent_results, i, true);
-          }
-        }
-
+        updateLegend(data[key].parent_results);
         one = false;
       }
 
@@ -1018,6 +1010,45 @@ function updateSelect(values) {
 
       options.append($("<option />").val(option_name).text(this.name));
     });
+
+    // Let's order the select
+    var $dd = $('select.text');
+    if ($dd.length > 0) { // make sure we found the select we were looking for
+
+      // save the selected value
+      var selectedVal = $dd.val();
+
+      // get the options and loop through them
+      var $options = $('option', $dd);
+      var arrVals = [];
+      $options.each(function(){
+        // push each option value and text into an array
+        arrVals.push({
+          val: $(this).val(),
+          text: $(this).text()
+        });
+      });
+
+      // sort the array by the value (change val to text to sort by text instead)
+      arrVals.sort(function(a, b){
+        if(a.val>b.val){
+          return 1;
+        }
+        else if (a.val==b.val){
+          return 0;
+        }
+        else {
+          return -1;
+        }
+      });
+
+      // loop through the sorted array and set the text/values to the options
+      for (var i = 0, l = arrVals.length; i < l; i++) {
+        $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
+      }
+      // set the selected value back
+      $dd.val(selectedVal);
+    }
   }
 }
 
