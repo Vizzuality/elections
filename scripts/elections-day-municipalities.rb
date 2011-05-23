@@ -37,7 +37,7 @@ File.read("urls/urls-#{block}.log").each_line do |raw_path|
   
   url = raw_path.match(/-(([a-z\-]+){3})-/)[1]
   if municipalities[url].nil? || (municipalities[url][1].blank? || municipalities[url][2].blank?)
-    puts "Skipping #{municipalities.inspect}"
+    puts "Skipping #{municipalities[url]}"
     next 
   end
   
