@@ -435,8 +435,19 @@ function initializeGraph() {
           }
           // Other political party
           $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS');
-          var lavinia = (valuesHash[data_id].lavinia_url).split('|');
-          $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+          
+          if (year>2006) {
+            if (valuesHash[data_id].lavinia_url!=undefined) {
+              var lavinia = (valuesHash[data_id].lavinia_url).split('|');
+              $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+            } else {
+              $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/');
+            }
+            $('div#graph_infowindow div.stats div.partido:eq(3)').show();
+          } else {
+            $('div#graph_infowindow div.stats div.partido:eq(3)').hide();
+          }
+          
         } else {
 
           $('div#graph_infowindow div.stats').hide();
