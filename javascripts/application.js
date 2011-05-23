@@ -23,7 +23,11 @@
   function initializeKeyBindings() {
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
-        $("#welcomewindow").fadeOut();
+        if (ie_) {
+          $("#welcomewindow").hide();
+        } else {
+          $("#welcomewindow").fadeOut();
+        }
         explanationwindow.hide();
         comparewindow.hide();
         aboutwindow.hide();
@@ -103,7 +107,11 @@
     function initWelcomeWindow() {
       $('body').click(function(event) {
         if (!$(event.target).closest('div#welcomewindow').length) {
-          $("#welcomewindow").fadeOut("slow");
+          if (ie_) {
+            $("#welcomewindow").hide();
+          } else {
+            $("#welcomewindow").fadeOut();
+          }
           $('body').unbind('click');
         }
       });
@@ -111,7 +119,11 @@
       $("#welcomewindow a.close_info").click(function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        $("#welcomewindow").fadeOut("slow");
+        if (ie_) {
+          $("#welcomewindow").hide();
+        } else {
+          $("#welcomewindow").fadeOut();
+        }
       });
 
       $("#welcomewindow a.start").click(function(ev) {
