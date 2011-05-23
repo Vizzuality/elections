@@ -243,11 +243,8 @@ function initializeGraph() {
         }
 
         var data = var_resolutions[deep_level];
-        //console.log(data, deep_level);
 
         if (data == undefined || data[normalization[compare]] == null) {
-          // console.log("no hay datos");
-          //console.log(top);
 
           var top = $("div#graph_infowindow a.more").position().top;
 
@@ -464,9 +461,6 @@ function initializeGraph() {
         var lastYearIndex  = 36 - (maxYear- lastYear);
         var currentYearIndex = 36 - (maxYear- year);
         var marginRight = 36 - lastYearIndex;
-
-        //console.log(firstYearIndex, lastYearIndex, data[firstYearIndex], data[lastYearIndex]);
-        //console.log(data, data[firstYearIndex]);
 
         for (var i = firstYearIndex; i < lastYearIndex + 1; i++) {
           if (!find) {
@@ -864,7 +858,6 @@ function createOrUpdateBubbles(url){
 }
 
 function createBubbles(url){
-  //console.log("Create bubbles", url);
 
   if (compare === "ninguna") {
     hideGraphLoader();
@@ -880,7 +873,6 @@ function createBubbles(url){
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
-      //console.log("Create 404", url);
       hideGraphLoader();
       return;
     }
@@ -907,24 +899,21 @@ function createBubbles(url){
         hideGraphLoader();
       }
 
-//console.log(data[key].parent_results);
       if (one) {
         graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
 
-        //if (deep != "municipios") {
 
-          var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
+        var deep_text = {autonomias:"autonomías", provincias:"provincias", municipios:"municipios"}
 
-          $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
+        $('div.graph_legend div.summary h4').text(toTitleCase(deep_text[deep]) + " en los que es el más votado");
 
-          $('div.graph_legend div.summary li.partido').each(function(i,ele){
-            $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
-          });
+        $('div.graph_legend div.summary li.partido').each(function(i,ele){
+          $(ele).removeClass(parties.join(" ") + ' par1 par2 par3');
+        });
 
-          for (var i = 1; i <= 4; i++) {
-            drawTotalNumber(data[key].parent_results, i, true);
-          }
-        //}
+        for (var i = 1; i <= 4; i++) {
+          drawTotalNumber(data[key].parent_results, i, true);
+        }
 
         one = false;
       }
@@ -932,7 +921,6 @@ function createBubbles(url){
       valuesHash[key] = val;
 
       nBubbles = nBubbles+1;
-      //console.log(count, nBubbles, " created bubble " + key, createdBubbles);
       $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><p class="region_name">'+val.name+'</p><div class="outerBubble"></div><div class="innerBubble"></div></div>');
 
       var height_stat = $('#'+key+' p.region_name').height();
@@ -950,7 +938,6 @@ function createBubbles(url){
 }
 
 function updateBubbles(url){
-  //console.log("Update bubbles", url);
 
   $.getJSON(url, function(data) {
 
@@ -959,7 +946,6 @@ function updateBubbles(url){
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      //console.log("Update 404", url);
       return;
     }
 
@@ -1049,12 +1035,6 @@ function goDeeper(url){
 
   name = url_split[url_split_length].split(normalization[compare])[0].substring(0, length-1);
 
- // console.log("url", url);
-
- // console.log("url_split", url_split);
- // console.log("deep", deep);
- // console.log("name", name);
- // console.log("compare", normalization[compare], compare);
 
   graphLegend.hideError();
   graphBubbleTooltip.hide();
@@ -1083,12 +1063,10 @@ function destroyBubble(b, url){
     top: displacementY,
     opacity: "0"
   }, 500, function(){
-    //console.log(nBubbles, " removing "+b);
     $("#"+b).remove();
     nBubbles = nBubbles-1;
 
     if(nBubbles == 0){
-      //console.log("All bubbles were removed", valuesHash, valuesHash.length);
       createdBubbles = false;
       createOrUpdateBubbles(url);
     }
