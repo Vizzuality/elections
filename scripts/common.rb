@@ -47,7 +47,7 @@ THIRD_PARTY_COLORS = {
 }
 
 # Versions
-$graphs_next_version = "v14"
+$graphs_next_version = "v15"
 
 CartoDB::Settings = YAML.load_file('cartodb_config.yml')
 $cartodb = CartoDB::Client::Connection.new
@@ -132,11 +132,19 @@ def get_x_coordinate(row, max, known_parties)
   end
   if known_parties.keys.include?(row[:primer_partido_id])
     x_coordinate = if row[:primer_partido_percent]
-      ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+      if row[:primer_partido_percent] && row[:segundo_partido_percent]
+        ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
+      else
+        0
+      end
     elsif row[:primer_partido_votos]
-      ((row[:primer_partido_votos] - row[:segundo_partido_votos]).to_f * 260.0) / max
+      if row[:primer_partido_votos] && row[:segundo_partido_votos]
+        ((row[:primer_partido_votos] - row[:segundo_partido_votos]).to_f * 260.0) / max
+      else
+        0
+      end
     end
-    x_coordinate += 50.0
+    x_coordinate += 50.0 unless x_coordinate == 0
     x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(known_parties[row[:primer_partido_id]])
     return ("%.2f" % x_coordinate).to_f
   else
