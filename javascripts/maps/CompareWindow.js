@@ -168,11 +168,21 @@
         }
         bar_width = (percent*this.bar_width_multiplier)/100;
       } else {
-        partido = "OTRO";
+        partido = "OTROS";
       }
-      $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-      $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(partido+' ('+percent+'%)');
+      
+      if (party_id!=4) {
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') p').text(partido+' ('+percent+'%)');
+      } else {
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') p a').text(partido+' ('+percent+'%)');
+        var lavinia = (info.lavinia_url).split('|');
+        $('div#comparewindow div.top div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+      }
+
     }
+
 
     CompareWindow.prototype.compareFirstRegion = function(info,zoom) {
     	var me = this;
@@ -230,6 +240,7 @@
       this.show();
     }
 
+
     CompareWindow.prototype.compareSecondRegion = function(info,formatted_address, region_name) {
       var me = this;
       this.cleanSecondRegion();
@@ -245,12 +256,14 @@
               fillData(info, region_name);
               $('div#comparewindow p.refer').hide();
             } else {
-              $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+              $('div#comparewindow div.bottom').addClass('search').removeClass('region province');
+              me.refreshBottom();
               $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
             }
           },
           error: function(error) {
-            $('div#comparewindow div.bottom').addClass('search').removeClass('region')
+            $('div#comparewindow div.bottom').addClass('search').removeClass('region province');
+            me.refreshBottom();
             $('div#comparewindow p.refer').text('No hay datos para esta localidad').show();
           }
         });
@@ -262,6 +275,8 @@
       function fillData(info, region_name) {
         me.secondData = info;
         me.createChart(info,false);
+        $('div#comparewindow div.bottom').removeClass('search province').addClass('region');
+        
 
         $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
         $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+info['data'][year]['censo_total']+' habitantes');
@@ -270,7 +285,6 @@
         if (info.provincia != null) {
           $('div#comparewindow div.bottom div.region h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
         }
-
 
         // Remove previous political style bars
         $('div#comparewindow div.bottom div.region div.stats div.partido').each(function(i,ele){
@@ -339,14 +353,16 @@
         // Other
         bar_width = (info['data'][year]['otros_partido_percent']*200)/100;
         $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-        $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
-        // $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+sanitizeRTVE(info.autonomia)+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        $('div#comparewindow div.bottom div.region div.stats div.partido_3 a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        var lavinia = (info.lavinia_url).split('|');
+        $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
         $('div#comparewindow div#compare_region2 div.stats').show();
 
       }
         $('div#comparewindow div.bottom').removeClass('search').addClass('region');
       }
     }
+
 
     CompareWindow.prototype.drawTotalNumber = function(party_id, region, info, animated) {
 
@@ -379,6 +395,7 @@
       }
     }
 
+
     CompareWindow.prototype.renderTotalNumber = function($div, id, value, name) {
       if (name != null) {
         $div.show();
@@ -388,6 +405,7 @@
         $div.hide();
       }
     }
+
 
     CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
@@ -407,11 +425,11 @@
         }, 500, 'easeOutCubic');
         $('div#comparewindow div.'+level+' div.stats div.partido:eq('+id+') p').text(data['data'][year][positions[id] + '_partido_name']+ ' ('+data['data'][year][positions[id] + '_partido_percent']+'%)');
       } else {
-
         bar_width = normalizeBarWidth((data['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
+        var lavinia = (data.lavinia_url).split('|');
         $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p a').text('OTROS ('+data['data'][year]['otros_partido_percent']+'%)');
-        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
+        $('div#comparewindow div.'+level+' div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
       }
     }
 
@@ -489,7 +507,7 @@
     CompareWindow.prototype.removeRegion = function(from) {
 
       // Si solo hay una region -> Cerrar movideta
-      if ($('div#comparewindow div.bottom').hasClass('search')) {
+      if ($('div#comparewindow div.bottom').hasClass('search') || $('div#comparewindow div.bottom').hasClass('province')) {
         this.hide();
         return false;
       }
@@ -533,8 +551,6 @@
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
           var max_ = max_min_avg[ele+'_'+year+'_max'];
           var min_ = max_min_avg[ele+'_'+year+'_min'];
-          console.log(max_,min_);
-          
 
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
@@ -590,7 +606,6 @@
       }
 
     }
-    
     
 
     CompareWindow.prototype.setUpChartView = function() {

@@ -42,7 +42,7 @@
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
               '<div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
               '<div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (61%)</a></p></div>'+
+              '<div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS DATOS  (61%)</a></p></div>'+
             '</div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -55,6 +55,7 @@
             '</div>'+
           '</div>'+
           '<div class="bottom">'+
+          '  <div class="tooltip"><span></span><div class="tip"></div></div>'+
             '<p class="info">La region tiene <strong></strong> de la media en España.</p>'+
             '<div class="chart">'+
               '<img title="" alt="Chart de región" />'+
@@ -178,8 +179,9 @@
         // Other
         bar_width = normalizeBarWidth((info['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
         $('div#infowindow div.stats div.partido:eq('+id+') span.c').width((bar_width<2)?2:bar_width);
-        //$('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+((info.autonomia!=undefined)?sanitizeRTVE(info.autonomia):'undefined')+'/provincias/'+sanitizeRTVE(info.provincia)+'/municipios/'+sanitizeRTVE(info.name)+'/');
-        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS ('+info['data'][year]['otros_partido_percent']+'%)');
+        var lavinia = (info.lavinia_url).split('|');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
+        $('div#infowindow div.stats div.partido:eq('+id+') p a').text('OTROS DATOS ('+info['data'][year]['otros_partido_percent']+'%)');
       }
     }
 
@@ -222,8 +224,7 @@
 
           $('div#infowindow div.stats').show();
           $('div#infowindow div.summary').hide();
-        }
-        else {
+        } else {
           for (var i = 1; i <= 4; i++) {
             this.drawTotalNumber(i, info);
           }
@@ -249,18 +250,48 @@
         var sign = (selected_value < 0) ? "negative" : "positive";
 
         var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
         if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
-          var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         } else {
-          var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          if (max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']!=undefined) {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+          } else {
+            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+          }
         }
-        
+
         var last_year = lastAvailableYear();
         text = _.template(text)({media:media, yearSim: (last_year<year)?last_year:year});
 
+        text = text + "<sup class='help'>1</sup>";
 
         $('div#infowindow div.chart').show();
         $('div#infowindow p.info').html(text);
+
+        $('div#infowindow p.info').html(text);
+
+        $('div#infowindow p.info sup.help').unbind('mouseenter').unbind('mouseleave');
+        $('div#infowindow p.info sup.help').mouseenter(function(ev){
+
+          var top = $('div#infowindow p.info sup.help').position().top;
+          var left = $('div#infowindow p.info sup.help').position().left;
+          var deep_text = {autonomias:"las autonomías", provincias:"las provincias", municipios:"los municipios"}
+
+          var zoomLevelName = getDeepLevelFromZoomLevel(peninsula.getZoom());
+          $('div#infowindow div.tooltip').css("top", top - 60);
+          $('div#infowindow div.tooltip').css("left", left - 70);
+          $('div#infowindow div.tooltip span').text("Desviación respecto a la media de " + deep_text[zoomLevelName]);
+          $('div#infowindow div.tooltip').show();
+        });
+        $('div#infowindow p.info sup.help').mouseleave(function(ev){
+          $('div#infowindow div.tooltip').hide();
+        });
+
       } else {
 				var msg = "";
 				if (compare != "ninguna") {
@@ -274,10 +305,13 @@
 						msg += 'este municipio';
 					}
 					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+				} else {
+				  msg = "Selecciona una variable en la zona superior para compararla con los datos electorales";
 				}
         $('div#infowindow p.info').html(msg);
         $('div#infowindow div.chart').hide();
       }
+
 
       if (this.deep_level=="municipios") {
         $('div.infowindow a.goTo').hide();
@@ -409,7 +443,7 @@
 
             bar_width = normalizeBarWidth((this.information['data'][year]['otros_partido_percent']*this.bar_width_multiplier)/100);
             $('div#infowindow div.stats div.partido:eq(3) span.c').width((bar_width<2)?2:bar_width);
-            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS ('+this.information['data'][year]['otros_partido_percent']+'%)');
+            $('div#infowindow div.stats div.partido:eq(3) p').text('OTROS DATOS ('+this.information['data'][year]['otros_partido_percent']+'%)');
             $('div#infowindow div.stats').show();
           } else {
             $('div#infowindow div.stats').hide();
@@ -422,11 +456,22 @@
           var info_text = textInfoWindow[comparison_variable];
           var sign = (selected_value < 0) ? "negative" : "positive";
           var text = info_text["before_"+sign] + " <strong>"+Math.abs(selected_value)+"</strong>" + info_text["after_" + sign];
+
+
           if (compare=="lineas adsl" || compare=="consumo prensa" || compare=="consumo tv") {
-            var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+            if (max_min_avg[(normalization[compare])+'_'+year+'_avg']!=undefined) {
+              var media = parseFloat(max_min_avg[(normalization[compare])+'_'+year+'_avg']).toFixed(2);
+            } else {
+              var media = parseFloat(max_min_avg[(normalization[compare])+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+            }
           } else {
-            var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+            if (max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']!=undefined) {
+              var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+year+'_avg']).toFixed(2);
+            } else {
+              var media = parseFloat(max_min_avg[(normalization[compare]).replace('_normalizado','')+'_'+lastAvailableYear()+'_avg']).toFixed(2);
+            }
           }
+
           var last_year = lastAvailableYear();
           text = _.template(text)({media : media, yearSim: (last_year<year)?last_year:year});
           // Change image url
@@ -446,6 +491,8 @@
   						msg += 'este municipio';
   					}
   					msg += '. <a class="why_no_data" href="#porque">¿Por qué?</a>';
+  				} else {
+  				  msg = "Selecciona una variable en la zona superior para compararla con los datos electorales";
   				}
           $('div#infowindow p.info').html(msg);
           $('div#infowindow div.chart').hide();
@@ -494,7 +541,7 @@
 
       this.map_.panBy(left,top);
     }
-    
+
 
 
     InfoWindow.prototype.generateStatImage = function() {

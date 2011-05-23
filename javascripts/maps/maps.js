@@ -221,7 +221,7 @@
 
   function simpleRefreshTiles() {  
     $('div#peninsula div').each(function(i,ele){
-      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1) {
+      if ($(ele).css('opacity')>0 && $(ele).css('opacity')<1 && $(ele).children('img').length>0)  {
         var old_image = $(ele).children('img');        
         var old_url = old_image.attr('src');
         var tm = old_url.split("/");
