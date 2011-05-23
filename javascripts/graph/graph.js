@@ -139,7 +139,7 @@ function initializeGraph() {
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>'+
-      '      <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS (11%)</a></p></div>'+
+      '      <div class="partido otros"><p><a href="http://resultados-elecciones.rtve.es/municipales/" target="_blank">OTROS</a></p></div>'+
       '    </div>'+
             '<div class="summary">'+
             '<h4>Municipios en los que es el más votado...</h4>'+
@@ -422,9 +422,7 @@ function initializeGraph() {
             drawPartyBar(data_id, i);
           }
           // Other political party
-          bar_width = normalizeBarWidth((valuesHash[data_id].resto_partidos_percent * bar_width_multiplier/100));
-          $('div#graph_infowindow div.stats div.partido:eq(3) span').width(bar_width);
-          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS ('+valuesHash[data_id].resto_partidos_percent+'%)');
+          $('div#graph_infowindow div.stats div.partido:eq(3) p a').text('OTROS');
           var lavinia = (valuesHash[data_id].lavinia_url).split('|');
           $('div#graph_infowindow div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
         } else {
@@ -612,7 +610,7 @@ function initializeGraph() {
        <div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>\
        <div class="partido pp"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PP (36%)</p></div>\
        <div class="partido iu"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>IU (12%)</p></div>\
-       <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS (11%)</p></div>\
+       <div class="partido otros"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>OTROS</p></div>\
        </div>\
        <div class="summary">\
        <h4>Municipios en los que es el más votado...</h4>\
@@ -761,9 +759,7 @@ function initializeGraph() {
         drawPartyBar(results,3);
 
         // Other
-        bar_width = normalizeBarWidth((results.otros[1]*bar_width_multiplier)/100);
-        $('div.graph_legend div.stats div.partido:eq(3) span.c').width(bar_width);
-        $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS ('+results.otros[1]+'%)');
+        $('div.graph_legend div.stats div.partido:eq(3) p').text('OTROS');
         showLegend();
       } else {
 
