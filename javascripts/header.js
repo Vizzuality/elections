@@ -627,7 +627,6 @@
     }
 
 
-
     var comparison_var = normalization[compare];
 
     if (var_resolutions[deep_level][comparison_var]!=undefined) {
