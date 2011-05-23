@@ -21,8 +21,8 @@ block = ARGV[0].to_i
 
 fd = File.open("inserts-#{block}.log", 'w+')
 
-municipalities = CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :encoding => "".encoding).inject({}) do |h,e| 
-  h[e[9]] = [e[10],e[11],e[12]]
+municipalities = CSV.read('elections-day/pueblos_reconciliados_lavinia_ine.csv', :headers => true, :return_headers => false, :encoding => 'UTF-8').inject({}) do |h,e| 
+  h[e["union_url"]] = [e["cartodb_id"],e["ine_muni_int"],e["ine_prov_int"]]
   h
 end
 
