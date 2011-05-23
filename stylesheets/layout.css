@@ -171,7 +171,7 @@ div.tabs div.message a {font:normal 15px "Officina Regular"; color:#8C1F76}
 /*graph*/
 div.bubbleContainer{position:absolute;background:transparent;height:60px;width:60px;top:100px;left:100px;}
 div.bubbleContainer span.name{display:none;}
-div.outerBubble{position:relative; background:#ddd; background:url('../images/balls_sprite.png') no-repeat 0 0\9; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
+div.outerBubble{position:relative; background:#ddd; border:none; height:60px;width:60px;top:0px;left:0px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px;}
 div.innerBubble{position:absolute;background:#000000;border:none;height:40px;width:40px;top:10px;left:10px; overflow:visible; -moz-border-radius:50px;-webkit-border-radius:50px; border-radius:50px; cursor:pointer; z-index:1;}
 div.bubbleContainer p.region_name {position:absolute; top:0px; left:50%; width:70px; margin:0 0 0 -35px; font:normal 11px Arial; color:white; color:black\9; text-align:center; z-index:5;}
 div.bubbleContainer p.region_name {position:relative\8; width:60px\8;}
@@ -271,7 +271,7 @@ div.infowindow div.bottom a.compare:hover,div#infowindow div.bottom a.compare:ho
 div.infowindow div.bottom a.more,div#infowindow div.bottom a.more {float:left; width:auto; padding-top: 16px; margin:10px 45px 8px 0; padding:6px 0 7px; font:normal 13px "Officina Regular"; color:#000000; text-shadow: 0 1px white; cursor:pointer; text-decoration:underline;}
 div.infowindowdiv.bottom a.more:hover,div#infowindow div.bottom a.more:hover {color:black;}
 
-div#graph_infowindow div.warning {display:none; position:absolute;  bottom:40px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
+div#graph_infowindow div.warning {display:none; position:absolute; bottom:40px; left:17px; width:137px; margin: 0 0 0 -34px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
 div#graph_infowindow div.warning div.tip {position:absolute; bottom: -6px; left: 68px; width: 13px; height:6px; background: url('../images/tip.png') no-repeat bottom; }
 
 div#graph_infowindow div.tooltip {display:none; position:absolute; width:137px; text-align: center; padding: 10px; background:#333; background:rgba(0,0,0, .8); color:#fff; font:normal 13px "Officina Regular"; -moz-border-radius:3px;-webkit-border-radius:3px;}
@@ -465,57 +465,46 @@ div.stats div.bar span.l{position:absolute; left:0px; background:url('../images/
 div.stats div.bar span.r{position:absolute; right:0px; background: url('../images/right_bar_mask.png') no-repeat right bottom; width:4px; height:6px;}
 div.stats div p {padding:0 0 0 5px; font:normal 10px Arial; text-shadow:0 1px #dddddd; text-transform:uppercase;}
 /*psoe*/
-div.outerBubble.psoe{background:url('../images/balls_sprite.png') no-repeat 0 0\9;}
 div.stats div.partido.psoe div.bar {background-position:0 -0px!important;}
 div.stats div.partido.psoe div.bar span.c {background-position:right -0px!important;}
 div.stats div.partido.psoe p, li.partido.psoe {color:red!important;}
 /*pp*/
-div.outerBubble.pp{background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.pp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pp div.bar span.c{background-position:right -6px!important;}
 div div.stats div.partido.pp p, li.partido.pp {color:#00B2EB!important;}
 /*iu*/
-div.outerBubble.iu{background:url('../images/balls_sprite.png') no-repeat -120px 0\9;}
 div div.stats div.partido.iu div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iu div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.iu p, li.partido.iu {color:#54A551!important;}
 /*ap*/
-div.outerBubble.ap{background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.ap div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.ap div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.ap p, li.partido.ap {color:#00B2EB!important;}
 /*indep*/
-div.outerBubble.indep {background:url('../images/balls_sprite.png') no-repeat -180px 0\9;}
 div div.stats div.partido.indep div.bar {background-position:0 -24px!important;}
 div div.stats div.partido.indep div.bar span.c {background-position:right -24px!important}
 div div.stats div.partido.indep p, li.partido.indep {color:gray!important;}
 /*pa*/
-div.outerBubble.pa {background:url('../images/balls_sprite.png') no-repeat -120px 0\9;}
 div div.stats div.partido.pa div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.pa div.bar span.c {background-position:right -12px!important}
 div div.stats div.partido.pa p, li.partido.pa {color:#54A551!important;}
 /*bng*/
-div.outerBubble.bng {background:url('../images/balls_sprite.png') no-repeat 0 0\9;}
 div div.stats div.partido.bng div.bar {background-position:0 0px!important;}
 div div.stats div.partido.bng div.bar span.c {background-position:right 0px!important}
 div div.stats div.partido.bng p, li.partido.bng {color:red!important;}
 /*pdp*/
-div.outerBubble.pdp {background:url('../images/balls_sprite.png') no-repeat -60px 0\9;}
 div div.stats div.partido.pdp div.bar {background-position:0 -6px!important;}
 div div.stats div.partido.pdp div.bar span.c {background-position:right -6px!important}
 div div.stats div.partido.pdp p, li.partido.pdp {color:#00B2EB!important;}
 /*erc-am*/
-div.outerBubble.erc_am {background:url('../images/balls_sprite.png') no-repeat -240px 0\9;}
 div div.stats div.partido.erc_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc_am p, li.partido.erc_am {color:#EC7B37!important;}
 /*esquerra-am*/
-div.outerBubble.esquerra_am {background:url('../images/balls_sprite.png') no-repeat -240px 0\9;}
 div div.stats div.partido.esquerra_am div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.esquerra_am div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.esquerra_am p, li.partido.esquerra_am {color:#EC7B37!important;}
 /*erc*/
-
 div div.stats div.partido.erc div.bar {background-position:0 -30px!important;}
 div div.stats div.partido.erc div.bar span.c {background-position:right -30px!important}
 div div.stats div.partido.erc p, li.partido.erc {color:#EC7B37!important;}
