@@ -144,7 +144,7 @@ div.tabs div#map div.canary_island:hover a {display:block;}
 div.tabs div#map div#canary_island {position:absolute; width:300px; height:160px;}
 div.tabs div#map div#canary_island.left {left:0; right:none; border-left:none; border-right:1px solid black;}
 
-div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #999999; z-index:0;}
+div.tabs div#graph {display:none; position:absolute; left:0; right:0; top:0; bottom:0; width:100%; background: #CCCCCC; z-index:0;}
 div.tabs div#graph div#graph_container {position:absolute; left:50%; top:0; width:1024px; height:580px; margin:0 0 0 -512px; background:url('../images/graph_bkg.png'); z-index:0;}
 div.tabs div#graph div.legend {display:none; position: absolute; left:50%; width:1024px; margin:0 0 0 -502px;  font:normal 13px "Officina Regular"; color:#333;text-align:center;}
 div.tabs div#graph div#top_legend { top: 25px;}
