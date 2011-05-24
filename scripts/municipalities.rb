@@ -105,7 +105,7 @@ SQL
         json[municipality_name][:cartodb_id]   = municipality[:cartodb_id]
         json[municipality_name][:name] = municipality[:nombre]
         json[municipality_name][:google_maps_name] = municipality[:google_maps_name]
-        json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties_known)
+        json[municipality_name][:x_coordinate] = x_coordinate = get_x_coordinate(municipality, max_x, parties)
         json[municipality_name][:y_coordinate] = get_y_coordinate(municipality, real_variable.to_sym, max_y, min_y)
         json[municipality_name][:radius]       = get_radius(municipality)
         json[municipality_name][:color]        = get_color(municipality , x_coordinate, parties)
