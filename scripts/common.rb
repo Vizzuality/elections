@@ -130,6 +130,10 @@ def get_x_coordinate(row, max, known_parties)
   if max == 0
     return 0
   end
+  
+  puts "row: #{row.inspect}"
+  puts "known_parties.keys.inspect: #{known_parties.keys.inspect}"
+  
   if known_parties.keys.include?(row[:primer_partido_id])
     x_coordinate = if row[:primer_partido_percent]
       if row[:primer_partido_percent] && row[:segundo_partido_percent]
