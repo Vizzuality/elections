@@ -292,7 +292,7 @@ div#comparewindow div.top {display:inline-block; width:356px; height:244px; padd
 div#comparewindow div h2 {margin:0 0 0 40px; font:normal 17px "Officina Bold"; color:#000000; text-shadow: 0 1px white;}
 div#comparewindow div h2 a.remove_compare {display:inline-block; vertical-align:top; width:52px; height:13px; margin:4px 0 0 3px; background:url('../images/delete_bkg.png') no-repeat 0 0; text-decoration:none;  overflow: hidden; text-indent:-9999%; font-size:0; line-height:0;}
 div#comparewindow div h2 a.remove_compare:hover {background-position:0 -13px;}
-div#comparewindow div p.province {margin:0 0 0 40px; font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
+div#comparewindow div p.province {height:13px; margin:0 0 0 40px; font:normal 12px "Officina Regular"; color:#999999; text-shadow:0 1px white;}
 div#comparewindow div p.no_data {display:none; width:275px; height:75px; margin:8px 0 0 40px; font:normal 13px "Officina Regular"; color:#666666; text-shadow:0 1px white;}
 div#comparewindow div p.no_data a {color:#666666;}
 div#comparewindow div p.no_data a:hover {color:#333333;}
@@ -553,9 +553,16 @@ div div.stats div.partido.pr div.bar span.c {background-position:right bottom!im
 div div.stats div.partido.pr p, li.partido.pr {color:#008140!important;}
 /*bildu*/
 div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
-div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.bildu div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.bildu p, li.partido.bildu {color:#000000!important;}
+/*bildu alternativa*/
+div div.stats div.partido.bildu-ea-alternatiba div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.bildu-ea-alternatiba div.bar span.c {background-position:right -90px!important}
+div div.stats div.partido.bildu-ea-alternatiba p, li.partido.bildu-ea-alternatiba {color:#000000!important;}
+/*psoe pais vasco*/
+div.stats div.partido.pse_ee_psoe_ div.bar {background-position:0 -0px!important;}
+div.stats div.partido.pse_ee_psoe_ div.bar span.c {background-position:right -0px!important;}
+div.stats div.partido.pse_ee_psoe_ p, li.partido.pse_ee_psoe_ {color:red!important;}
 /*uv*/
 div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}

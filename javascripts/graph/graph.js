@@ -891,76 +891,89 @@ function createBubbles(url){
   } else {
     chooseMessage.hide();
   }
+  
+  
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    success: function(data) {
+      if (data == null) {
+        createdBubbles = false;
+        failCircle.reset();
+        failCircle.resetDataNotFound();
+        failCircle.show();
+        hideGraphLoader();
+        return;
+      }
 
-  $.getJSON(url, function(data) {
-    if (data == null) {
+      failCircle.hide();
+
+      var one = true;
+      possibleValues = data;
+      updateSelect(data);
+      count = 0;
+      _.each(data, function(val, key) {
+        //Check data for show legend or not
+
+        if (createdBubbles) {
+          return;
+        }
+
+        if (count>19) {
+          createdBubbles = true;
+          hideGraphLoader();
+          return false;
+        } else if (count >= _.size(possibleValues) - 1) {
+          createdBubbles = true;
+          hideGraphLoader();
+        }
+
+
+        if (one) {
+          graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
+          updateLegend(data[key].parent_results);
+          one = false;
+        }
+
+        valuesHash[key] = val;
+        nBubbles = nBubbles+1;
+
+
+        $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
+
+        var height_stat = $('#'+key+' p.region_name').height();
+        if (!ie_) {
+          $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+        } else {
+          if ($.browser.version.slice(0,3) >= '8.0') {
+            $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
+          } else {
+            $('#'+key+' p.region_name').css({width:'60px',margin:'10px 0 0 -30px'});
+          }
+        }
+        $('#'+key+' p.region_name').addClass("dark_shadow");
+        $('#'+key).css("left",(offsetScreenX).toString()+"px");
+        $('#'+key).css("top",(offsetScreenY).toString()+"px");
+        $('#'+key).css("opacity","0");
+        if (!ie_) {
+          $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
+        } else {
+          $('#'+key).find('.innerBubble').css("background","none");
+        }
+
+        updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
+        count ++;
+      });
+    },
+    error: function(xhr,err) {
       createdBubbles = false;
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      return;
     }
+  });
 
-    failCircle.hide();
-
-    var one = true;
-    possibleValues = data;
-    updateSelect(data);
-    count = 0;
-    _.each(data, function(val, key) {
-      //Check data for show legend or not
-
-      if (createdBubbles) {
-        return;
-      }
-
-      if (count>19) {
-        createdBubbles = true;
-        hideGraphLoader();
-        return false;
-      } else if (count >= _.size(possibleValues) - 1) {
-        createdBubbles = true;
-        hideGraphLoader();
-      }
-
-
-      if (one) {
-        graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-        updateLegend(data[key].parent_results);
-        one = false;
-      }
-
-      valuesHash[key] = val;
-      nBubbles = nBubbles+1;
-      
-      
-      $('#graph_container').append('<div class="bubbleContainer" id="'+key+'"><div class="outerBubble"></div><div class="innerBubble"></div><p class="region_name">'+val.name+'</p></div>');
-
-      var height_stat = $('#'+key+' p.region_name').height();
-      if (!ie_) {
-        $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
-      } else {
-        if ($.browser.version.slice(0,3) >= '8.0') {
-          $('#'+key+' p.region_name').css({top:'-'+(height_stat)+'px'});
-        } else {
-          $('#'+key+' p.region_name').css({width:'60px',margin:'10px 0 0 -30px'});
-        }
-      }
-      $('#'+key+' p.region_name').addClass("dark_shadow");
-      $('#'+key).css("left",(offsetScreenX).toString()+"px");
-      $('#'+key).css("top",(offsetScreenY).toString()+"px");
-      $('#'+key).css("opacity","0");
-      if (!ie_) {
-        $('#'+key).find('.innerBubble').css("backgroundColor",val["color"]);
-      } else {
-        $('#'+key).find('.innerBubble').css("background","none");
-      }
-
-      updateBubble('#'+key,offsetScreenX+parseInt(val["x_coordinate"]),offsetScreenY-parseInt(val["y_coordinate"]),val["radius"],val["color"], val.partido_1[0]);
-      count ++;
-    });
-  })
 }
 
 function updateLegend(data) {
@@ -976,35 +989,44 @@ function updateLegend(data) {
 
 function updateBubbles(url){
 
-  $.getJSON(url, function(data) {
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    success: function(data) {
+      if (data == null) {
+        failCircle.reset();
+        failCircle.resetDataNotFound();
+        failCircle.show();
+        hideGraphLoader();
+        return;
+      }
 
-    if (data == null) {
+      failCircle.hide();
+      var one = true;
+      var count = 0;
+      _.each(data, function(v,key) {
+        if (one) { //Check data for show legend or not
+          graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
+          updateLegend(data[key].parent_results);
+          one = false;
+        }
+
+        if (count >= _.size(possibleValues) - 1) {
+          hideGraphLoader();
+        }
+
+        valuesHash[key] = v;
+        updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
+        count ++;
+      });
+    },
+    error: function(xhr,err) {
       failCircle.reset();
       failCircle.resetDataNotFound();
       failCircle.show();
       hideGraphLoader();
-      return;
     }
-
-    failCircle.hide();
-    var one = true;
-    var count = 0;
-    _.each(data, function(v,key) {
-      if (one) { //Check data for show legend or not
-        graphLegend.change(data[key].parent_results, data[key].parent, data[key].parent_url);
-        updateLegend(data[key].parent_results);
-        one = false;
-      }
-
-      if (count >= _.size(possibleValues) - 1) {
-        hideGraphLoader();
-      }
-
-      valuesHash[key] = v;
-      updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
-      count ++;
-    });
-  })
+  });
 }
 
 //Function for update the values of the bubbles that are being visualized

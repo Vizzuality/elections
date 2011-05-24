@@ -107,7 +107,7 @@ var normalizedRegions =  {
   'jaen': 'Jaén'
 }
 
-var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv", "iu_lv_rm", "iu_los_verdes", "psn_psoe", "psoe_andalucia", "pp_eu", "iu_lv", "psdeg_psoe", "iulv", "iulv_ca", "iu_lvcyl", "upn", "bildu", "psoede_andalucia", "psoe_de_andalucia", "psoe_de", "psc_pm"];
+var parties = ["psoe", "pp", "iu", "ap", "indep", "pa", "bng", "pdp", "erc_am", "esquerra_am", "erc", "hb", "ciu", "cds", "par", "eaj_pnv", "ea", "prc", "pr", "uv", "iu_lv_rm", "iu_los_verdes", "psn_psoe", "psoe_andalucia", "pp_eu", "iu_lv", "psdeg_psoe", "iulv", "iulv_ca", "iu_lvcyl", "upn", "bildu", "bildu_ea_alternatiba", "psoede_andalucia", "pse_ee_psoe_", "psoe_de_andalucia", "psoe_de", "psc_pm"];
 
 
 var normalization = {
