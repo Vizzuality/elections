@@ -501,23 +501,16 @@
         }
       }
       
-      
-      if (party_id==4 && (data['data'][year]['percen_participacion']==undefined)) {
+
+      if (party_id==4 && data['data'][year]['percen_participacion']==undefined) {
         $('div#comparewindow p.no_data').show();
         $('div#comparewindow div.'+level+' div.stats').hide();
       } else {
-        
-        // if (level=='top' && this.firstData.provincia!=undefined) {
-        //   $('div#comparewindow div.'+level+' div.stats').hide();
-        // } else {
-        //   $('div#comparewindow div.'+level+' div.stats').show();
-        // }
-        // 
-        // if (level=='bottom' && this.secondData.provincia!=undefined) {
-        //   $('div#comparewindow div.'+level+' div.stats').hide();
-        // } else {
-        //   $('div#comparewindow div.'+level+' div.stats').show();
-        // }
+        if (data.provincia==undefined) {
+          $('div#comparewindow div.'+level+' div.stats').hide();
+        } else {
+          $('div#comparewindow div.'+level+' div.stats').show();
+        }
         
         $('div#comparewindow p.no_data').hide();
       }
