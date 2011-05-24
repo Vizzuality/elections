@@ -84,7 +84,7 @@ evolution = {}
       json[province_name] ||= {}
       json[province_name][:cartodb_id]   = province[:cartodb_id]
       json[province_name][:name]         = province[:name_2] 
-      json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties_known)
+      json[province_name][:x_coordinate] = x_coordinate = get_x_coordinate(row, max_x, parties)
       json[province_name][:y_coordinate] = get_y_coordinate(row, real_variable.to_sym, max_y, min_y)
       json[province_name][:radius]       = get_radius(row)
       json[province_name][:color]        = get_color(row, x_coordinate, parties)
