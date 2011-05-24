@@ -37,6 +37,7 @@
           '<div class="top">'+
             '<h2>Alaejos</h2>'+
             '<p class="province">Valladolid, 11.982 habitantes.</p>'+
+            '<p class="no_data">Lo sentimos, no tenemos datos de resultados para este municipio. Puedes verlos en la <a href="http://resultados2011.mir.es/99MU/DMU99000PR_L1.htm" target="_blank">web ministerio</a>.</p>'+
             '<div class="stats">'+
               '<h4>65% de participación</h4>'+
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
@@ -50,7 +51,6 @@
               '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
               '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
               '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
-              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
             '</ul>'+
             '</div>'+
           '</div>'+
@@ -167,7 +167,7 @@
       var partido = "otros";
       
       if (party_id < 4) {
-        if (info['data'][year][positions[id] +'_partido_name']!=undefined) {
+        if (info['data'][year][positions[id] +'_partido_name']!=undefined && info['data'][year][positions[id] +'_partido_name']!=null && info['data'][year][positions[id] +'_partido_name']!='null') {
           partido = info['data'][year][positions[id] +'_partido_name'];
 
           if (partido.length>13) {
@@ -219,10 +219,10 @@
       $('div#infowindow div.chart img').hide();
 
       $('div#infowindow h2').html(info.name);
-      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
+      $('div#infowindow p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'') + ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':' '));
 
 
-      if (info['data'][year]['primer_partido_name']!=undefined) {
+      if (info['data'][year]['primer_partido_name']!=undefined || info['data'][year]['primer_partido_name']!=null) {
 
         if (this.deep_level == "municipios") {
           $('div#infowindow div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
@@ -253,9 +253,12 @@
           $('div#infowindow div.summary').show();
           $('div#infowindow div.stats').hide();
         }
-
+        $('div#infowindow p.no_data').hide();
+        $('div#infowindow div.summary').hide();
       } else {
+        $('div#infowindow p.no_data').show();
         $('div#infowindow div.stats').hide();
+        $('div#infowindow div.summary').hide();
       }
 
       if (info['data'][year][normalization[compare]]!=null) {
@@ -420,10 +423,10 @@
         else {
           $('div#infowindow p.province').text(((this.information.provincia!=undefined)?(this.information.provincia+', '):'')+ ((this.information['data'][year]['censo_total']!=undefined)?this.information['data'][year]['censo_total']+' habitantes':''));
 
-          if (this.information['data'][year]['primer_partido_name']!=undefined) {
+          if (this.information['data'][year]['primer_partido_name']!=undefined && this.information['data'][year]['primer_partido_name']!=null && this.information['data'][year]['primer_partido_name']!='null') {
             $('div#infowindow div.stats h4').text(parseFloat(this.information['data'][year]['percen_participacion']).toFixed(0)+'% de participación, '+ graph_hack_year[year]);
 
-            if (this.information['data'][year]['primer_partido_name']!=undefined) {
+            if (this.information['data'][year]['primer_partido_name']!=undefined && this.information['data'][year]['primer_partido_name']!=null && this.information['data'][year]['primer_partido_name']!='null') {
               var partido_1 = normalizePartyName(this.information['data'][year]['primer_partido_name']);
               $('div#infowindow div.stats div.partido:eq(0)').removeClass(parties.join(" ") + ' par1 par2 par3');
               if (_.indexOf(parties, partido_1) !== -1) {
@@ -442,7 +445,7 @@
             }            
             
             
-            if (this.information['data'][year]['segundo_partido_name']!=undefined) {
+            if (this.information['data'][year]['segundo_partido_name']!=undefined && this.information['data'][year]['segundo_partido_name']!=null && this.information['data'][year]['primer_partido_name']!='null') {
               var partido_2 = normalizePartyName(this.information['data'][year]['segundo_partido_name']);
               $('div#infowindow div.stats div.partido:eq(1)').removeClass(parties.join(" ") + ' par1 par2 par3');
               if (_.indexOf(parties, partido_2) !== -1) {
@@ -461,7 +464,7 @@
             }
 
 
-            if (this.information['data'][year]['tercer_partido_name']!=undefined) {
+            if (this.information['data'][year]['tercer_partido_name']!=undefined && this.information['data'][year]['tercer_partido_name']!=null && this.information['data'][year]['primer_partido_name']!='null') {
               var partido_3 = normalizePartyName(this.information['data'][year]['tercer_partido_name']);
               $('div#infowindow div.stats div.partido:eq(2)').removeClass(parties.join(" ") + ' par1 par2 par3');
               if (_.indexOf(parties, partido_3) !== -1) {
@@ -492,8 +495,10 @@
               $('div#infowindow div.stats div.partido:eq(3)').hide();
             }
 
+            $('div#infowindow p.no_data').hide();
             $('div#infowindow div.stats').show();
           } else {
+            $('div#infowindow p.no_data').show();
             $('div#infowindow div.stats').hide();
           }
         }

@@ -153,6 +153,7 @@ function initializeGraph() {
       '  <div class="top">'+
       '    <h2>Alaejos</h2>'+
       '    <p class="province">11.982 habitantes.</p>'+
+          '<p class="no_data">Lo sentimos, no tenemos datos de resultados para este municipio. Puedes verlos en la <a href="http://resultados2011.mir.es/99MU/DMU99000PR_L1.htm" target="_blank">web ministerio</a>.</p>'+
       '    <div class="stats">'+
       '      <h4>65% de participación</h4>'+
       '      <div class="partido"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
@@ -166,7 +167,6 @@ function initializeGraph() {
               '<li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>'+
               '<li class="partido pp bar"><strong>00</strong><span>PP</span></li>'+
               '<li class="partido iu bar"><strong>00</strong><span>IU</span></li>'+
-              '<li class="partido otros"><strong>00</strong><span>OTROS</span></li>'+
             '</ul>'+
             '</div>'+
       '  </div>'+
@@ -638,7 +638,6 @@ function initializeGraph() {
          <li class="partido psoe bar"><strong>00</strong><span>PSOE</span></li>\
          <li class="partido pp bar"><strong>00</strong><span>PP</span></li>\
          <li class="partido iu bar"><strong>00</strong><span>IU</span></li>\
-         <li class="partido otros"><strong>00</strong><span>OTROS</span></li>\
        </ul>\
        </div>\
        <form>\

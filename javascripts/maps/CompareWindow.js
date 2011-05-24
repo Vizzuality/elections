@@ -24,6 +24,7 @@
         '<div id="compare_region1" class="top">'+
           '<h2>Alaejos <a class="remove_compare" href="#eliminar">ELIMINAR</a></h2>'+
           '<p class="province">Valladolid, 11.982 habitantes.</p>'+
+          '<p class="no_data">Lo sentimos, no tenemos datos de resultados para este municipio. Puedes verlos en la <a href="http://resultados2011.mir.es/99MU/DMU99000PR_L1.htm" target="_blank">web ministerio</a>.</p>'+
           '<div class="stats">'+
             '<h4>65% de participación</h4>'+
             '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
@@ -37,7 +38,6 @@
             '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
             '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
             '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-            '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
           '</ul>'+
           '</div>'+
           '<div class="compare_graph">'+
@@ -63,6 +63,7 @@
           '<div class="region">'+
             '<h2>Alaejos <a class="remove_compare" href="#eliminar">ELIMINAR</a></h2>'+
             '<p class="province">Valladolid, 11.982 habitantes.</p>'+
+            '<p class="no_data">Lo sentimos, no tenemos datos de resultados para este municipio. Puedes verlos en la <a href="http://resultados2011.mir.es/99MU/DMU99000PR_L1.htm" target="_blank">web ministerio</a>.</p>'+
             '<div class="stats">'+
               '<h4>65% de participación</h4>'+
               '<div class="partido psoe"><div class="bar"><span class="l"></span><span class="c"></span><span class="r"></span></div><p>PSOE (61%)</p></div>'+
@@ -76,7 +77,6 @@
               '<li class="partido psoe bar"><strong>231</strong><span>PSOE</span></li>'+
               '<li class="partido pp bar"><strong>231</strong><span>PP</span></li>'+
               '<li class="partido iu bar"><strong>231</strong><span>IU</span></li>'+
-              '<li class="partido otros"><strong>231</strong><span>OTROS</span></li>'+
             '</ul>'+
             '</div>'+
           '</div>'+
@@ -159,8 +159,9 @@
       var positions = ["primer", "segundo", "tercer", "otros"];
       var percent   = info.data[year][positions[id]+'_partido_percent'];
 
+
       if (party_id < 4) {
-        if (info['data'][year][positions[id] +'_partido_name']!=undefined) {
+        if (info['data'][year][positions[id] +'_partido_name']!=undefined && info['data'][year][positions[id] +'_partido_name']!=null && info['data'][year][positions[id] +'_partido_name']!='null') {
           // First political party
           var partido = info['data'][year][positions[id] + '_partido_name'].toLowerCase().replace("-", "_");
           bar_width = (percent*this.bar_width_multiplier)/100;
@@ -233,16 +234,19 @@
         });
 
         if (info.provincia != null) {
-          if (info['data'][year]['primer_partido_name']!=undefined) {
+          if (info['data'][year]['primer_partido_name']!=undefined && info['data'][year]['primer_partido_name']!=null && info['data'][year]['primer_partido_name']!='null') {
             this.drawTopBar(1, info);
             this.drawTopBar(2, info);
             this.drawTopBar(3, info);
             this.drawTopBar(4, info);
             
-            $('div#comparewindow div.stats').css({'opacity':1,'display':"block"});
+            $('div#comparewindow div.stats').show();
             $('div#comparewindow div#compare_region1 div.summary').hide();
+            $('div#comparewindow div#compare_region1 p.no_data').hide();
           } else {
-            $('div#comparewindow div.stats').css({'opacity':0,'display':"block"});
+            $('div#comparewindow div.stats').hide();
+            $('div#comparewindow div#compare_region1 p.no_data').show();
+            $('div#comparewindow div#compare_region1 div.summary').hide();
           }
         } else {
           this.drawTotalNumber(1, 1, info, false);
@@ -250,7 +254,7 @@
           this.drawTotalNumber(3, 1, info, false);
           this.drawTotalNumber(4, 1, info, false);
           $('div#comparewindow div#compare_region1 div.summary').show();
-          $('div#comparewindow div.stats').css({'opacity':0,'display':"none"});
+          $('div#comparewindow div.stats').hide();
         }
       }
       this.show();
@@ -296,7 +300,7 @@
 
 
         $('div#comparewindow div.bottom div.region h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
-        $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
+        $('div#comparewindow div.bottom div.region p.province').text(((info.provincia!=undefined)?(info.provincia+', '):' ')+((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':' '));
 
 
         if (info.provincia != null) {
@@ -388,11 +392,11 @@
                 var lavinia = (info.lavinia_url).split('|');
                 $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/municipales/'+lavinia[0]+'/provincias/'+lavinia[1]+'/municipios/'+lavinia[2]+'/');
               } else {
-                $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+') p a').attr('href','http://resultados-elecciones.rtve.es/');
+                $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3) p a').attr('href','http://resultados-elecciones.rtve.es/');
               }
-              $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+')').show();
+              $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3)').show();
             } else {
-              $('div#comparewindow div.bottom div.region div.stats div.partido:eq('+id+')').hide();
+              $('div#comparewindow div.bottom div.region div.stats div.partido:eq(3)').hide();
             }
             
             $('div#comparewindow div#compare_region2 div.stats').show();
@@ -458,9 +462,21 @@
     CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
+      
+      // if (party_id == 1 && (data['data'][year][positions[id] + '_partido_name']==undefined || data['data'][year][positions[id] + '_partido_name']==null || data['data'][year][positions[id] + '_partido_name']=='null')) {
+      //   $('div#comparewindow div.'+level+' div.stats').css('display','none!important');
+      //   $('div#comparewindow div.'+level+' div.summary').hide();
+      //   $('div#comparewindow p.no_data').show();
+      //   return; 
+      // } else {
+      //   $('div#comparewindow div.'+level+' div.stats').show();
+      //   $('div#comparewindow div.'+level+' div.summary').hide();
+      //   $('div#comparewindow p.no_data').hide();
+      // }
+
 
       if (party_id < 4) {
-        if (data['data'][year][positions[id] + '_partido_name']!=undefined) {
+        if (data['data'][year][positions[id] + '_partido_name']!=undefined && data['data'][year][positions[id] + '_partido_name']!=null && data['data'][year][positions[id] + '_partido_name']!='null') {
           var partido = normalizePartyName(data['data'][year][positions[id] + '_partido_name']);
 
           if (partido.length > 16) {
@@ -508,11 +524,12 @@
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
         $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
-        $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):'')+this.firstData['data'][year]['censo_total']+' habitantes');
+        $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):' ')+((this.firstData['data'][year]['censo_total']!=undefined)?this.firstData['data'][year]['censo_total']+' habitantes':' '));
+        
 
         if (!_.isEmpty(this.secondData)) {
           $('div#comparewindow div.bottom div.stats h4').text(parseFloat(this.secondData.data[year].percen_participacion).toFixed(0)+'% de participación');
-          $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):'')+this.secondData['data'][year]['censo_total']+' habitantes');
+          $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):' ')+((this.secondData['data'][year]['censo_total']!=undefined)?this.secondData['data'][year]['censo_total']+' habitantes':' '));
         }
 
         this.updateTotalNumber();
