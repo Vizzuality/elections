@@ -139,11 +139,7 @@ def get_x_coordinate(row, max, known_parties)
         0
       end
     elsif row[:primer_partido_votos]
-      
       if row[:primer_partido_votos] && row[:segundo_partido_votos]
-        puts "row: #{row.inspect}"
-        puts "known_parties.keys.inspect: #{known_parties.keys.inspect}"
-        
         ((row[:primer_partido_votos] - row[:segundo_partido_votos]).to_f * 260.0) / max
       else
         0
