@@ -337,6 +337,7 @@
 
       if (this.deep_level=="municipios") {
         $('div.infowindow a.goTo').hide();
+        $('div#infowindow div.summary').hide();
       } else if (this.deep_level=="provincias") {
         $('div.infowindow a.goTo').text('Ver municipios');
         $('div.infowindow a.goTo').attr('href','#ver_municipios');

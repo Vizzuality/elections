@@ -462,20 +462,6 @@
     CompareWindow.prototype.drawBar = function(party_id, level, data){
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
-      
-      
-      if (party_id == 1 && (data['data'][year][positions[id] + '_partido_name']==undefined || data['data'][year][positions[id] + '_partido_name']==null || data['data'][year][positions[id] + '_partido_name']=='null')) {
-        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+' div.stats').css('display','none!important');
-        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+' div.stats').hide();
-        $('div#comparewindow div.'+level+' div.summary').hide();
-        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+'p.no_data').hide();
-        return false; 
-      } else {
-        $('div#comparewindow div.'+level+' div.stats').show();
-        $('div#comparewindow div.'+level+' div.summary').hide();
-        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+'p.no_data').hide();
-      }
-
 
       if (party_id < 4) {
         if (data['data'][year][positions[id] + '_partido_name']!=undefined && data['data'][year][positions[id] + '_partido_name']!=null && data['data'][year][positions[id] + '_partido_name']!='null') {
@@ -513,9 +499,30 @@
         } else {
           $('div#comparewindow div.'+level+' div.stats div.partido:eq(3)').hide();
         }
+      }
+      
+      
+      if (party_id==4 && (data['data'][year]['percen_participacion']==undefined)) {
+        $('div#comparewindow p.no_data').show();
+        $('div#comparewindow div.'+level+' div.stats').hide();
+      } else {
         
+        // if (level=='top' && this.firstData.provincia!=undefined) {
+        //   $('div#comparewindow div.'+level+' div.stats').hide();
+        // } else {
+        //   $('div#comparewindow div.'+level+' div.stats').show();
+        // }
+        // 
+        // if (level=='bottom' && this.secondData.provincia!=undefined) {
+        //   $('div#comparewindow div.'+level+' div.stats').hide();
+        // } else {
+        //   $('div#comparewindow div.'+level+' div.stats').show();
+        // }
+        
+        $('div#comparewindow p.no_data').hide();
       }
     }
+
 
     CompareWindow.prototype.refreshChart = function(){
       if (this.firstData != null) {
@@ -523,21 +530,24 @@
       }
     }
 
+
     CompareWindow.prototype.updateValues = function(){
       if (this.div) {
         $('div#comparewindow div.top div.stats h4').text(parseFloat(this.firstData.data[year].percen_participacion).toFixed(0)+'% de participación');
         $('div#comparewindow div.top p.province').text(((this.firstData.provincia!=undefined)?(this.firstData.provincia+', '):' ')+((this.firstData['data'][year]['censo_total']!=undefined)?this.firstData['data'][year]['censo_total']+' habitantes':' '));
         
-
+        
         if (!_.isEmpty(this.secondData)) {
           $('div#comparewindow div.bottom div.stats h4').text(parseFloat(this.secondData.data[year].percen_participacion).toFixed(0)+'% de participación');
           $('div#comparewindow div.bottom p.province').text(((this.secondData.provincia!=undefined)?(this.secondData.provincia+', '):' ')+((this.secondData['data'][year]['censo_total']!=undefined)?this.secondData['data'][year]['censo_total']+' habitantes':' '));
         }
-
+        
+        
         this.updateTotalNumber();
         this.updateBars();
       }
     }
+
 
     CompareWindow.prototype.updateTotalNumber = function() {
         $('div#comparewindow div.summary li.partido').each(function(i,ele){

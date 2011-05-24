@@ -1090,8 +1090,8 @@ function goDeeper(url){
   showGraphLoader();
 
   var url_split = url.split('/');
-
-  deep = url_split[5];
+  
+  deep = url_split[url_split.length-3];
 
   var url_split_length = url_split.length-1;
   var compare_var      = compare.replace(/ /g,'_');

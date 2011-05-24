@@ -630,8 +630,7 @@
 
 
     var comparison_var = normalization[compare];
-
-    if (var_resolutions[deep_level][comparison_var]!=undefined) {
+    if (comparison_var!=undefined && var_resolutions[deep_level][comparison_var]!=undefined) {
 
       var left_no      = var_resolutions[deep_level][comparison_var][0] - 1987;
       var length_array = var_resolutions[deep_level][comparison_var].length;
