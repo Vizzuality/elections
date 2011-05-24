@@ -553,9 +553,16 @@ div div.stats div.partido.pr div.bar span.c {background-position:right bottom!im
 div div.stats div.partido.pr p, li.partido.pr {color:#008140!important;}
 /*bildu*/
 div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
-div div.stats div.partido.bildu div.bar {background-position:0 -90px!important;}
 div div.stats div.partido.bildu div.bar span.c {background-position:right -90px!important}
 div div.stats div.partido.bildu p, li.partido.bildu {color:#000000!important;}
+/*bildu alternativa*/
+div div.stats div.partido.bildu-ea-alternatiba div.bar {background-position:0 -90px!important;}
+div div.stats div.partido.bildu-ea-alternatiba div.bar span.c {background-position:right -90px!important}
+div div.stats div.partido.bildu-ea-alternatiba p, li.partido.bildu-ea-alternatiba {color:#000000!important;}
+/*psoe pais vasco*/
+div.stats div.partido.pse_ee_psoe_ div.bar {background-position:0 -0px!important;}
+div.stats div.partido.pse_ee_psoe_ div.bar span.c {background-position:right -0px!important;}
+div.stats div.partido.pse_ee_psoe_ p, li.partido.pse_ee_psoe_ {color:red!important;}
 /*uv*/
 div.innerBubble.uv{background:url('../images/backgrounds/uv.png'); }
 div div.stats div.partido.uv div.bar {background-position:0 -78px!important;}
