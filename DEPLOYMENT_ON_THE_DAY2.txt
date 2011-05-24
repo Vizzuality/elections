@@ -1,0 +1,30 @@
+El DIA D
+
+-----------
+
+
+    6) nohup ruby bubbles.rb 6 7 11 > nohup_bubbles.out &
+        cd /mnt/www/data/bubbles
+        rm current 
+        ln -s /mnt/www/data/bubbles/29 current
+        cd /home/ubuntu/elections/scripts
+    
+    7) (editar el common.rb, cambiar var version y lo ejecutamos) nohup ./run_graphs.sh > nohup_graphs.out &
+    8) nohup ruby googlenamescache_generator.rb > nohup_ooglenames.out &
+        cd /mnt/www/data/google_names_cache
+        rm current 
+        ln -s /mnt/www/data/google_names_cache/15 current
+        cd /home/ubuntu/elections/scripts
+        
+    9) nohup ./run_maps.sh > nohup_run_maps.out & 
+    
+    10) //compress the HTML LOCALLY --> Looking at the html
+    
+    11) //Go TO server cd /home/ubuntu/elections/deploy
+        nohup ./vector_data.sh > nohup_vector_data.out &
+        ./app.sh
+        nohup ./tile_data.sh > nohup_tile_data.out &
+            
+    
+10) Pre-seed the Akamai caches
+
