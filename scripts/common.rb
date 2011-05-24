@@ -131,10 +131,7 @@ def get_x_coordinate(row, max, known_parties)
     return 0
   end
     
-  if known_parties.keys.include?(row[:primer_partido_id])
-    puts "row: #{row.inspect}"
-    puts "known_parties.keys.inspect: #{known_parties.keys.inspect}"
-  
+  if known_parties.keys.include?(row[:primer_partido_id])  
     x_coordinate = if row[:primer_partido_percent]
       if row[:primer_partido_percent] && row[:segundo_partido_percent]
         ((row[:primer_partido_percent] - row[:segundo_partido_percent]).to_f * 260.0) / max
@@ -142,7 +139,11 @@ def get_x_coordinate(row, max, known_parties)
         0
       end
     elsif row[:primer_partido_votos]
+      
       if row[:primer_partido_votos] && row[:segundo_partido_votos]
+        puts "row: #{row.inspect}"
+        puts "known_parties.keys.inspect: #{known_parties.keys.inspect}"
+        
         ((row[:primer_partido_votos] - row[:segundo_partido_votos]).to_f * 260.0) / max
       else
         0
