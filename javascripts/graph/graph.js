@@ -1004,7 +1004,13 @@ function updateBubbles(url){
       updateBubble('#'+key,offsetScreenX+parseInt(v["x_coordinate"]),offsetScreenY-parseInt(v["y_coordinate"]),v["radius"],v["color"], v.partido_1[0]);
       count ++;
     });
-  })
+  }).error(function(){
+    createdBubbles = false;
+    failCircle.reset();
+    failCircle.resetDataNotFound();
+    failCircle.show();
+    hideGraphLoader();
+  });
 }
 
 //Function for update the values of the bubbles that are being visualized
