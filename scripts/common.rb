@@ -147,7 +147,7 @@ def get_x_coordinate(row, max, parties)
       end
     end
     x_coordinate += 50.0 unless x_coordinate == 0
-    x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(parties[row[:primer_partido_id]])
+    x_coordinate = x_coordinate*-1 if LEFT_PARTIES.include?(parties[row[:primer_partido_id]]) || parties[row[:primer_partido_id]].include?("PSOE")
     return ("%.2f" % x_coordinate).to_f
   else
     return 0
