@@ -254,11 +254,9 @@
           $('div#infowindow div.stats').hide();
         }
         $('div#infowindow p.no_data').hide();
-        $('div#infowindow div.summary').hide();
       } else {
         $('div#infowindow p.no_data').show();
         $('div#infowindow div.stats').hide();
-        $('div#infowindow div.summary').hide();
       }
 
       if (info['data'][year][normalization[compare]]!=null) {
@@ -343,10 +341,12 @@
         $('div.infowindow a.goTo').text('Ver municipios');
         $('div.infowindow a.goTo').attr('href','#ver_municipios');
         $('div.infowindow a.goTo').show();
+        $('div#infowindow div.summary').show();
       } else {
         $('div.infowindow a.goTo').text('Ver provincias');
         $('div.infowindow a.goTo').attr('href','#ver_provincias');
         $('div.infowindow a.goTo').show('Ver provincias');
+        $('div#infowindow div.summary').show();
       }
 
 

@@ -463,16 +463,18 @@
       var id = party_id - 1;
       var positions = ["primer", "segundo", "tercer"];
       
-      // if (party_id == 1 && (data['data'][year][positions[id] + '_partido_name']==undefined || data['data'][year][positions[id] + '_partido_name']==null || data['data'][year][positions[id] + '_partido_name']=='null')) {
-      //   $('div#comparewindow div.'+level+' div.stats').css('display','none!important');
-      //   $('div#comparewindow div.'+level+' div.summary').hide();
-      //   $('div#comparewindow p.no_data').show();
-      //   return; 
-      // } else {
-      //   $('div#comparewindow div.'+level+' div.stats').show();
-      //   $('div#comparewindow div.'+level+' div.summary').hide();
-      //   $('div#comparewindow p.no_data').hide();
-      // }
+      
+      if (party_id == 1 && (data['data'][year][positions[id] + '_partido_name']==undefined || data['data'][year][positions[id] + '_partido_name']==null || data['data'][year][positions[id] + '_partido_name']=='null')) {
+        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+' div.stats').css('display','none!important');
+        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+' div.stats').hide();
+        $('div#comparewindow div.'+level+' div.summary').hide();
+        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+'p.no_data').hide();
+        return false; 
+      } else {
+        $('div#comparewindow div.'+level+' div.stats').show();
+        $('div#comparewindow div.'+level+' div.summary').hide();
+        $('div#comparewindow div'+((level=="top")?'#compare_region1':'#compare_region2')+'p.no_data').hide();
+      }
 
 
       if (party_id < 4) {
