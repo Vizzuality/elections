@@ -1,13 +1,13 @@
 
- // var global_url      = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
- // var tiles_pngs_url  = "http://datos{n}.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
-  var global_url = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data"
-  var tiles_pngs_url  = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data/tiles/";
+  var global_url      = "http://datos.rtve.es/elecciones/autonomicas-municipales/data";
+  var tiles_pngs_url  = "http://datos{n}.rtve.es/elecciones/autonomicas-municipales/data/tiles/";
+  //var global_url = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data"
+  //var tiles_pngs_url  = "http://ec2-50-16-13-57.compute-1.amazonaws.com/data/tiles/";
   var proxy_url       = "proxy.php";
   var tiles_version   = "live"; //"current"; //3;
   var bubbles_version = "current"; //10;
   var gmaps_version   = "current"; //4;
-  var graph_version   = "current"; //"v7";
+  var graph_version   = "live"; //"current"; //"v7";
   var ua              = $.browser;
   var ie_             = false;
   
