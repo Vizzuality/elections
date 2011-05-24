@@ -7,7 +7,7 @@
   var tiles_version   = "live"; //"current"; //3;
   var bubbles_version = "current"; //10;
   var gmaps_version   = "current"; //4;
-  var graph_version   = "current"; //"v7";
+  var graph_version   = "live"; //"current"; //"v7";
   var ua              = $.browser;
   var ie_             = false;
   
