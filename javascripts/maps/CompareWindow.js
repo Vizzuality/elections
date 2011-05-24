@@ -218,7 +218,7 @@
 
       if (info.name != undefined) {
         $('div#comparewindow div.top h2').html(info.name + ' <a class="remove_compare" href="#eliminar">ELIMINAR</a>');
-        $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+ ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':''));
+        $('div#comparewindow div.top p.province').text(((info.provincia!=undefined)?(info.provincia+', '):'')+ ((info['data'][year]['censo_total']!=undefined)?info['data'][year]['censo_total']+' habitantes':' '));
 
         if (info.provincia != null) {
           $('div#comparewindow div.top div.stats h4').text(parseFloat(info['data'][year]['percen_participacion']).toFixed(0)+'% de participación');
