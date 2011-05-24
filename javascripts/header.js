@@ -557,7 +557,7 @@
     $('a.twitter').click(function(ev){
       ev.stopPropagation();
       ev.preventDefault();
-      var new_url = 'http://twitter.com/?status=' + encodeURIComponent('El microscopio del voto, cómo vota España ' + window.location.href);
+      var new_url = 'http://twitter.com/?status=' + encodeURIComponent('El microscopio del voto, cómo vota España - http://www.rtve.es/microscopio');
       window.open(new_url,'_newtab');
     });
 
