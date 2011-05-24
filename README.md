@@ -10,37 +10,13 @@ These datasources all drive the visualisation that can be initialised by running
 Please note that these scripts are unlikely to run without modification for your environment, please ensure all code is read and updated before attempting to use. Please see LICENCE file for full terms of use.
 
 
-Quick Install
--------------
-
-Initiates generation and sync to Akamai is
-
-./run_all.sh
-
-for timed run: `time run_all.sh`
-
-
 Data generation detail
 -----------------------
 
 To generate all data run the following from the scripts directory:
 
-./run_graphs.sh
-ruby bubbles.rb 6 7 11
-ruby googlenamescache_generator.rb
-./run_maps.sh
-
-
-Deploy detail
---------------
-
-Run from the deploy directory:
-./all.sh 
-
-
-or you can sync specific parts of the data with:
-
-./vector_data.sh
-./app.sh
-./tile_data.sh
+ * ./run_graphs.sh
+ * ruby bubbles.rb 6 7 11
+ * ruby googlenamescache_generator.rb
+ * ./run_maps.sh
 
