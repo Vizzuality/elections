@@ -339,9 +339,9 @@ var textInfoWindow = {
 
 var explanationContent = {
   "Resultados electorales" : {
-    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, se muestra el número de municipios con mayor número de votantes a los diferentes partidos políticos. <br /><br />A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos.</p>",
+    htmlContent: "<h1>Resultados Electorales</h1><p class='rango'>Datos disponibles a nivel de municipio entre 1987 y 2011</p><p>A nivel de comunidad autónoma y de provincia, se muestra el número de municipios con mayor número de votantes a los diferentes partidos políticos. <br /><br/>A nivel de municipio, porcentaje de votantes (aplicando redondeo simétrico) de los diferentes partidos políticos.</p>",
 		graph: false,
-		sourceText: "<p class='fuente'>Puedes acceder a los datos en <a href='http://www.infoelectoral.mir.es/min/areaDescarga.html'>la web del Ministerio de Interior</a></p>",
+		sourceText: "<p class='fuente'>Puedes acceder a los datos electorales en <a href='http://www.infoelectoral.mir.es/min/areaDescarga.html'>la web del Ministerio de Interior</a>.</p><p>Los datos geoespaciales fueron proporcionados por <a href='http://centrodedescargas.cnig.es/CentroDescargas/index.jsp'>el Instituto Geográfico Nacional</a>.</p>",
 		units: "",
 		graphRange: "100"
   },
