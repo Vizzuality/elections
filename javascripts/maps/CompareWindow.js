@@ -133,23 +133,53 @@
         this.position = "down";
         $('div.outer_stats_slider').scrollTo( {top:'110px',left:'+=0'}, 500);
       });
+      
+
+      $('form.search_compare #google_compare_autocomplete').focusin(function(){
+        var value = $(this).val();
+        if (value=="Introduce una ubicación") {
+          $(this).val('');
+        }
+      });
+      
+      $('form.search_compare #google_compare_autocomplete').focusout(function(){
+        var value = $(this).val();
+        if (value=="") {
+          $(this).val('Introduce una ubicación');
+        }
+      });
+
 
       me.addGoogleAutocomplete();
     }
 
 
     CompareWindow.prototype.addGoogleAutocomplete = function() {
-      var me = this;
-      var input = document.getElementById('google_compare_autocomplete');
-      var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(27.391278222579277, -18.45703125),new google.maps.LatLng(42.601619944327965, 4.0869140625));
-      var options = {bounds: defaultBounds};
-      google_autocomplete = new google.maps.places.Autocomplete(input, options);
-
-
-      google.maps.event.addListener(google_autocomplete, 'place_changed', function() {
-        var place = google_autocomplete.getPlace();
-        comparewindow.compareSecondRegion(null,place.formatted_address);
-      });
+      $("#google_compare_autocomplete").autocomplete({
+        source: function( request, response ) {
+        				$.ajax({
+        					url: "http://munifinder.heroku.com",
+        					dataType: "jsonp",
+        					data: {
+        						term: request.term
+        					},
+        					jsonpCallback:"callback",
+        					success: function( data ) {
+        						response( $.map( data, function( item ) {
+        							return {
+        								label: item.n,
+        								la: item.a,
+        								lo: item.o,
+        								id: item.id,
+        								google_name: item.gn
+        							}
+        						}));
+        					}
+        				});
+        }, autoFocus:'true', minLength:2, appendTo: "div#compare_region2 form.search_compare",
+      select:function(event,ui){
+        comparewindow.compareSecondRegion(null,ui.item.google_name);
+      }});
     }
 
 
@@ -627,7 +657,6 @@
         $('div#comparewindow div.stats_slider').empty();
       }
       
-      console.log(info.name);
 
       var width = 90;
       var count = 0;
@@ -653,7 +682,6 @@
               '<span style="'+((info['data'][year][ele]>0)?'margin:0 0 0 '+(bar_width+5)+'px':'margin:0 '+(bar_width+5)+'px 0 0')+'" class="data '+((info['data'][year][ele]>0)?'positive':'negative')+' second">'+parseFloat(info['data'][year][ele]).toFixed(2)+'%</span>'
             );
           } else {
-            console.log(i);
             
             $('div.stats_slider').append(
               '<div alt="'+i+'" class="up block">'+
