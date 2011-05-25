@@ -626,6 +626,8 @@
       if (remove) {
         $('div#comparewindow div.stats_slider').empty();
       }
+      
+      console.log(info.name);
 
       var width = 90;
       var count = 0;
@@ -633,6 +635,7 @@
       //Add top blocks
       _.each(normalization,function(ele,i){
         if (info.data != undefined && info.data[year][ele]!=undefined) {
+          
           count ++;
           // Calculate min-max from variable
           var region_type = getDeepLevelFromZoomLevel(peninsula.getZoom());
@@ -642,14 +645,16 @@
           var max = Math.max(Math.abs(max_),Math.abs(min_));
           var bar_width = ((Math.abs(info['data'][year][ele]*width))/max);
 
-          if (bar_width > 100) bar_width = 100;
-
+          if (bar_width > 90) bar_width = 90;
+          
           if ($('div.stats_slider div[alt="'+i+'"].up').length>0) {
             $('div.stats_slider div[alt="'+i+'"].up').append(
               '<span style="width:'+bar_width+'px" class="bar '+((info['data'][year][ele]>0)?'positive':'negative')+' second"></span>'+
               '<span style="'+((info['data'][year][ele]>0)?'margin:0 0 0 '+(bar_width+5)+'px':'margin:0 '+(bar_width+5)+'px 0 0')+'" class="data '+((info['data'][year][ele]>0)?'positive':'negative')+' second">'+parseFloat(info['data'][year][ele]).toFixed(2)+'%</span>'
             );
           } else {
+            console.log(i);
+            
             $('div.stats_slider').append(
               '<div alt="'+i+'" class="up block">'+
                 '<h3>% '+i+'</h3>'+
@@ -689,7 +694,7 @@
       });
 
       if (refresh && !_.isEmpty(this.secondData)) {
-        this.createChart(this.secondData,false,false)
+        this.createChart(this.secondData,false,false);
       }
 
     }

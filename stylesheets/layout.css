@@ -21,6 +21,7 @@ div#header {position:absolute; left:0; right:0; top:51px; height:179px; min-widt
 div#header span.end_left {position:absolute; left:0; top:0; width:10px; height:20px; background:url('../images/end_left.jpg') no-repeat 0 0;}
 div#header span.end_right {position:absolute; right:0; top:0; width:10px; height:20px; background:url('../images/end_right.jpg') no-repeat 0 0;}
 div#header h1 {float: left; width:60%; margin:17px 0 0 19px; font:normal 25px "Officina Bold"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
+div#header h1 a {text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530); text-decoration:none;}
 div#header h2 {float: left; width:990px;  margin:2px 0 1px 20px; font:normal 15px "Officina Regular"; text-shadow:0 1px #371530; color:white; filter:progid:DXImageTransform.Microsoft.DropShadow(offx=0, offy=1, color=#371530);}
 div#header div.secondContainer div.left {float:left; width:320px; height:auto; margin:0; padding:0;}
 div#header div.secondContainer div.left form {position:relative; display:inline-block; width:262px; height:32px; margin:15px 0 0 0; padding:0 0 0 19px;}
@@ -638,7 +639,7 @@ div div.stats div.partido.iu_lvcyl p, li.partido.iu_lvcyl{color:#54a551!importan
 
 div div.stats div.partido.iulv_ca div.bar {background-position:0 -12px!important;}
 div div.stats div.partido.iulv_ca div.bar span.c {background-position:right -12px!important}
-div div.stats div.partido.iulv_ca p, li.partido.iulv_cal{color:#54a551!important;}
+div div.stats div.partido.iulv_ca p, li.partido.iulv_ca {color:#54a551!important;}
 
 div div.stats div.partido.upn div.bar {background-position:0 -36px!important;}
 div div.stats div.partido.upn div.bar span.c {background-position:right -36px!important}

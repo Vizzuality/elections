@@ -710,7 +710,7 @@
       }
       if(comparewindow.isVisible()){
         comparewindow.updateValues();
-        comparewindow.createChart(infowindow.information,true,true);
+        comparewindow.refreshChart();
       }
     } else {
       graphBubbleTooltip.hide();
